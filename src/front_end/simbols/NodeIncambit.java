@@ -1,0 +1,18 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+package compilador.simbols;
+
+/**
+ *
+ * @author Eloy
+ */
+public class NodeIncambit extends NodeBase{
+
+        public NodeIncambit() {
+            super("Incambit", 0);
+            ts.incAmbit();
+        }
+}
