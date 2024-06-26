@@ -1,6 +1,6 @@
 
 
-package compilador.errors;
+package errors;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

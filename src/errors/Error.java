@@ -1,4 +1,4 @@
-package compilador.errors;
+package errors;
 
 import java.io.Writer;
 

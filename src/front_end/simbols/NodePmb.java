@@ -1,8 +1,8 @@
 
-package compilador.simbols;
+package front_end.simbols;
 
-import compilador.backend.Parametro;
-import compilador.estructura_de_dades.Procediment;
+import data_structures.Parameter;
+import data_structures.Procedure;
 import java.util.ArrayList;
 
 

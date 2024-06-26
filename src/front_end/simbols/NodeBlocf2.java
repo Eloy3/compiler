@@ -1,6 +1,6 @@
 
 
-package compilador.simbols;
+package front_end.simbols;
 
 
 public class NodeBlocf2 extends NodeBase{

@@ -1,5 +1,5 @@
 
-package compilador.simbols;
+package front_end.simbols;
 
 public class NodePrograma extends NodeBase{
     public NodePrograma() {

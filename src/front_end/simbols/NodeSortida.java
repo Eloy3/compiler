@@ -1,8 +1,8 @@
 
 
-package compilador.simbols;
+package front_end.simbols;
 
-import compilador.simbols.NodeValor.exprsimple;
+import front_end.simbols.NodeValor.exprsimple;
 
 
 public class NodeSortida extends NodeBase{

@@ -1,10 +1,10 @@
 
 
-package compilador.simbols;
+package front_end.simbols;
 
-import compilador.errors.Error_DistintTipus;
-import compilador.errors.Error_VarNoExisteix;
-import static compilador.simbols.NodeBase.ts;
+import errors.Error_DistintTipus;
+import errors.Error_VarNoExisteix;
+import static front_end.simbols.NodeBase.ts;
 
 
 public class NodeExprcomposta extends NodeBase{

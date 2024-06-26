@@ -1,7 +1,7 @@
 
-package compilador.simbols;
+package front_end.simbols;
 
-import compilador.errors.*;
+import errors.*;
 
 public class NodeDecl_Variable extends NodeBase{
     private NodeTipus tipus;

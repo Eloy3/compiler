@@ -10,8 +10,8 @@ import java_cup.runtime.*;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 import java_cup.runtime.ComplexSymbolFactory.Location;
 
-import parser.ParserSym;
-import parser.Simbol;
+import front_end.parser.ParserSym;
+import front_end.simbols.Simbol;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

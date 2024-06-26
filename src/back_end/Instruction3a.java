@@ -5,29 +5,29 @@
 
 package back_end;
 
-public class ThreeAdressInstruction {
+public class Instruction3a {
 
-    private Operacio codi;
+    private Operation codi;
     private String operand1;
     private String operand2;
     private String desti;
     
-    public Instruccioc3a(Operacio operacio, String operand1, String operand2, String desti) {
-        this.codi = operacio;
+    public Instruction3a(Operation Operation, String operand1, String operand2, String desti) {
+        this.codi = Operation;
         this.operand1 = operand1;
         this.operand2 = operand2;
         this.desti = desti;
 
     }
     
-    public void modInstruccion(Operacio codi, String operand1, String operand2, String desti){
+    public void modInstruccion(Operation codi, String operand1, String operand2, String desti){
         this.codi = codi;
         this.operand1 = operand1;
         this.operand2 = operand2;
         this.desti = desti;
     }
 
-    public Operacio getOperation() {
+    public Operation getOperation() {
         return codi;
     }
 
@@ -44,18 +44,18 @@ public class ThreeAdressInstruction {
     }
 
     public boolean esCondicional(){
-        return codi==Operacio.IF || codi==Operacio.IFIGUAL || codi==Operacio.IFMAJOR ||
-                codi==Operacio.IFMENOR || codi==Operacio.IFMAJORIGUAL ||
-                codi==Operacio.IFMENORIGUAL || codi==Operacio.IFDIFERENT;
+        return codi==Operation.IF || codi==Operation.IFIGUAL || codi==Operation.IFMAJOR ||
+                codi==Operation.IFMENOR || codi==Operation.IFMAJORIGUAL ||
+                codi==Operation.IFMENORIGUAL || codi==Operation.IFDIFERENT;
     }
 
     public boolean esArtim(){
-        return codi==Operacio.SUMA || codi==Operacio.RESTA || codi==Operacio.MULTIPLICACIO ||
-                codi==Operacio.DIVISIO  || codi==Operacio.AND || codi==Operacio.OR;
+        return codi==Operation.SUMA || codi==Operation.RESTA || codi==Operation.MULTIPLICACIO ||
+                codi==Operation.DIVISIO  || codi==Operation.AND || codi==Operation.OR;
     }
 
     public boolean esParam(){
-        return codi == Operacio.PARAM_C || codi == Operacio.PARAM_S;
+        return codi == Operation.PARAM_C || codi == Operation.PARAM_S;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package compilador.backend;
+package back_end;
 public enum Operation {
     ASSIGNA,
     SUMA,

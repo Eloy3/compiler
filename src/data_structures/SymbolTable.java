@@ -5,7 +5,7 @@
 
 package data_structures;
 
-import compilador.simbols.Simbol;
+import front_end.simbols.Simbol;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;

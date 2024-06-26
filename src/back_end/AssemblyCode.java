@@ -3,6 +3,7 @@ package back_end;
 
 
 import data_structures.Procedure;
+import data_structures.Parameter;
 import data_structures.Variable;
 import front_end.simbols.TipusSubjacent;
 import static front_end.simbols.TipusSubjacent.*;
@@ -43,7 +44,7 @@ public class AssemblyCode {
         this.code.add("\torg $1000");
         code.add("START:");
         code.add("\tJSR SCREENSIZE");
-        for (Instruction i : c3a.getInstructionList().getInst_list()){
+        for (Instruction3a i : c3a.getInstructionList().getInst_list()){
             traslate(i);
         }
         code.add("\tSIMHALT");
@@ -90,7 +91,7 @@ public class AssemblyCode {
         }
     }
 
-    private void traslate(Instruccioc3a i){
+    private void traslate(Instruction3a i){
 
         code.add("* -->" + i.toString());
         switch (i.getOperation()){
@@ -170,7 +171,7 @@ public class AssemblyCode {
         }
     }
 
-    private void iasigna(Instruccioc3a i){
+    private void iasigna(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
         switch (TipusSubjacent.valueOf(d.getType().toUpperCase())){
             case STRING:
@@ -219,7 +220,7 @@ public class AssemblyCode {
         }
     }
 
-    private void icall(Instruccioc3a i){
+    private void icall(Instruction3a i){
         Procedure p = c3a.getProc(i.getDestiny());
         if(p == null){
             switch (i.getDestiny()) {
@@ -295,7 +296,7 @@ public class AssemblyCode {
         param = null;
     }
 
-    private void iparam(Instruccioc3a i){
+    private void iparam(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
         switch (i.getOperation()){
             case PARAM_C:
@@ -345,7 +346,7 @@ public class AssemblyCode {
         }
     }
 
-    private void ipmb(Instruccioc3a i){
+    private void ipmb(Instruction3a i){
         Procedure p = c3a.getProc(i.getDestiny());
         ArrayList<Parameter> param = p.getParametros();
         int ind = param.size() - 1;
@@ -387,7 +388,7 @@ public class AssemblyCode {
         }
     }
 
-    private void irtn(Instruccioc3a i){
+    private void irtn(Instruction3a i){
         Variable r = c3a.getVar(i.getOperand1());
         if(r != null){
             Procedure p = c3a.getProc(i.getDestiny());
@@ -420,7 +421,7 @@ public class AssemblyCode {
         code.add("\tRTS");
     }
 
-    private void compare(Instruccioc3a i){
+    private void compare(Instruction3a i){
         Variable op1 = c3a.getVar(i.getOperand1());
         if(op1 == null){
             boolean numero;
@@ -487,7 +488,7 @@ public class AssemblyCode {
         }
     }
 
-    private void isuma(Instruccioc3a i){
+    private void isuma(Instruction3a i){
         Variable destino = c3a.getVar(i.getDestiny());
         if(TipusSubjacent.valueOf(destino.getType().toUpperCase()) == STRING){
             Variable op1 = c3a.getVar(i.getOperand1());
@@ -512,7 +513,7 @@ public class AssemblyCode {
         }
     }
 
-    private void iresta(Instruccioc3a i){
+    private void iresta(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
         code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D1");
         code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D0");
@@ -520,7 +521,7 @@ public class AssemblyCode {
         code.add("\tMOVE.W D1," + varnom(d));
     }
 
-    private void idivision(Instruccioc3a i){
+    private void idivision(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
         code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D1");
         code.add("\tEXT.L D1");
@@ -530,7 +531,7 @@ public class AssemblyCode {
         code.add("\tMOVE.W D1," + varnom(d));
     }
 
-    private void imultiplicacion(Instruccioc3a i){
+    private void imultiplicacion(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
         code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D0");
         code.add("\tEXT.L D0");
@@ -540,7 +541,7 @@ public class AssemblyCode {
         code.add("\tMOVE.W D1," + varnom(d));
     }
 
-    private void iand(Instruccioc3a i){
+    private void iand(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
         code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");
         code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1");
@@ -548,7 +549,7 @@ public class AssemblyCode {
         code.add("\tMOVE.B D1," + varnom(d));
     }
 
-    private void ior(Instruccioc3a i){
+    private void ior(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
         code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");
         code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1");
@@ -556,7 +557,7 @@ public class AssemblyCode {
         code.add("\tMOVE.B D1," + varnom(d));
     }
 
-    private void idesplazar(Instruccioc3a i){
+    private void idesplazar(Instruction3a i){
         Variable op = c3a.getVar(i.getOperand2());
         if(op == null){
             code.add("\tMOVE.W #" + i.getOperand2()+ ",D0");
@@ -791,7 +792,7 @@ public class AssemblyCode {
         return -1;
     }
 
-    private boolean checkHasAllFields(Instruccioc3a i){
+    private boolean checkHasAllFields(Instruction3a i){
         return i.getOperand1() != null && i.getOperand2() != null && i.getDestiny() != null;
     }
 }

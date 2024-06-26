@@ -12,19 +12,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class CodiTresAdrecesBackEnd {
+public class ThreeAdressCodeBackEnd {
 
     private final String TAC_PATH = "src/compilador/output/codiIntermitg.txt";
     private final String TVAR_PATH = "src/compilador/output/Taula_variables.txt";
     private final String TPROC_PATH = "src/compilador/output/Taula_Procedures.txt";
     private final String TSYM_PATH = "src/compilador/output/Taula_simbols.txt";
 
-    private LlistadInstruccions instructionList = new LlistadInstruccions();
+    private InstructionsList instructionList = new InstructionsList();
     private ArrayList<Variable> tv = new ArrayList<>();
     private ArrayList<Procedure> tp = new ArrayList<>();
     private ArrayList<Simbol> ts = new ArrayList<>();
     
-    public CodiTresAdrecesBackEnd() {
+    public ThreeAdressCodeBackEnd() {
         loadTs();
         loadTv();
         loadTp();
@@ -270,11 +270,11 @@ public class CodiTresAdrecesBackEnd {
         return null;
     }
 
-    public LlistadInstruccions getInstructionList() {
+    public InstructionsList getInstructionList() {
         return instructionList;
     }
 
-    public void updateInstructionList(LlistadInstruccions instructionList){
+    public void updateInstructionList(InstructionsList instructionList){
         this.instructionList = instructionList;
     }
 

@@ -6,8 +6,8 @@ import java_cup.runtime.*;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 import java_cup.runtime.ComplexSymbolFactory.Location;
 
-import parser.ParserSym;
-import parser.Simbol;
+import front_end.parser.ParserSym;
+import front_end.simbols.Simbol;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,7 +105,7 @@ ws = [' '|'\t']+
     Writer bw;
     public void writeToken(String token) {
       try {
-        bw  = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/compilador/output/tokens.txt", true), "utf-8"));
+        bw  = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output/tokens.txt", true), "utf-8"));
         bw.write(token+"\n");
         bw.close();
       } catch (FileNotFoundException ex) {
