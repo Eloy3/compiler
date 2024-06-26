@@ -1,0 +1,25 @@
+package compilador.backend;
+public enum Operation {
+    ASSIGNA,
+    SUMA,
+    RESTA,
+    DIVISIO,
+    MULTIPLICACIO,
+    AND,
+    OR,
+    GOTO,
+    SKIP,
+    IF,
+    IFIGUAL,
+    IFMAJOR,
+    IFMENOR,
+    IFMAJORIGUAL,
+    IFMENORIGUAL,
+    IFDIFERENT,
+    CALL,
+    RTN,
+    PMB,
+    PARAM_S,
+    PARAM_C,
+    DESPLAZAR_BITS
+}

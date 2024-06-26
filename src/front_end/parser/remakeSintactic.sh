@@ -11,5 +11,5 @@ cd "$(dirname "$0")"
 # Run CUP
 java -jar $CUP_JAR -parser Parser -symbols ParserSym -destdir $OUTPUT_DIR $CUP_FILE
 
-echo "Files generated in $OUTPUT_DIR"
+echo "Files generated"
 

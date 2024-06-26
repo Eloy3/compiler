@@ -1,8 +1,8 @@
 
-package compilador.simbols;
+package front_end.simbols;
 
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
-import compilador.backend.Types;
+import back_end.Types;
 import java.util.ArrayList;
 public class Simbol{
     String nom;

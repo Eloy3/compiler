@@ -1,19 +1,18 @@
+package front_end.simbols;
 
-package compilador.simbols;
-
-import compilador.estructura_de_dades.TaulaProcediments;
-import compilador.estructura_de_dades.TaulaSimbols;
-import compilador.estructura_de_dades.TaulaVariables;
-import compilador.generar_codi.CodiTresAdreces;
+import data_structures.TaulaProcediments;
+import data_structures.SymbolTable;
+import data_structures.TaulaVariables;
+import back_end.generate_code.ThreeAdressCode;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 
 
 public class NodeBase extends ComplexSymbol{
     private static int i = 0;
-    protected static TaulaSimbols ts = new TaulaSimbols();
+    protected static SymbolTable ts = new SymbolTable();
     protected static TaulaVariables tv = new TaulaVariables();
     protected static TaulaProcediments tp = new TaulaProcediments();
-    protected static CodiTresAdreces cta = new CodiTresAdreces(tv);
+    protected static ThreeAdressCode cta = new ThreeAdressCode(tv);
     
     public NodeBase(String nom, Integer valor){
         super(nom, i++, valor);

@@ -1,7 +1,7 @@
 
-package compilador.simbols;
+package front_end.simbols;
 
-import compilador.errors.*;
+import errors.*;
 import java.util.ArrayList;
 
 /**

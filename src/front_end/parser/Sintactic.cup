@@ -10,12 +10,18 @@ import java.util.HashMap;
 import front_end.simbols.*;
 import front_end.scanner.*;
 
+class Parser; 
+
 parser code {: 
         private Lexic lexic;
 
         public Parser(Lexic l, java_cup.runtime.SymbolFactory sf) {
                 super(l, sf);
                 this.lexic = l;
+        }
+
+        public Parser(Lexic l) {
+                this(l, new ComplexSymbolFactory());
         }
 :}
 
