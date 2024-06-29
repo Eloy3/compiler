@@ -18,22 +18,23 @@ public class Main {
         try {
             if (args.length > 0) {
                 input = new FileReader(args[0]);
+                cleanTextFile("output/tokens.txt");
+                cleanTextFile("output/taulaSimbols.txt");
+                cleanTextFile("output/Taula_simbols.txt");
+                cleanTextFile("output/Taula_variables.txt");
+                cleanTextFile("output/Errors.txt");
+                cleanTextFile("output/codiIntermitg.txt");
+
+                SymbolFactory sf = new ComplexSymbolFactory();
+                Lexic scanner = new Lexic(input);
+                Parser parser = new Parser(scanner, sf);
+                parser.parse();
             } else {
                 System.out.println("No argument given");
                 input = null;
             }
 
-            cleanTextFile("output/tokens.txt");
-            cleanTextFile("output/taulaSimbols.txt");
-            cleanTextFile("output/Taula_simbols.txt");
-            cleanTextFile("output/Taula_variables.txt");
-            cleanTextFile("output/Errors.txt");
-            cleanTextFile("output/codiIntermitg.txt");
-
-            SymbolFactory sf = new ComplexSymbolFactory();
-            Lexic scanner = new Lexic(input);
-            Parser parser = new Parser(scanner, sf);
-            parser.parse();
+            
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("error: " + e.getMessage());
