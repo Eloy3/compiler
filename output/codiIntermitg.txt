@@ -1,0 +1,44 @@
+goto principal
+principal:skip
+pmb principal
+t0 = 3
+x = t0
+t2 = 24
+y = t2
+t4 = cert
+b = t4
+if b then goto e0
+goto e1
+e0:skip
+t6 = fals
+b = t6
+e1:skip
+if x == y goto e3
+goto e4
+e3:skip
+t8 = 50
+y = t8
+t10 = y
+x = t10
+goto e5
+e4:skip
+t12 = 99
+x = t12
+e5:skip
+param_s x
+call line
+param_s y
+call line
+param_s z
+call getInt
+z = retInt
+e6:skip
+if z != 0 goto e7
+goto e8
+e7:skip
+param_s z
+call line
+t15 = z - 1
+z = t15
+goto e6
+e8:skip

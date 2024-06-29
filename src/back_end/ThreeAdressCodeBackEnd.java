@@ -14,10 +14,10 @@ import java.util.ArrayList;
 
 public class ThreeAdressCodeBackEnd {
 
-    private final String TAC_PATH = "src/compilador/output/codiIntermitg.txt";
-    private final String TVAR_PATH = "src/compilador/output/Taula_variables.txt";
-    private final String TPROC_PATH = "src/compilador/output/Taula_Procedures.txt";
-    private final String TSYM_PATH = "src/compilador/output/Taula_simbols.txt";
+    private final String TAC_PATH = "output/codiIntermitg.txt";
+    private final String TVAR_PATH = "output/Taula_variables.txt";
+    private final String TPROC_PATH = "output/Taula_Procedures.txt";
+    private final String TSYM_PATH = "output/Taula_simbols.txt";
 
     private InstructionsList instructionList = new InstructionsList();
     private ArrayList<Variable> tv = new ArrayList<>();

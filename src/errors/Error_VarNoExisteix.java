@@ -13,7 +13,7 @@ public class Error_VarNoExisteix extends Error {
     @Override
     public int printError(int[] column_line, String var_err) {
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/compilador/output/Errors.txt", true), StandardCharsets.UTF_8));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output/Errors.txt", true), StandardCharsets.UTF_8));
             writer.write("Error semàntic. "+ "[" + column_line[0] + ":" + column_line[1] + "]" + " La variable " + "'" + var_err + "'" + " no existeix\n");
             
             writer.close();

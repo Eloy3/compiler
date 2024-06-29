@@ -1,0 +1,206 @@
+package front_end.parser;
+
+import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
+import java_cup.runtime.ComplexSymbolFactory.Location;
+
+import java_cup.runtime.*;
+
+import java.io.PrintStream;
+import java.util.HashMap;
+import front_end.simbols.*;
+import front_end.scanner.*;
+
+class Parser; 
+
+parser code {: 
+        private Lexic lexic;
+
+        public Parser(Lexic l, java_cup.runtime.SymbolFactory sf) {
+                super(l, sf);
+                this.lexic = l;
+        }
+
+        public Parser(Lexic l) {
+                this(l, new ComplexSymbolFactory());
+        }
+:}
+
+terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator;
+terminal String ID, ENT, BOOL, CONST, TUPLA, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA;
+
+non terminal tipusbucle;
+non terminal NodeExprcomposta exprcomposta;
+non terminal NodeOperador_expr operador_expr;
+non terminal NodeSentencia sentencia;
+non terminal NodeSentencies sentencies;
+non terminal NodeSentencies2 sentencies2;
+non terminal NodeOperador_cond operador_cond;
+non terminal NodeDecl_Variable decl_variable;
+non terminal decl_funcio;
+non terminal NodeTipus tipus;
+non terminal NodeVarinic varinic;
+non terminal NodeVarinic2 varinic2;
+non terminal NodeExprsimple exprsimple;
+non terminal NodeExprtupla exprtupla;
+non terminal NodeParam param;
+non terminal NodeParam2 param2;
+non terminal NodeBlocf blocf;
+non terminal cons,tipusf,blocf2,sentenciaf,bucle,decl_variable_local,comportamentvl, sretorna;
+non terminal NodePrincipal principal;
+non terminal NodeCondicional condicional;
+non terminal NodeCondsino condsino;
+non terminal NodeSino sino;
+non terminal NodeCondicio condicio;
+non terminal NodeEtiquetacond etiquetacond;
+non terminal NodeCondiciobot condiciobot;
+non terminal NodeIncambit incambit;
+non terminal NodeDecambit decambit;
+non terminal NodePrograma programa;
+non terminal NodePmb pmb;
+non terminal NodeSortida sortida;
+non terminal NodeEntrada entrada;
+non terminal NodeLlistaValors llista_valors;
+non terminal NodeValor valor;
+non terminal NodeInicibucle inicibucle;
+non terminal NodeRetornabucle retornabucle;
+
+start with principal;
+
+//programa principal
+
+principal::=  programa PRINCIPAL EParen DParen pmb EClau sentencies:s DClau {: RESULT = new NodePrincipal(s);:};
+
+programa ::= {: RESULT = new NodePrograma(); :};
+
+pmb ::= {:RESULT = new NodePmb();:};
+
+//sentencies
+
+sentencies ::=   sentencia:s sentencies2:s2 {: RESULT = new NodeSentencies(s,s2);:};
+
+sentencies2 ::= sentencies:s {: RESULT = new NodeSentencies2(s);:} 
+                | {: RESULT = new NodeSentencies2();:};
+
+sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
+              | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
+              | bucle
+              | condicional:c {: RESULT = new NodeSentencia(c); :}
+              | decl_funcio
+              | sortida PUNTICOMA
+              | entrada PUNTICOMA;      
+
+decl_funcio ::= FUNCIO tipusf ID EParen param DParen EClau blocf DClau;
+
+tipusf ::= ENT
+        | BOOL
+        | BUIT;
+
+param ::= tipus:t ID:id ASSIGN exprsimple:v param2:p2 {: RESULT = new NodeParam(t, id, v, p2); :}
+            |   {: RESULT = new NodeParam(); :};
+
+param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}
+            |   {: RESULT = new NodeParam2(); :};
+
+cons ::= CONST
+        |     ;
+
+blocf ::= sentenciaf:s blocf2 ;
+
+blocf2 ::= blocf:a
+         | ;
+
+//El mateix que sentencia però sense declaracions de funcions.
+sentenciaf ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
+              | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
+              | bucle
+              | condicional:v {: RESULT = new NodeSentencia(v); :}
+              | sretorna
+              | sortida PUNTICOMA
+              | entrada PUNTICOMA;  
+
+sretorna ::= RETORNA exprsimple PUNTICOMA;
+
+decl_variable ::= tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(t, id, vi, lexic.getLineColumn()); :}; //ent x = 3;
+
+varinic ::= ASSIGN exprsimple:v   {: RESULT = new NodeVarinic(v); :}
+            |      {: RESULT = new NodeVarinic(); :}           ;
+
+varinic2 ::= ID:v ASSIGN exprsimple:v1 {: RESULT = new NodeVarinic2(v, v1, lexic.getLineColumn()); :}
+        | ID:v ASSIGN exprcomposta:e {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :};
+
+exprcomposta ::= exprsimple:a operador_expr:o exprsimple:b {: RESULT = new NodeExprcomposta(a,o,b,lexic.getLineColumn());:};
+
+operador_expr ::= SUMA:a {: RESULT = new NodeOperador_expr(a.toString());:}
+                | RESTA:a {: RESULT = new NodeOperador_expr(a.toString());:}
+                | MUL:a {: RESULT = new NodeOperador_expr(a.toString());:}
+                | DIV:a {: RESULT = new NodeOperador_expr(a.toString());:};
+
+// **** Sortida per pantalla ****
+
+sortida ::= SORTIDA EParen llista_valors:v DParen {: RESULT = new NodeSortida(v,false);:}
+        | SORTIDALN EParen llista_valors:v DParen {: RESULT = new NodeSortida(v,true);:};
+
+llista_valors ::= valor:v {: RESULT = new NodeLlistaValors(v);:}|
+                  valor:v COMA llista_valors:lv {: RESULT = new NodeLlistaValors(v, lv);:} ;
+
+valor ::= ID:v {: RESULT = new NodeValor(NodeValor.exprsimple.id, v); :}
+         | ENTER:v {: RESULT = new NodeValor(NodeValor.exprsimple.enter, v.toString()); :}
+         | BOOLEA:v {: RESULT = new NodeValor(NodeValor.exprsimple.boolea, v.toString()); :};
+
+// **** Entrada per teclat ****
+
+entrada ::= ENTRADA EParen ID:i DParen {: RESULT = new NodeEntrada(i);:};
+
+// **** IF ****
+
+condicional ::= SI etiquetacond EParen condicio:a DParen EClau condiciobot incambit blocf:b decambit DClau sino condsino:c {: RESULT = new NodeCondicional(a,b,c); :};
+
+condicio ::= exprsimple:v operador_cond:o exprsimple:v1 {: RESULT = new NodeCondicio(v,o,v1); :}
+                | ID:id {: RESULT = new NodeCondicio(id); :};
+
+condsino ::= SINO EClau incambit blocf:a decambit DClau {: RESULT = new NodeCondsino(a); :}
+        |       {: RESULT = new NodeCondsino(); :};
+
+sino ::=  {: RESULT = new NodeSino(); :};
+
+operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
+        | OLO:a {: RESULT = new NodeOperador_cond(a); :}
+        | IGUAL:a {: RESULT = new NodeOperador_cond(a); :}
+        | DIFERENT:a {: RESULT = new NodeOperador_cond(a); :};
+
+
+// **** WHILE i FOR****
+
+bucle ::= inicibucle MENTRE etiquetacond EParen condicio DParen EClau condiciobot incambit blocf retornabucle DClau
+
+        | PER EParen decl_variable_local PUNTICOMA condicio PUNTICOMA comportamentvl DParen EClau blocf DClau;
+
+decl_variable_local ::= tipus ID varinic | ;
+
+comportamentvl ::= ID SUMA SUMA | ID RESTA RESTA | ;
+
+exprsimple ::= ID:v          {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.id, v); :}
+             | ENTER:v       {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.enter, v.toString()); :}
+             | BOOLEA:v      {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.boolea, v.toString()); :}
+             | exprtupla:v   {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.tupla, v); :};
+
+tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ent); :}
+        | BOOL  {: RESULT = new NodeTipus(Tipus.bool); :}
+        | TUPLA {: RESULT = new NodeTipus(Tipus.tupla); :};
+
+exprtupla ::= EClaudator param:v DClaudator     {: RESULT = new NodeExprtupla(v); :};
+
+
+//codi3adreces
+
+etiquetacond ::= {: RESULT = new NodeEtiquetacond(); :};
+
+condiciobot ::= {: RESULT = new NodeCondiciobot(false) ; :};
+
+incambit ::= {: RESULT = new NodeIncambit(); :};
+
+decambit ::= {: RESULT = new NodeDecambit(); :};
+
+inicibucle ::= {: RESULT = new NodeInicibucle();:};
+
+retornabucle ::= {: RESULT = new NodeRetornabucle();:};

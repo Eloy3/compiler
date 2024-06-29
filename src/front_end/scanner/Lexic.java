@@ -387,7 +387,7 @@ public class Lexic implements java_cup.runtime.Scanner {
     Writer bw;
     public void writeToken(String token) {
       try {
-        bw  = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/compilador/output/tokens.txt", true), "utf-8"));
+        bw  = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output/tokens.txt", true), "utf-8"));
         bw.write(token+"\n");
         bw.close();
       } catch (FileNotFoundException ex) {

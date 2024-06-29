@@ -16,7 +16,7 @@ public class TaulaProcediments {
     private ArrayList<Procedure> row_list ;
 
     private static final String TABLE_NAME = "Taula de procedimients";
-    private static final String FILE_PATH = "src/compilador/output/Taula_procediments.txt";
+    private static final String FILE_PATH = "output/Taula_procediments.txt";
 
     public TaulaProcediments() {
         try {

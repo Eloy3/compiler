@@ -27,7 +27,7 @@ public class SymbolTable {
     protected Stack<HashMap> tambit;
     protected ArrayList<Simbol> temp;
     public Writer writer;
-    private static final String FILE_PATH = "src/compilador/output/Taula_simbols.txt";
+    private static final String FILE_PATH = "output/Taula_simbols.txt";
     
     
     public SymbolTable (){
@@ -112,7 +112,7 @@ public class SymbolTable {
     
     private void escriutxt(String string) {
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/compilador/output/Taula_simbols.txt", true), "utf-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output/Taula_simbols.txt", true), "utf-8"));
             writer.write(string);
             writer.write("\n");
             writer.close();

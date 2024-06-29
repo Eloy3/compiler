@@ -769,7 +769,7 @@ public class AssemblyCode {
     }
 
     private void setStore() throws IOException {
-        br = new BufferedReader(new FileReader("src/compilador/backend/stores.txt"));
+        br = new BufferedReader(new FileReader("src/back_end/stores.txt"));
         int_store = Integer.parseInt(br.readLine().split(" ")[2]);
         str_store = Integer.parseInt(br.readLine().split(" ")[2]);
         logic_store = Integer.parseInt(br.readLine().split(" ")[2]);

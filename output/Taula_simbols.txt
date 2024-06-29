@@ -1,0 +1,4 @@
+id=x, tipus=ent, valor=3
+id=y, tipus=ent, valor=24
+id=b, tipus=bool, valor=cert
+id=z, tipus=ent, valor=null

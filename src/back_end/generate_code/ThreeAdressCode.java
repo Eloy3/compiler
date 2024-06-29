@@ -19,7 +19,7 @@ public class ThreeAdressCode {
     private final Stack<String> true_stack, false_stack, end_stack, start_stack;
     private final ArrayList<String> operands, instruction_list;
     private String temp_id = null, cur_prog, cur_type = "";
-    private static final String FILE_PATH = "src/compilador/output/codiIntermitg.txt";
+    private static final String FILE_PATH = "output/codiIntermitg.txt";
     private final VariableTable tv;
     
     public ThreeAdressCode(VariableTable tv){

@@ -24,8 +24,8 @@ public class VariableTable {
     public BufferedReader br;
     private final ArrayList<Variable> rows_list = new ArrayList<>();
 
-    private static final String TABLE_FILE_PATH = "src/compilador/output/Taula_variables.txt";
-    private static final String STORES_FILE_PATH = "src/compilador/estructura_de_dades/stores.txt";
+    private static final String TABLE_FILE_PATH = "output/Taula_variables.txt";
+    private static final String STORES_FILE_PATH = "src/data_structures/stores.txt";
 
     public VariableTable() {
         try {
