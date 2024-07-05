@@ -1,15 +1,20 @@
 package main;
 import java.io.Reader;
+import java.io.Writer;
 
+import back_end.AssemblyCode;
+import back_end.ThreeAdressCodeBackEnd;
 import front_end.scanner.Lexic;
 import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.SymbolFactory;
 import front_end.parser.Parser;
 
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 
 public class Main {
@@ -29,11 +34,16 @@ public class Main {
                 Lexic scanner = new Lexic(input);
                 Parser parser = new Parser(scanner, sf);
                 parser.parse();
+
+                ThreeAdressCodeBackEnd c3a = new ThreeAdressCodeBackEnd();
+                AssemblyCode ac = new AssemblyCode(c3a);
+                ac.generate();
+                writeFile("output/codiEnsamblador.X68", ac.getCode());
+
             } else {
                 System.out.println("No argument given");
                 input = null;
             }
-
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,6 +65,17 @@ public class Main {
             System.out.println("El fitxer " + filePath + " s'ha buidat");
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
+        }
+    }
+    private static void writeFile(String canonicalFilename, String text)
+            throws IOException
+    {
+        Writer out = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(canonicalFilename), "UTF-8"));
+        try {
+            out.write(text);
+        } finally {
+            out.close();
         }
     }
 }
