@@ -1,0 +1,6 @@
+Taula de variables
+
+Nombre			NV			Subprograma			Ocupació			Desplaçament			Tipus subjacent			Valor
+z			0			principal			4			0			ent			
+
+t1			1			principal			4			4			ent			z

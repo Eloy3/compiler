@@ -24,7 +24,6 @@ public class Main {
             if (args.length > 0) {
                 input = new FileReader(args[0]);
                 cleanTextFile("output/tokens.txt");
-                cleanTextFile("output/taulaSimbols.txt");
                 cleanTextFile("output/Taula_simbols.txt");
                 cleanTextFile("output/Taula_variables.txt");
                 cleanTextFile("output/Errors.txt");

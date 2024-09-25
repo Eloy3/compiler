@@ -41,11 +41,15 @@ non terminal NodeTipus tipus;
 non terminal NodeVarinic varinic;
 non terminal NodeVarinic2 varinic2;
 non terminal NodeExprsimple exprsimple;
-non terminal NodeExprtupla exprtupla;
 non terminal NodeParam param;
 non terminal NodeParam2 param2;
 non terminal NodeBlocf blocf;
-non terminal cons,tipusf,blocf2,sentenciaf,bucle,decl_variable_local,comportamentvl, sretorna;
+non terminal NodeBlocf2 blocf2;
+non terminal NodeComportamentv1 comportamentvl;
+non terminal NodeBucle bucle;
+non terminal NodeSentencia sentenciaf;
+non terminal cons,tipusf,decl_variable_local, sretorna;
+
 non terminal NodePrincipal principal;
 non terminal NodeCondicional condicional;
 non terminal NodeCondsino condsino;
@@ -83,7 +87,7 @@ sentencies2 ::= sentencies:s {: RESULT = new NodeSentencies2(s);:}
 
 sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
               | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
-              | bucle
+              | bucle:b {: RESULT = new NodeSentencia(b); :}
               | condicional:c {: RESULT = new NodeSentencia(c); :}
               | decl_funcio
               | sortida PUNTICOMA
@@ -104,15 +108,15 @@ param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}
 cons ::= CONST
         |     ;
 
-blocf ::= sentenciaf:s blocf2 ;
+blocf ::= sentenciaf:s blocf2:b  {: RESULT = new NodeBlocf(s,b); :};
 
-blocf2 ::= blocf:a
-         | ;
+blocf2 ::= blocf:a {: RESULT = new NodeBlocf2(a); :}
+         | {: RESULT = new NodeBlocf2(); :};
 
 //El mateix que sentencia però sense declaracions de funcions.
 sentenciaf ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
               | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
-              | bucle
+              | bucle:v {: RESULT = new NodeSentencia(v); :}
               | condicional:v {: RESULT = new NodeSentencia(v); :}
               | sretorna
               | sortida PUNTICOMA
@@ -120,7 +124,7 @@ sentenciaf ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); 
 
 sretorna ::= RETORNA exprsimple PUNTICOMA;
 
-decl_variable ::= tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(t, id, vi, lexic.getLineColumn()); :}; //ent x = 3;
+decl_variable ::= tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(t, id, vi, lexic.getLineColumn()); :};
 
 varinic ::= ASSIGN exprsimple:v   {: RESULT = new NodeVarinic(v); :}
             |      {: RESULT = new NodeVarinic(); :}           ;
@@ -169,26 +173,23 @@ operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
         | DIFERENT:a {: RESULT = new NodeOperador_cond(a); :};
 
 
-// **** WHILE i FOR****
+// **** WHILE i FOR ****
 
-bucle ::= inicibucle MENTRE etiquetacond EParen condicio DParen EClau condiciobot incambit blocf retornabucle DClau
+bucle ::= inicibucle:a MENTRE etiquetacond:b EParen condicio:c DParen EClau condiciobot:d incambit:e blocf:f retornabucle:g DClau {: RESULT = new NodeBucle(a,b,c,d,e,f,g); :}
 
-        | PER EParen decl_variable_local PUNTICOMA condicio PUNTICOMA comportamentvl DParen EClau blocf DClau;
+        | inicibucle:a PER EParen incambit:b decl_variable:c PUNTICOMA etiquetacond:d condicio:e condiciobot:f PUNTICOMA comportamentvl:g DParen EClau blocf:h retornabucle:i DClau {: RESULT = new NodeBucle(a,b,c,d,e,f,g,h,i); :};
 
-decl_variable_local ::= tipus ID varinic | ;
 
-comportamentvl ::= ID SUMA SUMA | ID RESTA RESTA | ;
+comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v); :}
+                | ID:v RESTA RESTA {: RESULT = new NodeComportamentv1(v); :}
+                | {: RESULT = new NodeComportamentv1(); :};
 
 exprsimple ::= ID:v          {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.id, v); :}
              | ENTER:v       {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.enter, v.toString()); :}
-             | BOOLEA:v      {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.boolea, v.toString()); :}
-             | exprtupla:v   {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.tupla, v); :};
+             | BOOLEA:v      {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.boolea, v.toString()); :};
 
 tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ent); :}
-        | BOOL  {: RESULT = new NodeTipus(Tipus.bool); :}
-        | TUPLA {: RESULT = new NodeTipus(Tipus.tupla); :};
-
-exprtupla ::= EClaudator param:v DClaudator     {: RESULT = new NodeExprtupla(v); :};
+        | BOOL  {: RESULT = new NodeTipus(Tipus.bool); :};
 
 
 //codi3adreces

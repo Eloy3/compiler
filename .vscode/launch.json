@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "java",
             "name": "Main",
@@ -15,7 +16,7 @@
             "mainClass": "main.Main",
             "projectName": "compilador",
             "args": [
-                "${input:programArgs}"
+                "input/test1.txt"
             ],
             "vmArgs": "",
             "cwd": "${workspaceFolder}",
@@ -27,7 +28,7 @@
             "id": "programArgs",
             "type": "promptString",
             "description": "Enter program arguments",
-            "default": ""
+            "default": "input/test1.txt"
         }
     ]
 }

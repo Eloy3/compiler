@@ -14,7 +14,13 @@ public class NodeSentencia extends NodeBase{
         private NodeDecl_Variable decl_variable;
         private NodeVarinic2 varinic2;
         private NodeCondicional condicional;
+        private NodeBucle nodeBucle;
         
+        public NodeSentencia(NodeBucle nodeBucle) {
+            super("Sentencia",0);
+            this.nodeBucle = nodeBucle;
+        }
+
         public NodeSentencia(NodeDecl_Variable a){
             super("Sentencia",0);
             decl_variable = a;
