@@ -13,6 +13,9 @@ public class NodeIncambit extends NodeBase{
 
         public NodeIncambit() {
             super("Incambit", 0);
+        }
+
+        public void incAmbit(){
             ts.incAmbit();
         }
 }

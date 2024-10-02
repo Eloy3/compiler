@@ -6,44 +6,27 @@ START:
 * --> | SKIP | null | null | principal |
 principal:
 * --> | PMB | null | null | principal |
-* --> | PARAM_S | null | null | z |
-	MOVE.W z_principal,-(A7)
-* --> | CALL | null | null | getInt |
-	SUBA.L #2,A7
-	JSR GETINT
-* --> | ASSIGNA | retInt | null | z |
-	MOVE.W (A7)+,z_principal
-* --> | SKIP | null | null | e0 |
-e0:
-* --> | IFDIFERENT | z | 0 | e1 |
-	MOVE.W z_principal,D1
-	MOVE.W #0,D0
-	CMP.W D0,D1
-	BNE e1
-* --> | GOTO | null | null | e2 |
-	JMP e2
-* --> | SKIP | null | null | e1 |
-e1:
-* --> | PARAM_S | null | null | z |
-	MOVE.W z_principal,-(A7)
+* --> | ASSIGNA | 3 | null | t0 |
+	MOVE.W #3,t0_principal
+* --> | ASSIGNA | t0 | null | x |
+	MOVE.W t0_principal,x_principal
+* --> | SUMA | x | 7 | t2 |
+	MOVE.W x_principal,D0
+	MOVE.W #7,D1
+	JSR ISUMA
+	MOVE.W D1,t2_principal
+* --> | ASSIGNA | t2 | null | x |
+	MOVE.W t2_principal,x_principal
+* --> | PARAM_S | null | null | x |
+	MOVE.W x_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
-* --> | RESTA | z | 1 | t1 |
-	MOVE.W z_principal,D1
-	MOVE.W #1,D0
-	JSR IRESTA
-	MOVE.W D1,t1_principal
-* --> | ASSIGNA | t1 | null | z |
-	MOVE.W t1_principal,z_principal
-* --> | GOTO | null | null | e0 |
-	JMP e0
-* --> | SKIP | null | null | e2 |
-e2:
 	SIMHALT
  
-z_principal: DS.W 1
-t1_principal: DS.W 1
+t0_principal: DS.W 1
+x_principal: DS.W 1
+t2_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0

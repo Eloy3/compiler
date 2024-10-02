@@ -13,6 +13,7 @@ public class NodeVarinic2 extends NodeBase{
     private NodeExprsimple exprsimple;
     private NodeExprcomposta exprcomposta;
     private String id;
+    private int[] lc;
     
     private NodeExprsimple a;
     private NodeExprsimple b;
@@ -24,13 +25,13 @@ public class NodeVarinic2 extends NodeBase{
         super("Varinic2", 0);
         this.id = id;
         this.exprsimple = e;
-                
+        this.lc = lc;
+    }
+    public void generateCode_exprsimple(){
         String id2 = exprsimple.getValor();
-        //System.out.println("id2 "+id2);
         Simbol var = ts.get(id);
         
         Simbol param = ts.get(id2);
-        //System.out.println("param "+param.nom);
         if(!ts.existeixTs(id)){
             new Error_VarNoExisteix().printError(lc, id); 
         }else{
@@ -65,11 +66,6 @@ public class NodeVarinic2 extends NodeBase{
                     break;
             }
         }
-        
-    }
-    
-    public NodeVarinic2(){
-        super("Varinic2",0);
     }
     
     public NodeVarinic2(String id, NodeExprcomposta e, int[] lc){
@@ -78,7 +74,10 @@ public class NodeVarinic2 extends NodeBase{
         this.exprcomposta = e;
         this.a = e.getA();
         this.b = e.getB();
-        
+              
+    }
+
+    public void generateCode_exprcomposta(){
         op = ts.get(id);
         if(!ts.existeixTs(id)){
             new Error_VarNoExisteix().printError(lc, id); 
@@ -202,9 +201,7 @@ public class NodeVarinic2 extends NodeBase{
                     break;
             }
         }
-          
     }
-
     private void calcOcup(){
         Simbol operand = ts.get(id);
         String temp_var;
@@ -245,6 +242,14 @@ public class NodeVarinic2 extends NodeBase{
 
     public String getId() {
         return id;
+    }
+
+    public NodeExprsimple getExprsimple() {
+        return exprsimple;
+    }
+    
+    public NodeExprcomposta getExprcomposta() {
+        return exprcomposta;
     }
 
 }

@@ -1,15 +1,16 @@
-
 package front_end.simbols;
 
-public class NodeInicibucle extends NodeBase{
+public class NodeInicibucle extends NodeBase {
     
-    public NodeInicibucle(){
+    private String start_label;
+
+    public NodeInicibucle() {
         super("Inicibucle", 0);
-
-        String start_label = cta.newLabel();
-        cta.push(cta.getStart_stack(), start_label);
-
-        cta.generateCode(start_label + ":skip\n");
+        start_label = cta.newLabel();
     }
     
+    public void generateCode() {
+        cta.push(cta.getStart_stack(), start_label);
+        cta.generateCode(start_label + ":skip\n");
+    }
 }

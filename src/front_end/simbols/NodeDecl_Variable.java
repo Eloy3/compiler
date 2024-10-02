@@ -4,38 +4,38 @@ package front_end.simbols;
 import errors.*;
 
 public class NodeDecl_Variable extends NodeBase{
-    private NodeTipus tipus;
+    private NodeTipus nt;
     private NodeVarinic varinic;
     private String id;
-    
-    public NodeDecl_Variable(NodeTipus nt, String id, NodeVarinic nv, int[] lc){
+    private int[] lc;
+    public NodeDecl_Variable(NodeTipus nt, String id, NodeVarinic varinic, int[] lc){
         super("Decl_variable", 0);
-        this.tipus = nt;
-        this.varinic = nv;
+        this.nt = nt;
+        this.varinic = varinic;
         this.id = id;
+        this.lc = lc;
         
         if(ts.existeixTs(id)){
             new Error_VarJaDeclarada().printError(lc, id);
         }
-        
+    }
+    
+    public void generateCode(){
         if(varinic == null){
             ts.insertElement(id, nt.getTipus(), null);
         }else{
-            
-        
             String id2 = varinic.getValor();
             switch(varinic.getTipus()){
                 case "id":
 
-                    //nova ts
                     if(!ts.existeixTs(id2)){
                         //System.out.println("Error sintàctic, la variable '"+id2+"' no existeix");
                         new Error_VarNoExisteix().printError(lc, id);
                     }else{
-                        //Comprovar a la taula de simols si id2 té el mateix tipus que id.
+                        //Comprovar a la taula de simbols si id2 té el mateix tipus que id.
                         Simbol param = ts.get(id2);
                         //System.out.println(param);
-                        if(!tipus.getTipus().equals(param.tipus)){
+                        if(!nt.getTipus().equals(param.tipus)){
                             //System.out.println("Error semàntic, la variable '"+id2+"' no te el mateix tipus que '"+id+"'");
                             new Error_DistintTipus().printError(lc, id);
                         }else{
@@ -47,34 +47,31 @@ public class NodeDecl_Variable extends NodeBase{
                     break;
                 case "enter":
                     //System.out.println(tipus.getTipus());
-                    if(!tipus.getTipus().equals("ent")){
+                    if(!nt.getTipus().equals("ent")){
                         //System.out.println("Error semàntic, '"+id2+"' no té el mateix tipus que '"+id+"'");
                         new Error_DistintTipus().printError(lc, id);
                     }else{
-                        //tsim.introduir(id, nt.getTipus().toString(), nv);
-                        ts.insertElement(id, nt.getTipus().toString(), nv);
+                        ts.insertElement(id, nt.getTipus().toString(), varinic);
                         generaC3a();
                     }
                     break;
 
                 case "boolea":
-                    if(!tipus.getTipus().equals("bool")){
+                    if(!nt.getTipus().equals("bool")){
                         //System.out.println("Error semàntic, '"+id2+"' no té el mateix tipus que '"+id+"'");
                         new Error_DistintTipus().printError(lc, id);
                     }else{
-                        //tsim.introduir(id, nt.getTipus().toString(), nv);
-                        ts.insertElement(id, nt.getTipus().toString(), nv);
+                        ts.insertElement(id, nt.getTipus().toString(), varinic);
                         generaC3a();
                     }
                     break;
 
                 case "tupla":
-                    if(!tipus.getTipus().equals("tupla")){
+                    if(!nt.getTipus().equals("tupla")){
                         //System.out.println("Error semàntic, '"+id2+"' no té el mateix tipus que '"+id+"'");
                         new Error_DistintTipus().printError(lc, id);
                     }else{
-                        //tsim.introduir(id, nt.getTipus().toString(), nv);
-                        ts.insertElement(id, nt.getTipus().toString(), nv);
+                        ts.insertElement(id, nt.getTipus().toString(), varinic);
 
                     }
             }

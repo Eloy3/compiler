@@ -6,8 +6,11 @@ package front_end.simbols;
  */
 public class NodeDecambit extends NodeBase{
 
-        public NodeDecambit() {
-            super("Decsmbit", 0);
-            ts.incAmbit();
-        }
+    public NodeDecambit() {
+        super("Decambit", 0);
+    }
+
+    public void decAmbit(){
+        ts.incAmbit();
+    }
 }

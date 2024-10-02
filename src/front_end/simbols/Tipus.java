@@ -5,6 +5,6 @@
 package front_end.simbols;
 
 public enum Tipus{
-    ent,bool,tupla
+    ent,bool
 }   
 

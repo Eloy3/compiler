@@ -1,16 +1,9 @@
 goto principal
 principal:skip
 pmb principal
-param_s z
-call getInt
-z = retInt
-e0:skip
-if z != 0 goto e1
-goto e2
-e1:skip
-param_s z
+t0 = 3
+x = t0
+t2 = x + 7
+x = t2
+param_s x
 call line
-t1 = z - 1
-z = t1
-goto e0
-e2:skip

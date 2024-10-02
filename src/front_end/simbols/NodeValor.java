@@ -4,7 +4,7 @@ package front_end.simbols;
 
 public class NodeValor extends NodeBase{
     
-    public enum exprsimple {id, enter, boolea, tupla}
+    public enum exprsimple {id, enter, boolea}
     private exprsimple tipus;
     private String valor;
     

@@ -24,11 +24,11 @@ public class NodeCondicio extends NodeBase{
         operand1 = v;
         operand2 = v1;
         operador = o;
-        
+    }
+    
+    public void generateCode(){
         cta.generateCode(operand1.getValor()+" ");
         cta.generateCode(operador.getOperador()+ " ");
         cta.generateCode(operand2.getValor() + " ");
     }
-    
-    
 }

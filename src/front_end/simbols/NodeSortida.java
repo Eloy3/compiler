@@ -14,14 +14,14 @@ public class NodeSortida extends NodeBase{
         super("Sortida", 0);
         LlistaValors = lv;
         linea = l;
-
+    }
+    
+    public void generateCode(){
         cta.generateCode(paramType()+" " + LlistaValors.getValor().getValor() + "\n");
         cta.generateCode("call "+((linea)?"line" : "print")+"\n");
 
         cta.setTemp_id(null);
-        
     }
-    
     private String paramType(){
         
         if(LlistaValors.getValor().getTipus()==exprsimple.id){

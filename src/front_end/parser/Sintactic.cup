@@ -157,15 +157,13 @@ entrada ::= ENTRADA EParen ID:i DParen {: RESULT = new NodeEntrada(i);:};
 
 // **** IF ****
 
-condicional ::= SI etiquetacond EParen condicio:a DParen EClau condiciobot incambit blocf:b decambit DClau sino condsino:c {: RESULT = new NodeCondicional(a,b,c); :};
+condicional ::= SI etiquetacond EParen condicio:a DParen EClau condiciobot incambit blocf:b decambit DClau condsino:c {: RESULT = new NodeCondicional(a,b,c); :};
 
 condicio ::= exprsimple:v operador_cond:o exprsimple:v1 {: RESULT = new NodeCondicio(v,o,v1); :}
                 | ID:id {: RESULT = new NodeCondicio(id); :};
 
 condsino ::= SINO EClau incambit blocf:a decambit DClau {: RESULT = new NodeCondsino(a); :}
         |       {: RESULT = new NodeCondsino(); :};
-
-sino ::=  {: RESULT = new NodeSino(); :};
 
 operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
         | OLO:a {: RESULT = new NodeOperador_cond(a); :}
@@ -180,8 +178,8 @@ bucle ::= inicibucle:a MENTRE etiquetacond:b EParen condicio:c DParen EClau cond
         | inicibucle:a PER EParen incambit:b decl_variable:c PUNTICOMA etiquetacond:d condicio:e condiciobot:f PUNTICOMA comportamentvl:g DParen EClau blocf:h retornabucle:i DClau {: RESULT = new NodeBucle(a,b,c,d,e,f,g,h,i); :};
 
 
-comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v); :}
-                | ID:v RESTA RESTA {: RESULT = new NodeComportamentv1(v); :}
+comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comportament.INCREMENT, lexic.getLineColumn()); :}
+                | ID:v RESTA RESTA {: RESULT = new NodeComportamentv1(v, Comportament.DECREMENT, lexic.getLineColumn()); :}
                 | {: RESULT = new NodeComportamentv1(); :};
 
 exprsimple ::= ID:v          {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.id, v); :}
