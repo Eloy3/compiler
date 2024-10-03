@@ -1,23 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+package front_end.simbols;
 
- package front_end.simbols;
+public class NodeSentencies extends NodeBase {
 
-/**
- *
- * @author Eloy
- */
-public class NodeSentencies extends NodeBase{
-    
-    private final NodeSentencia Sentencia;
-    private final NodeSentencies2 Sentencies2;
+    private NodeSentencia sentencia;
+    private NodeSentencies2 sentencies2;
 
-    public NodeSentencies(NodeSentencia a, NodeSentencies2 b) {
-        super("SENTLISTSEP", 0);
-        this.Sentencia = a;
-        this.Sentencies2 = b;
+    public NodeSentencies(NodeSentencia sentencia, NodeSentencies2 sentencies2) {
+        super("Sentencies", 0);
+        this.sentencia = sentencia;
+        this.sentencies2 = sentencies2;
     }
 
+    public void generateCode() {
+        // First, generate the code for the current sentencia
+        if (sentencia != null) {
+            sentencia.generateCode();
+        }
+
+        // Then, generate the code for the next set of sentencies (if any)
+        if (sentencies2 != null) {
+            sentencies2.generateCode();
+        }
+    }
 }

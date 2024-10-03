@@ -1,5 +1,5 @@
 Taula de procedimients
 
 NP	Profunditat	Etiqueta inici	Parámetres	Ocupació variables locals	Tipus retorn	
-1		0			principal			[]			12						NULL
+1		0			principal			[]			8						NULL
 

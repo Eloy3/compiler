@@ -37,7 +37,7 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\117\000\002\002\004\000\002\032\012\000\002\043" +
+    "\000\116\000\002\002\004\000\002\032\012\000\002\043" +
     "\002\000\002\044\002\000\002\006\004\000\002\007\003" +
     "\000\002\007\002\000\002\005\005\000\002\005\004\000" +
     "\002\005\003\000\002\005\003\000\002\005\003\000\002" +
@@ -53,15 +53,15 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\003\000\002\004\003\000\002\004\003\000\002\004\003" +
     "\000\002\045\006\000\002\045\006\000\002\047\003\000" +
     "\002\047\005\000\002\050\003\000\002\050\003\000\002" +
-    "\050\003\000\002\046\006\000\002\033\017\000\002\036" +
+    "\050\003\000\002\046\006\000\002\033\016\000\002\036" +
     "\005\000\002\036\003\000\002\034\010\000\002\034\002" +
-    "\000\002\035\002\000\002\010\003\000\002\010\003\000" +
-    "\002\010\003\000\002\010\003\000\002\024\016\000\002" +
-    "\024\022\000\002\023\005\000\002\023\005\000\002\023" +
-    "\002\000\002\016\003\000\002\016\003\000\002\016\003" +
-    "\000\002\013\003\000\002\013\003\000\002\037\002\000" +
-    "\002\040\002\000\002\041\002\000\002\042\002\000\002" +
-    "\051\002\000\002\052\002" });
+    "\000\002\010\003\000\002\010\003\000\002\010\003\000" +
+    "\002\010\003\000\002\024\016\000\002\024\022\000\002" +
+    "\023\005\000\002\023\005\000\002\023\002\000\002\016" +
+    "\003\000\002\016\003\000\002\016\003\000\002\013\003" +
+    "\000\002\013\003\000\002\037\002\000\002\040\002\000" +
+    "\002\041\002\000\002\042\002\000\002\051\002\000\002" +
+    "\052\002" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -69,155 +69,153 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\241\000\004\043\uffff\001\002\000\004\043\007\001" +
+    "\000\240\000\004\043\uffff\001\002\000\004\043\007\001" +
     "\002\000\004\002\006\001\002\000\004\002\001\001\002" +
     "\000\004\010\010\001\002\000\004\011\011\001\002\000" +
     "\004\016\ufffe\001\002\000\004\016\013\001\002\000\030" +
-    "\023\027\024\uffea\025\uffea\026\033\030\022\037\uffb4\040" +
-    "\uffb4\041\032\044\026\045\017\046\021\001\002\000\006" +
-    "\024\112\025\114\001\002\000\032\017\ufff7\023\ufff7\024" +
+    "\023\027\024\uffea\025\uffea\026\033\030\022\037\uffb5\040" +
+    "\uffb5\041\032\044\026\045\017\046\021\001\002\000\006" +
+    "\024\111\025\114\001\002\000\032\017\ufff7\023\ufff7\024" +
     "\ufff7\025\ufff7\026\ufff7\030\ufff7\037\ufff7\040\ufff7\041\ufff7" +
-    "\044\ufff7\045\ufff7\046\ufff7\001\002\000\004\013\241\001" +
-    "\002\000\004\010\236\001\002\000\032\017\ufffb\023\027" +
-    "\024\uffea\025\uffea\026\033\030\022\037\uffb4\040\uffb4\041" +
-    "\032\044\026\045\017\046\021\001\002\000\004\010\231" +
-    "\001\002\000\010\024\210\025\212\032\211\001\002\000" +
-    "\006\037\150\040\151\001\002\000\032\017\ufff8\023\ufff8" +
+    "\044\ufff7\045\ufff7\046\ufff7\001\002\000\004\013\240\001" +
+    "\002\000\004\010\235\001\002\000\032\017\ufffb\023\027" +
+    "\024\uffea\025\uffea\026\033\030\022\037\uffb5\040\uffb5\041" +
+    "\032\044\026\045\017\046\021\001\002\000\004\010\230" +
+    "\001\002\000\010\024\207\025\211\032\210\001\002\000" +
+    "\006\037\147\040\150\001\002\000\032\017\ufff8\023\ufff8" +
     "\024\ufff8\025\ufff8\026\ufff8\030\ufff8\037\ufff8\040\ufff8\041" +
-    "\ufff8\044\ufff8\045\ufff8\046\ufff8\001\002\000\004\017\147" +
-    "\001\002\000\004\010\136\001\002\000\004\012\125\001" +
-    "\002\000\004\013\124\001\002\000\004\013\123\001\002" +
-    "\000\004\010\uffb8\001\002\000\006\024\uffeb\025\uffeb\001" +
+    "\ufff8\044\ufff8\045\ufff8\046\ufff8\001\002\000\004\017\146" +
+    "\001\002\000\004\010\135\001\002\000\004\012\124\001" +
+    "\002\000\004\013\123\001\002\000\004\013\122\001\002" +
+    "\000\004\010\uffb9\001\002\000\006\024\uffeb\025\uffeb\001" +
     "\002\000\032\017\ufff6\023\ufff6\024\ufff6\025\ufff6\026\ufff6" +
     "\030\ufff6\037\ufff6\040\ufff6\041\ufff6\044\ufff6\045\ufff6\046" +
     "\ufff6\001\002\000\004\010\036\001\002\000\010\014\043" +
     "\015\041\023\037\001\002\000\016\011\uffca\013\uffca\033" +
-    "\uffbd\034\uffbd\035\uffbd\036\uffbd\001\002\000\004\011\053" +
-    "\001\002\000\030\004\uffbb\005\uffbb\006\uffbb\007\uffbb\011" +
-    "\uffbb\013\uffbb\020\uffbb\033\uffbb\034\uffbb\035\uffbb\036\uffbb" +
-    "\001\002\000\012\033\045\034\047\035\046\036\050\001" +
-    "\002\000\030\004\uffbc\005\uffbc\006\uffbc\007\uffbc\011\uffbc" +
-    "\013\uffbc\020\uffbc\033\uffbc\034\uffbc\035\uffbc\036\uffbc\001" +
+    "\uffbe\034\uffbe\035\uffbe\036\uffbe\001\002\000\004\011\053" +
+    "\001\002\000\030\004\uffbc\005\uffbc\006\uffbc\007\uffbc\011" +
+    "\uffbc\013\uffbc\020\uffbc\033\uffbc\034\uffbc\035\uffbc\036\uffbc" +
+    "\001\002\000\012\033\046\034\047\035\045\036\050\001" +
+    "\002\000\030\004\uffbd\005\uffbd\006\uffbd\007\uffbd\011\uffbd" +
+    "\013\uffbd\020\uffbd\033\uffbd\034\uffbd\035\uffbd\036\uffbd\001" +
     "\002\000\010\014\043\015\041\023\051\001\002\000\010" +
-    "\014\uffc4\015\uffc4\023\uffc4\001\002\000\010\014\uffc6\015" +
-    "\uffc6\023\uffc6\001\002\000\010\014\uffc3\015\uffc3\023\uffc3" +
-    "\001\002\000\010\014\uffc5\015\uffc5\023\uffc5\001\002\000" +
-    "\020\004\uffbd\005\uffbd\006\uffbd\007\uffbd\011\uffbd\013\uffbd" +
-    "\020\uffbd\001\002\000\006\011\uffcb\013\uffcb\001\002\000" +
-    "\004\016\054\001\002\000\030\023\uffb7\024\uffb7\025\uffb7" +
+    "\014\uffc7\015\uffc7\023\uffc7\001\002\000\010\014\uffc5\015" +
+    "\uffc5\023\uffc5\001\002\000\010\014\uffc4\015\uffc4\023\uffc4" +
+    "\001\002\000\010\014\uffc6\015\uffc6\023\uffc6\001\002\000" +
+    "\020\004\uffbe\005\uffbe\006\uffbe\007\uffbe\011\uffbe\013\uffbe" +
+    "\020\uffbe\001\002\000\006\011\uffcb\013\uffcb\001\002\000" +
+    "\004\016\054\001\002\000\030\023\uffb8\024\uffb8\025\uffb8" +
+    "\026\uffb8\031\uffb8\037\uffb8\040\uffb8\041\uffb8\044\uffb8\045" +
+    "\uffb8\046\uffb8\001\002\000\030\023\uffb7\024\uffb7\025\uffb7" +
     "\026\uffb7\031\uffb7\037\uffb7\040\uffb7\041\uffb7\044\uffb7\045" +
-    "\uffb7\046\uffb7\001\002\000\030\023\uffb6\024\uffb6\025\uffb6" +
-    "\026\uffb6\031\uffb6\037\uffb6\040\uffb6\041\uffb6\044\uffb6\045" +
-    "\uffb6\046\uffb6\001\002\000\030\023\027\024\uffea\025\uffea" +
-    "\026\033\031\063\037\uffb4\040\uffb4\041\032\044\026\045" +
-    "\017\046\021\001\002\000\006\024\112\025\114\001\002" +
+    "\uffb7\046\uffb7\001\002\000\030\023\027\024\uffea\025\uffea" +
+    "\026\033\031\063\037\uffb5\040\uffb5\041\032\044\026\045" +
+    "\017\046\021\001\002\000\006\024\111\025\114\001\002" +
     "\000\032\017\uffe3\023\uffe3\024\uffe3\025\uffe3\026\uffe3\031" +
     "\uffe3\037\uffe3\040\uffe3\041\uffe3\044\uffe3\045\uffe3\046\uffe3" +
-    "\001\002\000\004\013\111\001\002\000\032\017\uffe2\023" +
+    "\001\002\000\004\013\110\001\002\000\032\017\uffe2\023" +
     "\uffe2\024\uffe2\025\uffe2\026\uffe2\031\uffe2\037\uffe2\040\uffe2" +
     "\041\uffe2\044\uffe2\045\uffe2\046\uffe2\001\002\000\010\014" +
     "\043\015\041\023\051\001\002\000\032\017\uffe7\023\027" +
-    "\024\uffea\025\uffea\026\033\031\063\037\uffb4\040\uffb4\041" +
+    "\024\uffea\025\uffea\026\033\031\063\037\uffb5\040\uffb5\041" +
     "\032\044\026\045\017\046\021\001\002\000\032\017\uffe4" +
     "\023\uffe4\024\uffe4\025\uffe4\026\uffe4\031\uffe4\037\uffe4\040" +
     "\uffe4\041\uffe4\044\uffe4\045\uffe4\046\uffe4\001\002\000\004" +
-    "\017\uffb5\001\002\000\004\013\072\001\002\000\004\013" +
+    "\017\uffb6\001\002\000\004\013\072\001\002\000\004\013" +
     "\071\001\002\000\032\017\uffe0\023\uffe0\024\uffe0\025\uffe0" +
     "\026\uffe0\031\uffe0\037\uffe0\040\uffe0\041\uffe0\044\uffe0\045" +
     "\uffe0\046\uffe0\001\002\000\032\017\uffe5\023\uffe5\024\uffe5" +
     "\025\uffe5\026\uffe5\031\uffe5\037\uffe5\040\uffe5\041\uffe5\044" +
     "\uffe5\045\uffe5\046\uffe5\001\002\000\004\017\074\001\002" +
-    "\000\036\017\uffc7\023\uffc7\024\uffc7\025\uffc7\026\uffc7\030" +
-    "\uffc7\031\uffc7\037\uffc7\040\uffc7\041\uffc7\042\uffc7\044\uffc7" +
-    "\045\uffc7\046\uffc7\001\002\000\036\017\uffc8\023\uffc8\024" +
-    "\uffc8\025\uffc8\026\uffc8\030\uffc8\031\uffc8\037\uffc8\040\uffc8" +
-    "\041\uffc8\042\077\044\uffc8\045\uffc8\046\uffc8\001\002\000" +
-    "\034\017\uffcc\023\uffcc\024\uffcc\025\uffcc\026\uffcc\030\uffcc" +
-    "\031\uffcc\037\uffcc\040\uffcc\041\uffcc\044\uffcc\045\uffcc\046" +
-    "\uffcc\001\002\000\004\016\100\001\002\000\030\023\uffb6" +
-    "\024\uffb6\025\uffb6\026\uffb6\031\uffb6\037\uffb6\040\uffb6\041" +
-    "\uffb6\044\uffb6\045\uffb6\046\uffb6\001\002\000\030\023\027" +
-    "\024\uffea\025\uffea\026\033\031\063\037\uffb4\040\uffb4\041" +
-    "\032\044\026\045\017\046\021\001\002\000\004\017\uffb5" +
-    "\001\002\000\004\017\104\001\002\000\034\017\uffc9\023" +
-    "\uffc9\024\uffc9\025\uffc9\026\uffc9\030\uffc9\031\uffc9\037\uffc9" +
-    "\040\uffc9\041\uffc9\044\uffc9\045\uffc9\046\uffc9\001\002\000" +
-    "\004\017\uffe8\001\002\000\004\017\uffe9\001\002\000\004" +
-    "\013\110\001\002\000\032\017\uffdf\023\uffdf\024\uffdf\025" +
-    "\uffdf\026\uffdf\031\uffdf\037\uffdf\040\uffdf\041\uffdf\044\uffdf" +
-    "\045\uffdf\046\uffdf\001\002\000\032\017\uffe1\023\uffe1\024" +
-    "\uffe1\025\uffe1\026\uffe1\031\uffe1\037\uffe1\040\uffe1\041\uffe1" +
-    "\044\uffe1\045\uffe1\046\uffe1\001\002\000\004\023\uffba\001" +
-    "\002\000\004\013\122\001\002\000\004\023\uffb9\001\002" +
-    "\000\004\023\116\001\002\000\006\012\120\013\uffdc\001" +
-    "\002\000\004\013\uffde\001\002\000\010\014\043\015\041" +
-    "\023\051\001\002\000\004\013\uffdd\001\002\000\032\017" +
-    "\uffe6\023\uffe6\024\uffe6\025\uffe6\026\uffe6\031\uffe6\037\uffe6" +
-    "\040\uffe6\041\uffe6\044\uffe6\045\uffe6\046\uffe6\001\002\000" +
-    "\032\017\ufff4\023\ufff4\024\ufff4\025\ufff4\026\ufff4\030\ufff4" +
-    "\037\ufff4\040\ufff4\041\ufff4\044\ufff4\045\ufff4\046\ufff4\001" +
-    "\002\000\032\017\ufff9\023\ufff9\024\ufff9\025\ufff9\026\ufff9" +
-    "\030\ufff9\037\ufff9\040\ufff9\041\ufff9\044\ufff9\045\ufff9\046" +
-    "\ufff9\001\002\000\010\014\043\015\041\023\051\001\002" +
-    "\000\004\013\uffda\001\002\000\014\004\133\005\130\006" +
-    "\132\007\134\013\uffdb\001\002\000\010\014\uffd7\015\uffd7" +
-    "\023\uffd7\001\002\000\010\014\043\015\041\023\051\001" +
-    "\002\000\010\014\uffd6\015\uffd6\023\uffd6\001\002\000\010" +
-    "\014\uffd8\015\uffd8\023\uffd8\001\002\000\010\014\uffd5\015" +
-    "\uffd5\023\uffd5\001\002\000\004\013\uffd9\001\002\000\010" +
-    "\014\143\015\142\023\137\001\002\000\006\011\uffd0\020" +
-    "\uffd0\001\002\000\006\011\uffd2\020\145\001\002\000\004" +
-    "\011\144\001\002\000\006\011\uffce\020\uffce\001\002\000" +
-    "\006\011\uffcf\020\uffcf\001\002\000\004\013\uffd4\001\002" +
-    "\000\010\014\143\015\142\023\137\001\002\000\004\011" +
-    "\uffd1\001\002\000\004\002\000\001\002\000\004\010\uffb8" +
-    "\001\002\000\004\010\152\001\002\000\006\024\uffb6\025" +
-    "\uffb6\001\002\000\006\024\112\025\114\001\002\000\004" +
-    "\013\155\001\002\000\010\014\uffb8\015\uffb8\023\uffb8\001" +
-    "\002\000\010\014\043\015\041\023\037\001\002\000\004" +
-    "\013\uffb7\001\002\000\004\013\161\001\002\000\006\011" +
-    "\uffbe\023\162\001\002\000\006\004\172\005\171\001\002" +
-    "\000\004\011\164\001\002\000\004\016\165\001\002\000" +
-    "\030\023\027\024\uffea\025\uffea\026\033\031\063\037\uffb4" +
-    "\040\uffb4\041\032\044\026\045\017\046\021\001\002\000" +
-    "\004\017\uffb3\001\002\000\004\017\170\001\002\000\034" +
-    "\017\uffc1\023\uffc1\024\uffc1\025\uffc1\026\uffc1\030\uffc1\031" +
-    "\uffc1\037\uffc1\040\uffc1\041\uffc1\044\uffc1\045\uffc1\046\uffc1" +
-    "\001\002\000\004\005\174\001\002\000\004\004\173\001" +
-    "\002\000\004\011\uffc0\001\002\000\004\011\uffbf\001\002" +
-    "\000\004\010\176\001\002\000\010\014\043\015\041\023" +
-    "\037\001\002\000\004\011\200\001\002\000\004\016\201" +
-    "\001\002\000\030\023\uffb7\024\uffb7\025\uffb7\026\uffb7\031" +
-    "\uffb7\037\uffb7\040\uffb7\041\uffb7\044\uffb7\045\uffb7\046\uffb7" +
-    "\001\002\000\030\023\uffb6\024\uffb6\025\uffb6\026\uffb6\031" +
-    "\uffb6\037\uffb6\040\uffb6\041\uffb6\044\uffb6\045\uffb6\046\uffb6" +
-    "\001\002\000\030\023\027\024\uffea\025\uffea\026\033\031" +
-    "\063\037\uffb4\040\uffb4\041\032\044\026\045\017\046\021" +
-    "\001\002\000\004\017\uffb3\001\002\000\004\017\206\001" +
-    "\002\000\034\017\uffc2\023\uffc2\024\uffc2\025\uffc2\026\uffc2" +
-    "\030\uffc2\031\uffc2\037\uffc2\040\uffc2\041\uffc2\044\uffc2\045" +
-    "\uffc2\046\uffc2\001\002\000\004\023\213\001\002\000\004" +
-    "\023\ufff2\001\002\000\004\023\ufff0\001\002\000\004\023" +
-    "\ufff1\001\002\000\004\010\214\001\002\000\010\011\uffee" +
-    "\024\112\025\114\001\002\000\004\023\223\001\002\000" +
-    "\004\011\217\001\002\000\004\016\220\001\002\000\030" +
-    "\023\027\024\uffea\025\uffea\026\033\031\063\037\uffb4\040" +
-    "\uffb4\041\032\044\026\045\017\046\021\001\002\000\004" +
-    "\017\222\001\002\000\032\017\ufff3\023\ufff3\024\ufff3\025" +
-    "\ufff3\026\ufff3\030\ufff3\037\ufff3\040\ufff3\041\ufff3\044\ufff3" +
-    "\045\ufff3\046\ufff3\001\002\000\004\012\224\001\002\000" +
-    "\010\014\043\015\041\023\051\001\002\000\006\011\uffec" +
-    "\020\226\001\002\000\010\011\uffee\024\112\025\114\001" +
-    "\002\000\004\011\uffef\001\002\000\004\011\uffed\001\002" +
-    "\000\004\023\232\001\002\000\004\011\233\001\002\000" +
-    "\004\013\uffcd\001\002\000\004\017\ufffd\001\002\000\004" +
-    "\017\ufffc\001\002\000\010\014\143\015\142\023\137\001" +
-    "\002\000\004\011\240\001\002\000\004\013\uffd3\001\002" +
-    "\000\032\017\ufff5\023\ufff5\024\ufff5\025\ufff5\026\ufff5\030" +
-    "\ufff5\037\ufff5\040\ufff5\041\ufff5\044\ufff5\045\ufff5\046\ufff5" +
-    "\001\002\000\004\013\243\001\002\000\032\017\ufffa\023" +
-    "\ufffa\024\ufffa\025\ufffa\026\ufffa\030\ufffa\037\ufffa\040\ufffa" +
-    "\041\ufffa\044\ufffa\045\ufffa\046\ufffa\001\002" });
+    "\000\036\017\uffc8\023\uffc8\024\uffc8\025\uffc8\026\uffc8\030" +
+    "\uffc8\031\uffc8\037\uffc8\040\uffc8\041\uffc8\042\076\044\uffc8" +
+    "\045\uffc8\046\uffc8\001\002\000\034\017\uffcc\023\uffcc\024" +
+    "\uffcc\025\uffcc\026\uffcc\030\uffcc\031\uffcc\037\uffcc\040\uffcc" +
+    "\041\uffcc\044\uffcc\045\uffcc\046\uffcc\001\002\000\004\016" +
+    "\077\001\002\000\030\023\uffb7\024\uffb7\025\uffb7\026\uffb7" +
+    "\031\uffb7\037\uffb7\040\uffb7\041\uffb7\044\uffb7\045\uffb7\046" +
+    "\uffb7\001\002\000\030\023\027\024\uffea\025\uffea\026\033" +
+    "\031\063\037\uffb5\040\uffb5\041\032\044\026\045\017\046" +
+    "\021\001\002\000\004\017\uffb6\001\002\000\004\017\103" +
+    "\001\002\000\034\017\uffc9\023\uffc9\024\uffc9\025\uffc9\026" +
+    "\uffc9\030\uffc9\031\uffc9\037\uffc9\040\uffc9\041\uffc9\044\uffc9" +
+    "\045\uffc9\046\uffc9\001\002\000\004\017\uffe8\001\002\000" +
+    "\004\017\uffe9\001\002\000\004\013\107\001\002\000\032" +
+    "\017\uffdf\023\uffdf\024\uffdf\025\uffdf\026\uffdf\031\uffdf\037" +
+    "\uffdf\040\uffdf\041\uffdf\044\uffdf\045\uffdf\046\uffdf\001\002" +
+    "\000\032\017\uffe1\023\uffe1\024\uffe1\025\uffe1\026\uffe1\031" +
+    "\uffe1\037\uffe1\040\uffe1\041\uffe1\044\uffe1\045\uffe1\046\uffe1" +
+    "\001\002\000\004\023\uffbb\001\002\000\004\013\121\001" +
+    "\002\000\004\023\115\001\002\000\004\023\uffba\001\002" +
+    "\000\006\012\117\013\uffdc\001\002\000\004\013\uffde\001" +
+    "\002\000\010\014\043\015\041\023\051\001\002\000\004" +
+    "\013\uffdd\001\002\000\032\017\uffe6\023\uffe6\024\uffe6\025" +
+    "\uffe6\026\uffe6\031\uffe6\037\uffe6\040\uffe6\041\uffe6\044\uffe6" +
+    "\045\uffe6\046\uffe6\001\002\000\032\017\ufff4\023\ufff4\024" +
+    "\ufff4\025\ufff4\026\ufff4\030\ufff4\037\ufff4\040\ufff4\041\ufff4" +
+    "\044\ufff4\045\ufff4\046\ufff4\001\002\000\032\017\ufff9\023" +
+    "\ufff9\024\ufff9\025\ufff9\026\ufff9\030\ufff9\037\ufff9\040\ufff9" +
+    "\041\ufff9\044\ufff9\045\ufff9\046\ufff9\001\002\000\010\014" +
+    "\043\015\041\023\051\001\002\000\004\013\uffda\001\002" +
+    "\000\014\004\132\005\127\006\131\007\133\013\uffdb\001" +
+    "\002\000\010\014\uffd7\015\uffd7\023\uffd7\001\002\000\010" +
+    "\014\043\015\041\023\051\001\002\000\010\014\uffd6\015" +
+    "\uffd6\023\uffd6\001\002\000\010\014\uffd8\015\uffd8\023\uffd8" +
+    "\001\002\000\010\014\uffd5\015\uffd5\023\uffd5\001\002\000" +
+    "\004\013\uffd9\001\002\000\010\014\142\015\141\023\136" +
+    "\001\002\000\006\011\uffd0\020\uffd0\001\002\000\006\011" +
+    "\uffd2\020\144\001\002\000\004\011\143\001\002\000\006" +
+    "\011\uffce\020\uffce\001\002\000\006\011\uffcf\020\uffcf\001" +
+    "\002\000\004\013\uffd4\001\002\000\010\014\142\015\141" +
+    "\023\136\001\002\000\004\011\uffd1\001\002\000\004\002" +
+    "\000\001\002\000\004\010\uffb9\001\002\000\004\010\151" +
+    "\001\002\000\006\024\uffb7\025\uffb7\001\002\000\006\024" +
+    "\111\025\114\001\002\000\004\013\154\001\002\000\010" +
+    "\014\uffb9\015\uffb9\023\uffb9\001\002\000\010\014\043\015" +
+    "\041\023\037\001\002\000\004\013\uffb8\001\002\000\004" +
+    "\013\160\001\002\000\006\011\uffbf\023\161\001\002\000" +
+    "\006\004\171\005\170\001\002\000\004\011\163\001\002" +
+    "\000\004\016\164\001\002\000\030\023\027\024\uffea\025" +
+    "\uffea\026\033\031\063\037\uffb5\040\uffb5\041\032\044\026" +
+    "\045\017\046\021\001\002\000\004\017\uffb4\001\002\000" +
+    "\004\017\167\001\002\000\034\017\uffc2\023\uffc2\024\uffc2" +
+    "\025\uffc2\026\uffc2\030\uffc2\031\uffc2\037\uffc2\040\uffc2\041" +
+    "\uffc2\044\uffc2\045\uffc2\046\uffc2\001\002\000\004\005\173" +
+    "\001\002\000\004\004\172\001\002\000\004\011\uffc1\001" +
+    "\002\000\004\011\uffc0\001\002\000\004\010\175\001\002" +
+    "\000\010\014\043\015\041\023\037\001\002\000\004\011" +
+    "\177\001\002\000\004\016\200\001\002\000\030\023\uffb8" +
+    "\024\uffb8\025\uffb8\026\uffb8\031\uffb8\037\uffb8\040\uffb8\041" +
+    "\uffb8\044\uffb8\045\uffb8\046\uffb8\001\002\000\030\023\uffb7" +
+    "\024\uffb7\025\uffb7\026\uffb7\031\uffb7\037\uffb7\040\uffb7\041" +
+    "\uffb7\044\uffb7\045\uffb7\046\uffb7\001\002\000\030\023\027" +
+    "\024\uffea\025\uffea\026\033\031\063\037\uffb5\040\uffb5\041" +
+    "\032\044\026\045\017\046\021\001\002\000\004\017\uffb4" +
+    "\001\002\000\004\017\205\001\002\000\034\017\uffc3\023" +
+    "\uffc3\024\uffc3\025\uffc3\026\uffc3\030\uffc3\031\uffc3\037\uffc3" +
+    "\040\uffc3\041\uffc3\044\uffc3\045\uffc3\046\uffc3\001\002\000" +
+    "\004\023\212\001\002\000\004\023\ufff2\001\002\000\004" +
+    "\023\ufff0\001\002\000\004\023\ufff1\001\002\000\004\010" +
+    "\213\001\002\000\010\011\uffee\024\111\025\114\001\002" +
+    "\000\004\023\222\001\002\000\004\011\216\001\002\000" +
+    "\004\016\217\001\002\000\030\023\027\024\uffea\025\uffea" +
+    "\026\033\031\063\037\uffb5\040\uffb5\041\032\044\026\045" +
+    "\017\046\021\001\002\000\004\017\221\001\002\000\032" +
+    "\017\ufff3\023\ufff3\024\ufff3\025\ufff3\026\ufff3\030\ufff3\037" +
+    "\ufff3\040\ufff3\041\ufff3\044\ufff3\045\ufff3\046\ufff3\001\002" +
+    "\000\004\012\223\001\002\000\010\014\043\015\041\023" +
+    "\051\001\002\000\006\011\uffec\020\225\001\002\000\010" +
+    "\011\uffee\024\111\025\114\001\002\000\004\011\uffef\001" +
+    "\002\000\004\011\uffed\001\002\000\004\023\231\001\002" +
+    "\000\004\011\232\001\002\000\004\013\uffcd\001\002\000" +
+    "\004\017\ufffd\001\002\000\004\017\ufffc\001\002\000\010" +
+    "\014\142\015\141\023\136\001\002\000\004\011\237\001" +
+    "\002\000\004\013\uffd3\001\002\000\032\017\ufff5\023\ufff5" +
+    "\024\ufff5\025\ufff5\026\ufff5\030\ufff5\037\ufff5\040\ufff5\041" +
+    "\ufff5\044\ufff5\045\ufff5\046\ufff5\001\002\000\004\013\242" +
+    "\001\002\000\032\017\ufffa\023\ufffa\024\ufffa\025\ufffa\026" +
+    "\ufffa\030\ufffa\037\ufffa\040\ufffa\041\ufffa\044\ufffa\045\ufffa" +
+    "\046\ufffa\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -225,16 +223,16 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\241\000\006\032\004\043\003\001\001\000\002\001" +
+    "\000\240\000\006\032\004\043\003\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\004\044\011\001\001\000\002\001" +
     "\001\000\026\005\017\006\024\012\033\015\027\024\023" +
     "\026\013\033\014\045\015\046\030\051\022\001\001\000" +
-    "\006\011\241\013\114\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\030\005\017\006\234\007" +
-    "\233\012\033\015\027\024\023\026\013\033\014\045\015" +
+    "\006\011\240\013\112\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\030\005\017\006\233\007" +
+    "\232\012\033\015\027\024\023\026\013\033\014\045\015" +
     "\046\030\051\022\001\001\000\002\001\001\000\004\027" +
-    "\206\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\205\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\004\037\034\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\006\016" +
@@ -245,57 +243,57 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\001\000\002\001\001\000\002\001\001\000\004\040\054" +
     "\001\001\000\004\041\055\001\001\000\026\015\066\021" +
     "\065\024\064\025\063\026\056\031\061\033\057\045\060" +
-    "\046\067\051\022\001\001\000\006\011\112\013\114\001" +
+    "\046\067\051\022\001\001\000\006\011\111\013\112\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\004\016\106\001\001\000\030\015\066\021\104\022" +
-    "\105\024\064\025\063\026\056\031\061\033\057\045\060" +
+    "\000\004\016\105\001\001\000\030\015\066\021\103\022" +
+    "\104\024\064\025\063\026\056\031\061\033\057\045\060" +
     "\046\067\051\022\001\001\000\002\001\001\000\004\042" +
     "\072\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\035" +
-    "\074\001\001\000\004\034\075\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\041\100\001\001\000\026\015" +
-    "\066\021\101\024\064\025\063\026\056\031\061\033\057" +
-    "\045\060\046\067\051\022\001\001\000\004\042\102\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\001\001\000\002\001\001\000\002\001\001\000\004\034" +
+    "\074\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\041\077\001\001\000\026\015\066\021\100\024\064\025" +
+    "\063\026\056\031\061\033\057\045\060\046\067\051\022" +
+    "\001\001\000\004\042\101\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\004\014\116\001\001\000" +
-    "\002\001\001\000\004\016\120\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\006\003\125\016\126\001\001\000\002\001\001\000\004" +
-    "\004\130\001\001\000\002\001\001\000\004\016\134\001" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\006\047\140\050\137\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\006\047" +
-    "\145\050\137\001\001\000\002\001\001\000\002\001\001" +
-    "\000\004\037\174\001\001\000\002\001\001\000\004\041" +
-    "\152\001\001\000\006\011\153\013\114\001\001\000\002" +
-    "\001\001\000\004\037\155\001\001\000\006\016\041\036" +
-    "\156\001\001\000\004\040\157\001\001\000\002\001\001" +
-    "\000\004\023\162\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\026\015\066\021\165\024\064" +
-    "\025\063\026\056\031\061\033\057\045\060\046\067\051" +
-    "\022\001\001\000\004\052\166\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\000\004\014\115\001\001\000\002\001\001\000\004\016" +
+    "\117\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\006\003\124\016\125\001" +
+    "\001\000\002\001\001\000\004\004\127\001\001\000\002" +
+    "\001\001\000\004\016\133\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\006" +
-    "\016\041\036\176\001\001\000\002\001\001\000\002\001" +
-    "\001\000\004\040\201\001\001\000\004\041\202\001\001" +
-    "\000\026\015\066\021\203\024\064\025\063\026\056\031" +
-    "\061\033\057\045\060\046\067\051\022\001\001\000\004" +
-    "\052\204\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\006\013\214\017\215\001" +
+    "\047\137\050\136\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\026\015\066\021\220\024\064\025\063\026\056\031" +
-    "\061\033\057\045\060\046\067\051\022\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\016" +
-    "\224\001\001\000\004\020\226\001\001\000\006\013\214" +
-    "\017\227\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\006\047\236\050\137\001" +
+    "\000\002\001\001\000\006\047\144\050\136\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\037\173\001\001" +
+    "\000\002\001\001\000\004\041\151\001\001\000\006\011" +
+    "\152\013\112\001\001\000\002\001\001\000\004\037\154" +
+    "\001\001\000\006\016\041\036\155\001\001\000\004\040" +
+    "\156\001\001\000\002\001\001\000\004\023\161\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\026\015\066\021\164\024\064\025\063\026\056\031\061" +
+    "\033\057\045\060\046\067\051\022\001\001\000\004\052" +
+    "\165\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\006\016\041\036\175\001\001" +
+    "\000\002\001\001\000\002\001\001\000\004\040\200\001" +
+    "\001\000\004\041\201\001\001\000\026\015\066\021\202" +
+    "\024\064\025\063\026\056\031\061\033\057\045\060\046" +
+    "\067\051\022\001\001\000\004\052\203\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001" });
+    "\000\006\013\213\017\214\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\026\015\066\021\217" +
+    "\024\064\025\063\026\056\031\061\033\057\045\060\046" +
+    "\067\051\022\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\004\016\223\001\001\000\004\020" +
+    "\225\001\001\000\006\013\213\017\226\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\006\047\235\050\136\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -511,7 +509,10 @@ class CUP$Parser$actions {
           case 12: // sentencia ::= sortida PUNTICOMA 
             {
               NodeSentencia RESULT =null;
-
+		int sleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		NodeSortida s = (NodeSortida)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		RESULT = new NodeSentencia(s); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("sentencia",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -520,7 +521,10 @@ class CUP$Parser$actions {
           case 13: // sentencia ::= entrada PUNTICOMA 
             {
               NodeSentencia RESULT =null;
-
+		int eleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		NodeEntrada e = (NodeEntrada)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		RESULT = new NodeSentencia(e); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("sentencia",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -727,7 +731,10 @@ class CUP$Parser$actions {
           case 32: // sentenciaf ::= sortida PUNTICOMA 
             {
               NodeSentencia RESULT =null;
-
+		int sleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		NodeSortida s = (NodeSortida)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		 RESULT = new NodeSentencia(s); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("sentenciaf",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -736,7 +743,10 @@ class CUP$Parser$actions {
           case 33: // sentenciaf ::= entrada PUNTICOMA 
             {
               NodeSentencia RESULT =null;
-
+		int eleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		NodeEntrada e = (NodeEntrada)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		 RESULT = new NodeSentencia(e); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("sentenciaf",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -985,20 +995,20 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 53: // condicional ::= SI etiquetacond EParen condicio DParen EClau condiciobot incambit blocf decambit DClau sino condsino 
+          case 53: // condicional ::= SI etiquetacond EParen condicio DParen EClau condiciobot incambit blocf decambit DClau condsino 
             {
               NodeCondicional RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).right;
-		NodeCondicio a = (NodeCondicio)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-9)).value;
-		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
-		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
-		NodeBlocf b = (NodeBlocf)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)).right;
+		NodeCondicio a = (NodeCondicio)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-8)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
+		NodeBlocf b = (NodeBlocf)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodeCondsino c = (NodeCondsino)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		 RESULT = new NodeCondicional(a,b,c); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicional",25, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-12)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicional",25, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
@@ -1054,16 +1064,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 58: // sino ::= 
-            {
-              NodeSino RESULT =null;
-		 RESULT = new NodeSino(); 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("sino",27, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 59: // operador_cond ::= OLI 
+          case 58: // operador_cond ::= OLI 
             {
               NodeOperador_cond RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
@@ -1075,7 +1076,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 60: // operador_cond ::= OLO 
+          case 59: // operador_cond ::= OLO 
             {
               NodeOperador_cond RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
@@ -1087,7 +1088,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 61: // operador_cond ::= IGUAL 
+          case 60: // operador_cond ::= IGUAL 
             {
               NodeOperador_cond RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
@@ -1099,7 +1100,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 62: // operador_cond ::= DIFERENT 
+          case 61: // operador_cond ::= DIFERENT 
             {
               NodeOperador_cond RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
@@ -1111,7 +1112,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 63: // bucle ::= inicibucle MENTRE etiquetacond EParen condicio DParen EClau condiciobot incambit blocf retornabucle DClau 
+          case 62: // bucle ::= inicibucle MENTRE etiquetacond EParen condicio DParen EClau condiciobot incambit blocf retornabucle DClau 
             {
               NodeBucle RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)).left;
@@ -1141,7 +1142,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 64: // bucle ::= inicibucle PER EParen incambit decl_variable PUNTICOMA etiquetacond condicio condiciobot PUNTICOMA comportamentvl DParen EClau blocf retornabucle DClau 
+          case 63: // bucle ::= inicibucle PER EParen incambit decl_variable PUNTICOMA etiquetacond condicio condiciobot PUNTICOMA comportamentvl DParen EClau blocf retornabucle DClau 
             {
               NodeBucle RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-15)).left;
@@ -1177,7 +1178,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 65: // comportamentvl ::= ID SUMA SUMA 
+          case 64: // comportamentvl ::= ID SUMA SUMA 
             {
               NodeComportamentv1 RESULT =null;
 		int vleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
@@ -1189,7 +1190,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 66: // comportamentvl ::= ID RESTA RESTA 
+          case 65: // comportamentvl ::= ID RESTA RESTA 
             {
               NodeComportamentv1 RESULT =null;
 		int vleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
@@ -1201,7 +1202,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 67: // comportamentvl ::= 
+          case 66: // comportamentvl ::= 
             {
               NodeComportamentv1 RESULT =null;
 		 RESULT = new NodeComportamentv1(); 
@@ -1210,7 +1211,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 68: // exprsimple ::= ID 
+          case 67: // exprsimple ::= ID 
             {
               NodeExprsimple RESULT =null;
 		int vleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
@@ -1222,7 +1223,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 69: // exprsimple ::= ENTER 
+          case 68: // exprsimple ::= ENTER 
             {
               NodeExprsimple RESULT =null;
 		int vleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
@@ -1234,7 +1235,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 70: // exprsimple ::= BOOLEA 
+          case 69: // exprsimple ::= BOOLEA 
             {
               NodeExprsimple RESULT =null;
 		int vleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
@@ -1246,7 +1247,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 71: // tipus ::= ENT 
+          case 70: // tipus ::= ENT 
             {
               NodeTipus RESULT =null;
 		 RESULT = new NodeTipus(Tipus.ent); 
@@ -1255,7 +1256,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 72: // tipus ::= BOOL 
+          case 71: // tipus ::= BOOL 
             {
               NodeTipus RESULT =null;
 		 RESULT = new NodeTipus(Tipus.bool); 
@@ -1264,7 +1265,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 73: // etiquetacond ::= 
+          case 72: // etiquetacond ::= 
             {
               NodeEtiquetacond RESULT =null;
 		 RESULT = new NodeEtiquetacond(); 
@@ -1273,7 +1274,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 74: // condiciobot ::= 
+          case 73: // condiciobot ::= 
             {
               NodeCondiciobot RESULT =null;
 		 RESULT = new NodeCondiciobot(false) ; 
@@ -1282,7 +1283,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 75: // incambit ::= 
+          case 74: // incambit ::= 
             {
               NodeIncambit RESULT =null;
 		 RESULT = new NodeIncambit(); 
@@ -1291,7 +1292,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 76: // decambit ::= 
+          case 75: // decambit ::= 
             {
               NodeDecambit RESULT =null;
 		 RESULT = new NodeDecambit(); 
@@ -1300,7 +1301,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 77: // inicibucle ::= 
+          case 76: // inicibucle ::= 
             {
               NodeInicibucle RESULT =null;
 		 RESULT = new NodeInicibucle();
@@ -1309,7 +1310,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 78: // retornabucle ::= 
+          case 77: // retornabucle ::= 
             {
               NodeRetornabucle RESULT =null;
 		 RESULT = new NodeRetornabucle();

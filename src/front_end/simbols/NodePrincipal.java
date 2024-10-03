@@ -8,9 +8,12 @@ public class NodePrincipal extends NodeBase {
     public NodePrincipal(NodeSentencies sentencies) {
         super("Principal", 0);
         this.sentencies = sentencies;
-        //ts.insertElement(new Simbol("program", MAINPROG, "NULL", ts.getParams()));
-        //ts.emptyParams();
+        if (sentencies != null) {
+            sentencies.generateCode();
+        }
         tp.calculateLocalVarSize(tv);
         tancaFitxers();
+
+        
     }
 }

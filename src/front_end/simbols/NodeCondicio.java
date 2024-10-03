@@ -11,12 +11,13 @@ public class NodeCondicio extends NodeBase{
     private NodeExprsimple operand2;
     private NodeOperador_cond operador;
     
+    
     private String ID;
     
     public NodeCondicio(String id) {
         super("NodeCondicio", 0);
         ID = id;
-        cta.generateCode(id + " then ");
+        
     }
     
     public NodeCondicio(NodeExprsimple v, NodeOperador_cond o, NodeExprsimple v1) {
@@ -25,10 +26,16 @@ public class NodeCondicio extends NodeBase{
         operand2 = v1;
         operador = o;
     }
-    
-    public void generateCode(){
+    public void generateCodeID(){
+        cta.generateCode(ID + " then ");
+    }
+    public void generateCodeOperador(){
         cta.generateCode(operand1.getValor()+" ");
         cta.generateCode(operador.getOperador()+ " ");
         cta.generateCode(operand2.getValor() + " ");
+    }
+
+    public NodeOperador_cond getOperador() {
+        return operador;
     }
 }

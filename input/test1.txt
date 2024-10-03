@@ -1,6 +1,9 @@
 principal(){
+	ent z;
+	entrada(z);
 
-	ent x = 3;
-	x = x+7;
-	sortidaln(x);
+	mentre(z!=0){
+	   sortidaln(z);
+	   z = z - 1;
+	}
 }

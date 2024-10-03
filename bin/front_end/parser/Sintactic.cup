@@ -90,8 +90,8 @@ sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); :
               | bucle:b {: RESULT = new NodeSentencia(b); :}
               | condicional:c {: RESULT = new NodeSentencia(c); :}
               | decl_funcio
-              | sortida PUNTICOMA
-              | entrada PUNTICOMA;      
+              | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s); :}
+              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e); :};      
 
 decl_funcio ::= FUNCIO tipusf ID EParen param DParen EClau blocf DClau;
 
@@ -119,8 +119,8 @@ sentenciaf ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); 
               | bucle:v {: RESULT = new NodeSentencia(v); :}
               | condicional:v {: RESULT = new NodeSentencia(v); :}
               | sretorna
-              | sortida PUNTICOMA
-              | entrada PUNTICOMA;  
+              | sortida:s PUNTICOMA {: RESULT = new NodeSentencia(s); :}
+              | entrada:e PUNTICOMA {: RESULT = new NodeSentencia(e); :};  
 
 sretorna ::= RETORNA exprsimple PUNTICOMA;
 

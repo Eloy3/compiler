@@ -14,5 +14,13 @@ public class NodeBlocf2 extends NodeBase{
     
     public NodeBlocf2(){
         super("Blocf2",0);
+        blocf = null;
     }   
+
+    public void generateCode() {
+        // Only generate code if there's more sentences to process
+        if (blocf != null) {
+            blocf.generateCode();
+        }
+    }
 }
