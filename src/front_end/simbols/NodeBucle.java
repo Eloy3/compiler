@@ -61,6 +61,7 @@ public class NodeBucle extends NodeBase{
         blocf.generateCode();
         retornabucle();
     }
+    
     public void generateCodeFor(){
         inicibucle();
         ts.incAmbit();
