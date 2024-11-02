@@ -63,9 +63,9 @@ public class NodeBucle extends NodeBase{
     }
     
     public void generateCodeFor(){
-        inicibucle();
         ts.incAmbit();
         decl_Variable.generateCode();
+        inicibucle();
         etiquetacond();
         if(condicio.getOperador() != null){
             condicio.generateCodeOperador();

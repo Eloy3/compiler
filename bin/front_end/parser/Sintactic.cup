@@ -114,6 +114,7 @@ blocf2 ::= blocf:a {: RESULT = new NodeBlocf2(a); :}
          | {: RESULT = new NodeBlocf2(); :};
 
 //El mateix que sentencia però sense declaracions de funcions.
+
 sentenciaf ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
               | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
               | bucle:v {: RESULT = new NodeSentencia(v); :}

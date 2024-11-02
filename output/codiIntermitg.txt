@@ -4,13 +4,15 @@ pmb principal
 param_s z
 call getInt
 z = retInt
+t1 = 0
+i = t1
 e0:skip
-if z != 0 goto e1
+if i != z goto e1
 goto e2
 e1:skip
-param_s z
+t3 = i + 1
+i = t3
+param_s i
 call line
-t1 = z - 1
-z = t1
 goto e0
 e2:skip

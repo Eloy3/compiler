@@ -2,8 +2,7 @@ principal(){
 	ent z;
 	entrada(z);
 
-	mentre(z!=0){
-	   sortidaln(z);
-	   z = z - 1;
+	per(ent i=0; i!=z; i++){
+	   sortidaln(i);
 	}
 }

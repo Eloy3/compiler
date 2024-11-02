@@ -13,29 +13,33 @@ principal:
 	JSR GETINT
 * --> | ASSIGNA | retInt | null | z |
 	MOVE.W (A7)+,z_principal
+* --> | ASSIGNA | 0 | null | t1 |
+	MOVE.W #0,t1_principal
+* --> | ASSIGNA | t1 | null | i |
+	MOVE.W t1_principal,i_principal
 * --> | SKIP | null | null | e0 |
 e0:
-* --> | IFDIFERENT | z | 0 | e1 |
-	MOVE.W z_principal,D1
-	MOVE.W #0,D0
+* --> | IFDIFERENT | i | z | e1 |
+	MOVE.W i_principal,D1
+	MOVE.W z_principal,D0
 	CMP.W D0,D1
 	BNE e1
 * --> | GOTO | null | null | e2 |
 	JMP e2
 * --> | SKIP | null | null | e1 |
 e1:
-* --> | PARAM_S | null | null | z |
-	MOVE.W z_principal,-(A7)
+* --> | SUMA | i | 1 | t3 |
+	MOVE.W i_principal,D0
+	MOVE.W #1,D1
+	JSR ISUMA
+	MOVE.W D1,t3_principal
+* --> | ASSIGNA | t3 | null | i |
+	MOVE.W t3_principal,i_principal
+* --> | PARAM_S | null | null | i |
+	MOVE.W i_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
-* --> | RESTA | z | 1 | t1 |
-	MOVE.W z_principal,D1
-	MOVE.W #1,D0
-	JSR IRESTA
-	MOVE.W D1,t1_principal
-* --> | ASSIGNA | t1 | null | z |
-	MOVE.W t1_principal,z_principal
 * --> | GOTO | null | null | e0 |
 	JMP e0
 * --> | SKIP | null | null | e2 |
@@ -44,6 +48,8 @@ e2:
  
 z_principal: DS.W 1
 t1_principal: DS.W 1
+i_principal: DS.W 1
+t3_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0

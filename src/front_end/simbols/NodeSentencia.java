@@ -55,7 +55,7 @@ public class NodeSentencia extends NodeBase {
             if (bucle.getComportamentv1()==null){
                 bucle.generateCodeWhile();
             }else{
-                
+                bucle.generateCodeFor();
             }   
         } else if (entrada != null) {
             entrada.generateCode();  

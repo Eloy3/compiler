@@ -1,1 +1,2 @@
 id=z, tipus=ent, valor=null
+id=i, tipus=ent, valor=0
