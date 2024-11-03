@@ -1,0 +1,1 @@
+Error semàntic. [9:14] La variable 'i' no existeix

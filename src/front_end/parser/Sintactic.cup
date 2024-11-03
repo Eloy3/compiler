@@ -36,8 +36,9 @@ non terminal NodeSentencies sentencies;
 non terminal NodeSentencies2 sentencies2;
 non terminal NodeOperador_cond operador_cond;
 non terminal NodeDecl_Variable decl_variable;
-non terminal decl_funcio;
+non terminal NodeDecl_funcio decl_funcio;
 non terminal NodeTipus tipus;
+non terminal NodeTipus tipusf;
 non terminal NodeVarinic varinic;
 non terminal NodeVarinic2 varinic2;
 non terminal NodeExprsimple exprsimple;
@@ -48,7 +49,7 @@ non terminal NodeBlocf2 blocf2;
 non terminal NodeComportamentv1 comportamentvl;
 non terminal NodeBucle bucle;
 non terminal NodeSentencia sentenciaf;
-non terminal cons,tipusf,decl_variable_local, sretorna;
+non terminal cons,decl_variable_local, sretorna;
 
 non terminal NodePrincipal principal;
 non terminal NodeCondicional condicional;
@@ -85,19 +86,15 @@ sentencies ::=   sentencia:s sentencies2:s2 {: RESULT = new NodeSentencies(s,s2)
 sentencies2 ::= sentencies:s {: RESULT = new NodeSentencies2(s);:} 
                 | {: RESULT = new NodeSentencies2();:};
 
-sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
-              | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
-              | bucle:b {: RESULT = new NodeSentencia(b); :}
-              | condicional:c {: RESULT = new NodeSentencia(c); :}
-              | decl_funcio
-              | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s); :}
-              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e); :};      
+sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_variable"); :}
+              | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v,"varinic2"); :}
+              | bucle:b {: RESULT = new NodeSentencia(b,"bucle"); :}
+              | condicional:c {: RESULT = new NodeSentencia(c,"condicional"); :}
+              | decl_funcio:df {: RESULT = new NodeSentencia(df,"decl_funcio"); :}
+              | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s,"sortida"); :}
+              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e,"entrada"); :};      
 
-decl_funcio ::= FUNCIO tipusf ID EParen param DParen EClau blocf DClau;
-
-tipusf ::= ENT
-        | BOOL
-        | BUIT;
+decl_funcio ::= FUNCIO tipusf:t ID:name EParen param:p DParen EClau blocf:b DClau {: RESULT = new NodeDecl_funcio(t,name,p,b, lexic.getLineColumn()); :};
 
 param ::= tipus:t ID:id ASSIGN exprsimple:v param2:p2 {: RESULT = new NodeParam(t, id, v, p2); :}
             |   {: RESULT = new NodeParam(); :};
@@ -108,6 +105,17 @@ param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}
 cons ::= CONST
         |     ;
 
+exprsimple ::= ID:v         {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.id, v); :}
+             | ENTER:v      {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.enter, v.toString()); :}
+             | BOOLEA:v     {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.boolea, v.toString()); :};
+
+tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ent); :}
+        | BOOL  {: RESULT = new NodeTipus(Tipus.bool); :};
+
+tipusf ::= ENT {: RESULT = new NodeTipus(Tipus.ent); :}
+        | BOOL {: RESULT = new NodeTipus(Tipus.bool); :}
+        | BUIT {: RESULT = new NodeTipus(Tipus.buit); :};
+
 blocf ::= sentenciaf:s blocf2:b  {: RESULT = new NodeBlocf(s,b); :};
 
 blocf2 ::= blocf:a {: RESULT = new NodeBlocf2(a); :}
@@ -115,13 +123,13 @@ blocf2 ::= blocf:a {: RESULT = new NodeBlocf2(a); :}
 
 //El mateix que sentencia però sense declaracions de funcions.
 
-sentenciaf ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
-              | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v); :}
-              | bucle:v {: RESULT = new NodeSentencia(v); :}
-              | condicional:v {: RESULT = new NodeSentencia(v); :}
+sentenciaf ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_variable"); :}
+              | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v,"varinic2"); :}
+              | bucle:b {: RESULT = new NodeSentencia(b,"bucle"); :}
+              | condicional:c {: RESULT = new NodeSentencia(c,"condicional"); :}
               | sretorna
-              | sortida:s PUNTICOMA {: RESULT = new NodeSentencia(s); :}
-              | entrada:e PUNTICOMA {: RESULT = new NodeSentencia(e); :};  
+              | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s,"sortida"); :}
+              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e,"entrada"); :};     
 
 sretorna ::= RETORNA exprsimple PUNTICOMA;
 
@@ -142,8 +150,8 @@ operador_expr ::= SUMA:a {: RESULT = new NodeOperador_expr(a.toString());:}
 
 // **** Sortida per pantalla ****
 
-sortida ::= SORTIDA EParen llista_valors:v DParen {: RESULT = new NodeSortida(v,false);:}
-        | SORTIDALN EParen llista_valors:v DParen {: RESULT = new NodeSortida(v,true);:};
+sortida ::= SORTIDA EParen llista_valors:v DParen {: RESULT = new NodeSortida(v,false,lexic.getLineColumn());:}
+        | SORTIDALN EParen llista_valors:v DParen {: RESULT = new NodeSortida(v,true,lexic.getLineColumn());:};
 
 llista_valors ::= valor:v {: RESULT = new NodeLlistaValors(v);:}|
                   valor:v COMA llista_valors:lv {: RESULT = new NodeLlistaValors(v, lv);:} ;
@@ -182,14 +190,6 @@ bucle ::= inicibucle:a MENTRE etiquetacond:b EParen condicio:c DParen EClau cond
 comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comportament.INCREMENT, lexic.getLineColumn()); :}
                 | ID:v RESTA RESTA {: RESULT = new NodeComportamentv1(v, Comportament.DECREMENT, lexic.getLineColumn()); :}
                 | {: RESULT = new NodeComportamentv1(); :};
-
-exprsimple ::= ID:v          {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.id, v); :}
-             | ENTER:v       {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.enter, v.toString()); :}
-             | BOOLEA:v      {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.boolea, v.toString()); :};
-
-tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ent); :}
-        | BOOL  {: RESULT = new NodeTipus(Tipus.bool); :};
-
 
 //codi3adreces
 

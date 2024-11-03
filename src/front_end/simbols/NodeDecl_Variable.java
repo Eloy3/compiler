@@ -8,6 +8,7 @@ public class NodeDecl_Variable extends NodeBase{
     private NodeVarinic varinic;
     private String id;
     private int[] lc;
+    
     public NodeDecl_Variable(NodeTipus nt, String id, NodeVarinic varinic, int[] lc){
         super("Decl_variable", 0);
         this.nt = nt;

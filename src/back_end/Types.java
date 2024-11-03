@@ -6,5 +6,5 @@
 package back_end;
 
 public enum Types {
-    MAINPROG, VARIABLE, CONSTANT, FUNCTION, METHOD
+    MAINPROG, VARIABLE, CONSTANT, FUNCTION
 }

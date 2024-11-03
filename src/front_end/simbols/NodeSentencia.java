@@ -2,65 +2,98 @@ package front_end.simbols;
 
 public class NodeSentencia extends NodeBase {
 
+    private String sentencia;
     private NodeDecl_Variable decl_variable;
     private NodeVarinic2 varinic2;
     private NodeCondicional condicional;
     private NodeBucle bucle;
     private NodeEntrada entrada;
     private NodeSortida sortida;
+    private NodeDecl_funcio decl_funcio;
 
-    public NodeSentencia(NodeBucle nodeBucle) {
+    public NodeSentencia(NodeBucle nodeBucle, String sentencia) {
         super("Sentencia", 0);
         this.bucle = nodeBucle;
+        this.sentencia = sentencia;
     }
 
-    public NodeSentencia(NodeDecl_Variable a) {
+    public NodeSentencia(NodeDecl_Variable a, String sentencia) {
         super("Sentencia", 0);
         this.decl_variable = a;
+        this.sentencia = sentencia;
     }
 
-    public NodeSentencia(NodeVarinic2 a) {
+    public NodeSentencia(NodeVarinic2 a, String sentencia) {
         super("Sentencia", 0);
         this.varinic2 = a;
+        this.sentencia = sentencia;
     }
 
-    public NodeSentencia(NodeCondicional a) {
+    public NodeSentencia(NodeCondicional a, String sentencia) {
         super("Sentencia", 0);
         this.condicional = a;
+        this.sentencia = sentencia;
     }
 
-    public NodeSentencia(NodeEntrada entrada) {
+    public NodeSentencia(NodeEntrada entrada, String sentencia) {
         super("Sentencia", 0);
         this.entrada = entrada;
+        this.sentencia = sentencia;
     }
 
-    public NodeSentencia(NodeSortida sortida) {
+    public NodeSentencia(NodeSortida sortida, String sentencia) {
         super("Sentencia", 0);
         this.sortida = sortida;
+        this.sentencia = sentencia;
+    }
+
+    public NodeSentencia(NodeDecl_funcio decl_funcio, String sentencia) {
+        super("Sentencia", 0);
+        this.decl_funcio = decl_funcio;
+        this.sentencia = sentencia;
     }
 
     public void generateCode() {
-        if (decl_variable != null) {
-            decl_variable.generateCode();  // Generate TAC for declaration
-        } else if (varinic2 != null) {
-            // Check whether it's a simple or compound expression
-            if (varinic2.getExprsimple() != null) {
-                varinic2.generateCode_exprsimple();
-            } else if (varinic2.getExprcomposta() != null) {
-                varinic2.generateCode_exprcomposta();
-            }
-        } else if (condicional != null) {
-            //condicional.generateCode();
-        } else if (bucle != null) {
-            if (bucle.getComportamentv1()==null){
-                bucle.generateCodeWhile();
-            }else{
-                bucle.generateCodeFor();
-            }   
-        } else if (entrada != null) {
-            entrada.generateCode();  
-        } else if (sortida != null) {
-            sortida.generateCode();  
+
+        switch(sentencia){
+
+            case "decl_variable":
+                decl_variable.generateCode();
+                break;
+
+            case "varinic2":
+                // Check whether it's a simple or compound expression
+                if (varinic2.getExprsimple() != null) {
+                    varinic2.generateCode_exprsimple();
+                } else if (varinic2.getExprcomposta() != null) {
+                    varinic2.generateCode_exprcomposta();
+                }
+                break;
+
+            case "condicional":
+                //condicional.generateCode();
+                break;
+
+            case "bucle":
+                if (bucle.getComportamentv1()==null){
+                    bucle.generateCodeWhile();
+                }else{
+                    bucle.generateCodeFor();
+                }  
+                break;
+            
+            case "entrada":
+                entrada.generateCode();
+                break;
+            
+            case "sortida":
+                sortida.generateCode();
+                break;
+            
+            case "decl_funcio":
+                break;
+            default:
+                break;
         }
     }
 }

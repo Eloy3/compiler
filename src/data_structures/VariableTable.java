@@ -84,7 +84,6 @@ public class VariableTable {
             case ENT -> int_store;
             case BOOL -> logic_store;
             case NULL -> null_store;
-            case STRING -> str_store * s.length();
         };
     }
 

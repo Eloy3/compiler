@@ -5,4 +5,7 @@ principal(){
 	per(ent i=0; i!=z; i++){
 	   sortidaln(i);
 	}
+
+	sortidaln(i);
+
 }

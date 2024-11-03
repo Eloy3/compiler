@@ -320,8 +320,6 @@ public class ThreeAdressCodeBackEnd {
                 return "retInt";
             case BOOL:
                 return "retBool";
-            case STRING:
-                return "retStr";
             default: return null;
         }
     }

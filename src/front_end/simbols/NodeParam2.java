@@ -16,4 +16,7 @@ public class NodeParam2 extends NodeBase{
         super("Param2",0);
     }
     
+    public NodeParam getParam() {
+        return param;
+    }
 }

@@ -83,10 +83,6 @@ public class AssemblyCode {
                     }
                     code.add(name + ": DS.W "+v.getStore()/calculateStore(v.getType(),""));
                     break;
-                case STRING:
-                    bytes = true;
-                    code.add(name + ": DS.B 100");
-                    break;
             }
         }
     }
@@ -174,24 +170,6 @@ public class AssemblyCode {
     private void iasigna(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
         switch (TipusSubjacent.valueOf(d.getType().toUpperCase())){
-            case STRING:
-                if (!i.getOperand1().equals("retStr")){
-                    Variable v = c3a.getVar(i.getOperand1());
-                    if(v == null){
-                        code.add("\tLEA.L " + setConstString(i.getOperand1()) + ",A0");
-                        code.add("\tLEA.L " + varnom(d) + ",A1");
-                        code.add("\tJSR STRCPY");
-                    } else{
-                        code.add("\tLEA.L " + varnom(v) + ",A0");
-                        code.add("\tLEA.L " + varnom(d) + ",A1");
-                        code.add("\tJSR STRCPY");
-                    }
-                } else {
-                    code.add("\tMOVE.L (A7)+,A0");
-                    code.add("\tLEA.L " + varnom(d) + ",A1");
-                    code.add("\tJSR STRCPY");
-                }
-                break;
             case BOOL:
                 if (!i.getOperand1().equals("retBool")) {
                     code.add("\tMOVE.B " + getop(i.getOperand1()) + "," + getop(i.getDestiny()));
@@ -258,8 +236,6 @@ public class AssemblyCode {
                     case BOOL:
                         code.add("\tSUBA.L #2,A7");
                         break;
-                    case STRING:
-                        code.add("\tSUBA.L #4,A7");
                 }
             }
             code.add("\tJSR " + i.getDestiny());
@@ -270,9 +246,6 @@ public class AssemblyCode {
                     case BOOL:
                         k += 2;
                         break;
-                    case STRING:
-                        k += 4;
-                        break;
                 }
             }
             if(k > 0){
@@ -281,10 +254,6 @@ public class AssemblyCode {
                         case ENT:
                         case BOOL:
                             code.add("\tMOVE.W (A7)," + k + "(A7)");
-                            code.add("\tADDA.L #" + k + ",A7");
-                            break;
-                        case STRING:
-                            code.add("\tMOVE.L (A7)," + k + "(A7)");
                             code.add("\tADDA.L #" + k + ",A7");
                             break;
                     }
@@ -301,17 +270,9 @@ public class AssemblyCode {
         switch (i.getOperation()){
             case PARAM_C:
                 if (d == null){
-                    switch (i.getDestiny()) {
-                        case "retStr":
-                            param = STRING;
-                            break;
-                        default:
-                            code.add("\tMOVE.L #" + setConstString(i.getDestiny()) + ",-(A7)");
-                            break;
-                    }
-                } else {
-                    code.add("\tMOVE.L #" + varnom(d) + ",-(A7)");
-                    param = STRING;
+
+                    code.add("\tMOVE.L #" + setConstString(i.getDestiny()) + ",-(A7)");
+
                 }
                 break;
             case PARAM_S:
@@ -353,9 +314,6 @@ public class AssemblyCode {
         int k = 4;
         if(p.getType_return() != null){
             switch (p.getType_return()){
-                case STRING:
-                    k = 8;
-                    break;
                 case ENT:
                 case BOOL:
                     k = 6;
@@ -376,13 +334,6 @@ public class AssemblyCode {
                     code.add("\tMOVE.W " + k +"(A7)," + varnom(v));
                     k += 2;
                     break;
-                case STRING:
-                    code.add("\tMOVEA.L " + k +"(A7),A0");
-                    code.add("\tLEA.L " + varnom(v) + ",A1");
-                    code.add("\tJSR STRCPY");
-                    //code.add("\tMOVE.L " + k +"(A7)," + varnom(v));
-                    k += 4;
-                    break;
             }
             ind--;
         }
@@ -400,9 +351,6 @@ public class AssemblyCode {
                     code.add("\tCLR.W D0");
                     code.add("\tMOVE.B " + varnom(r) + ",D0");
                     code.add("\tMOVE.W D0,4(A7)");
-                    break;
-                case STRING:
-                    code.add("\tMOVE.L #" + varnom(r) + ",4(A7)");
                     break;
             }
         } else if (i.getOperand1() != null){
@@ -446,9 +394,6 @@ public class AssemblyCode {
                     code.add("\tMOVE.B " + varnom(op1) + ",D1");
                     code.add("\tEXT.W D1");
                     break;
-                case STRING:
-                    code.add("\tLEA.L " + varnom(op1) + ",A0");
-                    break;
             }
         }
 
@@ -479,10 +424,6 @@ public class AssemblyCode {
                     code.add("\tMOVE.B " + varnom(op2) + ",D0");
                     code.add("\tCMP.B D0,D1");
                     break;
-                case STRING:
-                    code.add("\tLEA.L " + varnom(op2) + ",A1");
-                    code.add("\tJSR STRCMP");
-                    break;
             }
 
         }
@@ -490,27 +431,10 @@ public class AssemblyCode {
 
     private void isuma(Instruction3a i){
         Variable destino = c3a.getVar(i.getDestiny());
-        if(TipusSubjacent.valueOf(destino.getType().toUpperCase()) == STRING){
-            Variable op1 = c3a.getVar(i.getOperand1());
-            if (op1 == null){
-                code.add("\tLEA.L " + setConstString(i.getOperand1()) + ",A0");
-            } else {
-                code.add("\tLEA.L " + varnom(op1) + ",A0");
-            }
-            Variable op2 = c3a.getVar(i.getOperand2());
-            if (op2 == null){
-                code.add("\tLEA.L " + setConstString(i.getOperand2()) + ",A1");
-            } else {
-                code.add("\tLEA.L " + varnom(op2) + ",A1");
-            }
-            code.add("\tLEA.L " + varnom(destino) + ",A2");
-            code.add("\tJSR STRCON");
-        } else {
-            code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D0");
-            code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D1");
-            code.add("\tJSR ISUMA");
-            code.add("\tMOVE.W D1," + varnom(destino));
-        }
+        code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D0");
+        code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D1");
+        code.add("\tJSR ISUMA");
+        code.add("\tMOVE.W D1," + varnom(destino));
     }
 
     private void iresta(Instruction3a i){
@@ -782,8 +706,6 @@ public class AssemblyCode {
         switch (enum_type) {
             case ENT:
                 return int_store;
-            case STRING:
-                return str_store * s.length();
             case BOOL:
                 return logic_store;
             case NULL:
