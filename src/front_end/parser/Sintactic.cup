@@ -56,18 +56,12 @@ non terminal NodeCondicional condicional;
 non terminal NodeCondsino condsino;
 non terminal NodeSino sino;
 non terminal NodeCondicio condicio;
-non terminal NodeEtiquetacond etiquetacond;
-non terminal NodeCondiciobot condiciobot;
-non terminal NodeIncambit incambit;
-non terminal NodeDecambit decambit;
 non terminal NodePrograma programa;
 non terminal NodePmb pmb;
 non terminal NodeSortida sortida;
 non terminal NodeEntrada entrada;
 non terminal NodeLlistaValors llista_valors;
 non terminal NodeValor valor;
-non terminal NodeInicibucle inicibucle;
-non terminal NodeRetornabucle retornabucle;
 
 start with principal;
 
@@ -166,12 +160,12 @@ entrada ::= ENTRADA EParen ID:i DParen {: RESULT = new NodeEntrada(i);:};
 
 // **** IF ****
 
-condicional ::= SI etiquetacond EParen condicio:a DParen EClau condiciobot incambit blocf:b decambit DClau condsino:c {: RESULT = new NodeCondicional(a,b,c); :};
+condicional ::= SI EParen condicio:a DParen EClau blocf:b DClau condsino:c {: RESULT = new NodeCondicional(a,b,c); :};
 
 condicio ::= exprsimple:v operador_cond:o exprsimple:v1 {: RESULT = new NodeCondicio(v,o,v1); :}
                 | ID:id {: RESULT = new NodeCondicio(id); :};
 
-condsino ::= SINO EClau incambit blocf:a decambit DClau {: RESULT = new NodeCondsino(a); :}
+condsino ::= SINO EClau blocf:a DClau {: RESULT = new NodeCondsino(a); :}
         |       {: RESULT = new NodeCondsino(); :};
 
 operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
@@ -182,25 +176,14 @@ operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
 
 // **** WHILE i FOR ****
 
-bucle ::= inicibucle:a MENTRE etiquetacond:b EParen condicio:c DParen EClau condiciobot:d incambit:e blocf:f retornabucle:g DClau {: RESULT = new NodeBucle(a,b,c,d,e,f,g); :}
+bucle ::= MENTRE EParen condicio:c DParen EClau blocf:bloc DClau {: RESULT = new NodeBucle(c,bloc); :}
 
-        | inicibucle:a PER EParen incambit:b decl_variable:c PUNTICOMA etiquetacond:d condicio:e condiciobot:f PUNTICOMA comportamentvl:g DParen EClau blocf:h retornabucle:i DClau {: RESULT = new NodeBucle(a,b,c,d,e,f,g,h,i); :};
+        | PER EParen decl_variable:decl PUNTICOMA condicio:cond PUNTICOMA comportamentvl:comp DParen EClau blocf:bloc DClau {: RESULT = new NodeBucle(decl,cond,comp,bloc); :};
 
 
 comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comportament.INCREMENT, lexic.getLineColumn()); :}
                 | ID:v RESTA RESTA {: RESULT = new NodeComportamentv1(v, Comportament.DECREMENT, lexic.getLineColumn()); :}
                 | {: RESULT = new NodeComportamentv1(); :};
 
-//codi3adreces
 
-etiquetacond ::= {: RESULT = new NodeEtiquetacond(); :};
 
-condiciobot ::= {: RESULT = new NodeCondiciobot(false) ; :};
-
-incambit ::= {: RESULT = new NodeIncambit(); :};
-
-decambit ::= {: RESULT = new NodeDecambit(); :};
-
-inicibucle ::= {: RESULT = new NodeInicibucle();:};
-
-retornabucle ::= {: RESULT = new NodeRetornabucle();:};
