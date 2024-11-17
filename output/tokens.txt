@@ -32,9 +32,16 @@ i
 )
 ;
 }
+funcio
+buit
+prova
+(
+)
+{
 sortidaln
 (
-i
+z
 )
 ;
+}
 }

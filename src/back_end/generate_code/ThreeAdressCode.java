@@ -165,7 +165,6 @@ public class ThreeAdressCode {
     //Procediment que afegeix una instruccio de 3@C
     public void generateCode(String code){
         instruction_list.add(code);
-        ;
     }
         
 

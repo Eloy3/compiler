@@ -21,7 +21,7 @@ public class NodeBucle extends NodeBase{
 
     //WHILE
     public NodeBucle(NodeCondicio condicio, NodeBlocf blocf){
-        super("Bucle", 0);
+        super("Buclewhile", 0);
         this.condicio = condicio;
         this.blocf = blocf;
     }

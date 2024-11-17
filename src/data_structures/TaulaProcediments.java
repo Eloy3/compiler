@@ -88,24 +88,22 @@ public class TaulaProcediments {
     }
 
     private String TableHeader() {
-        return "\n"
-                + "NP\t"
-                + "Profunditat\t"
-                + "Etiqueta inici\t"
-                + "Parámetres\t"
-                + "Ocupació variables locals\t"
-                + "Tipus retorn\t";
+        return String.format(
+            "\n%-5s %-12s %-15s %-15s %-25s %-15s\n",
+            "NP", "Profunditat", "Etiqueta inici", "Parámetres", "Ocupació variables locals", "Tipus retorn"
+        );
     }
 
     private String AddTableRow(Procedure node) {
-        return "\n"
-                + node.getNum_proc() + "\t\t"
-                + node.getDepth() + "\t\t\t"
-                + node.getStart_label() + "\t\t\t"
-                + node.getParametros().toString() + "\t\t\t"
-                + node.getTotal_store() + "\t\t\t\t\t\t"
-                + ((node.getType_return()!=null)? node.getType_return() : "") +"\n"
-                + "\n";
+        return String.format(
+            "%-5d %-12d %-15s %-15s %-25d %-15s\n",
+            node.getNum_proc(),
+            node.getDepth(),
+            node.getStart_label(),
+            node.getParametros().toString(),
+            node.getTotal_store(),
+            (node.getType_return() != null) ? node.getType_return() : ""
+        );
     }
 
 

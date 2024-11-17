@@ -48,7 +48,6 @@ public class ThreeAdressCodeBackEnd {
                         case "pmb":
                             instructionList.addInst(Operation.PMB,  null, null,  instruction.split(" ")[1]);
                             break;
-
                         case "goto":
                             instructionList.addInst(Operation.GOTO, null, null, instruction.split(" ")[1]);
                             break;
@@ -131,60 +130,99 @@ public class ThreeAdressCodeBackEnd {
         }
     }
     
-    private void loadTv(){
+    private void loadTv() {
         try {
             BufferedReader br = baseTable(TVAR_PATH);
             String variable;
-            String [] split;
-
+    
             while ((variable = br.readLine()) != null) {
-                if (!variable.equals("")) {
-                    split = variable.split("\\t+");
-
-                    tv.add(new Variable(
-                            split[0],
-                            Integer.parseInt(split[1]),
-                            split[2],
-                            Integer.parseInt(split[3]),
-                            Integer.parseInt(split[4]),
-                            split[5],
-                            (split.length==7)? split[6] : null //variable pot tenir valor o no
-                    ));
+                if (!variable.trim().isEmpty() && !variable.startsWith("Nombre")) { // Skip header line
+                    // Split using regex for two or more whitespace characters
+                    String[] split = variable.trim().split("\\s{2,}");
+                    
+                    // Check for expected fields, accounting for optional 'Valor'
+                    if (split.length >= 6) {
+                        try {
+                            String name = split[0].trim();
+                            int nv = Integer.parseInt(split[1].trim());
+                            String subprogram = split[2].trim();
+                            int store = Integer.parseInt(split[3].trim());
+                            int offset = Integer.parseInt(split[4].trim());
+                            String type = split[5].trim();
+                            // Assign 'Valor' if present, otherwise set to null
+                            String value = (split.length > 6) ? split[6].trim() : null;
+                            
+                            tv.add(new Variable(name, nv, subprogram, store, offset, type, value));
+                        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                            System.err.println("Error parsing variable line: " + variable + " - " + e.getMessage());
+                        }
+                    } else {
+                        System.err.println("Error: Insufficient fields in variable line: " + variable);
+                    }
                 }
-
             }
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
 
-    private void loadTp(){
+    private void loadTp() {
         try {
             BufferedReader br = baseTable(TPROC_PATH);
+            if (br == null) {
+                System.err.println("BufferedReader is null; check file path or permissions.");
+                return;
+            }
+    
             String proc;
-            String [] split;
-
             while ((proc = br.readLine()) != null) {
-                if (!proc.equals("")) {
-                    split = proc.split("\\t+");
-
-                    tp.add(new Procedure(
-                            Integer.parseInt(split[0]),
-                            Integer.parseInt(split[1]),
-                            split[2],
-                            (split[3].equals("[]"))? new ArrayList<Parameter>() : extractParamsTs(split[3]),
-                            Integer.parseInt(split[4]),
-                            TipusSubjacent.valueOf(split[5])
-                    ));
+                if (!proc.trim().isEmpty() && !proc.startsWith("NP")) { // Skip header lines
+                    // Split using regex, preserving multiple spaces within fields
+                    String[] split = proc.trim().split("\\s{2,}");
+                    
+                    if (split.length >= 6) {
+                        try {
+                            int np = Integer.parseInt(split[0].trim());
+                            int depth = Integer.parseInt(split[1].trim());
+                            String startLabel = split[2].trim();
+                            String paramsStr = split[3].trim();
+                            int localVarSize = Integer.parseInt(split[4].trim());
+                            String returnTypeStr = split[5].trim();
+    
+                            TipusSubjacent returnType;
+                            try {
+                                returnType = TipusSubjacent.valueOf(returnTypeStr.toUpperCase());
+                            } catch (IllegalArgumentException | NullPointerException e) {
+                                System.err.println("Unknown return type in procedure: " + returnTypeStr);
+                                returnType = null; // handle unknown return type gracefully
+                            }
+    
+                            tp.add(new Procedure(
+                                    np,
+                                    depth,
+                                    startLabel,
+                                    (paramsStr.equals("[]")) ? new ArrayList<Parameter>() : extractParamsTs(paramsStr),
+                                    localVarSize,
+                                    returnType
+                            ));
+                        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                            System.err.println("Error parsing procedure line: " + proc + " - " + e.getMessage());
+                        }
+                    } else {
+                        System.err.println("Error: Insufficient fields in procedure line: " + proc);
+                    }
                 }
-
             }
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
+    
+    
 
     public static Simbol createSimbolFromLine(String line) {
         String[] parts = line.split(", ");
@@ -238,11 +276,9 @@ public class ThreeAdressCodeBackEnd {
             FileReader fr = new FileReader(path);
             BufferedReader br = new BufferedReader(fr);
 
-            for (int i=0; i<3 && (br.readLine()) != null; i++){
+            for (int i = 0; i < 3 && (br.readLine()) != null; i++) {
             }
-
             return br;
-
         } catch (IOException e) {
             e.printStackTrace();
         }

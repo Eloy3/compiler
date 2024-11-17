@@ -91,7 +91,9 @@ public class NodeSentencia extends NodeBase {
                 break;
             
             case "decl_funcio":
+                decl_funcio.generateCode();
                 break;
+                
             default:
                 break;
         }

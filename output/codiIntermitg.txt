@@ -16,3 +16,8 @@ param_s i
 call line
 goto e0
 e2:skip
+prova:skip
+pmb prova
+param_s z
+call line
+rtn principal 

@@ -1,5 +1,6 @@
 package front_end.simbols;
 
+import data_structures.Procedure;
 import java_cup.terminal;
 
 public class NodeDecl_funcio extends NodeBase{
@@ -23,12 +24,14 @@ public class NodeDecl_funcio extends NodeBase{
         } else {
             ts.insertElement(functionName, tipus.getTipus(), null);
         }
-
     }
     
     public void generateCode(){
-        
+
         cta.generateCode(functionName + ":skip\n");
+        cta.push(cta.getStart_stack(), functionName);
+        //tp.addRow(new Procedure(tp.getNewNumProc(), 0, functionName, getParams(), 0, tipus));
+        cta.generateCode("pmb " + functionName + "\n"); // Preamble
         ts.incAmbit();
 
         NodeParam currentParam = param;
@@ -46,6 +49,7 @@ public class NodeDecl_funcio extends NodeBase{
         }
 
         // Finalize the function with a return
-        cta.generateCode("return\n");
+        cta.generateCode("rtn " + cta.getCur_prog() + " ");
+        ts.decAmbit();
     }
 }

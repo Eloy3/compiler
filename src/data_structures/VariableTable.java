@@ -103,27 +103,23 @@ public class VariableTable {
     }
 
     private String TableHeader() {
-        return "\n"
-                + "Nombre\t\t\t"
-                + "NV\t\t\t"
-                + "Subprograma\t\t\t"
-                + "Ocupació\t\t\t"
-                + "Desplaçament\t\t\t"
-                + "Tipus subjacent\t\t\t"
-                + "Valor";
-
+        return String.format(
+            "\n%-15s %-10s %-20s %-15s %-15s %-20s %-10s\n",
+            "Nombre", "NV", "Subprograma", "Ocupació", "Desplaçament", "Tipus subjacent", "Valor"
+        );
     }
-
+    
     private String AddTableRow(Variable node) {
-        return "\n"
-                + node.getName() + "\t\t\t"
-                + node.getN_var() + "\t\t\t"
-                + node.getSubprog() + "\t\t\t"
-                + node.getStore() + "\t\t\t"
-                + node.getOffset() + "\t\t\t"
-                + node.getType() + "\t\t\t"
-                + node.getValue()
-                + "\n";
+        return String.format(
+            "%-15s %-10d %-20s %-15d %-15d %-20s %-10s\n",
+            node.getName(),
+            node.getN_var(),
+            node.getSubprog(),
+            node.getStore(),
+            node.getOffset(),
+            node.getType(),
+            (node.getValue() != null) ? node.getValue() : ""
+        );
     }
 
     public ArrayList<Variable> getRows_list() {

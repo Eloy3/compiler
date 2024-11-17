@@ -6,6 +6,8 @@ principal(){
 	   sortidaln(i);
 	}
 
-	sortidaln(i);
-
+	funcio buit prova(){
+	   sortidaln(z);
+	}
 }
+
