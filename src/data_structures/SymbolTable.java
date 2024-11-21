@@ -23,9 +23,9 @@ import java.util.logging.Logger;
 
 public class SymbolTable {
 
-    protected int n;
     protected Stack<HashMap> tambit;
     protected ArrayList<Simbol> temp;
+    protected int profunditat;
     public Writer writer;
     private static final String FILE_PATH = "output/Taula_simbols.txt";
     
@@ -35,6 +35,7 @@ public class SymbolTable {
             tambit = new Stack<>();
             temp = new ArrayList<>();
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH), StandardCharsets.UTF_8));
+            profunditat = 0;
         } catch (IOException ex) {
             Logger.getLogger(SymbolTable.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -53,10 +54,12 @@ public class SymbolTable {
     
     public void incAmbit() {
         tambit.push(new HashMap<>());
+        profunditat++;
     }  
     
     public void decAmbit() {
         tambit.pop();
+        profunditat--;
     }  
     
     public void insertElement(String nom, String tipus, Object valor) {
@@ -110,6 +113,14 @@ public class SymbolTable {
         return null;
     }
     
+    public int getProfunditat() {
+        return profunditat;
+    }
+
+    public void setProfunditat(int profunditat) {
+        this.profunditat = profunditat;
+    }
+
     private void escriutxt(String string) {
         try {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output/Taula_simbols.txt", true), "utf-8"));

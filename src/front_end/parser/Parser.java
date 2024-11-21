@@ -637,7 +637,7 @@ class CUP$Parser$actions {
           case 24: // tipus ::= ENT 
             {
               NodeTipus RESULT =null;
-		 RESULT = new NodeTipus(Tipus.ent); 
+		 RESULT = new NodeTipus(Tipus.ENT); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipus",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -646,7 +646,7 @@ class CUP$Parser$actions {
           case 25: // tipus ::= BOOL 
             {
               NodeTipus RESULT =null;
-		 RESULT = new NodeTipus(Tipus.bool); 
+		 RESULT = new NodeTipus(Tipus.BOOL); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipus",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -655,7 +655,7 @@ class CUP$Parser$actions {
           case 26: // tipusf ::= ENT 
             {
               NodeTipus RESULT =null;
-		 RESULT = new NodeTipus(Tipus.ent); 
+		 RESULT = new NodeTipus(Tipus.ENT); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipusf",10, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -664,7 +664,7 @@ class CUP$Parser$actions {
           case 27: // tipusf ::= BOOL 
             {
               NodeTipus RESULT =null;
-		 RESULT = new NodeTipus(Tipus.bool); 
+		 RESULT = new NodeTipus(Tipus.BOOL); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipusf",10, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -673,7 +673,7 @@ class CUP$Parser$actions {
           case 28: // tipusf ::= BUIT 
             {
               NodeTipus RESULT =null;
-		 RESULT = new NodeTipus(Tipus.buit); 
+		 RESULT = new NodeTipus(Tipus.BUIT); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("tipusf",10, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

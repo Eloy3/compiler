@@ -5,8 +5,8 @@ package back_end;
 import data_structures.Procedure;
 import data_structures.Parameter;
 import data_structures.Variable;
-import front_end.simbols.TipusSubjacent;
-import static front_end.simbols.TipusSubjacent.*;
+import front_end.simbols.Tipus;
+import static front_end.simbols.Tipus.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class AssemblyCode {
     private ArrayList<String> conststrings;
     private int conststringidx;
     private ThreeAdressCodeBackEnd c3a;
-    private TipusSubjacent param;
+    private Tipus param;
 
     private int int_store;
     private int str_store;
@@ -71,7 +71,7 @@ public class AssemblyCode {
 
         for (Variable v : tac.getTv()){
             String name = varnom(v);
-            switch (TipusSubjacent.valueOf(v.getType().toUpperCase())){
+            switch (Tipus.valueOf(v.getType().toUpperCase())){
                 case BOOL:
                     bytes = true;
                     code.add(name + ": DS.B 1");
@@ -167,9 +167,15 @@ public class AssemblyCode {
         }
     }
 
-    private void iasigna(Instruction3a i){
+    private void iasigna(Instruction3a i) {
         Variable d = c3a.getVar(i.getDestiny());
-        switch (TipusSubjacent.valueOf(d.getType().toUpperCase())){
+        if (d == null || d.getType() == null) {
+            System.err.println("Error: Destination variable or its type is null for assignment: " + i);
+            return;
+        }
+        System.out.println("Assigning " + i.getOperand1() + " to " + i.getDestiny());
+    
+        switch (Tipus.valueOf(d.getType().toUpperCase())) {
             case BOOL:
                 if (!i.getOperand1().equals("retBool")) {
                     code.add("\tMOVE.B " + getop(i.getOperand1()) + "," + getop(i.getDestiny()));
@@ -179,16 +185,16 @@ public class AssemblyCode {
                 }
                 break;
             case ENT:
-                if (checkHasAllFields(i)){
+                if (checkHasAllFields(i)) {
                     Variable o1 = c3a.getVar(i.getOperand1());
                     Variable o2 = c3a.getVar(i.getOperand2());
-
-                    code.add("\tLEA.L "+varnom(o1)+ ",A0");
-                    code.add("\tMOVE.W "+varnom(o2)+ ",A1");
+    
+                    code.add("\tLEA.L " + varnom(o1) + ",A0");
+                    code.add("\tMOVE.W " + varnom(o2) + ",A1");
                     code.add("\tADD.L A1,A0");
                     code.add("\tMOVE.W (A0),D0");
-                    code.add("\tMOVE.W D0,"+varnom(d));
-
+                    code.add("\tMOVE.W D0," + varnom(d));
+    
                 } else if (!i.getOperand1().equals("retInt")) {
                     code.add("\tMOVE.W " + getop(i.getOperand1()) + "," + getop(i.getDestiny()));
                 } else {
@@ -277,7 +283,7 @@ public class AssemblyCode {
                 break;
             case PARAM_S:
                 if(d != null){
-                    if (TipusSubjacent.valueOf(d.getType().toUpperCase()) == ENT){
+                    if (Tipus.valueOf(d.getType().toUpperCase()) == ENT){
                         code.add("\tMOVE.W " + varnom(d) + ",-(A7)");
                         param =  ENT;
                     } else{
@@ -307,37 +313,52 @@ public class AssemblyCode {
         }
     }
 
-    private void ipmb(Instruction3a i){
+    private void ipmb(Instruction3a i) {
         Procedure p = c3a.getProc(i.getDestiny());
+        if (p == null) {
+            System.err.println("Error: Procedure not found for " + i.getDestiny());
+            return;
+        }
+    
         ArrayList<Parameter> param = p.getParametros();
+        if (param == null) {
+            param = new ArrayList<>(); // Initialize as empty if no parameters
+        }
+    
         int ind = param.size() - 1;
         int k = 4;
-        if(p.getType_return() != null){
-            switch (p.getType_return()){
+        if (p.getType_return() != null) {
+            switch (p.getType_return()) {
                 case ENT:
                 case BOOL:
                     k = 6;
                     break;
             }
         }
-
-        while(ind >= 0){
+    
+        while (ind >= 0) {
             Parameter aux = param.get(ind);
             Variable v = c3a.getVar(aux.getNombre());
-            switch (aux.getTipo()){
+            if (v == null) {
+                System.err.println("Error: Variable not found for parameter " + aux.getNombre());
+                continue;
+            }
+    
+            switch (aux.getTipo()) {
                 case BOOL:
-                    code.add("\tMOVE.W " + k +"(A7),D0");
+                    code.add("\tMOVE.W " + k + "(A7),D0");
                     code.add("\tMOVE.B D0," + varnom(v));
                     k += 2;
                     break;
                 case ENT:
-                    code.add("\tMOVE.W " + k +"(A7)," + varnom(v));
+                    code.add("\tMOVE.W " + k + "(A7)," + varnom(v));
                     k += 2;
                     break;
             }
             ind--;
         }
     }
+    
 
     private void irtn(Instruction3a i){
         Variable r = c3a.getVar(i.getOperand1());
@@ -385,7 +406,7 @@ public class AssemblyCode {
                 code.add("\tLEA.L " + setConstString(i.getOperand1()) + ",A0");
             }
         } else {
-            switch (TipusSubjacent.valueOf(op1.getType().toUpperCase())){
+            switch (Tipus.valueOf(op1.getType().toUpperCase())){
                 case ENT:
                     code.add("\tMOVE.W " + varnom(op1) + ",D1");
                     break;
@@ -414,7 +435,7 @@ public class AssemblyCode {
                 code.add("\tJSR STRCMP");
             }
         } else {
-            switch (TipusSubjacent.valueOf(op1.getType().toUpperCase())){
+            switch (Tipus.valueOf(op1.getType().toUpperCase())){
                 case ENT:
                     code.add("\tMOVE.W " + varnom(op2) + ",D0");
                     code.add("\tCMP.W D0,D1");
@@ -702,7 +723,7 @@ public class AssemblyCode {
     }
 
     public int calculateStore(String type, String s) {
-        TipusSubjacent enum_type = TipusSubjacent.valueOf(type.toUpperCase());
+        Tipus enum_type = Tipus.valueOf(type.toUpperCase());
         switch (enum_type) {
             case ENT:
                 return int_store;

@@ -1,7 +1,7 @@
 package data_structures;
 
 import data_structures.Parameter;
-import front_end.simbols.TipusSubjacent;
+import front_end.simbols.Tipus;
 import java.util.ArrayList;
 
 public class Procedure {
@@ -11,9 +11,9 @@ public class Procedure {
     private final String start_label;
     private final ArrayList<Parameter> parametros;
     private int total_store;
-    private TipusSubjacent type_return;
+    private Tipus type_return;
 
-    public Procedure(int num_proc, int depth, String start_label, ArrayList<Parameter> parametros, int total_store, TipusSubjacent type_return) {
+    public Procedure(int num_proc, int depth, String start_label, ArrayList<Parameter> parametros, int total_store, Tipus type_return) {
         this.num_proc = num_proc;
         this.depth = depth;
         this.start_label = start_label;
@@ -40,7 +40,7 @@ public class Procedure {
         this.total_store = total_store;
     }
 
-    public void setType_return(TipusSubjacent type_return) {
+    public void setType_return(Tipus type_return) {
         this.type_return = type_return;
     }
 
@@ -48,7 +48,7 @@ public class Procedure {
         return start_label;
     }
 
-    public TipusSubjacent getType_return() {
+    public Tipus getType_return() {
         return type_return;
     }
 }

@@ -6,7 +6,7 @@ import data_structures.Procedure;
 import data_structures.Variable;
 import data_structures.Parameter;
 import front_end.simbols.Simbol;
-import front_end.simbols.TipusSubjacent;
+import front_end.simbols.Tipus;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -32,103 +32,126 @@ public class ThreeAdressCodeBackEnd {
     }
     
     private void loadInstructions() {
-
-        try {
-            FileReader fr = new FileReader(TAC_PATH);
-            BufferedReader br = new BufferedReader(fr);
+        try (BufferedReader br = new BufferedReader(new FileReader(TAC_PATH))) {
             String instruction;
-
+    
             while ((instruction = br.readLine()) != null) {
-
-
-                if (!instruction.equalsIgnoreCase("")) {
-
-                    switch (instruction.split(" ")[0]) {
-
+                instruction = instruction.trim();
+                if (instruction.isEmpty()) continue; // Skip empty lines
+        
+                String[] parts = instruction.split("\\s+"); // Split by whitespace
+                if (parts.length == 0) {
+                    System.err.println("Error: Empty instruction: " + instruction);
+                    continue;
+                }
+    
+                try {
+                    switch (parts[0]) {
                         case "pmb":
-                            instructionList.addInst(Operation.PMB,  null, null,  instruction.split(" ")[1]);
+                            instructionList.addInst(Operation.PMB, null, null, parts[1]);
                             break;
+    
                         case "goto":
-                            instructionList.addInst(Operation.GOTO, null, null, instruction.split(" ")[1]);
+                            instructionList.addInst(Operation.GOTO, null, null, parts[1]);
                             break;
+    
                         case "call":
-                            instructionList.addInst(Operation.CALL, null, null, instruction.split(" ")[1]);
+                            instructionList.addInst(Operation.CALL, null, null, parts[1]);
                             break;
-                        case "param_c":
-                            instructionList.addInst(Operation.PARAM_C, null, null, instruction.split(" ")[1].replace("\"", ""));
-                            break;
+    
                         case "param_s":
-                            instructionList.addInst(Operation.PARAM_S, null, null, instruction.split(" ")[1]);
+                            instructionList.addInst(Operation.PARAM_S, null, null, parts[1]);
                             break;
+    
                         case "rtn":
-                            instructionList.addInst(Operation.RTN, instruction.split(" ")[2], null, instruction.split(" ")[1]);
+                            instructionList.addInst(Operation.RTN, null, null, parts[1]);
                             break;
-
+    
+                        case "if":
+                            handleConditional(parts, instruction);
+                            break;
+    
                         default:
-
-                            if (instruction.contains(":skip")) { //Etiqueta
-                                instructionList.addInst(Operation.SKIP, null, null, instruction.split(":")[0]);
-                            } else if (instruction.split(" ")[1].equalsIgnoreCase("=") && !instruction.split(" ")[2].equals("call")) {
-
-                                if (instruction.split(" ").length < 4) { //asignació simple (a = b).
-                                    String [] splitCode = instruction.split(" ");
-                                    if (instruction.contains("[")) {
-                                        String [] splitAdress = instruction.split("[\\[\\]=\\s]+");
-                                        if (splitCode[0].contains("[")){
-                                            instructionList.addInst(Operation.ASSIGNA, splitAdress[2], splitAdress[1], splitAdress[0]);
-                                        }
-                                        else instructionList.addInst(Operation.ASSIGNA, splitAdress[1], splitAdress[2], splitAdress[0]);
-
-                                    } else instructionList.addInst(Operation.ASSIGNA, splitCode[2], null, splitCode[0]);
-
-                                } else {
-                                    switch (instruction.split(" ")[3]) {
-                                        case "+" -> instructionList.addInst(Operation.SUMA, instruction.split(" ")[2], instruction.split(" ")[4], instruction.split(" ")[0]);
-                                        case "-" -> instructionList.addInst(Operation.RESTA, instruction.split(" ")[2], instruction.split(" ")[4], instruction.split(" ")[0]);
-                                        case "*" -> instructionList.addInst(Operation.MULTIPLICACIO, instruction.split(" ")[2], instruction.split(" ")[4], instruction.split(" ")[0]);
-                                        case "/" -> instructionList.addInst(Operation.DIVISIO, instruction.split(" ")[2], instruction.split(" ")[4], instruction.split(" ")[0]);
-                                        default -> //Es una assignació de string.
-                                                instructionList.addInst(Operation.ASSIGNA, instruction.split("=")[1].replaceAll("\"", ""), null, instruction.split(" ")[0]);
-                                    }
-                                }
-                            } else if (instruction.split(" ")[0].equalsIgnoreCase("if")) {
-                                switch (instruction.split(" ")[2]) {
-                                    case ">=":
-                                        instructionList.addInst(Operation.IFMAJORIGUAL,  instruction.split(" ")[1], instruction.split(" ")[3], instruction.split(" ")[5]);
-                                        break;
-                                    case "==":
-                                        instructionList.addInst(Operation.IFIGUAL,  instruction.split(" ")[1], instruction.split(" ")[3], instruction.split(" ")[5]);
-                                        break;
-                                    case ">":
-                                        instructionList.addInst(Operation.IFMAJOR, instruction.split(" ")[1], instruction.split(" ")[3], instruction.split(" ")[5]);
-                                        break;
-                                    case "<=":
-                                        instructionList.addInst(Operation.IFMENORIGUAL,  instruction.split(" ")[1], instruction.split(" ")[3], instruction.split(" ")[5]);
-                                        break;
-                                    case "<":
-                                        instructionList.addInst(Operation.IFMENOR,  instruction.split(" ")[1], instruction.split(" ")[3], instruction.split(" ")[5]);
-                                        break;
-                                    case "!=":
-                                        instructionList.addInst(Operation.IFDIFERENT,  instruction.split(" ")[1], instruction.split(" ")[3], instruction.split(" ")[5]);
-                                        break;
-                                    default:
-                                        instructionList.addInst(Operation.IF,  instruction.split(" ")[1], null, instruction.split(" ")[4]);
-                                }
-                            } else if (instruction.split(" ")[2].equals("call")) {
-                                instructionList.addInst(Operation.CALL, null, null, instruction.split(" ")[3]);
-                                if (instruction.split(" ")[1].equals("=")){
-                                    instructionList.addInst(Operation.ASSIGNA, getReturnProc(instruction.split(" ")[3]), null, instruction.split(" ")[0]);
-                                }
+                            if (instruction.contains("=")) {
+                                // Handle assignments
+                                handleAssignmentOrOperation(parts, instruction);
+                            } else if (instruction.contains(":skip")) {
+                                // Handle labels
+                                String label = instruction.split(":")[0].trim();
+                                instructionList.addInst(Operation.SKIP, null, null, label);
+                            } else {
+                                System.err.println("Error: Unknown instruction: " + instruction);
                             }
                     }
+                } catch (Exception e) {
+                    System.err.println("Error processing instruction: " + instruction + " - " + e.getMessage());
                 }
             }
-            br.close();
-            //System.out.println(instructionList.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
+    
+    private void handleConditional(String[] parts, String instruction) {
+        if (parts.length < 6) {
+            System.err.println("Error: Malformed conditional: " + instruction);
+            return;
+        }
+    
+        String op1 = parts[1];
+        String operator = parts[2];
+        String op2 = parts[3];
+        String label = parts[5];
+    
+        switch (operator) {
+            case "!=":
+                instructionList.addInst(Operation.IFDIFERENT, op1, op2, label);
+                break;
+            case "==":
+                instructionList.addInst(Operation.IFIGUAL, op1, op2, label);
+                break;
+            case ">":
+                instructionList.addInst(Operation.IFMAJOR, op1, op2, label);
+                break;
+            case ">=":
+                instructionList.addInst(Operation.IFMAJORIGUAL, op1, op2, label);
+                break;
+            case "<":
+                instructionList.addInst(Operation.IFMENOR, op1, op2, label);
+                break;
+            case "<=":
+                instructionList.addInst(Operation.IFMENORIGUAL, op1, op2, label);
+                break;
+            default:
+                System.err.println("Error: Unsupported conditional operator: " + operator);
+        }
+    }
+    
+    
+    private void handleAssignmentOrOperation(String[] parts, String instruction) {
+        if (parts.length < 5) {
+            // Handle simple assignments: `x = y`
+            String[] assignParts = instruction.split("=");
+            if (assignParts.length == 2) {
+                String lhs = assignParts[0].trim(); // Left-hand side
+                String rhs = assignParts[1].trim(); // Right-hand side
+                instructionList.addInst(Operation.ASSIGNA, rhs, null, lhs);
+            } else {
+                System.err.println("Error: Malformed assignment: " + instruction);
+            }
+        } else {
+            // Handle arithmetic operations: `x = y + z`
+            switch (parts[3]) {
+                case "+" -> instructionList.addInst(Operation.SUMA, parts[2], parts[4], parts[0]);
+                case "-" -> instructionList.addInst(Operation.RESTA, parts[2], parts[4], parts[0]);
+                case "*" -> instructionList.addInst(Operation.MULTIPLICACIO, parts[2], parts[4], parts[0]);
+                case "/" -> instructionList.addInst(Operation.DIVISIO, parts[2], parts[4], parts[0]);
+                default -> System.err.println("Error: Unknown operation in instruction: " + instruction);
+            }
+        }
+    }
+    
     
     private void loadTv() {
         try {
@@ -191,9 +214,9 @@ public class ThreeAdressCodeBackEnd {
                             int localVarSize = Integer.parseInt(split[4].trim());
                             String returnTypeStr = split[5].trim();
     
-                            TipusSubjacent returnType;
+                            Tipus returnType;
                             try {
-                                returnType = TipusSubjacent.valueOf(returnTypeStr.toUpperCase());
+                                returnType = Tipus.valueOf(returnTypeStr.toUpperCase());
                             } catch (IllegalArgumentException | NullPointerException e) {
                                 System.err.println("Unknown return type in procedure: " + returnTypeStr);
                                 returnType = null; // handle unknown return type gracefully
@@ -242,10 +265,10 @@ public class ThreeAdressCodeBackEnd {
     public static Object parseValue(String tipus, String valorStr) {
         Object valor;
         switch (tipus) {
-            case "ent":
+            case "ENT":
                 valor = Integer.parseInt(valorStr);
                 break;
-            case "bool":
+            case "BOOL":
                 valor = Boolean.parseBoolean(valorStr);
                 break;
             default:
@@ -294,7 +317,7 @@ public class ThreeAdressCodeBackEnd {
 
         for (String s : stringArray) {
             Simbol sym = getSymbol(s);
-            Parameters.add(new Parameter(sym.getNom(), TipusSubjacent.valueOf(sym.getTipus().toUpperCase())));
+            Parameters.add(new Parameter(sym.getNom(), Tipus.valueOf(sym.getTipus().toUpperCase())));
         }
         return Parameters;
     }

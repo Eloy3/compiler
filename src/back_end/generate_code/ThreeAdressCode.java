@@ -16,9 +16,9 @@ public class ThreeAdressCode {
 
     private int n_var, label_num, disp = 0;
     private BufferedWriter bw;
-    private final Stack<String> true_stack, false_stack, end_stack, start_stack;
+    private final Stack<String> true_stack, false_stack, end_stack, start_stack, pproc;
     private final ArrayList<String> operands, instruction_list;
-    private String temp_id = null, cur_prog, cur_type = "";
+    private String temp_id = null, cur_type = "";
     private static final String FILE_PATH = "output/codiIntermitg.txt";
     private final VariableTable tv;
     
@@ -27,7 +27,8 @@ public class ThreeAdressCode {
         this.false_stack = new Stack<>();
         this.end_stack = new Stack<>();
         this.start_stack = new Stack<>();
-        
+        this.pproc = new Stack<>();
+
         this.operands = new ArrayList<>();
         this.instruction_list = new ArrayList<>();
         this.tv = tv;
@@ -52,7 +53,7 @@ public class ThreeAdressCode {
             ("t" +
                     n_var,
                     n_var,
-                    cur_prog,
+                    pproc.peek(),
                 tv.calculateStore(type, ""),
                     disp,
             type,"")
@@ -73,7 +74,7 @@ public class ThreeAdressCode {
         tv.addRow(new Variable
             ("t" + n_var,
                     n_var,
-                    cur_prog,
+                    pproc.peek(),
                 tv.calculateStore(type, val),
                     disp,
                 type,
@@ -90,7 +91,7 @@ public class ThreeAdressCode {
         tv.addRow(new Variable
             (name,
                     n_var,
-                    cur_prog,
+                    pproc.peek(),
                 tv.calculateStore(type, ""),
                     disp,
             type, "")
@@ -108,7 +109,7 @@ public class ThreeAdressCode {
         tv.addRow(new Variable
             (name,
                     n_var,
-                    cur_prog,
+                    pproc.peek(),
                 tv.calculateStore(type, value),
                     disp,
                 type,
@@ -126,7 +127,7 @@ public class ThreeAdressCode {
         tv.addRow(new Variable
                 (name,
                         n_var,
-                        cur_prog,
+                        pproc.peek(),
                         store,
                         disp,
                         type, "")
@@ -186,31 +187,20 @@ public class ThreeAdressCode {
 
     public Stack<String> getStart_stack(){return start_stack;}
 
+    public Stack<String> getPproc(){return pproc;}
 
     public void pop(Stack<String> stack){stack.pop();}
 
-
     public String getTop(Stack<String> stack){return stack.peek();}
-
 
     public void push(Stack<String> stack, String label){stack.push(label);}
 
     public ArrayList<String> getOperands() {
         return operands;
     }
-
-
-
-    public String getCur_prog() {
-        return cur_prog;
-    }
-
-    public void setCur_prog(String cur_prog){this.cur_prog = cur_prog;}
     
-
     public void incDisplacement(int val){
         disp += val;}
-
 
     public void resetDisp(){
         disp = 0;}

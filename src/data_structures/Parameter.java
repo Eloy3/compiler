@@ -5,14 +5,14 @@
 
 package data_structures;
 
-import front_end.simbols.TipusSubjacent;
+import front_end.simbols.Tipus;
 
 
 public class Parameter {
     private String nombre;
-    private TipusSubjacent tipo;
+    private Tipus tipo;
 
-    public Parameter(String nombre, TipusSubjacent tipo) {
+    public Parameter(String nombre, Tipus tipo) {
         this.nombre = nombre;
         this.tipo = tipo;
     }
@@ -21,7 +21,7 @@ public class Parameter {
         return nombre;
     }
 
-    public TipusSubjacent getTipo() {
+    public Tipus getTipo() {
         return tipo;
     }
 

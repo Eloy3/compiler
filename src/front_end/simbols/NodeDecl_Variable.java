@@ -23,7 +23,7 @@ public class NodeDecl_Variable extends NodeBase{
     
     public void generateCode(){
         if(varinic == null){
-            ts.insertElement(id, nt.getTipus(), null);
+            ts.insertElement(id, nt.getTipusString(), null);
         }else{
             String id2 = varinic.getValor();
             switch(varinic.getTipus()){
@@ -36,11 +36,11 @@ public class NodeDecl_Variable extends NodeBase{
                         //Comprovar a la taula de simbols si id2 té el mateix tipus que id.
                         Simbol param = ts.get(id2);
                         //System.out.println(param);
-                        if(!nt.getTipus().equals(param.tipus)){
+                        if(!nt.getTipusString().equals(param.tipus)){
                             //System.out.println("Error semàntic, la variable '"+id2+"' no te el mateix tipus que '"+id+"'");
                             new Error_DistintTipus().printError(lc, id);
                         }else{
-                            ts.insertElement(id, nt.getTipus().toString(), param.valor);
+                            ts.insertElement(id, nt.getTipusString().toString(), param.valor);
                             generaC3a();
                         }
                     }   
@@ -48,33 +48,24 @@ public class NodeDecl_Variable extends NodeBase{
                     break;
                 case "enter":
                     //System.out.println(tipus.getTipus());
-                    if(!nt.getTipus().equals("ent")){
+                    if(!nt.getTipusString().equals("ENT")){
                         //System.out.println("Error semàntic, '"+id2+"' no té el mateix tipus que '"+id+"'");
                         new Error_DistintTipus().printError(lc, id);
                     }else{
-                        ts.insertElement(id, nt.getTipus().toString(), varinic);
+                        ts.insertElement(id, nt.getTipusString().toString(), varinic);
                         generaC3a();
                     }
                     break;
 
                 case "boolea":
-                    if(!nt.getTipus().equals("bool")){
+                    if(!nt.getTipusString().equals("BOOL")){
                         //System.out.println("Error semàntic, '"+id2+"' no té el mateix tipus que '"+id+"'");
                         new Error_DistintTipus().printError(lc, id);
                     }else{
-                        ts.insertElement(id, nt.getTipus().toString(), varinic);
+                        ts.insertElement(id, nt.getTipusString().toString(), varinic);
                         generaC3a();
                     }
                     break;
-
-                case "tupla":
-                    if(!nt.getTipus().equals("tupla")){
-                        //System.out.println("Error semàntic, '"+id2+"' no té el mateix tipus que '"+id+"'");
-                        new Error_DistintTipus().printError(lc, id);
-                    }else{
-                        ts.insertElement(id, nt.getTipus().toString(), varinic);
-
-                    }
             }
         }
     }

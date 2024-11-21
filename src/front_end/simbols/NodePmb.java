@@ -13,7 +13,7 @@ public class NodePmb extends NodeBase{
 
         String startLabel = cta.getTemp_id();
         cta.setTemp_id(null);
-        tp.addRow(new Procedure(tp.getNewNumProc(), 0, startLabel, getParams(), 0, TipusSubjacent.NULL));
+        tp.addRow(new Procedure(tp.getNewNumProc(), 0, startLabel, getParams(), 0, Tipus.NULL));
         cta.generateCode("pmb " + startLabel + "\n");
     }
 
@@ -22,7 +22,7 @@ public class NodePmb extends NodeBase{
         ArrayList<Parameter> params = new ArrayList<>();
 
         for (Simbol symbol : paramSymbol) {
-            TipusSubjacent enum_type = TipusSubjacent.valueOf(symbol.getTipusSubjacent().toUpperCase());
+            Tipus enum_type = Tipus.valueOf(symbol.getTipusSubjacent().toUpperCase());
             params.add(new Parameter(symbol.getNom(), enum_type));
         }
 

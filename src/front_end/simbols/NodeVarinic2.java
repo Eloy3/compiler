@@ -50,7 +50,7 @@ public class NodeVarinic2 extends NodeBase{
 
                     break;
                 case "enter":
-                    if(!var.tipus.equals("ent")){
+                    if(!var.tipus.equals("ENT")){
                         new Error_DistintTipus().printError(lc, id);
                     }else{
                         calcOcup();
@@ -58,7 +58,7 @@ public class NodeVarinic2 extends NodeBase{
                     break;
                 
                 case "boolea":
-                    if(!var.tipus.equals("bool")){
+                    if(!var.tipus.equals("BOOL")){
                         new Error_DistintTipus().printError(lc, id);
                     }else{
                         calcOcup();
@@ -92,7 +92,7 @@ public class NodeVarinic2 extends NodeBase{
                         }else{
                              operand1 = ts.get(a.getValor());
                              //EL primer operand també ha de ser un enter
-                             if(!operand1.getTipus().equals("ent")){
+                             if(!operand1.getTipus().equals("ENT")){
                                 new Error_DistintTipus().printError(lc, a.getName());
                             }else{
                                 //Miram el segon operand
@@ -103,7 +103,7 @@ public class NodeVarinic2 extends NodeBase{
                                     }else{
                                          operand2 = ts.get(b.getValor());
                                          //EL segon operand també ha de ser un enter
-                                         if(!operand2.getTipus().equals("ent")){
+                                         if(!operand2.getTipus().equals("ENT")){
                                             new Error_DistintTipus().printError(lc, b.getName());
                                         }else{
                                              calcOcup2();
@@ -126,7 +126,7 @@ public class NodeVarinic2 extends NodeBase{
                             }else{
                                  operand2 = ts.get(b.getValor());
                                  //EL segon operand també ha de ser un enter
-                                 if(!operand2.getTipus().equals("ent")){
+                                 if(!operand2.getTipus().equals("ENT")){
                                     new Error_DistintTipus().printError(lc, b.getName());
                                 }else{
                                      calcOcup2();
@@ -150,7 +150,7 @@ public class NodeVarinic2 extends NodeBase{
                         }else{
                              operand1 = ts.get(a.getValor());
                              //EL primer operand també ha de ser un boolea
-                             if(!operand1.getTipus().equals("bool")){
+                             if(!operand1.getTipus().equals("BOOL")){
                                 new Error_DistintTipus().printError(lc, a.getName());
                             }else{
                                 //Miram el segon operand
@@ -161,7 +161,7 @@ public class NodeVarinic2 extends NodeBase{
                                     }else{
                                          operand2 = ts.get(b.getValor());
                                          //EL segon operand també ha de ser un enter
-                                         if(!operand2.getTipus().equals("bool")){
+                                         if(!operand2.getTipus().equals("BOOL")){
                                             new Error_DistintTipus().printError(lc, b.getName());
                                         }else{
                                              calcOcup2();
@@ -184,7 +184,7 @@ public class NodeVarinic2 extends NodeBase{
                             }else{
                                  operand2 = ts.get(b.getValor());
                                  //EL segon operand també ha de ser un enter
-                                 if(!operand2.getTipus().equals("bool")){
+                                 if(!operand2.getTipus().equals("BOOL")){
                                     new Error_DistintTipus().printError(lc, b.getName());
                                 }else{
                                      calcOcup2();

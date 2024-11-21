@@ -1,3 +1,5 @@
-id=prova, tipus=buit, valor=null
-id=z, tipus=ent, valor=null
-id=i, tipus=ent, valor=0
+id=prova, tipus=BUIT, valor=null
+id=z, tipus=ENT, valor=null
+id=i, tipus=ENT, valor=0
+id=x, tipus=ENT, valor=3
+id=y, tipus=ENT, valor=7

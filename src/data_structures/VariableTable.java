@@ -5,7 +5,7 @@
 
 package data_structures;
 
-import front_end.simbols.TipusSubjacent;
+import front_end.simbols.Tipus;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -79,11 +79,12 @@ public class VariableTable {
     }
 
     public int calculateStore(String type, String s) {
-        TipusSubjacent enum_type = TipusSubjacent.valueOf(type.toUpperCase());
+        Tipus enum_type = Tipus.valueOf(type.toUpperCase());
         return switch (enum_type) {
             case ENT -> int_store;
             case BOOL -> logic_store;
             case NULL -> null_store;
+            case BUIT -> null_store;
         };
     }
 

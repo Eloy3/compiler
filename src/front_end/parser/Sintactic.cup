@@ -103,12 +103,12 @@ exprsimple ::= ID:v         {: RESULT = new NodeExprsimple(NodeExprsimple.exprsi
              | ENTER:v      {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.enter, v.toString()); :}
              | BOOLEA:v     {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.boolea, v.toString()); :};
 
-tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ent); :}
-        | BOOL  {: RESULT = new NodeTipus(Tipus.bool); :};
+tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ENT); :}
+        | BOOL  {: RESULT = new NodeTipus(Tipus.BOOL); :};
 
-tipusf ::= ENT {: RESULT = new NodeTipus(Tipus.ent); :}
-        | BOOL {: RESULT = new NodeTipus(Tipus.bool); :}
-        | BUIT {: RESULT = new NodeTipus(Tipus.buit); :};
+tipusf ::= ENT {: RESULT = new NodeTipus(Tipus.ENT); :}
+        | BOOL {: RESULT = new NodeTipus(Tipus.BOOL); :}
+        | BUIT {: RESULT = new NodeTipus(Tipus.BUIT); :};
 
 blocf ::= sentenciaf:s blocf2:b  {: RESULT = new NodeBlocf(s,b); :};
 

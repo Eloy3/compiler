@@ -7,7 +7,11 @@ principal(){
 	}
 
 	funcio buit prova(){
-	   sortidaln(z);
+	   ent x = 3;
+	   sortidaln(x);
 	}
+
+	ent y = 7;
+	sortidaln(7);
 }
 

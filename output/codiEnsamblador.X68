@@ -44,12 +44,37 @@ e1:
 	JMP e0
 * --> | SKIP | null | null | e2 |
 e2:
+* --> | SKIP | null | null | prova |
+prova:
+* --> | PMB | null | null | prova |
+* --> | ASSIGNA | 3 | null | t4 |
+	MOVE.W #3,t4_prova
+* --> | ASSIGNA | t4 | null | x |
+	MOVE.W t4_prova,x_prova
+* --> | PARAM_S | null | null | x |
+	MOVE.W x_prova,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+	ADDA.L #2,A7
+* --> | RTN | null | null | prova |
+	RTS
+* --> | ASSIGNA | 7 | null | t6 |
+	MOVE.W #7,t6_principal
+* --> | ASSIGNA | t6 | null | y |
+	MOVE.W t6_principal,y_principal
+* --> | CALL | null | null | line |
+	JSR SLINE
+	ADDA.L #4,A7
 	SIMHALT
  
 z_principal: DS.W 1
 t1_principal: DS.W 1
 i_principal: DS.W 1
 t3_principal: DS.W 1
+t4_prova: DS.W 1
+x_prova: DS.W 1
+t6_principal: DS.W 1
+y_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0

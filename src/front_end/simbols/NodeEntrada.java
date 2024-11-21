@@ -28,8 +28,8 @@ public class NodeEntrada extends NodeBase{
 
     private String returnType() {
         switch (s.getTipus()){
-            case "ent": return "retInt";
-            case "bool": return "retBool";
+            case "ENT": return "retInt";
+            case "BOOL": return "retBool";
         }
         return null;
     }
