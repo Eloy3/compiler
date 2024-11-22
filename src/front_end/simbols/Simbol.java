@@ -4,12 +4,12 @@ package front_end.simbols;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 import back_end.Types;
 import java.util.ArrayList;
+
 public class Simbol{
     String nom;
     String tipus;
     String tipusSubjacent;
     Object valor;
-    ArrayList<Simbol> args;
 
     public Simbol(String nom, String tipus, Object valor) {
         this.nom = nom;
@@ -20,12 +20,7 @@ public class Simbol{
         this.tipus = tipus;
         this.valor = valor;
     }
-    public Simbol(String id, Types types, String subtype, ArrayList<Simbol> args) {
-        this.nom = id;
-        this.tipus = types.toString();
-        this.tipusSubjacent = subtype;
-        this.args = args;
-    }
+
     public Simbol(){
         
     }

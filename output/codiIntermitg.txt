@@ -23,6 +23,7 @@ x = t4
 param_s x
 call line
 rtn prova
+rtn prova
 t6 = 7
 y = t6
 param_c 7

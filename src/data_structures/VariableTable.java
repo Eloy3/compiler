@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class VariableTable {
 
     private int int_store;
-    private int str_store;
     private int logic_store;
     private int null_store;
 
@@ -43,7 +42,6 @@ public class VariableTable {
     private void setStore() throws IOException {
         br = new BufferedReader(new FileReader(STORES_FILE_PATH));
         int_store = Integer.parseInt(br.readLine().split(" ")[2]);
-        str_store = Integer.parseInt(br.readLine().split(" ")[2]);
         logic_store = Integer.parseInt(br.readLine().split(" ")[2]);
         null_store = Integer.parseInt(br.readLine().split(" ")[2]);
         br.close();

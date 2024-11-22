@@ -37,6 +37,7 @@ non terminal NodeSentencies2 sentencies2;
 non terminal NodeOperador_cond operador_cond;
 non terminal NodeDecl_Variable decl_variable;
 non terminal NodeDecl_funcio decl_funcio;
+non terminal NodeCrida_funcio crida_funcio;
 non terminal NodeTipus tipus;
 non terminal NodeTipus tipusf;
 non terminal NodeVarinic varinic;
@@ -49,7 +50,8 @@ non terminal NodeBlocf2 blocf2;
 non terminal NodeComportamentv1 comportamentvl;
 non terminal NodeBucle bucle;
 non terminal NodeSentencia sentenciaf;
-non terminal cons,decl_variable_local, sretorna;
+non terminal NodeRetorna retorna;
+non terminal cons, decl_variable_local;
 
 non terminal NodePrincipal principal;
 non terminal NodeCondicional condicional;
@@ -85,8 +87,11 @@ sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"de
               | bucle:b {: RESULT = new NodeSentencia(b,"bucle"); :}
               | condicional:c {: RESULT = new NodeSentencia(c,"condicional"); :}
               | decl_funcio:df {: RESULT = new NodeSentencia(df,"decl_funcio"); :}
+              | crida_funcio:df {: RESULT = new NodeSentencia(df,"crida_funcio"); :}
               | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s,"sortida"); :}
               | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e,"entrada"); :};      
+
+crida_funcio ::= ID:name EParen param:p DParen PUNTICOMA {: RESULT = new NodeCrida_funcio(name, p, lexic.getLineColumn()); :};
 
 decl_funcio ::= FUNCIO tipusf:t ID:name EParen param:p DParen EClau blocf:b DClau {: RESULT = new NodeDecl_funcio(t,name,p,b, lexic.getLineColumn()); :};
 
@@ -121,11 +126,12 @@ sentenciaf ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"d
               | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v,"varinic2"); :}
               | bucle:b {: RESULT = new NodeSentencia(b,"bucle"); :}
               | condicional:c {: RESULT = new NodeSentencia(c,"condicional"); :}
-              | sretorna
-              | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s,"sortida"); :}
-              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e,"entrada"); :};     
+              | retorna:r {: RESULT = new NodeSentencia(r,"retorna"); :}
+              | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s, "sortida"); :}
+              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e, "entrada"); :};     
 
-sretorna ::= RETORNA exprsimple PUNTICOMA;
+retorna ::= RETORNA exprsimple:expr PUNTICOMA {: RESULT = new NodeRetorna(expr, lexic.getLineColumn()); :};
+retorna ::= RETORNA PUNTICOMA {: RESULT = new NodeRetorna(); :};
 
 decl_variable ::= tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(t, id, vi, lexic.getLineColumn()); :};
 

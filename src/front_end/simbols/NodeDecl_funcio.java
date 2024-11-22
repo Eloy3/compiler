@@ -60,7 +60,6 @@ public class NodeDecl_funcio extends NodeBase {
         ts.incAmbit();
         cta.push(cta.getPproc(),functionName);
         
-
         // Generate parameter code
         NodeParam currentParam = param;
         while (currentParam != null) {

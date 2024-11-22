@@ -1,28 +1,27 @@
-
-
 package front_end.simbols;
 
-
-public class NodeExprsimple extends NodeBase{
+public class NodeExprsimple extends NodeBase {
     public enum exprsimple {id, enter, boolea}
     private exprsimple tipus;
     private String valor;
-    private NodeExprtupla exprtupla;
-    
-    public NodeExprsimple(exprsimple t, String v){
+
+    public NodeExprsimple(exprsimple t, String v) {
         super("Exprsimple", 0);
         this.tipus = t;
         this.valor = v;
     }
-    
-    public NodeExprsimple(exprsimple t, NodeExprtupla v){
+
+    public NodeExprsimple(exprsimple t) {
         super("Exprsimple", 0);
         this.tipus = t;
-        exprtupla = v;
     }
 
     public exprsimple getTipus() {
         return tipus;
+    }
+
+    public String getTipusAsString() {
+        return tipus.name(); // Converts enum to String
     }
 
     public String getValor() {
@@ -33,6 +32,4 @@ public class NodeExprsimple extends NodeBase{
     public String toString() {
         return valor;
     }
-    
-    
 }

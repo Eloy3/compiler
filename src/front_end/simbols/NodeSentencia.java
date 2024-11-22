@@ -10,6 +10,8 @@ public class NodeSentencia extends NodeBase {
     private NodeEntrada entrada;
     private NodeSortida sortida;
     private NodeDecl_funcio decl_funcio;
+    private NodeCrida_funcio crida_funcio;
+    private NodeRetorna retorna;
 
     public NodeSentencia(NodeBucle nodeBucle, String sentencia) {
         super("Sentencia", 0);
@@ -50,6 +52,17 @@ public class NodeSentencia extends NodeBase {
     public NodeSentencia(NodeDecl_funcio decl_funcio, String sentencia) {
         super("Sentencia", 0);
         this.decl_funcio = decl_funcio;
+        this.sentencia = sentencia;
+    }
+    public NodeSentencia(NodeCrida_funcio crida_funcio, String sentencia) {
+        super("Sentencia", 0);
+        this.crida_funcio = crida_funcio;
+        this.sentencia = sentencia;
+    }
+
+    public NodeSentencia(NodeRetorna retorna, String sentencia) {
+        super("Sentencia", 0);
+        this.retorna = retorna;
         this.sentencia = sentencia;
     }
 
@@ -94,8 +107,10 @@ public class NodeSentencia extends NodeBase {
                 decl_funcio.generateCode();
                 break;
                 
-            default:
+            case "retorna":
+                retorna.generateCode();
                 break;
+                
         }
     }
 }

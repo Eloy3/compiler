@@ -173,8 +173,7 @@ public class AssemblyCode {
             System.err.println("Error: Destination variable or its type is null for assignment: " + i);
             return;
         }
-        System.out.println("Assigning " + i.getOperand1() + " to " + i.getDestiny());
-    
+            
         switch (Tipus.valueOf(d.getType().toUpperCase())) {
             case BOOL:
                 if (!i.getOperand1().equals("retBool")) {

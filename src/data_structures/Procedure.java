@@ -1,6 +1,5 @@
 package data_structures;
 
-import data_structures.Parameter;
 import front_end.simbols.Tipus;
 import java.util.ArrayList;
 

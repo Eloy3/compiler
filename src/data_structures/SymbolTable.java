@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.Stack;
-import java_cup.runtime.Symbol;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

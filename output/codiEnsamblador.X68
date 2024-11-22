@@ -58,6 +58,8 @@ prova:
 	ADDA.L #2,A7
 * --> | RTN | null | null | prova |
 	RTS
+* --> | RTN | null | null | prova |
+	RTS
 * --> | ASSIGNA | 7 | null | t6 |
 	MOVE.W #7,t6_principal
 * --> | ASSIGNA | t6 | null | y |

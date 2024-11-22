@@ -9,6 +9,7 @@ principal(){
 	funcio buit prova(){
 	   ent x = 3;
 	   sortidaln(x);
+	   retorna;
 	}
 
 	ent y = 7;
