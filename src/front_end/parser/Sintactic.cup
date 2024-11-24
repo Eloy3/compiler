@@ -95,7 +95,7 @@ crida_funcio ::= ID:name EParen param:p DParen PUNTICOMA {: RESULT = new NodeCri
 
 decl_funcio ::= FUNCIO tipusf:t ID:name EParen param:p DParen EClau blocf:b DClau {: RESULT = new NodeDecl_funcio(t,name,p,b, lexic.getLineColumn()); :};
 
-param ::= tipus:t ID:id ASSIGN exprsimple:v param2:p2 {: RESULT = new NodeParam(t, id, v, p2); :}
+param ::= tipus:t ID:id param2:p2 {: RESULT = new NodeParam(t, id, p2); :}
             |   {: RESULT = new NodeParam(); :};
 
 param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}

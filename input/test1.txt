@@ -1,15 +1,15 @@
 principal(){
-	ent z;
-	entrada(z);
+	ent a;
+	entrada(a);
 
-	per(ent i=0; i!=z; i++){
+	per(ent i=0; i!=a; i++){
 	   sortidaln(i);
 	}
 
-	funcio buit prova(){
-	   ent x = 3;
-	   sortidaln(x);
-	   retorna;
+	funcio ent suma(ent x, ent y){
+	   ent z;
+	   z = x + y;
+	   retorna z;
 	}
 
 	ent y = 7;

@@ -38,7 +38,7 @@ public class ThreeAdressCodeBackEnd {
             while ((instruction = br.readLine()) != null) {
                 instruction = instruction.trim();
                 if (instruction.isEmpty()) continue; // Skip empty lines
-        
+    
                 String[] parts = instruction.split("\\s+"); // Split by whitespace
                 if (parts.length == 0) {
                     System.err.println("Error: Empty instruction: " + instruction);
@@ -61,6 +61,10 @@ public class ThreeAdressCodeBackEnd {
     
                         case "param_s":
                             instructionList.addInst(Operation.PARAM_S, null, null, parts[1]);
+                            break;
+    
+                        case "param_c": // Handle constant parameter instruction
+                            instructionList.addInst(Operation.PARAM_C, parts[1], null, null);
                             break;
     
                         case "rtn":
@@ -91,6 +95,7 @@ public class ThreeAdressCodeBackEnd {
             e.printStackTrace();
         }
     }
+    
     
     
     private void handleConditional(String[] parts, String instruction) {
@@ -278,15 +283,46 @@ public class ThreeAdressCodeBackEnd {
         return valor;
     }
     
-    private void loadTs(){
+    private void loadTs() {
         try {
-            FileReader fr = new FileReader(TSYM_PATH);
-            BufferedReader br = new BufferedReader(fr);
-            String sym;
-
-            while ((sym = br.readLine()) != null) {
-                Simbol simbol = createSimbolFromLine(sym);
-                ts.add(simbol);
+            BufferedReader br = new BufferedReader(new FileReader(TSYM_PATH));
+            String line;
+            
+            // Skip the header line
+            line = br.readLine(); 
+    
+            while ((line = br.readLine()) != null) {
+                // Skip empty lines
+                if (line.trim().isEmpty()) continue;
+    
+                // Split by tabs or other consistent delimiters
+                String[] parts = line.split("\\s{2,}|\t");
+    
+                // Expecting: ID, TIPUS, VALOR, PROFUNDITAT, ARGS
+                if (parts.length >= 5) {
+                    String id = parts[0].trim();         // ID
+                    String tipus = parts[1].trim();      // TIPUS
+                    String valor = parts[2].trim();      // VALOR
+                    int profunditat = Integer.parseInt(parts[3].trim()); // PROFUNDITAT
+                    
+                    // Parse ARGS (reverse the order back)
+                    String argsStr = parts[4].trim();
+                    ArrayList<String> args = new ArrayList<>();
+                    if (!argsStr.equals("[]")) {
+                        String[] argsArray = argsStr.substring(1, argsStr.length() - 1).split(", ");
+                        for (int i = argsArray.length - 1; i >= 0; i--) {
+                            args.add(argsArray[i].trim());
+                        }
+                    }
+    
+                    // Create the Simbol object
+                    Simbol simbol = new Simbol(id, tipus, valor.equals("null") ? null : valor);
+    
+                    // Add arguments as needed to the Simbol or process as separate logic
+                    ts.add(simbol);
+                } else {
+                    System.err.println("Invalid line in symbol table: " + line);
+                }
             }
             br.close();
         } catch (IOException e) {
@@ -308,19 +344,32 @@ public class ThreeAdressCodeBackEnd {
         return null;
     }
 
-    private ArrayList<Parameter> extractParamsTs(String params){
-        params = params.substring(1, params.length() - 1);
-
-        String[] stringArray = params.split(", ");
-
-        ArrayList<Parameter> Parameters = new ArrayList<>();
-
-        for (String s : stringArray) {
-            Simbol sym = getSymbol(s);
-            Parameters.add(new Parameter(sym.getNom(), Tipus.valueOf(sym.getTipus().toUpperCase())));
+    private ArrayList<Parameter> extractParamsTs(String params) {
+        ArrayList<Parameter> parameters = new ArrayList<>();
+    
+        // Remove the brackets [ ] and split the string by commas
+        params = params.substring(1, params.length() - 1).trim();
+        if (!params.isEmpty()) {
+            String[] paramArray = params.split(", ");
+    
+            // Reverse the parameters to match the original order
+            for (int i = paramArray.length - 1; i >= 0; i--) {
+                String paramName = paramArray[i].trim();
+    
+                // Get the corresponding symbol from the symbol table
+                Simbol simbol = getSymbol(paramName);
+                if (simbol != null) {
+                    Tipus tipus = Tipus.valueOf(simbol.getTipus().toUpperCase());
+                    parameters.add(new Parameter(simbol.getNom(), tipus));
+                } else {
+                    System.err.println("Warning: Parameter symbol '" + paramName + "' not found in the symbol table.");
+                }
+            }
         }
-        return Parameters;
+    
+        return parameters;
     }
+    
 
     public Simbol getSymbol(String id){
         for (Simbol s : ts){

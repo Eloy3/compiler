@@ -275,9 +275,7 @@ public class AssemblyCode {
         switch (i.getOperation()){
             case PARAM_C:
                 if (d == null){
-
-                    code.add("\tMOVE.L #" + setConstString(i.getDestiny()) + ",-(A7)");
-
+                    code.add("\tMOVE.W #" + i.getOperand1() + ",-(A7)");
                 }
                 break;
             case PARAM_S:
@@ -340,7 +338,6 @@ public class AssemblyCode {
             Variable v = c3a.getVar(aux.getNombre());
             if (v == null) {
                 System.err.println("Error: Variable not found for parameter " + aux.getNombre());
-                continue;
             }
     
             switch (aux.getTipo()) {

@@ -6,22 +6,22 @@ START:
 * --> | SKIP | null | null | principal |
 principal:
 * --> | PMB | null | null | principal |
-* --> | PARAM_S | null | null | z |
-	MOVE.W z_principal,-(A7)
+* --> | PARAM_S | null | null | a |
+	MOVE.W a_principal,-(A7)
 * --> | CALL | null | null | getInt |
 	SUBA.L #2,A7
 	JSR GETINT
-* --> | ASSIGNA | retInt | null | z |
-	MOVE.W (A7)+,z_principal
+* --> | ASSIGNA | retInt | null | a |
+	MOVE.W (A7)+,a_principal
 * --> | ASSIGNA | 0 | null | t1 |
 	MOVE.W #0,t1_principal
 * --> | ASSIGNA | t1 | null | i |
 	MOVE.W t1_principal,i_principal
 * --> | SKIP | null | null | e0 |
 e0:
-* --> | IFDIFERENT | i | z | e1 |
+* --> | IFDIFERENT | i | a | e1 |
 	MOVE.W i_principal,D1
-	MOVE.W z_principal,D0
+	MOVE.W a_principal,D0
 	CMP.W D0,D1
 	BNE e1
 * --> | GOTO | null | null | e2 |
@@ -44,39 +44,48 @@ e1:
 	JMP e0
 * --> | SKIP | null | null | e2 |
 e2:
-* --> | SKIP | null | null | prova |
-prova:
-* --> | PMB | null | null | prova |
-* --> | ASSIGNA | 3 | null | t4 |
-	MOVE.W #3,t4_prova
-* --> | ASSIGNA | t4 | null | x |
-	MOVE.W t4_prova,x_prova
+* --> | GOTO | null | null | e3 |
+	JMP e3
+* --> | SKIP | null | null | suma |
+suma:
+* --> | PMB | null | null | suma |
+	MOVE.W 6(A7),x_suma
+	MOVE.W 8(A7),y_suma
 * --> | PARAM_S | null | null | x |
-	MOVE.W x_prova,-(A7)
+	MOVE.W x_suma,-(A7)
+* --> | PARAM_S | null | null | y |
+	MOVE.W y_suma,-(A7)
+* --> | SUMA | x | y | t6 |
+	MOVE.W x_suma,D0
+	MOVE.W y_suma,D1
+	JSR ISUMA
+	MOVE.W D1,t6_suma
+* --> | ASSIGNA | t6 | null | z |
+	MOVE.W t6_suma,z_suma
+* --> | RTN | null | null | z |
+	RTS
+* --> | SKIP | null | null | e3 |
+e3:
+* --> | ASSIGNA | 7 | null | t8 |
+	MOVE.W #7,t8_principal
+* --> | ASSIGNA | t8 | null | y |
+	MOVE.W t8_principal,y_suma
+* --> | PARAM_C | 7 | null | null |
+	MOVE.W #7,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
-* --> | RTN | null | null | prova |
-	RTS
-* --> | RTN | null | null | prova |
-	RTS
-* --> | ASSIGNA | 7 | null | t6 |
-	MOVE.W #7,t6_principal
-* --> | ASSIGNA | t6 | null | y |
-	MOVE.W t6_principal,y_principal
-* --> | CALL | null | null | line |
-	JSR SLINE
-	ADDA.L #4,A7
 	SIMHALT
  
-z_principal: DS.W 1
+a_principal: DS.W 1
 t1_principal: DS.W 1
 i_principal: DS.W 1
 t3_principal: DS.W 1
-t4_prova: DS.W 1
-x_prova: DS.W 1
-t6_principal: DS.W 1
-y_principal: DS.W 1
+x_suma: DS.W 1
+y_suma: DS.W 1
+t6_suma: DS.W 1
+z_suma: DS.W 1
+t8_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0
@@ -222,3 +231,8 @@ STRCON3:
 STRCON4:
 	RTS
 	END START
+
+*~Font name~Courier New~
+*~Font size~10~
+*~Tab type~1~
+*~Tab size~4~

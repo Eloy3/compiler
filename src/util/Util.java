@@ -26,4 +26,9 @@ public abstract class Util {
         // Handle literals by creating a temporary Simbol
         return new Simbol(operand.getTipusAsString(), operand.getValor());
     }
+
+    public static boolean isIdentifier(String type) {
+        // Assume identifiers are not primitive types like "ENT" or "BOOL"
+        return !type.equals("ENT") && !type.equals("BOOL");
+    }
 }

@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package data_structures;
 
 import front_end.simbols.Simbol;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,36 +9,39 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class SymbolTable {
 
-    protected Stack<HashMap> tambit;
+    protected Stack<HashMap<String, Simbol>> tambit;
     protected ArrayList<Simbol> temp;
     protected int profunditat;
     public Writer writer;
     private static final String FILE_PATH = "output/Taula_simbols.txt";
-    
-    
-    public SymbolTable (){
+
+    public SymbolTable() {
         try {
             tambit = new Stack<>();
             temp = new ArrayList<>();
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH), StandardCharsets.UTF_8));
             profunditat = 0;
+    
+            // Open the file in overwrite mode (to write the header cleanly)
+            try (BufferedWriter headerWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH, false), StandardCharsets.UTF_8))) {
+                headerWriter.write("ID\tTIPUS\tVALOR\tNIVELL\tARGS\n");
+            }
+    
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH, true), StandardCharsets.UTF_8));
         } catch (IOException ex) {
             Logger.getLogger(SymbolTable.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        writeFile("\n");
+    
         incAmbit();
     }
-    
+
     private void writeFile(String string) {
         try {
             writer.write(string);
@@ -50,25 +49,34 @@ public class SymbolTable {
             e.printStackTrace();
         }
     }
-    
+
     public void incAmbit() {
         tambit.push(new HashMap<>());
         profunditat++;
-    }  
-    
+    }
+
     public void decAmbit() {
         tambit.pop();
         profunditat--;
-    }  
-    
-    public void insertElement(String nom, String tipus, Object valor) {
-        Simbol s = new Simbol(nom,tipus,valor);
-        tambit.peek().put(s.getNom(), s);
-        escriutxt(s.toString());
     }
-    
-    public boolean existeixTs(String a) {
 
+    public void addParams(Simbol a) {
+        temp.add(a);
+    }
+
+    public void insertElement(String nom, String tipus, Object valor) {
+        Simbol s = new Simbol(nom, tipus, valor);
+        tambit.peek().put(s.getNom(), s);
+        writeSymbolToFile(s, null); // Arguments are null by default
+    }
+
+    public void insertElementWithArgs(String nom, String tipus, Object valor, ArrayList<String> args) {
+        Simbol s = new Simbol(nom, tipus, valor);
+        tambit.peek().put(s.getNom(), s);
+        writeSymbolToFile(s, args);
+    }
+
+    public boolean existeixTs(String a) {
         for (int i = tambit.size() - 1; i >= 0; i--) {
             if (tambit.get(i).containsKey(a)) {
                 return true;
@@ -76,9 +84,8 @@ public class SymbolTable {
         }
         return existeixTemp(a);
     }
-    
-    public boolean existeixTemp(String a) {
 
+    public boolean existeixTemp(String a) {
         if (temp == null) {
             return false;
         }
@@ -90,28 +97,26 @@ public class SymbolTable {
         }
         return false;
     }
-    
+
     public Simbol get(String a) {
         if (existeixTs(a)) {
             for (int i = tambit.size() - 1; i >= 0; i--) {
                 if (tambit.get(i).containsKey(a)) {
-                    return (Simbol) tambit.get(i).get(a);
+                    return tambit.get(i).get(a);
                 }
             }
         }
 
         if (temp != null) {
-
-            for (int i = 0; i < temp.size(); i++) {
-
-                if (temp.get(i).getNom().equals(a)) {
-                    return temp.get(i);
+            for (Simbol t : temp) {
+                if (t.getNom().equals(a)) {
+                    return t;
                 }
             }
         }
         return null;
     }
-    
+
     public int getProfunditat() {
         return profunditat;
     }
@@ -120,17 +125,24 @@ public class SymbolTable {
         this.profunditat = profunditat;
     }
 
-    private void escriutxt(String string) {
-        try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output/Taula_simbols.txt", true), "utf-8"));
-            writer.write(string);
-            writer.write("\n");
-            writer.close();
+    private void writeSymbolToFile(Simbol simbol, ArrayList<String> args) {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH, true), "utf-8"))) {
+            String argsString = "";
+            if (args != null && !args.isEmpty()) {
+                Collections.reverse(args); // Reverse arguments
+                argsString = args.toString();
+            }
+            writer.write(String.format("%s\t%s\t%s\t%d\t%s\n",
+                    simbol.getNom(),
+                    simbol.getTipus(),
+                    simbol.getValor() != null ? simbol.getValor() : "null",
+                    profunditat,
+                    argsString.isEmpty() ? "[]" : argsString));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     public ArrayList<Simbol> getParams() {
         Collections.reverse(temp);
         return temp;

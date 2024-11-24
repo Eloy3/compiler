@@ -10,6 +10,7 @@ public class Simbol{
     String tipus;
     String tipusSubjacent;
     Object valor;
+    private ArrayList<String> args;
 
     public Simbol(String nom, String tipus, Object valor) {
         this.nom = nom;

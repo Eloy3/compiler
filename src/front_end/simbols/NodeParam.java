@@ -13,12 +13,11 @@ public class NodeParam extends NodeBase{
     private NodeExprsimple v;
     
     
-    public NodeParam(NodeTipus tipus, String id, NodeExprsimple v, NodeParam2 p){
+    public NodeParam(NodeTipus tipus, String id, NodeParam2 p){
         super("Param",0);
         this.param = p;
         this.id = id;
         this.tipus = tipus;
-        this.v = v;
     }
     public NodeParam(){
         super("Param",0);

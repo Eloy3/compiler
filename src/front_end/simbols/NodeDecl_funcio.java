@@ -6,6 +6,7 @@ import errors.*;
 import data_structures.Parameter;
 import data_structures.Procedure;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NodeDecl_funcio extends NodeBase {
 
@@ -21,18 +22,7 @@ public class NodeDecl_funcio extends NodeBase {
         this.param = p;
         this.blocf = blocf;
         this.functionName = functionName;
-        this.lc = lc;
-
-        if (ts.existeixTs(functionName)) {
-            // Log an error for duplicate function declaration
-            ErrorLogger.logSemanticError(lc, "La funció '" + functionName + "' ja ha estat declarada.");
-        } else {
-            // Insert the function symbol into the symbol table
-            ts.insertElement(functionName, tipus.getTipusString(), null);
-        }
-
-        // Add the function to the procedure table
-        addProcedureToTable();
+        this.lc = lc;   
     }
 
     private void addProcedureToTable() {
@@ -50,22 +40,46 @@ public class NodeDecl_funcio extends NodeBase {
     }
 
     public void generateCode() {
-        // Generate the function label
+
+        if (ts.existeixTs(functionName)) {
+            // Log an error for duplicate function declaration
+            ErrorLogger.logSemanticError(lc, "La funció '" + functionName + "' ja ha estat declarada.");
+            return;
+        }
+
+        // Prepare arguments for insertion in the symbol table
+        ArrayList<String> argumentNames = new ArrayList<>();
+        NodeParam currentParam = param;
+
+        while (currentParam != null) {
+            argumentNames.add(currentParam.getId());
+            currentParam = currentParam.getNext();
+        }
+        Collections.reverse(argumentNames);
+        ts.insertElementWithArgs(functionName, tipus.getTipusString(), null, argumentNames);
+        addProcedureToTable();
+
+        //Skip subroutine if not called
+        String end_label = cta.newLabel();
+        cta.generateCode("goto " + end_label + "\n");
+
+
+        // Generate function code
         cta.generateCode(functionName + ":skip\n");
         cta.push(cta.getStart_stack(), functionName);
 
-        // Generate the preamble
         cta.generateCode("pmb " + functionName + "\n");
 
         ts.incAmbit();
-        cta.push(cta.getPproc(),functionName);
-        
+        cta.push(cta.getPproc(), functionName);
+
         // Generate parameter code
-        NodeParam currentParam = param;
+        currentParam = param;
         while (currentParam != null) {
             String paramName = currentParam.getId();
-            String paramType = currentParam.getTipus().toString();
+            String paramType = currentParam.getTipus().getTipus().toString();
             ts.insertElement(paramName, paramType, null);
+            cta.newVar(paramName, paramType);
             cta.generateCode("param_s " + paramName + "\n");
             currentParam = currentParam.getNext();
         }
@@ -75,11 +89,13 @@ public class NodeDecl_funcio extends NodeBase {
             blocf.generateCode();
         }
 
-        // Finalize the function with a return statement
-        cta.generateCode("rtn " + functionName + "\n");
         ts.decAmbit();
         cta.pop(cta.getPproc());
+        
+        //Skip subroutine if not called
+        cta.generateCode(end_label + ":skip\n");
     }
+
 
     
 }

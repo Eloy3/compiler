@@ -15,13 +15,13 @@ public class NodeDecl_Variable extends NodeBase{
         this.varinic = varinic;
         this.id = id;
         this.lc = lc;
-        
-        if(ts.existeixTs(id)){
-            new Error_VarJaDeclarada().printError(lc, id);
-        }
     }
     
     public void generateCode(){
+        if(ts.existeixTs(id)){
+            new Error_VarJaDeclarada().printError(lc, id);
+            return;
+        }
         if(varinic == null){
             ts.insertElement(id, nt.getTipusString(), null);
         }else{
@@ -35,9 +35,7 @@ public class NodeDecl_Variable extends NodeBase{
                     }else{
                         //Comprovar a la taula de simbols si id2 té el mateix tipus que id.
                         Simbol param = ts.get(id2);
-                        //System.out.println(param);
                         if(!nt.getTipusString().equals(param.tipus)){
-                            //System.out.println("Error semàntic, la variable '"+id2+"' no te el mateix tipus que '"+id+"'");
                             new Error_DistintTipus().printError(lc, id);
                         }else{
                             ts.insertElement(id, nt.getTipusString().toString(), param.valor);

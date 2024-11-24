@@ -39,7 +39,21 @@ public class NodeRetorna extends NodeBase{
             return;
         }
 
-        String exprType = expr.getTipusAsString();
+        String exprType;
+        if (expr.getTipusAsString().equals("id")) {
+            // Look up the identifier in the symbol table to get its type
+            Simbol exprSymbol = ts.get(expr.getValor());
+            if (exprSymbol == null) {
+                ErrorLogger.logSemanticError(lc, "Variable o identificador '" + expr.getValor() + "' no trobat.");
+                return;
+            }
+            exprType = exprSymbol.getTipus();
+        } else {
+            // For literals, directly use the type from the expression
+            exprType = expr.getTipusAsString();
+        }
+
+        // Check if the return type matches the function's return type
         if (!Util.typeMatches(functionReturnType, exprType)) {
             ErrorLogger.logSemanticError(lc, "Tipus de retorn incorrecte a la funció '" + currentFunctionName + "'. Esperat: '" + functionReturnType + "', obtingut: '" + exprType + "'.");
         }
