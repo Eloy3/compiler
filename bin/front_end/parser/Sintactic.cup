@@ -182,9 +182,9 @@ operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
 
 // **** WHILE i FOR ****
 
-bucle ::= MENTRE EParen condicio:c DParen EClau blocf:bloc DClau {: RESULT = new NodeBucle(c,bloc); :}
+bucle ::= MENTRE EParen condicio:c DParen EClau blocf:bloc DClau {: RESULT = new NodeBucle(c,bloc,lexic.getLineColumn()); :}
 
-        | PER EParen decl_variable:decl PUNTICOMA condicio:cond PUNTICOMA comportamentvl:comp DParen EClau blocf:bloc DClau {: RESULT = new NodeBucle(decl,cond,comp,bloc); :};
+        | PER EParen decl_variable:decl PUNTICOMA condicio:cond PUNTICOMA comportamentvl:comp DParen EClau blocf:bloc DClau {: RESULT = new NodeBucle(decl,cond,comp,bloc,lexic.getLineColumn()); :};
 
 
 comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comportament.INCREMENT, lexic.getLineColumn()); :}

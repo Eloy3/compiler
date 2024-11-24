@@ -1,11 +1,10 @@
 package front_end.simbols;
 
-import errors.*;
-import java.util.Optional;
+import errors.ErrorLogger;
 import util.Util;
-/**
- * NodeVarinic2 handles variable initialization.
- */
+
+import java.util.Optional;
+
 public class NodeVarinic2 extends NodeBase {
 
     private NodeExprsimple exprsimple;
@@ -30,56 +29,54 @@ public class NodeVarinic2 extends NodeBase {
     public void generateCode_exprsimple() {
         validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
     }
-    
-    public void generateCode_exprcomposta() {
-        validateAndGenerate(id, exprcomposta.getA().getTipusAsString(), exprcomposta.getA().getValor(), 
-                            Optional.of(exprcomposta.getB()));
-    }
-    
-    
-    private void validateAndGenerate(String targetId, String typeA, String valueA, Optional<NodeExprsimple> optionalB) {
 
+    public void generateCode_exprcomposta() {
+        validateAndGenerate(id, exprcomposta.getA().getTipusAsString(), exprcomposta.getA().getValor(),
+                Optional.of(exprcomposta.getB()));
+    }
+
+    private void validateAndGenerate(String targetId, String typeA, String valueA, Optional<NodeExprsimple> optionalB) {
         Simbol target = Util.validateVariableExists(ts, targetId, lc);
         if (target == null) {
             return;
         }
-    
+
         // Resolve typeA if it is an identifier
         if (Util.isIdentifier(typeA)) {
             Simbol operandA = Util.validateVariableExists(ts, valueA, lc);
             if (operandA == null) {
-                new Error_DistintTipus().printError(lc, targetId);
+                ErrorLogger.logSemanticError(lc, "La variable '" + valueA + "' no està definida.");
                 return;
             }
             typeA = operandA.getTipus(); // Update typeA to the resolved type
         }
-    
+
         // Validate type of the target variable
         if (!Util.typeMatches(target.getTipus(), typeA)) {
-            new Error_DistintTipus().printError(lc, targetId);
+            ErrorLogger.logSemanticError(lc, target+" i "+valueA+" no tenen el mateix tipus.");
             return;
         }
-    
+
         // Validate second operand if it exists
         if (optionalB.isPresent()) {
             NodeExprsimple b = optionalB.get();
             String typeB = b.getTipusAsString();
             String valueB = b.getValor();
-    
+
             if (Util.isIdentifier(typeB)) {
                 Simbol secondOperand = Util.validateVariableExists(ts, valueB, lc);
                 if (secondOperand == null) {
-                    new Error_DistintTipus().printError(lc, targetId);
+                    ErrorLogger.logSemanticError(lc, "La variable '" + valueB + "' no està definida.");
                     return;
                 }
                 typeB = secondOperand.getTipus(); // Update typeB to the resolved type
             }
-    
+
             if (!Util.typeMatches(target.getTipus(), typeB)) {
-                new Error_DistintTipus().printError(lc, targetId);
+                ErrorLogger.logSemanticError(lc, "Variable '" + targetId + "' has mismatched types.");
                 return;
             }
-    
+
             // Generate code for composite expression
             calcOcupComposite(target, valueA, exprcomposta.getOperador().getTipus(), valueB);
         } else {
@@ -87,8 +84,7 @@ public class NodeVarinic2 extends NodeBase {
             calcOcup(target, valueA);
         }
     }
-    
-    
+
     // Generate code for simple assignments
     private void calcOcup(Simbol target, String value) {
         String tempVar = cta.newTempVar(target.getTipus(), value);

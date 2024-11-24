@@ -1,6 +1,6 @@
 package front_end.simbols;
 
-import errors.Error_VarNoExisteix;
+import errors.ErrorLogger;
 
 public class NodeComportamentv1 extends NodeBase {
 
@@ -24,7 +24,7 @@ public class NodeComportamentv1 extends NodeBase {
         // Check if the variable exists in the symbol table
         Simbol variable = ts.get(id);
         if (variable == null) {
-            new Error_VarNoExisteix().printError(lc, id);
+            ErrorLogger.logSemanticError(lc,"La variable '" + id + "' no existeix.");
         } else {
             String tempVar;
 

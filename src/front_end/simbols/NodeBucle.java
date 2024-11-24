@@ -1,29 +1,33 @@
 
 package front_end.simbols;
 
+import util.Util;
 
 public class NodeBucle extends NodeBase{
 
     private NodeDecl_Variable decl_Variable;
     private NodeCondicio condicio;
     private NodeComportamentv1 comportamentv1;
+    private int[] lc;
 
     private NodeBlocf blocf;
 
     //FOR
-    public NodeBucle(NodeDecl_Variable decl_Variable, NodeCondicio condicio,NodeComportamentv1 comportamentv1, NodeBlocf blocf) {
+    public NodeBucle(NodeDecl_Variable decl_Variable, NodeCondicio condicio,NodeComportamentv1 comportamentv1, NodeBlocf blocf, int[] lc) {
         super("Buclefor", 0);
         this.decl_Variable = decl_Variable;
         this.condicio = condicio;
         this.comportamentv1 = comportamentv1;
         this.blocf = blocf;
+        this.lc = lc;
     }
 
     //WHILE
-    public NodeBucle(NodeCondicio condicio, NodeBlocf blocf){
+    public NodeBucle(NodeCondicio condicio, NodeBlocf blocf, int[] lc){
         super("Buclewhile", 0);
         this.condicio = condicio;
         this.blocf = blocf;
+        this.lc = lc;
     }
 
     public void generateCodeWhile(){
@@ -47,8 +51,10 @@ public class NodeBucle extends NodeBase{
         inicibucle();
         etiquetacond();
         if(condicio.getOperador() != null){
+            Util.validateBinaryOperands(ts, condicio.getOperand1(), condicio.getOperand2(), lc);
             condicio.generateCodeOperador();
         }else{
+            Util.validateUnaryOperand(ts, condicio.getOperand1(), lc);
             condicio.generateCodeID();
         }
         condiciobot(false);

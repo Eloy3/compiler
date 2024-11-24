@@ -1214,7 +1214,7 @@ class CUP$Parser$actions {
 		int blocleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int blocright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		NodeBlocf bloc = (NodeBlocf)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new NodeBucle(c,bloc); 
+		 RESULT = new NodeBucle(c,bloc,lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("bucle",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1235,7 +1235,7 @@ class CUP$Parser$actions {
 		int blocleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int blocright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		NodeBlocf bloc = (NodeBlocf)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new NodeBucle(decl,cond,comp,bloc); 
+		 RESULT = new NodeBucle(decl,cond,comp,bloc,lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("bucle",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

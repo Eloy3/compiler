@@ -19,7 +19,7 @@ public class NodeDecl_Variable extends NodeBase{
     
     public void generateCode(){
         if(ts.existeixTs(id)){
-            new Error_VarJaDeclarada().printError(lc, id);
+            ErrorLogger.logSemanticError(lc,"La variable '" + id + "' ja ha estat declarada.");
             return;
         }
         if(varinic == null){
@@ -31,24 +31,21 @@ public class NodeDecl_Variable extends NodeBase{
 
                     if(!ts.existeixTs(id2)){
                         //System.out.println("Error sintàctic, la variable '"+id2+"' no existeix");
-                        new Error_VarNoExisteix().printError(lc, id);
+                        ErrorLogger.logSemanticError(lc,"La variable '" + id + "' no existeix.");
                     }else{
                         //Comprovar a la taula de simbols si id2 té el mateix tipus que id.
                         Simbol param = ts.get(id2);
                         if(!nt.getTipusString().equals(param.tipus)){
-                            new Error_DistintTipus().printError(lc, id);
+                            ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
                         }else{
                             ts.insertElement(id, nt.getTipusString().toString(), param.valor);
                             generaC3a();
                         }
                     }   
-
                     break;
                 case "enter":
-                    //System.out.println(tipus.getTipus());
                     if(!nt.getTipusString().equals("ENT")){
-                        //System.out.println("Error semàntic, '"+id2+"' no té el mateix tipus que '"+id+"'");
-                        new Error_DistintTipus().printError(lc, id);
+                        ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
                     }else{
                         ts.insertElement(id, nt.getTipusString().toString(), varinic);
                         generaC3a();
@@ -57,8 +54,7 @@ public class NodeDecl_Variable extends NodeBase{
 
                 case "boolea":
                     if(!nt.getTipusString().equals("BOOL")){
-                        //System.out.println("Error semàntic, '"+id2+"' no té el mateix tipus que '"+id+"'");
-                        new Error_DistintTipus().printError(lc, id);
+                        ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
                     }else{
                         ts.insertElement(id, nt.getTipusString().toString(), varinic);
                         generaC3a();

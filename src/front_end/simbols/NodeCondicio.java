@@ -26,9 +26,11 @@ public class NodeCondicio extends NodeBase{
         operand2 = v1;
         operador = o;
     }
+
     public void generateCodeID(){
         cta.generateCode(ID + " then ");
     }
+
     public void generateCodeOperador(){
         cta.generateCode(operand1.getValor()+" ");
         cta.generateCode(operador.getOperador()+ " ");
@@ -38,4 +40,14 @@ public class NodeCondicio extends NodeBase{
     public NodeOperador_cond getOperador() {
         return operador;
     }
+
+    public NodeExprsimple getOperand1() {
+        return operand1;
+    }
+
+    public NodeExprsimple getOperand2() {
+        return operand2;
+    }
+
+    
 }

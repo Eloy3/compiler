@@ -2,8 +2,6 @@
 
 package front_end.simbols;
 
-import errors.Error_DistintTipus;
-import errors.Error_VarNoExisteix;
 import static front_end.simbols.NodeBase.ts;
 
 
