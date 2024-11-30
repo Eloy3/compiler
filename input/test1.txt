@@ -1,18 +1,17 @@
-principal(){
-	ent a;
-	entrada(a);
-
-	per(ent i=0; i!=a; i++){
-	   sortidaln(i);
-	}
-
-	funcio ent suma(ent x, ent y){
+funcio ent suma(ent x, ent y){
 	   ent z;
 	   z = x + y;
 	   retorna z;
-	}
+}
 
-	ent y = 7;
-	sortidaln(7);
+principal(){
+	ent a = 7;
+	ent b = 3;
+	ent test;
+	test = a + b;
+	sortidaln(test);
+	ent d;
+	d = suma(a,b);
+	sortidaln(d);
 }
 

@@ -29,7 +29,8 @@ public abstract class Util {
 
     public static boolean isIdentifier(String type) {
         // Assume identifiers are not primitive types like "ENT" or "BOOL"
-        return !type.equals("ENT") && !type.equals("BOOL");
+        //return !type.equals("ENT") && !type.equals("BOOL");
+        return type.equalsIgnoreCase("id");
     }
 
     public static void validateUnaryOperand(SymbolTable ts, NodeExprsimple operand, int[] lc) {

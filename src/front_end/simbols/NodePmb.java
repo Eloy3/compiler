@@ -10,13 +10,13 @@ public class NodePmb extends NodeBase{
     
      public NodePmb() {
         super("PMB", 0);
-
+    }
+    public void generateCode(){
         String startLabel = cta.getTemp_id();
         cta.setTemp_id(null);
         tp.addRow(new Procedure(tp.getNewNumProc(), 0, startLabel, getParams(), 0, Tipus.NULL));
         cta.generateCode("pmb " + startLabel + "\n");
     }
-
     private ArrayList<Parameter> getParams() {
         ArrayList<Simbol> paramSymbol = ts.getParams();
         ArrayList<Parameter> params = new ArrayList<>();

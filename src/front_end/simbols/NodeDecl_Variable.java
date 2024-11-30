@@ -23,40 +23,39 @@ public class NodeDecl_Variable extends NodeBase{
             return;
         }
         if(varinic == null){
-            ts.insertElement(id, nt.getTipusString(), null);
+            ts.insertElement(id, nt.getTipusAsString(), null);
         }else{
             String id2 = varinic.getValor();
             switch(varinic.getTipus()){
                 case "id":
 
                     if(!ts.existeixTs(id2)){
-                        //System.out.println("Error sintàctic, la variable '"+id2+"' no existeix");
-                        ErrorLogger.logSemanticError(lc,"La variable '" + id + "' no existeix.");
+                        ErrorLogger.logSemanticError(lc,"La variable '" + id2 + "' no existeix.");
                     }else{
                         //Comprovar a la taula de simbols si id2 té el mateix tipus que id.
                         Simbol param = ts.get(id2);
-                        if(!nt.getTipusString().equals(param.tipus)){
+                        if(!nt.getTipusAsString().equals(param.tipus)){
                             ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
                         }else{
-                            ts.insertElement(id, nt.getTipusString().toString(), param.valor);
+                            ts.insertElement(id, nt.getTipusAsString().toString(), param.valor);
                             generaC3a();
                         }
                     }   
                     break;
                 case "enter":
-                    if(!nt.getTipusString().equals("ENT")){
+                    if(!nt.getTipusAsString().equals("ENT")){
                         ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
                     }else{
-                        ts.insertElement(id, nt.getTipusString().toString(), varinic);
+                        ts.insertElement(id, nt.getTipusAsString().toString(), varinic);
                         generaC3a();
                     }
                     break;
 
                 case "boolea":
-                    if(!nt.getTipusString().equals("BOOL")){
+                    if(!nt.getTipusAsString().equals("BOOL")){
                         ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
                     }else{
-                        ts.insertElement(id, nt.getTipusString().toString(), varinic);
+                        ts.insertElement(id, nt.getTipusAsString().toString(), varinic);
                         generaC3a();
                     }
                     break;

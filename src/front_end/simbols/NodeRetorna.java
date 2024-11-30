@@ -59,7 +59,7 @@ public class NodeRetorna extends NodeBase{
         }
 
         String returnValue = expr.getValor();
-        cta.generateCode("rtn " + returnValue + "\n");
+        cta.generateCode("rtn "+ returnValue+ "\n");
         
     }
 }

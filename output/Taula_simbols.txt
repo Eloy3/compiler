@@ -1,8 +1,11 @@
-ID	TIPUS	VALOR	NIVELL	ARGS
-a	ENT	null	1	[]
-i	ENT	0	2	[]
-suma	ENT	null	1	[x, y]
-x	ENT	null	2	[]
-y	ENT	null	2	[]
-z	ENT	null	2	[]
-y	ENT	7	1	[]
+NOM             TIPUS      VALOR      NIVELL     ARGS                
+ 
+suma            ENT        null       1          [y, x]              
+x               ENT        null       2          []                  
+y               ENT        null       2          []                  
+z               ENT        null       2          []                  
+principal       NULL       null       1          []                  
+a               ENT        7          1          []                  
+b               ENT        3          1          []                  
+test            ENT        null       1          []                  
+d               ENT        null       1          []                  

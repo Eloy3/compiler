@@ -68,7 +68,7 @@ public class ThreeAdressCodeBackEnd {
                             break;
     
                         case "rtn":
-                            instructionList.addInst(Operation.RTN, null, null, parts[1]);
+                            instructionList.addInst(Operation.RTN, parts[1], null, null);
                             break;
     
                         case "if":
@@ -289,6 +289,7 @@ public class ThreeAdressCodeBackEnd {
             String line;
             
             // Skip the header line
+            line = br.readLine(); 
             line = br.readLine(); 
     
             while ((line = br.readLine()) != null) {

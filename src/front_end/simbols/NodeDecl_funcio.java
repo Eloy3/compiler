@@ -56,13 +56,11 @@ public class NodeDecl_funcio extends NodeBase {
             currentParam = currentParam.getNext();
         }
         Collections.reverse(argumentNames);
-        ts.insertElementWithArgs(functionName, tipus.getTipusString(), null, argumentNames);
+        ts.insertElementWithArgs(functionName, tipus.getTipusAsString(), null, argumentNames);
         addProcedureToTable();
 
         //Skip subroutine if not called
-        String end_label = cta.newLabel();
-        cta.generateCode("goto " + end_label + "\n");
-
+        cta.generateCode("goto principal \n");
 
         // Generate function code
         cta.generateCode(functionName + ":skip\n");
@@ -80,7 +78,7 @@ public class NodeDecl_funcio extends NodeBase {
             String paramType = currentParam.getTipus().getTipus().toString();
             ts.insertElement(paramName, paramType, null);
             cta.newVar(paramName, paramType);
-            cta.generateCode("param_s " + paramName + "\n");
+            //ta.generateCode("param_s " + paramName + "\n");
             currentParam = currentParam.getNext();
         }
 
@@ -91,9 +89,6 @@ public class NodeDecl_funcio extends NodeBase {
 
         ts.decAmbit();
         cta.pop(cta.getPproc());
-        
-        //Skip subroutine if not called
-        cta.generateCode(end_label + ":skip\n");
     }
 
 

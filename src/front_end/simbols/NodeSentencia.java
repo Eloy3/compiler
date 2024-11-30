@@ -106,11 +106,14 @@ public class NodeSentencia extends NodeBase {
             case "decl_funcio":
                 decl_funcio.generateCode();
                 break;
-                
+            
             case "retorna":
                 retorna.generateCode();
                 break;
-                
+            
+            case "crida_funcio":
+                crida_funcio.generateCode();
+                break;
         }
     }
 }

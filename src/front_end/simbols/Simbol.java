@@ -50,6 +50,13 @@ public class Simbol{
         this.valor = valor;
     }
 
+    public ArrayList<String> getArgs() {
+        return args;
+    }
+    public void setArgs(ArrayList<String> args) {
+        this.args = args;
+    }
+    
     @Override
     public String toString() {
         return  "id=" + nom + ", tipus=" + tipus + ", valor=" + valor;

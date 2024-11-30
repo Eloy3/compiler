@@ -30,17 +30,26 @@ public class SymbolTable {
             profunditat = 0;
     
             // Open the file in overwrite mode (to write the header cleanly)
-            try (BufferedWriter headerWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH, false), StandardCharsets.UTF_8))) {
-                headerWriter.write("ID\tTIPUS\tVALOR\tNIVELL\tARGS\n");
+            try (BufferedWriter headerWriter = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(FILE_PATH, false), StandardCharsets.UTF_8))) {
+                // Format header with fixed column widths
+                headerWriter.write(String.format(
+                    "%-15s %-10s %-10s %-10s %-20s\n \n",
+                    "NOM", "TIPUS", "VALOR", "NIVELL", "ARGS"
+                ));
+                // Add a separator line for clarity
+                //headerWriter.write("-".repeat(70) + "\n");
             }
     
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH, true), StandardCharsets.UTF_8));
+            writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(FILE_PATH, true), StandardCharsets.UTF_8));
         } catch (IOException ex) {
             Logger.getLogger(SymbolTable.class.getName()).log(Level.SEVERE, null, ex);
         }
     
         incAmbit();
     }
+    
 
     private void writeFile(String string) {
         try {
@@ -72,6 +81,7 @@ public class SymbolTable {
 
     public void insertElementWithArgs(String nom, String tipus, Object valor, ArrayList<String> args) {
         Simbol s = new Simbol(nom, tipus, valor);
+        s.setArgs(args);
         tambit.peek().put(s.getNom(), s);
         writeSymbolToFile(s, args);
     }
@@ -126,18 +136,30 @@ public class SymbolTable {
     }
 
     private void writeSymbolToFile(Simbol simbol, ArrayList<String> args) {
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH, true), "utf-8"))) {
-            String argsString = "";
-            if (args != null && !args.isEmpty()) {
-                Collections.reverse(args); // Reverse arguments
-                argsString = args.toString();
-            }
-            writer.write(String.format("%s\t%s\t%s\t%d\t%s\n",
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH, true), StandardCharsets.UTF_8))) {
+            String argsString = (args != null && !args.isEmpty()) ? args.toString() : "[]";
+    
+            // Format columns with fixed widths
+            writer.write(String.format("%-15s %-10s %-10s %-10d %-20s\n",
                     simbol.getNom(),
                     simbol.getTipus(),
                     simbol.getValor() != null ? simbol.getValor() : "null",
                     profunditat,
-                    argsString.isEmpty() ? "[]" : argsString));
+                    argsString));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void writeHeaderToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(FILE_PATH, false), StandardCharsets.UTF_8))) {
+            String header = String.format(
+                    "%-15s %-10s %-10s %-8s %-20s\n",
+                    "NOM", "TIPUS", "VALOR", "NIVELL", "ARGS"
+            );
+            writer.write(header);
+            writer.write("-".repeat(header.length()) + "\n"); // Add a separator
         } catch (IOException e) {
             e.printStackTrace();
         }

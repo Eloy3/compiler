@@ -1,12 +1,15 @@
 Taula de variables
 
 Nombre          NV         Subprograma          Ocupació        Desplaçament    Tipus subjacent      Valor     
-a               0          principal            4               0               ENT                            
-t1              1          principal            4               4               ENT                  0         
-i               2          principal            4               8               ENT                  0         
-t3              3          principal            4               12              ENT                            
-x               4          suma                 4               16              ENT                            
-y               5          suma                 4               20              ENT                            
-t6              6          suma                 4               24              ENT                  x         
-z               7          suma                 4               28              ENT                  x         
-t8              8          principal            4               32              ENT                  7         
+x               0          suma                 4               0               ENT                            
+y               1          suma                 4               4               ENT                            
+t2              2          suma                 4               8               ENT                  x         
+z               3          suma                 4               12              ENT                  x         
+t4              4          principal            4               16              ENT                  7         
+a               5          principal            4               20              ENT                  7         
+t6              6          principal            4               24              ENT                  3         
+b               7          principal            4               28              ENT                  3         
+t8              8          principal            4               32              ENT                  a         
+test            9          principal            4               36              ENT                  a         
+t10             10         principal            4               40              ENT                  suma      
+d               11         principal            4               44              ENT                            

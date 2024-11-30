@@ -194,10 +194,10 @@ public class AssemblyCode {
                     code.add("\tMOVE.W (A0),D0");
                     code.add("\tMOVE.W D0," + varnom(d));
     
-                } else if (!i.getOperand1().equals("retInt")) {
+                } else if (!i.getOperand1().equals("retENT")) {
                     code.add("\tMOVE.W " + getop(i.getOperand1()) + "," + getop(i.getDestiny()));
                 } else {
-                    code.add("\tMOVE.W (A7)+," + getop(i.getDestiny()));
+                    code.add("\tMOVE.W D3," + getop(i.getDestiny()));
                 }
                 break;
         }
@@ -233,39 +233,12 @@ public class AssemblyCode {
                     code.add("\tSUBA.L #2,A7");
                     code.add("\tJSR GETINT");
                     break;
+
+                default:
+                    
             }
         } else {
-            if(p.getType_return() != null){
-                switch (p.getType_return()){
-                    case ENT:
-                    case BOOL:
-                        code.add("\tSUBA.L #2,A7");
-                        break;
-                }
-            }
             code.add("\tJSR " + i.getDestiny());
-            int k = 0;
-            for(Parameter param : p.getParametros()){
-                switch (param.getTipo()){
-                    case ENT:
-                    case BOOL:
-                        k += 2;
-                        break;
-                }
-            }
-            if(k > 0){
-                if(p.getType_return() != null){
-                    switch (p.getType_return()){
-                        case ENT:
-                        case BOOL:
-                            code.add("\tMOVE.W (A7)," + k + "(A7)");
-                            code.add("\tADDA.L #" + k + ",A7");
-                            break;
-                    }
-                }else {
-                    code.add("\tADDA.L #" + k + ",A7");
-                }
-            }
         }
         param = null;
     }
@@ -276,6 +249,7 @@ public class AssemblyCode {
             case PARAM_C:
                 if (d == null){
                     code.add("\tMOVE.W #" + i.getOperand1() + ",-(A7)");
+                    param =  ENT;
                 }
                 break;
             case PARAM_S:
@@ -324,14 +298,14 @@ public class AssemblyCode {
     
         int ind = param.size() - 1;
         int k = 4;
-        if (p.getType_return() != null) {
+        /*if (p.getType_return() != null) {
             switch (p.getType_return()) {
                 case ENT:
                 case BOOL:
                     k = 6;
                     break;
             }
-        }
+        }*/
     
         while (ind >= 0) {
             Parameter aux = param.get(ind);
@@ -359,30 +333,16 @@ public class AssemblyCode {
     private void irtn(Instruction3a i){
         Variable r = c3a.getVar(i.getOperand1());
         if(r != null){
-            Procedure p = c3a.getProc(i.getDestiny());
-            switch (p.getType_return()){
-                case ENT:
-                    code.add("\tMOVE.W " + varnom(r) + ",4(A7)");
+            switch(r.getType()){
+                case "ENT":
+                    code.add("\tMOVE.W " + varnom(r) + ",D3");
                     break;
-                case BOOL:
-                    code.add("\tCLR.W D0");
-                    code.add("\tMOVE.B " + varnom(r) + ",D0");
-                    code.add("\tMOVE.W D0,4(A7)");
-                    break;
-            }
-        } else if (i.getOperand1() != null){
-            switch (i.getOperand1()){
-                case "retInt":
-                case "retBool":
-                    code.add("\tMOVE.W (A7),6(A7)");
-                    code.add("\tADDA.L #2,A7");
-                    break;
-                case "retStr":
-                    code.add("\tMOVE.W (A7),8(A7)");
-                    code.add("\tADDA.L #4,A7");
+                case "BOOL":
+                    code.add("\tMOVE.B " + varnom(r) + ",D3");
                     break;
             }
         }
+        
         code.add("\tRTS");
     }
 

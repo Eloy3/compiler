@@ -2,8 +2,9 @@ package front_end.simbols;
 
 import errors.ErrorLogger;
 import util.Util;
-
+import front_end.simbols.NodeCrida_funcio;
 import java.util.Optional;
+import front_end.simbols.NodeExprsimple.exprsimple;
 
 public class NodeVarinic2 extends NodeBase {
 
@@ -27,7 +28,10 @@ public class NodeVarinic2 extends NodeBase {
     }
 
     public void generateCode_exprsimple() {
-        validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
+        if(exprsimple.getTipusAsString().equals("procediment")){
+            exprsimple.generateCodeProcedure();
+        }
+        validateAndGenerate(id, exprsimple.tipusProcediment(), exprsimple.getValor(), Optional.empty());
     }
 
     public void generateCode_exprcomposta() {
@@ -53,7 +57,12 @@ public class NodeVarinic2 extends NodeBase {
 
         // Validate type of the target variable
         if (!Util.typeMatches(target.getTipus(), typeA)) {
-            ErrorLogger.logSemanticError(lc, target+" i "+valueA+" no tenen el mateix tipus.");
+            ErrorLogger.logSemanticError(lc, target.getNom()+" i "+valueA+" no tenen el mateix tipus.");
+            return;
+        }
+
+        if(exprsimple != null && exprsimple.getA()!=null){
+            calcOcupProcedure(target);
             return;
         }
 
@@ -98,6 +107,18 @@ public class NodeVarinic2 extends NodeBase {
         String tempVar = cta.newTempVar(target.getTipus(), valueA);
         cta.generateCode(tempVar + " = " + valueA + " " + operator + " " + valueB + "\n");
         cta.generateCode(cta.newVar(target.getNom(), target.getTipus(), valueA) + " = " + tempVar + "\n");
+    }
+
+    // Generate code for function call assignments
+    private void calcOcupProcedure(Simbol target) {
+
+        String functionName = exprsimple.getA().getFunctionName();
+
+        String tempVar = cta.newTempVar(target.getTipus(), functionName);
+        cta.generateCode(tempVar + " = ret" + target.getTipus().toUpperCase() + "\n");
+
+        // Assign the return value to the target variable
+        cta.generateCode(cta.newVar(target.getNom(), target.getTipus(), null) + " = " + tempVar + "\n");
     }
 
     @Override

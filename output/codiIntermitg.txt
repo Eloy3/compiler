@@ -1,31 +1,23 @@
-goto principal
-principal:skip
-pmb principal
-param_s a
-call getInt
-a = retInt
-t1 = 0
-i = t1
-e0:skip
-if i != a goto e1
-goto e2
-e1:skip
-t3 = i + 1
-i = t3
-param_s i
-call line
-goto e0
-e2:skip
-goto e3
+goto principal 
 suma:skip
 pmb suma
-param_s x
-param_s y
-t6 = x + y
-z = t6
+t2 = x + y
+z = t2
 rtn z
-e3:skip
-t8 = 7
-y = t8
-param_c 7
+principal:skip
+pmb principal
+t4 = 7
+a = t4
+t6 = 3
+b = t6
+t8 = a + b
+test = t8
+param_s test
+call line
+param_s a
+param_s b
+call suma
+t10 = retENT
+d = t10
+param_s d
 call line

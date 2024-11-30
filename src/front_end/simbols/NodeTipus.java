@@ -9,7 +9,7 @@ public class NodeTipus extends NodeBase {
         this.tipus = t;
     }
 
-    public String getTipusString() {
+    public String getTipusAsString() {
         return tipus.toString();
     }
 
