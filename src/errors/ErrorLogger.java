@@ -6,6 +6,10 @@ import java.nio.charset.StandardCharsets;
 public class ErrorLogger {
     private static final String ERROR_FILE = "output/Errors.txt";
 
+    public static void logLexicError(int[] column_line, String message) {
+        logError("Error lèxic. [" + column_line[0] + ":" + column_line[1] + "] " + message);
+    }
+
     public static void logSemanticError(int[] column_line, String message) {
         logError("Error semàntic. [" + column_line[0] + ":" + column_line[1] + "] " + message);
     }

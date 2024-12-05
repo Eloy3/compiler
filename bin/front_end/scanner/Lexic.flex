@@ -135,6 +135,17 @@ ws = [' '|'\t']+
 
       return line_col;
     }
+
+    public void logLexicalError(String errorMessage) {
+        try (BufferedWriter errorWriter = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("output/errors.txt", true), "utf-8"))) {
+            errorWriter.write(errorMessage + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 %}
 
 %%
@@ -181,3 +192,8 @@ ws = [' '|'\t']+
 
 {ENDLINE}                { /*return symbol(ParserSym.EOF);    */    numero_linea++;  }
 {ws}                     { /* No fer res amb els espais */  }
+[^] {
+    System.err.println("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
+    logLexicalError("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
+    return symbol(ParserSym.error);
+}

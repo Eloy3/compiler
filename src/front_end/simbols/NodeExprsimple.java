@@ -3,10 +3,10 @@ package front_end.simbols;
 import data_structures.Procedure;
 
 public class NodeExprsimple extends NodeBase {
-    public enum exprsimple {id, enter, boolea, procediment}
+    public enum exprsimple {id, ent, bool, procediment}
     private exprsimple tipus;
     private String valor;
-    private NodeCrida_funcio a;
+    private NodeCrida_funcio procedure;
 
     public NodeExprsimple(exprsimple t, String v) {
         super("Exprsimple", 0);
@@ -18,11 +18,11 @@ public class NodeExprsimple extends NodeBase {
         super("Exprsimple", 0);
         this.tipus = exprsimple.procediment;
         this.valor = a.getResult();
-        this.a = a;
+        this.procedure = a;
     }
 
     public void generateCodeProcedure(){
-        a.generateCode();
+        procedure.generateCode();
     }
     public exprsimple getTipus() {
         return tipus;
@@ -36,18 +36,22 @@ public class NodeExprsimple extends NodeBase {
         return valor;
     }
 
-    public NodeCrida_funcio getA() {
-        return a;
+    public NodeCrida_funcio getProcedure() {
+        return procedure;
     }
 
-    public void setA(NodeCrida_funcio a) {
-        this.a = a;
+    public void setProcedure(NodeCrida_funcio a) {
+        this.procedure = a;
     }
 
     public String tipusProcediment(){
-        String nom = a.getFunctionName();
+        String nom = procedure.getFunctionName();
         Procedure p = tp.getProc(nom);
         return p.getType_return().toString();
+    }
+
+    public String getNomProcediment(){
+        return procedure.getFunctionName();
     }
     @Override
     public String toString() {

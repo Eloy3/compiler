@@ -9,10 +9,12 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import front_end.simbols.*;
 import front_end.scanner.*;
+import errors.*;
 
 class Parser; 
 
 parser code {: 
+        
         private Lexic lexic;
 
         public Parser(Lexic l, java_cup.runtime.SymbolFactory sf) {
@@ -23,6 +25,15 @@ parser code {:
         public Parser(Lexic l) {
                 this(l, new ComplexSymbolFactory());
         }
+
+        public void logSintacticError(String errorMessage) {
+                ErrorLogger.logSintacticError(lexic.getLineColumn(),errorMessage);
+        }
+
+        public void logLexicError(String errorMessage) {
+                ErrorLogger.logLexicError(lexic.getLineColumn(),errorMessage);
+        }
+
 :}
 
 terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator;
@@ -79,11 +90,9 @@ codi ::= procedures:a principal:b  {: RESULT = new NodeCodi(a,b);:};
 procedures ::= decl_funcio:a procedures:b {: RESULT = new NodeProcedures(a,b);:}
                 | {: RESULT = new NodeProcedures();:};
 
-principal::=  programa PRINCIPAL EParen DParen pmb EClau sentencies:s DClau {: RESULT = new NodePrincipal(s);:};
+principal::=  programa PRINCIPAL EParen DParen EClau sentencies:s DClau {: RESULT = new NodePrincipal(s);:};
 
 programa ::= {: RESULT = new NodePrograma(); :};
-
-pmb ::= {:RESULT = new NodePmb();:};
 
 //sentencies
 
@@ -99,7 +108,9 @@ sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"de
               | decl_funcio:df {: RESULT = new NodeSentencia(df,"decl_funcio"); :}
               | crida_funcio:cf PUNTICOMA{: RESULT = new NodeSentencia(cf,"crida_funcio"); :}
               | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s,"sortida"); :}
-              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e,"entrada"); :};      
+              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e,"entrada"); :}
+              | error PUNTICOMA {: logLexicError("Sentència invàlida");:}
+              | ID {: logLexicError("Sentència invàlida");:};
 
 crida_funcio ::= ID:name EParen arg:a DParen {: RESULT = new NodeCrida_funcio(name, a, lexic.getLineColumn()); :};
 
@@ -121,8 +132,8 @@ cons ::= CONST
         |     ;
 
 exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.id, v); :}
-             | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.enter, v.toString()); :}
-             | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.boolea, v.toString()); :}
+             | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.ent, v.toString()); :}
+             | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.bool, v.toString()); :}
              | crida_funcio:a   {: RESULT = new NodeExprsimple(a); :};
 
 tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ENT); :}
@@ -156,7 +167,7 @@ varinic ::= ASSIGN exprsimple:v   {: RESULT = new NodeVarinic(v); :}
             |      {: RESULT = new NodeVarinic(); :}           ;
 
 varinic2 ::= ID:v ASSIGN exprsimple:v1 {: RESULT = new NodeVarinic2(v, v1, lexic.getLineColumn()); :}
-        | ID:v ASSIGN exprcomposta:e {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :};
+           | ID:v ASSIGN exprcomposta:e {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :};
 
 exprcomposta ::= exprsimple:a operador_expr:o exprsimple:b {: RESULT = new NodeExprcomposta(a,o,b,lexic.getLineColumn());:};
 
@@ -170,12 +181,8 @@ operador_expr ::= SUMA:a {: RESULT = new NodeOperador_expr(a.toString());:}
 sortida ::= SORTIDA EParen llista_valors:v DParen {: RESULT = new NodeSortida(v,false,lexic.getLineColumn());:}
         | SORTIDALN EParen llista_valors:v DParen {: RESULT = new NodeSortida(v,true,lexic.getLineColumn());:};
 
-llista_valors ::= valor:v {: RESULT = new NodeLlistaValors(v);:}|
-                  valor:v COMA llista_valors:lv {: RESULT = new NodeLlistaValors(v, lv);:} ;
-
-valor ::= ID:v {: RESULT = new NodeValor(NodeValor.exprsimple.id, v); :}
-         | ENTER:v {: RESULT = new NodeValor(NodeValor.exprsimple.enter, v.toString()); :}
-         | BOOLEA:v {: RESULT = new NodeValor(NodeValor.exprsimple.boolea, v.toString()); :};
+llista_valors ::= exprsimple:v {: RESULT = new NodeLlistaValors(v);:}|
+                  exprsimple:v COMA llista_valors:lv {: RESULT = new NodeLlistaValors(v, lv);:} ;
 
 // **** Entrada per teclat ****
 
@@ -205,8 +212,8 @@ bucle ::= MENTRE EParen condicio:c DParen EClau blocf:bloc DClau {: RESULT = new
 
 
 comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comportament.INCREMENT, lexic.getLineColumn()); :}
-                | ID:v RESTA RESTA {: RESULT = new NodeComportamentv1(v, Comportament.DECREMENT, lexic.getLineColumn()); :}
-                | {: RESULT = new NodeComportamentv1(); :};
+                 | ID:v RESTA RESTA {: RESULT = new NodeComportamentv1(v, Comportament.DECREMENT, lexic.getLineColumn()); :}
+                 | {: RESULT = new NodeComportamentv1(); :};
 
 
 

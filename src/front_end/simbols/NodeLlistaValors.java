@@ -3,15 +3,15 @@ package front_end.simbols;
 
 public class NodeLlistaValors extends NodeBase{
     
-    private NodeValor Valor;
+    private NodeExprsimple Valor;
     private NodeLlistaValors LlistaValors;
 
-    public NodeLlistaValors(NodeValor v) {
+    public NodeLlistaValors(NodeExprsimple v) {
         super("LlistaValors", 0);
         this.Valor = v;
     }
 
-    public NodeLlistaValors(NodeValor v, NodeLlistaValors lv) {
+    public NodeLlistaValors(NodeExprsimple v, NodeLlistaValors lv) {
         super("F", 0);
         this.Valor = v;
         this.LlistaValors = lv;
@@ -25,11 +25,11 @@ public class NodeLlistaValors extends NodeBase{
         this.LlistaValors = LlistaValors;
     }
 
-    public NodeValor getValor() {
+    public NodeExprsimple getValor() {
         return Valor;
     }
 
-    public void setValor(NodeValor Valor) {
+    public void setValor(NodeExprsimple Valor) {
         this.Valor = Valor;
     }
     

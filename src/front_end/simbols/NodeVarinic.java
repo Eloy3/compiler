@@ -30,4 +30,20 @@ public class NodeVarinic extends NodeBase{
     public String getValor() {
         return exprsimple.getValor();
     }
+
+    public NodeExprsimple getExprsimple() {
+        return exprsimple;
+    }
+
+    public void setExprsimple(NodeExprsimple exprsimple) {
+        this.exprsimple = exprsimple;
+    }
+
+    public String getTipusProcedure(){
+        return exprsimple.tipusProcediment();
+    }
+    
+    public String getNomProcedure(){
+        return exprsimple.getNomProcediment();
+    }
 }

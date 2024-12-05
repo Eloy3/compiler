@@ -3,21 +3,21 @@ suma:skip
 pmb suma
 t2 = x + y
 z = t2
-rtn z
+t4 = z
+rtn t4
 principal:skip
 pmb principal
-t4 = 7
-a = t4
-t6 = 3
-b = t6
-t8 = a + b
-test = t8
-param_s test
-call line
+t5 = 7
+a = t5
+t7 = 3
+b = t7
 param_s a
 param_s b
 call suma
-t10 = retENT
-d = t10
+param_s a
+param_s b
+call suma
+t9 = retInt
+d = t9
 param_s d
 call line

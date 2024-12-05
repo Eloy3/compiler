@@ -480,7 +480,7 @@ public class AssemblyCode {
         Variable v = c3a.getVar(identificador);
         if (v == null){
             if (identificador.startsWith("ret")){
-                return "(A7)+";
+                return "D3";
             } else {
                 if (identificador.equals("cert")) identificador = "-1";
                 else if (identificador.equals("fals")) identificador = "0";

@@ -169,4 +169,54 @@ public class SymbolTable {
         Collections.reverse(temp);
         return temp;
     }
+
+    public void updateValue(String nom, Object newValue) {
+        // Search for the symbol in the stack
+        for (int i = tambit.size() - 1; i >= 0; i--) {
+            if (tambit.get(i).containsKey(nom)) {
+                // Update the value
+                Simbol simbol = tambit.get(i).get(nom);
+                simbol.setValor(newValue);
+                
+                // Write the updated symbol to the file
+                writeUpdatedSymbolToFile(simbol);
+                return;
+            }
+        }
+        
+        // Check in temporary symbols
+        for (Simbol tempSymbol : temp) {
+            if (tempSymbol.getNom().equals(nom)) {
+                // Update the value
+                tempSymbol.setValor(newValue);
+                
+                // Write the updated symbol to the file
+                writeUpdatedSymbolToFile(tempSymbol);
+                return;
+            }
+        }
+    
+        // If not found, log an error
+        System.err.println("Error: Symbol '" + nom + "' not found in the symbol table.");
+    }
+
+    private void writeUpdatedSymbolToFile(Simbol simbol) {
+    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(FILE_PATH, true), StandardCharsets.UTF_8))) {
+        String argsString = (simbol.getArgs() != null && !simbol.getArgs().isEmpty()) 
+                            ? simbol.getArgs().toString() 
+                            : "[]";
+
+        // Format columns with fixed widths
+        writer.write(String.format("%-15s %-10s %-10s %-10d %-20s\n",
+                simbol.getNom(),
+                simbol.getTipus(),
+                simbol.getValor() != null ? simbol.getValor() : "null",
+                profunditat,
+                argsString));
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
 }

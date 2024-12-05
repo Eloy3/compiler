@@ -15,42 +15,38 @@ suma:
 	MOVE.W D1,t2_suma
 * --> | ASSIGNA | t2 | null | z |
 	MOVE.W t2_suma,z_suma
-* --> | RTN | z | null | null |
-	MOVE.W z_suma,D3
+* --> | ASSIGNA | z | null | t4 |
+	MOVE.W z_suma,t4_suma
+* --> | RTN | t4 | null | null |
+	MOVE.W t4_suma,D3
 	RTS
 * --> | SKIP | null | null | principal |
 principal:
 * --> | PMB | null | null | principal |
-* --> | ASSIGNA | 7 | null | t4 |
-	MOVE.W #7,t4_principal
-* --> | ASSIGNA | t4 | null | a |
-	MOVE.W t4_principal,a_principal
-* --> | ASSIGNA | 3 | null | t6 |
-	MOVE.W #3,t6_principal
-* --> | ASSIGNA | t6 | null | b |
-	MOVE.W t6_principal,b_principal
-* --> | SUMA | a | b | t8 |
-	MOVE.W a_principal,D0
-	MOVE.W b_principal,D1
-	JSR ISUMA
-	MOVE.W D1,t8_principal
-* --> | ASSIGNA | t8 | null | test |
-	MOVE.W t8_principal,test_principal
-* --> | PARAM_S | null | null | test |
-	MOVE.W test_principal,-(A7)
-* --> | CALL | null | null | line |
-	JSR ILINE
-	ADDA.L #2,A7
+* --> | ASSIGNA | 7 | null | t5 |
+	MOVE.W #7,t5_principal
+* --> | ASSIGNA | t5 | null | a |
+	MOVE.W t5_principal,a_principal
+* --> | ASSIGNA | 3 | null | t7 |
+	MOVE.W #3,t7_principal
+* --> | ASSIGNA | t7 | null | b |
+	MOVE.W t7_principal,b_principal
 * --> | PARAM_S | null | null | a |
 	MOVE.W a_principal,-(A7)
 * --> | PARAM_S | null | null | b |
 	MOVE.W b_principal,-(A7)
 * --> | CALL | null | null | suma |
 	JSR suma
-* --> | ASSIGNA | retENT | null | t10 |
-	MOVE.W D3,t10_principal
-* --> | ASSIGNA | t10 | null | d |
-	MOVE.W t10_principal,d_principal
+* --> | PARAM_S | null | null | a |
+	MOVE.W a_principal,-(A7)
+* --> | PARAM_S | null | null | b |
+	MOVE.W b_principal,-(A7)
+* --> | CALL | null | null | suma |
+	JSR suma
+* --> | ASSIGNA | retInt | null | t9 |
+	MOVE.W D3,t9_principal
+* --> | ASSIGNA | t9 | null | d |
+	MOVE.W t9_principal,d_principal
 * --> | PARAM_S | null | null | d |
 	MOVE.W d_principal,-(A7)
 * --> | CALL | null | null | line |
@@ -62,13 +58,12 @@ x_suma: DS.W 1
 y_suma: DS.W 1
 t2_suma: DS.W 1
 z_suma: DS.W 1
-t4_principal: DS.W 1
+t4_suma: DS.W 1
+t5_principal: DS.W 1
 a_principal: DS.W 1
-t6_principal: DS.W 1
+t7_principal: DS.W 1
 b_principal: DS.W 1
-t8_principal: DS.W 1
-test_principal: DS.W 1
-t10_principal: DS.W 1
+t9_principal: DS.W 1
 d_principal: DS.W 1
  
 strout: DS.B 100

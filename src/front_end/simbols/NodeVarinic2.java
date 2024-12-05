@@ -28,73 +28,61 @@ public class NodeVarinic2 extends NodeBase {
     }
 
     public void generateCode_exprsimple() {
-        if(exprsimple.getTipusAsString().equals("procediment")){
+        if ("procediment".equals(exprsimple.getTipusAsString())) {
+            if(Util.validateProcedureExists(ts,exprsimple.getNomProcediment(),lc)==null){return;} 
             exprsimple.generateCodeProcedure();
+            validateAndGenerate(id, exprsimple.tipusProcediment(), exprsimple.getValor(), Optional.empty());
+            return;
         }
-        validateAndGenerate(id, exprsimple.tipusProcediment(), exprsimple.getValor(), Optional.empty());
+        validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
+
     }
 
     public void generateCode_exprcomposta() {
-        validateAndGenerate(id, exprcomposta.getA().getTipusAsString(), exprcomposta.getA().getValor(),
+        validateAndGenerate(id, exprcomposta.getExprsimple().getTipusAsString(), exprcomposta.getExprsimple().getValor(),
                 Optional.of(exprcomposta.getB()));
     }
 
     private void validateAndGenerate(String targetId, String typeA, String valueA, Optional<NodeExprsimple> optionalB) {
         Simbol target = Util.validateVariableExists(ts, targetId, lc);
-        if (target == null) {
+        if (target == null) return;
+
+        typeA = resolveType(typeA, valueA);
+        if (typeA == null || !Util.typeMatches(target.getTipus(), typeA)) {
+            ErrorLogger.logSemanticError(lc, target.getNom() + " i " + valueA + " no tenen el mateix tipus.");
             return;
         }
 
-        // Resolve typeA if it is an identifier
-        if (Util.isIdentifier(typeA)) {
-            Simbol operandA = Util.validateVariableExists(ts, valueA, lc);
-            if (operandA == null) {
-                ErrorLogger.logSemanticError(lc, "La variable '" + valueA + "' no està definida.");
-                return;
-            }
-            typeA = operandA.getTipus(); // Update typeA to the resolved type
-        }
-
-        // Validate type of the target variable
-        if (!Util.typeMatches(target.getTipus(), typeA)) {
-            ErrorLogger.logSemanticError(lc, target.getNom()+" i "+valueA+" no tenen el mateix tipus.");
-            return;
-        }
-
-        if(exprsimple != null && exprsimple.getA()!=null){
+        if (exprsimple != null && exprsimple.getProcedure() != null) {
             calcOcupProcedure(target);
             return;
         }
 
-        // Validate second operand if it exists
         if (optionalB.isPresent()) {
             NodeExprsimple b = optionalB.get();
-            String typeB = b.getTipusAsString();
-            String valueB = b.getValor();
-
-            if (Util.isIdentifier(typeB)) {
-                Simbol secondOperand = Util.validateVariableExists(ts, valueB, lc);
-                if (secondOperand == null) {
-                    ErrorLogger.logSemanticError(lc, "La variable '" + valueB + "' no està definida.");
-                    return;
-                }
-                typeB = secondOperand.getTipus(); // Update typeB to the resolved type
-            }
-
-            if (!Util.typeMatches(target.getTipus(), typeB)) {
+            String typeB = resolveType(b.getTipusAsString(), b.getValor());
+            if (typeB == null || !Util.typeMatches(target.getTipus(), typeB)) {
                 ErrorLogger.logSemanticError(lc, "Variable '" + targetId + "' has mismatched types.");
                 return;
             }
-
-            // Generate code for composite expression
-            calcOcupComposite(target, valueA, exprcomposta.getOperador().getTipus(), valueB);
+            calcOcupComposite(target, valueA, exprcomposta.getOperador().getTipus(), b.getValor());
         } else {
-            // Generate code for single operand
             calcOcup(target, valueA);
         }
     }
 
-    // Generate code for simple assignments
+    private String resolveType(String type, String value) {
+        if (Util.isIdentifier(type)) {
+            Simbol operand = Util.validateVariableExists(ts, value, lc);
+            if (operand == null) {
+                ErrorLogger.logSemanticError(lc, "La variable '" + value + "' no està definida.");
+                return null;
+            }
+            return operand.getTipus();
+        }
+        return type;
+    }
+
     private void calcOcup(Simbol target, String value) {
         String tempVar = cta.newTempVar(target.getTipus(), value);
         cta.generateCode(tempVar + " = " + value + "\n");
@@ -102,22 +90,20 @@ public class NodeVarinic2 extends NodeBase {
         cta.setTemp_id(null);
     }
 
-    // Generate code for composite assignments
     private void calcOcupComposite(Simbol target, String valueA, String operator, String valueB) {
         String tempVar = cta.newTempVar(target.getTipus(), valueA);
         cta.generateCode(tempVar + " = " + valueA + " " + operator + " " + valueB + "\n");
         cta.generateCode(cta.newVar(target.getNom(), target.getTipus(), valueA) + " = " + tempVar + "\n");
     }
 
-    // Generate code for function call assignments
     private void calcOcupProcedure(Simbol target) {
-
-        String functionName = exprsimple.getA().getFunctionName();
-
+        String functionName = exprsimple.getProcedure().getFunctionName();
+        if (!ts.existeixTs(functionName)) {
+            ErrorLogger.logSemanticError(lc, "La funció '" + functionName + "' no existeix.");
+            return;
+        }
         String tempVar = cta.newTempVar(target.getTipus(), functionName);
         cta.generateCode(tempVar + " = ret" + target.getTipus().toUpperCase() + "\n");
-
-        // Assign the return value to the target variable
         cta.generateCode(cta.newVar(target.getNom(), target.getTipus(), null) + " = " + tempVar + "\n");
     }
 

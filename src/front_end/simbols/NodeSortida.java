@@ -1,7 +1,7 @@
 package front_end.simbols;
 
 import errors.ErrorLogger;
-import front_end.simbols.NodeValor.exprsimple;
+import front_end.simbols.NodeExprsimple.exprsimple;
 
 public class NodeSortida extends NodeBase {
 
@@ -39,7 +39,7 @@ public class NodeSortida extends NodeBase {
                     lc,
                     "Variable '" + LlistaValors.getValor().getValor() + "' no existeix."
                 );
-                throw new RuntimeException("Undefined variable: " + LlistaValors.getValor().getValor());
+                throw new RuntimeException("Variable '" + LlistaValors.getValor().getValor()+"' no existeix");
             }
 
             // Determine parameter type based on the variable's type

@@ -7,7 +7,7 @@ import static front_end.simbols.NodeBase.ts;
 
 public class NodeExprcomposta extends NodeBase{
     
-    private NodeExprsimple a;
+    private NodeExprsimple exprsimple;
     private NodeOperador_expr operador;
     private NodeExprsimple b;
     private Simbol operand1;
@@ -15,18 +15,18 @@ public class NodeExprcomposta extends NodeBase{
     
     public NodeExprcomposta(NodeExprsimple a, NodeOperador_expr o, NodeExprsimple b, int[] lc){
         super("Exprcomposta",0);
-        this.a = a;
+        this.exprsimple = a;
         this.operador = o;
         this.b = b;
         
     }
 
-    public NodeExprsimple getA() {
-        return a;
+    public NodeExprsimple getExprsimple() {
+        return exprsimple;
     }
 
-    public void setA(NodeExprsimple a) {
-        this.a = a;
+    public void setExprsimple(NodeExprsimple a) {
+        this.exprsimple = a;
     }
 
     public NodeOperador_expr getOperador() {

@@ -14,6 +14,14 @@ public abstract class Util {
         }
         return ts.get(varId);
     }
+
+    public static Simbol validateProcedureExists(SymbolTable ts, String varId, int[] lc) {
+        if (!ts.existeixTs(varId)) {
+            ErrorLogger.logSemanticError(lc,"La funció '" + varId + "' no existeix.");
+            return null;
+        }
+        return ts.get(varId);
+    }
     
     public static boolean typeMatches(String type1, String type2) {
         return type1 != null && type1.equalsIgnoreCase(type2);
