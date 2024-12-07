@@ -100,6 +100,7 @@ public class ThreeAdressCodeBackEnd {
     
     private void handleConditional(String[] parts, String instruction) {
         if (parts.length < 6) {
+            
             System.err.println("Error: Malformed conditional: " + instruction);
             return;
         }

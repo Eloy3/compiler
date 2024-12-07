@@ -1,10 +1,4 @@
 NOM             TIPUS      VALOR      NIVELL     ARGS                
  
-suma            ENT        null       2          [y, x]              
-x               ENT        null       2          []                  
-y               ENT        null       2          []                  
-z               ENT        null       2          []                  
 principal       NULL       null       1          []                  
-a               ENT        7          1          []                  
-b               ENT        3          1          []                  
-d               ENT        t9         1          []                  
+a               ENT        3          1          []                  

@@ -1,5 +1,7 @@
 package front_end.simbols;
 
+import front_end.simbols.NodeExprsimple.tipusexpr;
+import util.JumpUtil;
 import util.Util;
 
 public class NodeBucle extends NodeBase {
@@ -28,85 +30,67 @@ public class NodeBucle extends NodeBase {
         this.lc = lc;
     }
 
-    public void generateCodeWhile() {
-        inicibucle();
-        etiquetacond();
-        generateConditionCode();
-        condiciobot(false);
+    public boolean generateCodeWhile() {
+        if (!validate()) return false;
+        JumpUtil.inicibucle(cta);
+        JumpUtil.etiquetacond(cta);
+        if(!GenerateConditionCode()) return false;
+        JumpUtil.condiciobot(cta,false);
         ts.incAmbit();
         blocf.generateCode();
-        retornabucle();
+        JumpUtil.retornabucle(cta);
         ts.decAmbit();
+        return true;
     }
 
     public void generateCodeFor() {
         ts.incAmbit();
         decl_Variable.generateCode();
-        inicibucle();
-        etiquetacond();
-        validateAndGenerateConditionCode();
-        condiciobot(false);
+        JumpUtil.inicibucle(cta);
+        JumpUtil.etiquetacond(cta);
+        GenerateConditionCode();
+        JumpUtil.condiciobot(cta,false);
         comportamentv1.generateCode();
         blocf.generateCode();
-        retornabucle();
+        JumpUtil.retornabucle(cta);
         ts.decAmbit();
     }
 
-    private void generateConditionCode() {
+    /* private boolean generateConditionCode() {
         if (condicio.getOperador() != null) {
-            condicio.generateCodeOperador();
+            if (!condicio.generateCodeOperador()) return false;
         } else {
             condicio.generateCodeID();
         }
-    }
 
-    private void validateAndGenerateConditionCode() {
+        return true;
+    } */
+
+    private boolean validate(){
         if (condicio.getOperador() != null) {
-            Util.validateBinaryOperands(ts, condicio.getOperand1(), condicio.getOperand2(), lc);
-            condicio.generateCodeOperador();
-        } else {
-            Util.validateUnaryOperand(ts, condicio.getOperand1(), lc);
-            condicio.generateCodeID();
+            NodeExprsimple operand1 = condicio.getOperand1();
+            NodeExprsimple operand2 = condicio.getOperand2();
+            if(operand1.getTipus().equals(tipusexpr.id)){
+                if(Util.validateVariableExists(ts, operand1.getValor(), lc)==null) return false;
+            }
+            
+            if(operand2.getTipus().equals(tipusexpr.id)){
+                if(Util.validateVariableExists(ts, operand2.getValor(), lc)==null) return false;
+            }
+    
+            if(!Util.validateBinaryOperands(ts, operand2, operand1, lc)) return false;
+        }else{
+            if(Util.validateVariableExists(ts, condicio.getID(), lc)==null) return false;
         }
+        return true;
     }
-
-    public static void inicibucle() {
-        String startLabel = cta.newLabel();
-        cta.push(cta.getStart_stack(), startLabel);
-        cta.generateCode(startLabel + ":skip\n");
-    }
-
-    public static void etiquetacond() {
-        cta.generateCode("if ");
-        String trueLabel = cta.newLabel();
-        cta.push(cta.getTrue_stack(), trueLabel);
-
-        String falseLabel = cta.newLabel();
-        cta.push(cta.getFalse_stack(), falseLabel);
-    }
-
-    public static void condiciobot(boolean inverter) {
-        String trueLabel = cta.getTop(cta.getTrue_stack());
-        String falseLabel = cta.getTop(cta.getFalse_stack());
-
-        if (inverter) {
-            cta.generateCode("goto " + falseLabel + "\n");
-            cta.generateCode("goto " + trueLabel + "\n");
-            cta.pop(cta.getTrue_stack());
-            cta.generateCode(trueLabel + ":skip\n");
+    private boolean GenerateConditionCode() {
+        if (condicio.getOperador() != null) {
+            if (!condicio.generateCodeOperador()) return false;
         } else {
-            cta.generateCode("goto " + trueLabel + "\n");
-            cta.pop(cta.getTrue_stack());
-            cta.generateCode("goto " + falseLabel + "\n");
-            cta.generateCode(trueLabel + ":skip\n");
+            if (!condicio.generateCodeID()) return false;
         }
-        cta.setTemp_id(null);
-    }
-
-    public static void retornabucle() {
-        cta.generateCode("goto " + cta.getTop(cta.getStart_stack()) + "\n");
-        String falseLabel = cta.getTop(cta.getFalse_stack());
-        cta.generateCode(falseLabel + ":skip\n");
+        return true;
     }
 
     public NodeComportamentv1 getComportamentv1() {

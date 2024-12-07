@@ -47,12 +47,13 @@ public abstract class Util {
         }
     }
 
-    public static void validateBinaryOperands(SymbolTable ts, NodeExprsimple op1, NodeExprsimple op2, int[] lc) {
+    public static boolean validateBinaryOperands(SymbolTable ts, NodeExprsimple op1, NodeExprsimple op2, int[] lc) {
         Simbol operand1 = validateOperand(ts, op1, lc);
         Simbol operand2 = validateOperand(ts, op2, lc);
 
         if (operand1 == null || operand2 == null) {
             ErrorLogger.logSemanticError(lc,"Operands are not valid.");
+            return false;
         }
 
         // Check type compatibility
@@ -60,6 +61,9 @@ public abstract class Util {
              ErrorLogger.logSemanticError(lc,"Operand types do not match: " +
                 op1.getValor() + " (" + operand1.getTipus() + ") and " +
                 op2.getValor() + " (" + operand2.getTipus() + ")");
+                return false;
         }
+
+        return true;
     }
 }

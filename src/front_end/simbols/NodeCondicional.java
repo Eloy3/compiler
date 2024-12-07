@@ -1,6 +1,7 @@
 
 package front_end.simbols;
 
+import util.JumpUtil;
 
 public class NodeCondicional extends NodeBase{
 
@@ -15,4 +16,16 @@ public class NodeCondicional extends NodeBase{
         condsino = c;
     }
 
+    public void generateCode(){
+        JumpUtil.etiquetacond(cta);
+        if (condicio.getOperador() != null) {
+            condicio.generateCodeOperador();
+        } else {
+            condicio.generateCodeID();
+        }
+        JumpUtil.condiciobot(cta, false);
+        blocf.generateCode();
+        String falseLabel = cta.getTop(cta.getFalse_stack());
+        cta.generateCode(falseLabel + ":skip\n");
+    }
 }

@@ -84,7 +84,7 @@ public class NodeSentencia extends NodeBase {
                 break;
 
             case "condicional":
-                //condicional.generateCode();
+                condicional.generateCode();
                 break;
 
             case "bucle":

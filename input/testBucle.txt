@@ -1,0 +1,7 @@
+principal(){
+	ent a = 3;
+	mentre(b!=0){
+		sortidaln(a);
+		a = a-1;
+	}
+}

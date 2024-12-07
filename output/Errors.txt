@@ -1,0 +1,1 @@
+Error semàntic. [7:1] La variable 'b' no existeix.

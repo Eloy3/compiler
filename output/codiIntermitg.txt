@@ -1,23 +1,4 @@
-goto principal 
-suma:skip
-pmb suma
-t2 = x + y
-z = t2
-t4 = z
-rtn t4
 principal:skip
 pmb principal
-t5 = 7
-a = t5
-t7 = 3
-b = t7
-param_c 1
-param_c 9
-call suma
-param_c 1
-param_c 9
-call suma
-t9 = retInt
-d = t9
-param_s d
-call line
+t0 = 3
+a = t0
