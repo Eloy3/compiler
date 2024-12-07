@@ -1,7 +1,7 @@
 package front_end.simbols;
 
 import errors.ErrorLogger;
-import front_end.simbols.NodeExprsimple.exprsimple;
+import front_end.simbols.NodeExprsimple.tipusexpr;
 
 public class NodeSortida extends NodeBase {
 
@@ -30,7 +30,7 @@ public class NodeSortida extends NodeBase {
 
     private String paramType() {
         // Check if the value is an identifier (ID)
-        if (LlistaValors.getValor().getTipus() == exprsimple.id) {
+        if (LlistaValors.getValor().getTipus() == tipusexpr.id) {
             Simbol id = ts.get(LlistaValors.getValor().getValor());
 
             // If the variable does not exist in the symbol table, log an error

@@ -37,12 +37,11 @@ parser code {:
 :}
 
 terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator;
-terminal String ID, ENT, BOOL, CONST, TUPLA, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA;
+terminal String ID, ENT, BOOL, CONST, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA;
 
-non terminal tipusbucle;
 non terminal NodeExprcomposta exprcomposta;
 non terminal NodeOperador_expr operador_expr;
-non terminal NodeSentencia sentencia;
+non terminal NodeSentencia sentencia, sentenciaf;
 non terminal NodeSentencies sentencies;
 non terminal NodeSentencies2 sentencies2;
 non terminal NodeOperador_cond operador_cond;
@@ -53,7 +52,7 @@ non terminal NodeTipus tipus;
 non terminal NodeTipus tipusf;
 non terminal NodeVarinic varinic;
 non terminal NodeVarinic2 varinic2;
-non terminal NodeExprsimple exprsimple;
+non terminal NodeExprsimple exprsimple,exprsimpleArg;
 non terminal NodeParam param;
 non terminal NodeParam2 param2;
 non terminal NodeArg arg;
@@ -62,9 +61,8 @@ non terminal NodeBlocf blocf;
 non terminal NodeBlocf2 blocf2;
 non terminal NodeComportamentv1 comportamentvl;
 non terminal NodeBucle bucle;
-non terminal NodeSentencia sentenciaf;
 non terminal NodeRetorna retorna;
-non terminal cons, decl_variable_local;
+non terminal cons;
 
 non terminal NodePrincipal principal;
 non terminal NodeCondicional condicional;
@@ -72,11 +70,9 @@ non terminal NodeCondsino condsino;
 non terminal NodeSino sino;
 non terminal NodeCondicio condicio;
 non terminal NodePrograma programa;
-non terminal NodePmb pmb;
 non terminal NodeSortida sortida;
 non terminal NodeEntrada entrada;
 non terminal NodeLlistaValors llista_valors;
-non terminal NodeValor valor;
 non terminal NodeCodi codi;
 non terminal NodeProcedures procedures;
 
@@ -94,7 +90,7 @@ principal::=  programa PRINCIPAL EParen DParen EClau sentencies:s DClau {: RESUL
 
 programa ::= {: RESULT = new NodePrograma(); :};
 
-//sentencies
+//sentències
 
 sentencies ::=   sentencia:s sentencies2:s2 {: RESULT = new NodeSentencies(s,s2);:};
 
@@ -114,7 +110,7 @@ sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"de
 
 crida_funcio ::= ID:name EParen arg:a DParen {: RESULT = new NodeCrida_funcio(name, a, lexic.getLineColumn()); :};
 
-arg ::= ID:id arg2:a2 {: RESULT = new NodeArg(id, a2); :}
+arg ::= exprsimpleArg:e arg2:a2 {: RESULT = new NodeArg(e, a2); :}
             |   {: RESULT = new NodeArg(); :};
 
 arg2 ::= COMA arg:a {: RESULT = new NodeArg2(a); :}
@@ -131,10 +127,14 @@ param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}
 cons ::= CONST
         |     ;
 
-exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.id, v); :}
-             | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.ent, v.toString()); :}
-             | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.exprsimple.bool, v.toString()); :}
+exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v); :}
+             | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString()); :}
+             | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString()); :}
              | crida_funcio:a   {: RESULT = new NodeExprsimple(a); :};
+
+exprsimpleArg ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v); :}
+             | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString()); :}
+             | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString()); :};
 
 tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ENT); :}
         | BOOL  {: RESULT = new NodeTipus(Tipus.BOOL); :};

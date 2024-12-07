@@ -4,7 +4,7 @@ import errors.ErrorLogger;
 import util.Util;
 import front_end.simbols.NodeCrida_funcio;
 import java.util.Optional;
-import front_end.simbols.NodeExprsimple.exprsimple;
+import front_end.simbols.NodeExprsimple.tipusexpr;
 
 public class NodeVarinic2 extends NodeBase {
 

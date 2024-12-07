@@ -5,6 +5,7 @@ import java.util.List;
 
 import errors.*;
 import util.Util;
+import front_end.simbols.NodeExprsimple.tipusexpr;
 
 public class NodeCrida_funcio extends NodeBase {
 
@@ -33,6 +34,8 @@ public class NodeCrida_funcio extends NodeBase {
         // Get function definition from the symbol table
         Simbol functionSymbol = ts.get(functionName);
         ArrayList<String> expectedArgs = functionSymbol.getArgs();
+        ArrayList<String> expectedTypes = getTipusArgs(expectedArgs);
+    
         if (expectedArgs.size() != params.size()) {
             ErrorLogger.logSintacticError(
                 lc,
@@ -45,43 +48,66 @@ public class NodeCrida_funcio extends NodeBase {
         // Validate argument types and generate parameter code
         for (int i = 0; i < params.size(); i++) {
             NodeArg paramNode = params.get(i);
-            String expectedType = functionSymbol.getTipus();
+            NodeExprsimple.tipusexpr actualType = paramNode.getTipus(); 
+            String expectedType = expectedTypes.get(i);
+
+            if (actualType == NodeExprsimple.tipusexpr.id) {
+                // If the argument is an identifier, check its type in the symbol table
+                Simbol argSymbol = ts.get(paramNode.getExprsimple().getValor());
+                if (argSymbol == null) {
+                    ErrorLogger.logSemanticError(
+                        lc,
+                        "L'argument '" + paramNode.getExprsimple().getValor() + "' no està declarat."
+                    );
+                    return;
+                }
     
-            // Resolve argument type
-            Simbol argSymbol = ts.get(paramNode.getId());
-            if (argSymbol == null) {
+                // Check type compatibility
+                if (!Util.typeMatches(expectedType, argSymbol.getTipus())) {
+                    ErrorLogger.logSemanticError(
+                        lc,
+                        "Paràmetre " + (i + 1) + " de la funció '" + functionName +
+                        "' esperava tipus '" + expectedType + "' però s'ha trobat '" + argSymbol.getTipus() + "'"
+                    );
+                    return;
+                }
+    
+                // Generate code for passing the identifier as a parameter
+                cta.generateCode("param_s " + argSymbol.getNom() + "\n");
+    
+            } else if (actualType == NodeExprsimple.tipusexpr.ent || actualType == NodeExprsimple.tipusexpr.bool) {
+                // If the argument is a literal, directly validate its type
+                if (!Util.typeMatches(expectedType, actualType.name().toUpperCase())) {
+                    ErrorLogger.logSemanticError(
+                        lc,
+                        "Paràmetre " + (i + 1) + " de la funció '" + functionName +
+                        "' esperava tipus '" + expectedType + "' però s'ha trobat literal '" + actualType + "'"
+                    );
+                    return;
+                }
+    
+                // Generate code for passing the literal as a parameter
+                cta.generateCode("param_c " + paramNode.getExprsimple().getValor() + "\n");
+    
+            } else {
                 ErrorLogger.logSemanticError(
                     lc,
-                    "L'argument '" + paramNode.getId() + "' no està declarat."
+                    "Tipus d'argument desconegut per al paràmetre " + (i + 1) + " de la funció '" + functionName + "'."
                 );
                 return;
             }
-    
-            String actualType = argSymbol.getTipus();
-    
-            // Check type compatibility
-            if (!Util.typeMatches(expectedType, actualType)) {
-                ErrorLogger.logSemanticError(
-                    lc,
-                    "Paràmetre " + (i + 1) + " de la funció '" + functionName + 
-                    "' esperava tipus '" + expectedType + "' però s'ha trobat '" + actualType + "'"
-                );
-                return;
-            }else{
-                cta.generateCode("param_s "+argSymbol.getNom() + "\n");
-            }
-            
         }
     
         // Generate code for the function call
         cta.generateCode("call " + functionName + "\n");
-
+    
         // Handle return value (if applicable)
         if (!functionSymbol.getTipus().equals("BUIT")) {
             //resultTemp = cta.newTempVar(functionSymbol.getTipus(), null);
             //cta.generateCode("MOVE.W (A7)+, " + resultTemp + "\n");
         }
     }
+    
     
     private List<NodeArg> extractParamList() {
         List<NodeArg> params = new ArrayList<>();
@@ -91,6 +117,17 @@ public class NodeCrida_funcio extends NodeBase {
             current = current.getNext();
         }
         return params;
+    }
+
+    public ArrayList<String> getTipusArgs(ArrayList<String> args) {
+        ArrayList<String> tipusList = new ArrayList<>();
+        for (String arg : args) {
+            Simbol id = ts.get(arg);
+            if (id != null) {
+                tipusList.add(id.getTipus());
+            }
+        }
+        return tipusList;
     }
 
     public String getResult() {

@@ -28,7 +28,7 @@ public abstract class Util {
     }
 
     public static Simbol validateOperand(SymbolTable ts, NodeExprsimple operand, int[] lc) {
-        if (operand.getTipus() == NodeExprsimple.exprsimple.id) {
+        if (operand.getTipus() == NodeExprsimple.tipusexpr.id) {
             return Util.validateVariableExists(ts, operand.getValor(), lc);
         }
         // Handle literals by creating a temporary Simbol

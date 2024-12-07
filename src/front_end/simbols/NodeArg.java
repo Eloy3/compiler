@@ -2,12 +2,12 @@ package front_end.simbols;
 
 public class NodeArg extends NodeBase{
     private NodeArg2 arg;
-    private String id;
+    private NodeExprsimple exprsimple;
     
-    public NodeArg(String id, NodeArg2 a){
+    public NodeArg(NodeExprsimple exprsimple, NodeArg2 a){
         super("Arg",0);
         this.arg = a;
-        this.id = id;
+        this.exprsimple = exprsimple;
     }
 
     public NodeArg(){
@@ -25,13 +25,16 @@ public class NodeArg extends NodeBase{
         this.arg = arg;
     }
 
-    public String getId() {
-        return id;
+    public NodeExprsimple getExprsimple() {
+        return exprsimple;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setExprsimple(NodeExprsimple exprsimple) {
+        this.exprsimple = exprsimple;
     }
 
+    public NodeExprsimple.tipusexpr getTipus(){
+        return exprsimple.getTipus();
+    }
     
 }

@@ -7,7 +7,7 @@ funcio ent suma(ent x, ent y){
 principal(){
 	ent a = 7;
 	ent b = 3;
-	ent d = suma(a,b);
+	ent d = suma(1,9);
 	sortidaln(d);
 }
 

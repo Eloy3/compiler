@@ -11,11 +11,11 @@ t5 = 7
 a = t5
 t7 = 3
 b = t7
-param_s a
-param_s b
+param_c 1
+param_c 9
 call suma
-param_s a
-param_s b
+param_c 1
+param_c 9
 call suma
 t9 = retInt
 d = t9

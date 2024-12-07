@@ -31,16 +31,16 @@ principal:
 	MOVE.W #3,t7_principal
 * --> | ASSIGNA | t7 | null | b |
 	MOVE.W t7_principal,b_principal
-* --> | PARAM_S | null | null | a |
-	MOVE.W a_principal,-(A7)
-* --> | PARAM_S | null | null | b |
-	MOVE.W b_principal,-(A7)
+* --> | PARAM_C | 1 | null | null |
+	MOVE.W #1,-(A7)
+* --> | PARAM_C | 9 | null | null |
+	MOVE.W #9,-(A7)
 * --> | CALL | null | null | suma |
 	JSR suma
-* --> | PARAM_S | null | null | a |
-	MOVE.W a_principal,-(A7)
-* --> | PARAM_S | null | null | b |
-	MOVE.W b_principal,-(A7)
+* --> | PARAM_C | 1 | null | null |
+	MOVE.W #1,-(A7)
+* --> | PARAM_C | 9 | null | null |
+	MOVE.W #9,-(A7)
 * --> | CALL | null | null | suma |
 	JSR suma
 * --> | ASSIGNA | retInt | null | t9 |

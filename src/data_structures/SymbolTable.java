@@ -65,7 +65,7 @@ public class SymbolTable {
     }
 
     public void decAmbit() {
-        tambit.pop();
+        //tambit.pop();
         profunditat--;
     }
 

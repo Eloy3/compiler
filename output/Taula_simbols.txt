@@ -1,6 +1,6 @@
 NOM             TIPUS      VALOR      NIVELL     ARGS                
  
-suma            ENT        null       1          [y, x]              
+suma            ENT        null       2          [y, x]              
 x               ENT        null       2          []                  
 y               ENT        null       2          []                  
 z               ENT        null       2          []                  

@@ -72,7 +72,6 @@ principal = "principal"
 ent = "ent"
 bool = "bool"
 const = "const"
-tupla = "tupla"
 funcio = "funcio"
 si = "si"
 si_no = "si_no"
@@ -177,7 +176,6 @@ ws = [' '|'\t']+
 {ent}                    { writeToken(this.yytext()); return symbol(ParserSym.ENT, "ent"); }
 {bool}                   { writeToken(this.yytext()); return symbol(ParserSym.BOOL, "bool"); }
 {const}                  { writeToken(this.yytext()); return symbol(ParserSym.CONST, "const"); }
-{tupla}                  { writeToken(this.yytext()); return symbol(ParserSym.TUPLA, "tupla"); }
 {funcio}                 { writeToken(this.yytext()); return symbol(ParserSym.FUNCIO, "funcio"); }
 {buit}                   { writeToken(this.yytext()); return symbol(ParserSym.BUIT, "buit"); }
 {retorna}                { writeToken(this.yytext()); return symbol(ParserSym.RETORNA, "retorna"); }

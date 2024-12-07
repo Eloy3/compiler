@@ -53,6 +53,7 @@ public class Simbol{
     public ArrayList<String> getArgs() {
         return args;
     }
+    
     public void setArgs(ArrayList<String> args) {
         this.args = args;
     }

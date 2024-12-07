@@ -56,6 +56,7 @@ public class NodeDecl_funcio extends NodeBase {
             currentParam = currentParam.getNext();
         }
         Collections.reverse(argumentNames);
+        ts.incAmbit();
         ts.insertElementWithArgs(functionName, tipus.getTipusAsString(), null, argumentNames);
         addProcedureToTable();
 
@@ -68,7 +69,7 @@ public class NodeDecl_funcio extends NodeBase {
 
         cta.generateCode("pmb " + functionName + "\n");
 
-        ts.incAmbit();
+        
         cta.push(cta.getPproc(), functionName);
 
         // Generate parameter code
