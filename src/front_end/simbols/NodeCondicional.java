@@ -2,22 +2,27 @@
 package front_end.simbols;
 
 import util.JumpUtil;
+import util.Util;
 
 public class NodeCondicional extends NodeBase{
 
     private NodeCondicio condicio;
     private NodeBlocf blocf;
     private NodeCondsino condsino;
+    private int[] lc;
     
-    public NodeCondicional(NodeCondicio a, NodeBlocf b, NodeCondsino c){
+    public NodeCondicional(NodeCondicio a, NodeBlocf b, NodeCondsino c, int[] lc){
         super("Condicional",0);
         condicio = a;
         blocf = b;
         condsino = c;
+        this.lc = lc;
     }
 
-    public void generateCode(){
+    public boolean generateCode(){
+        if(!Util.validateCondicio(ts, condicio.getOperand1(), condicio.getOperand2(), condicio.getID(), lc)) return false;
         JumpUtil.etiquetacond(cta);
+        String endLabel = cta.newLabel();
         if (condicio.getOperador() != null) {
             condicio.generateCodeOperador();
         } else {
@@ -26,6 +31,13 @@ public class NodeCondicional extends NodeBase{
         JumpUtil.condiciobot(cta, false);
         blocf.generateCode();
         String falseLabel = cta.getTop(cta.getFalse_stack());
+        cta.generateCode("goto " + endLabel + "\n");
         cta.generateCode(falseLabel + ":skip\n");
+        if(condsino!=null){
+            condsino.generateCode();
+        }
+
+        cta.generateCode(endLabel + ":skip\n");
+        return true;
     }
 }

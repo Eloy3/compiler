@@ -4,14 +4,39 @@ START:
 * --> | SKIP | null | null | principal |
 principal:
 * --> | PMB | null | null | principal |
-* --> | ASSIGNA | 3 | null | t0 |
-	MOVE.W #3,t0_principal
-* --> | ASSIGNA | t0 | null | a |
-	MOVE.W t0_principal,a_principal
+* --> | ASSIGNA | fals | null | t0 |
+	MOVE.B #0,t0_principal
+* --> | ASSIGNA | t0 | null | deu |
+	MOVE.B t0_principal,deu_principal
+* --> | IF | deu | null | e0 |
+	MOVE.B deu_principal,D0
+	MOVE.B #-1,D1
+	CMP.B D0,D1
+	BEQ e0
+* --> | GOTO | null | null | e1 |
+	JMP e1
+* --> | SKIP | null | null | e0 |
+e0:
+* --> | PARAM_C | 1 | null | null |
+	MOVE.W #1,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+	ADDA.L #2,A7
+* --> | GOTO | null | null | e2 |
+	JMP e2
+* --> | SKIP | null | null | e1 |
+e1:
+* --> | PARAM_C | 3 | null | null |
+	MOVE.W #3,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+	ADDA.L #2,A7
+* --> | SKIP | null | null | e2 |
+e2:
 	SIMHALT
  
-t0_principal: DS.W 1
-a_principal: DS.W 1
+t0_principal: DS.B 1
+deu_principal: DS.B 1
  
 strout: DS.B 100
 	DC.W 0

@@ -1,19 +1,7 @@
-funcio ent suma(ent x, ent y){
-	   ent z;
-	   z = x + y;
-	   retorna z;
-}
-
 principal(){
-	ent a = 7;
-	ent b = 3;
 	bool deu = fals;
-	ent d = suma(1,9);
-	si(d==10){
-		deu = cert;
-	}
 	si(deu){
-		sortidaln(d);
+		sortidaln(1);
 	}si_no{
 		sortidaln(3);
 	}

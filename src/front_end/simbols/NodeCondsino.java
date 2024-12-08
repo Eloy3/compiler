@@ -9,9 +9,7 @@ public class NodeCondsino extends NodeBase{
     public NodeCondsino(NodeBlocf a){
         super("Condsino", 0);
         blocf = a;
-        /* String etiquetaFi = cta.getTop(cta.getEnd_stack());
-        cta.pop(cta.getFalse_stack());
-        cta.generateCode(etiquetaFi + ":skip\n"); */
+        
     }
     
     public NodeCondsino(){
@@ -19,7 +17,7 @@ public class NodeCondsino extends NodeBase{
         //cta.removeGotoElse();
     }
 
-/*     public generateCode(){
-        
-    } */
+    public void generateCode(){
+        blocf.generateCode();
+    } 
 }

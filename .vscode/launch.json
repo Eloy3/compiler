@@ -16,7 +16,7 @@
             "mainClass": "main.Main",
             "projectName": "compilador",
             "args": [
-                "input/testBucle.txt"
+                "input/test1.txt"
             ],
             "vmArgs": "",
             "cwd": "${workspaceFolder}",

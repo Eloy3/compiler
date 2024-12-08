@@ -3,6 +3,7 @@ package util;
 import data_structures.SymbolTable;
 import errors.ErrorLogger;
 import front_end.simbols.NodeExprsimple;
+import front_end.simbols.NodeExprsimple.tipusexpr;
 import front_end.simbols.Simbol;
 
 public abstract class Util {
@@ -64,6 +65,23 @@ public abstract class Util {
                 return false;
         }
 
+        return true;
+    }
+
+    public static boolean validateCondicio(SymbolTable ts, NodeExprsimple operand1, NodeExprsimple operand2, String ID, int[] lc){
+        if (operand1 != null) {
+            if(operand1.getTipus().equals(tipusexpr.id)){
+                if(validateVariableExists(ts, operand1.getValor(), lc)==null) return false;
+            }
+            
+            if(operand2.getTipus().equals(tipusexpr.id)){
+                if(validateVariableExists(ts, operand2.getValor(), lc)==null) return false;
+            }
+    
+            if(!validateBinaryOperands(ts, operand2, operand1, lc)) return false;
+        }else{
+            if(validateVariableExists(ts, ID, lc)==null) return false;
+        }
         return true;
     }
 }

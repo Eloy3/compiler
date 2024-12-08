@@ -1,8 +1,4 @@
-
 package front_end.simbols;
-
-import front_end.simbols.NodeExprsimple.tipusexpr;
-import util.Util;
 
 /**
  *
@@ -32,22 +28,11 @@ public class NodeCondicio extends NodeBase{
     }
 
     public boolean generateCodeID(){
-        if(Util.validateVariableExists(ts, ID, lc)==null) return false;
         cta.generateCode(ID + " then ");
         return true;
     }
 
     public boolean generateCodeOperador(){
-        if(operand1.getTipus().equals(tipusexpr.id)){
-            if(Util.validateVariableExists(ts, operand1.getValor(), lc)==null) return false;
-        }
-        
-        if(operand2.getTipus().equals(tipusexpr.id)){
-            if(Util.validateVariableExists(ts, operand2.getValor(), lc)==null) return false;
-        }
-
-        if(!Util.validateBinaryOperands(ts, operand2, operand1, lc)) return false;
-
         cta.generateCode(operand1.getValor()+" ");
         cta.generateCode(operador.getOperador()+ " ");
         cta.generateCode(operand2.getValor() + " ");
@@ -73,6 +58,4 @@ public class NodeCondicio extends NodeBase{
     public void setID(String iD) {
         ID = iD;
     }
-
-    
 }

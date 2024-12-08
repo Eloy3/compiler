@@ -1237,7 +1237,7 @@ class CUP$Parser$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodeCondsino c = (NodeCondsino)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new NodeCondicional(a,b,c); 
+		 RESULT = new NodeCondicional(a,b,c,lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicional",27, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

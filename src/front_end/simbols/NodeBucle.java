@@ -31,7 +31,7 @@ public class NodeBucle extends NodeBase {
     }
 
     public boolean generateCodeWhile() {
-        if (!validate()) return false;
+        if (!Util.validateCondicio(ts, condicio.getOperand1(), condicio.getOperand2(), condicio.getID(), lc)) return false;
         JumpUtil.inicibucle(cta);
         JumpUtil.etiquetacond(cta);
         if(!GenerateConditionCode()) return false;
@@ -66,24 +66,6 @@ public class NodeBucle extends NodeBase {
         return true;
     } */
 
-    private boolean validate(){
-        if (condicio.getOperador() != null) {
-            NodeExprsimple operand1 = condicio.getOperand1();
-            NodeExprsimple operand2 = condicio.getOperand2();
-            if(operand1.getTipus().equals(tipusexpr.id)){
-                if(Util.validateVariableExists(ts, operand1.getValor(), lc)==null) return false;
-            }
-            
-            if(operand2.getTipus().equals(tipusexpr.id)){
-                if(Util.validateVariableExists(ts, operand2.getValor(), lc)==null) return false;
-            }
-    
-            if(!Util.validateBinaryOperands(ts, operand2, operand1, lc)) return false;
-        }else{
-            if(Util.validateVariableExists(ts, condicio.getID(), lc)==null) return false;
-        }
-        return true;
-    }
     private boolean GenerateConditionCode() {
         if (condicio.getOperador() != null) {
             if (!condicio.generateCodeOperador()) return false;

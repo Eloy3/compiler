@@ -190,7 +190,7 @@ entrada ::= ENTRADA EParen ID:i DParen {: RESULT = new NodeEntrada(i);:};
 
 // **** IF ****
 
-condicional ::= SI EParen condicio:a DParen EClau blocf:b DClau condsino:c {: RESULT = new NodeCondicional(a,b,c); :};
+condicional ::= SI EParen condicio:a DParen EClau blocf:b DClau condsino:c {: RESULT = new NodeCondicional(a,b,c,lexic.getLineColumn()); :};
 
 condicio ::= exprsimpleArg:v operador_cond:o exprsimpleArg:v1 {: RESULT = new NodeCondicio(v,o,v1,lexic.getLineColumn()); :}
                 | ID:id {: RESULT = new NodeCondicio(id,lexic.getLineColumn()); :};

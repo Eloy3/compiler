@@ -99,9 +99,14 @@ public class ThreeAdressCodeBackEnd {
     
     
     private void handleConditional(String[] parts, String instruction) {
-        if (parts.length < 6) {
-            
+
+        if (parts.length < 5) {
             System.err.println("Error: Malformed conditional: " + instruction);
+            return;
+        }
+        
+        if (parts.length == 5) {
+            instructionList.addInst(Operation.IF, parts[1], null, parts[4]);
             return;
         }
     
@@ -109,7 +114,7 @@ public class ThreeAdressCodeBackEnd {
         String operator = parts[2];
         String op2 = parts[3];
         String label = parts[5];
-    
+
         switch (operator) {
             case "!=":
                 instructionList.addInst(Operation.IFDIFERENT, op1, op2, label);
