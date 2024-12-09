@@ -37,7 +37,7 @@ parser code {:
 :}
 
 terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator;
-terminal String ID, ENT, BOOL, CONST, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA;
+terminal String ID, ENT, BOOL, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA, RESERVA;
 
 non terminal NodeExprcomposta exprcomposta;
 non terminal NodeOperador_expr operador_expr;
@@ -62,12 +62,10 @@ non terminal NodeBlocf2 blocf2;
 non terminal NodeComportamentv1 comportamentvl;
 non terminal NodeBucle bucle;
 non terminal NodeRetorna retorna;
-non terminal cons;
 
 non terminal NodePrincipal principal;
 non terminal NodeCondicional condicional;
 non terminal NodeCondsino condsino;
-non terminal NodeSino sino;
 non terminal NodeCondicio condicio;
 non terminal NodePrograma programa;
 non terminal NodeSortida sortida;
@@ -75,7 +73,14 @@ non terminal NodeEntrada entrada;
 non terminal NodeLlistaValors llista_valors;
 non terminal NodeCodi codi;
 non terminal NodeProcedures procedures;
-
+non terminal NodeDecl_taula decl_taula;
+non terminal NodeDecl_dimensio decl_dimensio;
+non terminal NodeAssignacio_dimensional assignacio_dimensional;
+non terminal NodeAssignacio_memoria assignacio_memoria;
+non terminal NodeElements_dimensional elements_dimensional;
+non terminal NodeAssignacio_dimensio assignacio_dimensio; 
+non terminal NodeTaula_inic taula_inic;
+non terminal NodeT_inic2 t_inic2;
 
 start with codi;
 
@@ -97,7 +102,7 @@ sentencies ::=   sentencia:s sentencies2:s2 {: RESULT = new NodeSentencies(s,s2)
 sentencies2 ::= sentencies:s {: RESULT = new NodeSentencies2(s);:} 
                 | {: RESULT = new NodeSentencies2();:};
 
-sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_variable"); :}
+sentencia ::=   decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_variable"); :}
               | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v,"varinic2"); :}
               | bucle:b {: RESULT = new NodeSentencia(b,"bucle"); :}
               | condicional:c {: RESULT = new NodeSentencia(c,"condicional"); :}
@@ -105,6 +110,9 @@ sentencia ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"de
               | crida_funcio:cf PUNTICOMA{: RESULT = new NodeSentencia(cf,"crida_funcio"); :}
               | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s,"sortida"); :}
               | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e,"entrada"); :}
+              | decl_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"decl_taula"); :}
+              | taula_inic:a PUNTICOMA {:RESULT = new NodeSentencia(a,"taula_inic"); :}
+
               | error PUNTICOMA {: logLexicError("Sentència invàlida");:}
               | ID {: logLexicError("Sentència invàlida");:};
 
@@ -123,9 +131,6 @@ param ::= tipus:t ID:id param2:p2 {: RESULT = new NodeParam(t, id, p2); :}
 
 param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}
             |   {: RESULT = new NodeParam2(); :};
-
-cons ::= CONST
-        |     ;
 
 exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v); :}
              | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString()); :}
@@ -150,7 +155,7 @@ blocf2 ::= blocf:a {: RESULT = new NodeBlocf2(a); :}
 
 //El mateix que sentencia però sense declaracions de funcions.
 
-sentenciaf ::= cons decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_variable"); :}
+sentenciaf ::=  decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_variable"); :}
               | varinic2:v PUNTICOMA {: RESULT = new NodeSentencia(v,"varinic2"); :}
               | bucle:b {: RESULT = new NodeSentencia(b,"bucle"); :}
               | condicional:c {: RESULT = new NodeSentencia(c,"condicional"); :}
@@ -216,4 +221,26 @@ comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comporta
                  | {: RESULT = new NodeComportamentv1(); :};
 
 
+// Taules amb múltiples dimensions
 
+decl_taula::= tipus:a decl_dimensio:b ID:c assignacio_dimensional:d {: RESULT = new NodeDecl_taula(a, b, c, d, lexic.getLineColumn()); :}
+            | tipus:a decl_dimensio:b ID:c PUNTICOMA {: RESULT = new NodeDecl_taula(a, b, c, lexic.getLineColumn()); :};
+
+decl_dimensio ::= EClaudator DClaudator {: RESULT = new NodeDecl_dimensio(1, lexic.getLineColumn()); :}
+                | decl_dimensio:a EClaudator DClaudator {: RESULT = new NodeDecl_dimensio(a, lexic.getLineColumn()); :};
+
+assignacio_dimensional ::= ASSIGN EClau elements_dimensional:a DClau {: RESULT = new NodeAssignacio_dimensional(a, lexic.getLineColumn()); :}
+                        | assignacio_memoria:a {: RESULT = new NodeAssignacio_dimensional(a, lexic.getLineColumn()); :};
+
+elements_dimensional ::= exprsimpleArg:a COMA elements_dimensional:b {: RESULT = new NodeElements_dimensional(a, b, lexic.getLineColumn()); :}
+                       | exprsimpleArg:a {: RESULT = new NodeElements_dimensional(a, null, lexic.getLineColumn()); :};
+
+assignacio_memoria ::= RESERVA assignacio_dimensio:a{: RESULT = new NodeAssignacio_memoria(a, lexic.getLineColumn()); :};
+
+assignacio_dimensio ::= EClaudator exprsimpleArg:a DClaudator {: RESULT = new NodeAssignacio_dimensio(a, lexic.getLineColumn()); :}
+                        | assignacio_dimensio:a EClaudator exprsimpleArg:b DClaudator  {: RESULT = new NodeAssignacio_dimensio(a, b, lexic.getLineColumn()); :};
+
+taula_inic ::= ID t_inic2:a ASSIGN exprsimpleArg:b {: RESULT = new NodeTaula_inic(a, b, lexic.getLineColumn()); :};
+
+t_inic2 ::= EClaudator exprsimpleArg:a DClaudator {: RESULT = new NodeT_inic2(a, lexic.getLineColumn()); :}
+           |t_inic2:a EClaudator exprsimpleArg:b DClaudator  {: RESULT = new NodeT_inic2(a, b, lexic.getLineColumn()); :};

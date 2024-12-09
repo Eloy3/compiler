@@ -4,6 +4,7 @@
     "java.externalJars": [
         "lib/java-cup-11b-runtime.jar",
         "lib/java-cup-11b.jar"
-    ]
+    ],
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }
 

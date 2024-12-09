@@ -71,7 +71,6 @@ coma         = ,
 principal = "principal"
 ent = "ent"
 bool = "bool"
-const = "const"
 funcio = "funcio"
 si = "si"
 si_no = "si_no"
@@ -82,6 +81,7 @@ buit = "buit"
 sortida = "sortida"
 sortidaln = "sortidaln"
 entrada = "entrada"
+reserva = "reserva"
 ENDLINE   = [\r\n]+
 ws = [' '|'\t']+
 
@@ -175,10 +175,10 @@ ws = [' '|'\t']+
 {entrada}                { writeToken(this.yytext()); return symbol(ParserSym.ENTRADA, "entrada"); }
 {ent}                    { writeToken(this.yytext()); return symbol(ParserSym.ENT, "ent"); }
 {bool}                   { writeToken(this.yytext()); return symbol(ParserSym.BOOL, "bool"); }
-{const}                  { writeToken(this.yytext()); return symbol(ParserSym.CONST, "const"); }
 {funcio}                 { writeToken(this.yytext()); return symbol(ParserSym.FUNCIO, "funcio"); }
 {buit}                   { writeToken(this.yytext()); return symbol(ParserSym.BUIT, "buit"); }
 {retorna}                { writeToken(this.yytext()); return symbol(ParserSym.RETORNA, "retorna"); }
+{reserva}                { writeToken(this.yytext()); return symbol(ParserSym.RESERVA, "reserva"); }
 {mentre}                 { writeToken(this.yytext()); return symbol(ParserSym.MENTRE, "mentre"); }
 {per}                    { writeToken(this.yytext()); return symbol(ParserSym.PER, "per"); }
 {si}                     { writeToken(this.yytext()); return symbol(ParserSym.SI, "si"); }

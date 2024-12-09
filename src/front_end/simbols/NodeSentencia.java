@@ -12,6 +12,8 @@ public class NodeSentencia extends NodeBase {
     private NodeDecl_funcio decl_funcio;
     private NodeCrida_funcio crida_funcio;
     private NodeRetorna retorna;
+    private NodeDecl_taula decl_taula;
+    private NodeTaula_inic taula_inic;
 
     public NodeSentencia(NodeBucle nodeBucle, String sentencia) {
         super("Sentencia", 0);
@@ -63,6 +65,18 @@ public class NodeSentencia extends NodeBase {
     public NodeSentencia(NodeRetorna retorna, String sentencia) {
         super("Sentencia", 0);
         this.retorna = retorna;
+        this.sentencia = sentencia;
+    }
+
+    public NodeSentencia(NodeDecl_taula decl_taula, String sentencia) {
+        super("Sentencia", 0);
+        this.decl_taula = decl_taula;
+        this.sentencia = sentencia;
+    }
+
+    public NodeSentencia(NodeTaula_inic taula_inic, String sentencia) {
+        super("Sentencia", 0);
+        this.taula_inic = taula_inic;
         this.sentencia = sentencia;
     }
 

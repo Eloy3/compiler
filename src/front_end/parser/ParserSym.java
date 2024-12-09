@@ -9,41 +9,41 @@ package front_end.parser;
 public class ParserSym {
   /* terminals */
   public static final int ENTER = 10;
-  public static final int DIFERENT = 25;
-  public static final int CONST = 20;
-  public static final int SI = 30;
+  public static final int DIFERENT = 24;
+  public static final int SI = 29;
+  public static final int RESERVA = 35;
   public static final int RESTA = 3;
   public static final int EParen = 6;
-  public static final int OLO = 27;
+  public static final int OLO = 26;
   public static final int EClau = 12;
-  public static final int OLI = 26;
-  public static final int PRINCIPAL = 32;
-  public static final int IGUAL = 24;
+  public static final int OLI = 25;
+  public static final int PRINCIPAL = 31;
+  public static final int IGUAL = 23;
   public static final int DClaudator = 16;
-  public static final int SINO = 31;
-  public static final int PER = 29;
+  public static final int SINO = 30;
+  public static final int PER = 28;
   public static final int BOOL = 19;
   public static final int DIV = 5;
   public static final int SUMA = 2;
   public static final int ASSIGN = 8;
-  public static final int FUNCIO = 21;
+  public static final int FUNCIO = 20;
   public static final int ID = 17;
   public static final int EOF = 0;
   public static final int DClau = 13;
   public static final int error = 1;
   public static final int MUL = 4;
-  public static final int BUIT = 23;
+  public static final int BUIT = 22;
   public static final int COMA = 14;
   public static final int EClaudator = 15;
-  public static final int RETORNA = 22;
+  public static final int RETORNA = 21;
   public static final int ENT = 18;
-  public static final int MENTRE = 28;
+  public static final int MENTRE = 27;
   public static final int DParen = 7;
-  public static final int ENTRADA = 35;
-  public static final int SORTIDA = 33;
+  public static final int ENTRADA = 34;
+  public static final int SORTIDA = 32;
   public static final int BOOLEA = 11;
   public static final int PUNTICOMA = 9;
-  public static final int SORTIDALN = 34;
+  public static final int SORTIDALN = 33;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -65,7 +65,6 @@ public class ParserSym {
   "ID",
   "ENT",
   "BOOL",
-  "CONST",
   "FUNCIO",
   "RETORNA",
   "BUIT",
@@ -80,7 +79,8 @@ public class ParserSym {
   "PRINCIPAL",
   "SORTIDA",
   "SORTIDALN",
-  "ENTRADA"
+  "ENTRADA",
+  "RESERVA"
   };
 }
 
