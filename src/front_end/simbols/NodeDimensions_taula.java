@@ -1,10 +1,10 @@
 package front_end.simbols;
 
-public class NodeDecl_dimensio extends NodeBase {
+public class NodeDimensions_taula extends NodeBase {
     private int dimensio = 0;
     private int[] lineCode;
 
-    public NodeDecl_dimensio(NodeDecl_dimensio a, int[] l){
+    public NodeDimensions_taula(NodeDimensions_taula a, int[] l){
         super("Decl_dimensio", 0);
         this.dimensio += 1;
         if(a!=null){

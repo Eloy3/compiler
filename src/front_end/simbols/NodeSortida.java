@@ -1,7 +1,10 @@
 package front_end.simbols;
 
+import java.util.ArrayList;
+
 import errors.ErrorLogger;
 import front_end.simbols.NodeExprsimple.tipusexpr;
+import util.Util;
 
 public class NodeSortida extends NodeBase {
 
@@ -17,29 +20,30 @@ public class NodeSortida extends NodeBase {
     }
 
     public void generateCode() {
-        try {
-            // Generate parameter type and call code
-            cta.generateCode(paramType() + " " + LlistaValors.getValor().getValor() + "\n");
-            cta.generateCode("call " + ((linea) ? "line" : "print") + "\n");
-        } catch (RuntimeException e) {
-            // Log the error and handle gracefully
-            ErrorLogger.logSemanticError(lc, e.getMessage());
+        ArrayList<NodeExprsimple> printList = Util.getArrayList(LlistaValors);
+        for (NodeExprsimple print : printList) {
+            try {
+                cta.generateCode(paramType(print) + " " + print.getValor() + "\n");
+                cta.generateCode("call " + ((linea) ? "line" : "print") + "\n");
+            } catch (RuntimeException e) {
+                ErrorLogger.logSemanticError(lc, e.getMessage());
+            }
         }
         cta.setTemp_id(null);
     }
 
-    private String paramType() {
+    private String paramType(NodeExprsimple print) {
         // Check if the value is an identifier (ID)
-        if (LlistaValors.getValor().getTipus() == tipusexpr.id) {
-            Simbol id = ts.get(LlistaValors.getValor().getValor());
+        if (print.getTipus() == tipusexpr.id) {
+            Simbol id = ts.get(print.getValor());
 
             // If the variable does not exist in the symbol table, log an error
             if (id == null) {
                 ErrorLogger.logSemanticError(
                     lc,
-                    "Variable '" + LlistaValors.getValor().getValor() + "' no existeix."
+                    "Variable '" + print.getValor() + "' no existeix."
                 );
-                throw new RuntimeException("Variable '" + LlistaValors.getValor().getValor()+"' no existeix");
+                throw new RuntimeException("Variable '" + print.getValor()+"' no existeix");
             }
 
             // Determine parameter type based on the variable's type
@@ -51,7 +55,7 @@ public class NodeSortida extends NodeBase {
             } else {
                 ErrorLogger.logSemanticError(
                     lc,
-                    "Unsupported variable type for: " + LlistaValors.getValor().getValor()
+                    "Unsupported variable type for: " + print.getValor()
                 );
                 throw new RuntimeException("Unsupported variable type: " + varType);
             }

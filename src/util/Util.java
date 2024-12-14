@@ -1,10 +1,15 @@
 package util;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import data_structures.SymbolTable;
 import errors.ErrorLogger;
 import front_end.simbols.NodeExprsimple;
 import front_end.simbols.NodeExprsimple.tipusexpr;
+import front_end.simbols.NodeLlistaValors;
 import front_end.simbols.Simbol;
+import front_end.simbols.NodeBase;
 
 public abstract class Util {
     
@@ -83,5 +88,15 @@ public abstract class Util {
             if(validateVariableExists(ts, ID, lc)==null) return false;
         }
         return true;
+    }
+
+    public static ArrayList<NodeExprsimple> getArrayList(NodeLlistaValors valors) {
+        ArrayList<NodeExprsimple> list = new ArrayList<>();
+        NodeLlistaValors aux = valors;
+        while (aux != null) {
+            list.add(aux.getValor());
+            aux = aux.getLlistaValors();
+        }
+        return list;
     }
 }

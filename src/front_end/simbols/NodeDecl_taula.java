@@ -4,24 +4,24 @@ import errors.ErrorLogger;
 
 public class NodeDecl_taula extends NodeBase {
     private NodeTipus tipus;
-    private NodeDecl_dimensio decl_dimensio;
-    private NodeAssignacio_dimensional assignacio_dimensional;
+    private NodeDimensions_taula dimensions_taula;
+    private NodeInicialitzacio_taula inicialitzacio_taula;
     private String id;
     private int[] lineCode;
 
-    public NodeDecl_taula(NodeTipus tipus, NodeDecl_dimensio decl_dimensio, String id, NodeAssignacio_dimensional assignacio_dimensional, int[] l){
+    public NodeDecl_taula(NodeTipus tipus, NodeDimensions_taula dimensions_taula, String id, NodeInicialitzacio_taula inicialitzacio_taula, int[] l){
         super("Decl_taula", 0);
         this.tipus = tipus;
-        this.decl_dimensio = decl_dimensio;
-        this.assignacio_dimensional = assignacio_dimensional;
+        this.dimensions_taula = dimensions_taula;
+        this.inicialitzacio_taula = inicialitzacio_taula;
         this.id = id;
         this.lineCode = l;
     }
 
-    public NodeDecl_taula(NodeTipus tipus, NodeDecl_dimensio decl_dimensio, String id, int[] l){
+    public NodeDecl_taula(NodeTipus tipus, NodeDimensions_taula dimensions_taula, String id, int[] l){
         super("Decl_taula", 0);
         this.tipus = tipus;
-        this.decl_dimensio = decl_dimensio;
+        this.dimensions_taula = dimensions_taula;
         this.id = id;
         this.lineCode = l;
     }
@@ -32,11 +32,16 @@ public class NodeDecl_taula extends NodeBase {
             return;
         }
 
-        if(assignacio_dimensional == null){
-            
+        if(inicialitzacio_taula == null){
+            ts.insertElement(id, tipus.getTipusAsString(), null);
+        }else{
+            handleArrayInitialization();
         }
     }
     
+    private void handleArrayInitialization() {
+        
+    }
     public String getId() {
         return id;
     }

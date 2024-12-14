@@ -223,7 +223,7 @@ comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comporta
 
 // Taules amb múltiples dimensions
 
-//             ent       []              x    
+//             ent       []...            x    
 decl_taula::= tipus:a dimensions_taula:b ID:c inicialitzacio_taula:d {: RESULT = new NodeDecl_taula(a, b, c, d, lexic.getLineColumn()); :}
             | tipus:a dimensions_taula:b ID:c PUNTICOMA {: RESULT = new NodeDecl_taula(a, b, c, lexic.getLineColumn()); :};
                     
@@ -235,7 +235,7 @@ inicialitzacio_taula ::= ASSIGN EClau valors_taula:a DClau {: RESULT = new NodeI
                        | ASSIGN assignacio_memoria:a {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :};
 
 valors_taula ::= exprsimpleArg:a COMA valors_taula:b {: RESULT = new NodeValors_taula(a, b, lexic.getLineColumn()); :}
-                       | exprsimpleArg:a {: RESULT = new NodeValors_taula(a, null, lexic.getLineColumn()); :};
+               | exprsimpleArg:a {: RESULT = new NodeValors_taula(a, null, lexic.getLineColumn()); :};
 
 //                  =  reserva  [2] ...
 assignacio_memoria ::= RESERVA especificacio_dimensio:a{: RESULT = new NodeAssignacio_memoria(a, lexic.getLineColumn()); :};
@@ -243,7 +243,7 @@ assignacio_memoria ::= RESERVA especificacio_dimensio:a{: RESULT = new NodeAssig
 especificacio_dimensio ::= EClaudator exprsimpleArg:a DClaudator {: RESULT = new NodeEspecificacio_dimensio(a, lexic.getLineColumn()); :}
                         | especificacio_dimensio:a EClaudator exprsimpleArg:b DClaudator  {: RESULT = new NodeEspecificacio_dimensio(a, b, lexic.getLineColumn()); :};
 
-//                      x  [0]              =         1
+//                      x  [0]...            =         1
 inic_element_taula ::= ID indexos_taula:a ASSIGN exprsimpleArg:b {: RESULT = new NodeInic_element_taula(a, b, lexic.getLineColumn()); :};
 
 indexos_taula ::= EClaudator exprsimpleArg:a DClaudator {: RESULT = new NodeIndexos_taula(a, lexic.getLineColumn()); :}

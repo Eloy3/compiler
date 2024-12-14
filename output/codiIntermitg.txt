@@ -1,10 +1,14 @@
 principal:skip
 pmb principal
-t0 = 3
-y = t0
+t0 = 5
+x = t0
+t2 = 3
+y = t2
+t4 = 2
+z = t4
+param_s x
+call line
 param_s y
 call line
-t2 = 5
-x = t2
-param_s x
+param_s z
 call line

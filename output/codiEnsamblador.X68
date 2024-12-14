@@ -4,30 +4,41 @@ START:
 * --> | SKIP | null | null | principal |
 principal:
 * --> | PMB | null | null | principal |
-* --> | ASSIGNA | 3 | null | t0 |
-	MOVE.W #3,t0_principal
-* --> | ASSIGNA | t0 | null | y |
-	MOVE.W t0_principal,y_principal
+* --> | ASSIGNA | 5 | null | t0 |
+	MOVE.W #5,t0_principal
+* --> | ASSIGNA | t0 | null | x |
+	MOVE.W t0_principal,x_principal
+* --> | ASSIGNA | 3 | null | t2 |
+	MOVE.W #3,t2_principal
+* --> | ASSIGNA | t2 | null | y |
+	MOVE.W t2_principal,y_principal
+* --> | ASSIGNA | 2 | null | t4 |
+	MOVE.W #2,t4_principal
+* --> | ASSIGNA | t4 | null | z |
+	MOVE.W t4_principal,z_principal
+* --> | PARAM_S | null | null | x |
+	MOVE.W x_principal,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+	ADDA.L #2,A7
 * --> | PARAM_S | null | null | y |
 	MOVE.W y_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
-* --> | ASSIGNA | 5 | null | t2 |
-	MOVE.W #5,t2_principal
-* --> | ASSIGNA | t2 | null | x |
-	MOVE.W t2_principal,x_principal
-* --> | PARAM_S | null | null | x |
-	MOVE.W x_principal,-(A7)
+* --> | PARAM_S | null | null | z |
+	MOVE.W z_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
 	SIMHALT
  
 t0_principal: DS.W 1
-y_principal: DS.W 1
-t2_principal: DS.W 1
 x_principal: DS.W 1
+t2_principal: DS.W 1
+y_principal: DS.W 1
+t4_principal: DS.W 1
+z_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0
