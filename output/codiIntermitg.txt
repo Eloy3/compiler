@@ -1,14 +1,10 @@
 principal:skip
 pmb principal
-t0 = fals
-deu = t0
-if deu then goto e0
-goto e1
-e0:skip
-param_c 1
+t0 = 3
+y = t0
+param_s y
 call line
-goto e2
-e1:skip
-param_c 3
+t2 = 5
+x = t2
+param_s x
 call line
-e2:skip

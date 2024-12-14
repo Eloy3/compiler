@@ -1,5 +1,7 @@
 package front_end.simbols;
 
+import errors.ErrorLogger;
+
 public class NodeDecl_taula extends NodeBase {
     private NodeTipus tipus;
     private NodeDecl_dimensio decl_dimensio;
@@ -24,6 +26,17 @@ public class NodeDecl_taula extends NodeBase {
         this.lineCode = l;
     }
 
+    public void generateCode(){
+        if(ts.existeixTs(id)){
+            ErrorLogger.logSemanticError(lineCode,"La variable '" + id + "' ja ha estat declarada.");
+            return;
+        }
+
+        if(assignacio_dimensional == null){
+            
+        }
+    }
+    
     public String getId() {
         return id;
     }

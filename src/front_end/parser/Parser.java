@@ -647,7 +647,7 @@ class CUP$Parser$actions {
               NodeSentencia RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
-		NodeTaula_inic a = (NodeTaula_inic)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		NodeInic_element_taula a = (NodeInic_element_taula)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		RESULT = new NodeSentencia(a,"taula_inic"); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("sentencia",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -1463,13 +1463,13 @@ class CUP$Parser$actions {
 		NodeTipus a = (NodeTipus)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
-		NodeDecl_dimensio b = (NodeDecl_dimensio)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		NodeDimensions_taula b = (NodeDimensions_taula)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		String c = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		int dleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		NodeAssignacio_dimensional d = (NodeAssignacio_dimensional)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		NodeInicialitzacio_taula d = (NodeInicialitzacio_taula)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		 RESULT = new NodeDecl_taula(a, b, c, d, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("decl_taula",35, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -1484,7 +1484,7 @@ class CUP$Parser$actions {
 		NodeTipus a = (NodeTipus)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
-		NodeDecl_dimensio b = (NodeDecl_dimensio)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		NodeDimensions_taula b = (NodeDimensions_taula)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		String c = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
@@ -1496,8 +1496,8 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 86: // decl_dimensio ::= EClaudator DClaudator 
             {
-              NodeDecl_dimensio RESULT =null;
-		 RESULT = new NodeDecl_dimensio(1, lexic.getLineColumn()); 
+              NodeDimensions_taula RESULT =null;
+		 RESULT = new NodeDimensions_taula(null, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("decl_dimensio",36, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1505,11 +1505,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 87: // decl_dimensio ::= decl_dimensio EClaudator DClaudator 
             {
-              NodeDecl_dimensio RESULT =null;
+              NodeDimensions_taula RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
-		NodeDecl_dimensio a = (NodeDecl_dimensio)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 RESULT = new NodeDecl_dimensio(a, lexic.getLineColumn()); 
+		NodeDimensions_taula a = (NodeDimensions_taula)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		 RESULT = new NodeDimensions_taula(a, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("decl_dimensio",36, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1517,11 +1517,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 88: // assignacio_dimensional ::= ASSIGN EClau elements_dimensional DClau 
             {
-              NodeAssignacio_dimensional RESULT =null;
+              NodeInicialitzacio_taula RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
-		NodeElements_dimensional a = (NodeElements_dimensional)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new NodeAssignacio_dimensional(a, lexic.getLineColumn()); 
+		NodeValors_taula a = (NodeValors_taula)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		 RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("assignacio_dimensional",37, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1529,11 +1529,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 89: // assignacio_dimensional ::= assignacio_memoria 
             {
-              NodeAssignacio_dimensional RESULT =null;
+              NodeInicialitzacio_taula RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodeAssignacio_memoria a = (NodeAssignacio_memoria)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new NodeAssignacio_dimensional(a, lexic.getLineColumn()); 
+		 RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("assignacio_dimensional",37, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1541,14 +1541,14 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 90: // elements_dimensional ::= exprsimpleArg COMA elements_dimensional 
             {
-              NodeElements_dimensional RESULT =null;
+              NodeValors_taula RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		NodeExprsimple a = (NodeExprsimple)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		NodeElements_dimensional b = (NodeElements_dimensional)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new NodeElements_dimensional(a, b, lexic.getLineColumn()); 
+		NodeValors_taula b = (NodeValors_taula)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = new NodeValors_taula(a, b, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("elements_dimensional",39, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1556,11 +1556,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 91: // elements_dimensional ::= exprsimpleArg 
             {
-              NodeElements_dimensional RESULT =null;
+              NodeValors_taula RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodeExprsimple a = (NodeExprsimple)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new NodeElements_dimensional(a, null, lexic.getLineColumn()); 
+		 RESULT = new NodeValors_taula(a, null, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("elements_dimensional",39, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1571,7 +1571,7 @@ class CUP$Parser$actions {
               NodeAssignacio_memoria RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		NodeAssignacio_dimensio a = (NodeAssignacio_dimensio)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		NodeEspecificacio_dimensio a = (NodeEspecificacio_dimensio)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		 RESULT = new NodeAssignacio_memoria(a, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("assignacio_memoria",38, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -1580,11 +1580,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 93: // assignacio_dimensio ::= EClaudator exprsimpleArg DClaudator 
             {
-              NodeAssignacio_dimensio RESULT =null;
+              NodeEspecificacio_dimensio RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		NodeExprsimple a = (NodeExprsimple)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new NodeAssignacio_dimensio(a, lexic.getLineColumn()); 
+		 RESULT = new NodeEspecificacio_dimensio(a, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("assignacio_dimensio",40, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1592,14 +1592,14 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 94: // assignacio_dimensio ::= assignacio_dimensio EClaudator exprsimpleArg DClaudator 
             {
-              NodeAssignacio_dimensio RESULT =null;
+              NodeEspecificacio_dimensio RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
-		NodeAssignacio_dimensio a = (NodeAssignacio_dimensio)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		NodeEspecificacio_dimensio a = (NodeEspecificacio_dimensio)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		NodeExprsimple b = (NodeExprsimple)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new NodeAssignacio_dimensio(a, b, lexic.getLineColumn()); 
+		 RESULT = new NodeEspecificacio_dimensio(a, b, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("assignacio_dimensio",40, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1607,14 +1607,14 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 95: // taula_inic ::= ID t_inic2 ASSIGN exprsimpleArg 
             {
-              NodeTaula_inic RESULT =null;
+              NodeInic_element_taula RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
-		NodeT_inic2 a = (NodeT_inic2)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		Node_Indexos_taula a = (Node_Indexos_taula)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodeExprsimple b = (NodeExprsimple)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new NodeTaula_inic(a, b, lexic.getLineColumn()); 
+		 RESULT = new NodeInic_element_taula(a, b, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("taula_inic",41, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1622,11 +1622,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 96: // t_inic2 ::= EClaudator exprsimpleArg DClaudator 
             {
-              NodeT_inic2 RESULT =null;
+              Node_Indexos_taula RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		NodeExprsimple a = (NodeExprsimple)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new NodeT_inic2(a, lexic.getLineColumn()); 
+		 RESULT = new Node_Indexos_taula(a, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("t_inic2",42, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1634,14 +1634,14 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 97: // t_inic2 ::= t_inic2 EClaudator exprsimpleArg DClaudator 
             {
-              NodeT_inic2 RESULT =null;
+              Node_Indexos_taula RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
-		NodeT_inic2 a = (NodeT_inic2)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		Node_Indexos_taula a = (Node_Indexos_taula)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		NodeExprsimple b = (NodeExprsimple)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new NodeT_inic2(a, b, lexic.getLineColumn()); 
+		 RESULT = new Node_Indexos_taula(a, b, lexic.getLineColumn()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("t_inic2",42, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

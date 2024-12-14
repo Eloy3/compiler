@@ -1,17 +1,17 @@
 package front_end.simbols;
 
-public class NodeElements_dimensional {
+public class NodeValors_taula {
     private NodeExprsimple exprsimple;
-    private NodeElements_dimensional elements_dimensionals;
+    private NodeValors_taula elements_dimensionals;
     private int[] codeLine;
 
-    public NodeElements_dimensional(NodeExprsimple a, NodeElements_dimensional b, int[] l){
+    public NodeValors_taula(NodeExprsimple a, NodeValors_taula b, int[] l){
         this.exprsimple = a;
         this.elements_dimensionals = b;
         this.codeLine = l;
     }
 
-    public NodeElements_dimensional(NodeExprsimple a, int[] l){
+    public NodeValors_taula(NodeExprsimple a, int[] l){
         this.exprsimple = a;
         this.codeLine = l;
     }

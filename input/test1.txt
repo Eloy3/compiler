@@ -1,10 +1,7 @@
 principal(){
-	bool deu = fals;
-	si(deu){
-		sortidaln(1);
-	}si_no{
-		sortidaln(3);
-	}
+	ent x;
+	ent[] y = {1, 2, 3};
+	x = 5;
+	sortidaln(x);
 	
 }
-
