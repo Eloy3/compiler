@@ -1,14 +1,24 @@
+goto principal 
+suma:skip
+pmb suma
+t2 = a + b
+z = t2
+t4 = z
+rtn t4
 principal:skip
 pmb principal
-t0 = 5
-x = t0
-t2 = 3
-y = t2
-t4 = 2
-z = t4
+t5 = 5
+x = t5
+t7 = 3
+y = t7
+param_s x
+param_s y
+call suma
+t9 = retInt
+j = t9
 param_s x
 call line
 param_s y
 call line
-param_s z
+param_s j
 call line

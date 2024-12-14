@@ -1,6 +1,7 @@
 package front_end.simbols;
 
 import errors.*;
+import util.TacUtil;
 
 public class NodeDecl_Variable extends NodeBase{
     private NodeTipus nt;
@@ -23,6 +24,8 @@ public class NodeDecl_Variable extends NodeBase{
         }
         if(varinic == null){
             ts.insertElement(id, nt.getTipusAsString(), null);
+        }else if(varinic.getCrida_funcio()!=null){
+            handleProcedimentType();
         }else{
             handleVariableInitialization();
         }
@@ -39,9 +42,6 @@ public class NodeDecl_Variable extends NodeBase{
                 break;
             case "bool":
                 handleBooleaType(id2);
-                break;
-            case "procediment":
-                handleProcedimentType();
                 break;
         }
     }
@@ -89,12 +89,7 @@ public class NodeDecl_Variable extends NodeBase{
             ErrorLogger.logSemanticError(lc,"La variable " +id + " i el procediment " + nomProcedure + " no tenen el mateix tipus");
         }else{
             varinic.getExprsimple().generateCodeProcedure();
-            varinic.getExprsimple().generateCodeProcedure();
-            String tempVar = cta.newTempVar(nt.getTipusAsString(), null);
-            cta.generateCode(tempVar + " = retInt\n");
-            ts.insertElement(id, nt.getTipusAsString(), tempVar); // Insert the variable declaration
-            cta.generateCode(id + " = " + tempVar + "\n");
-            cta.newVar(id, nt.getTipusAsString());
+            TacUtil.procedureResultToVariable(cta, ts, id, nt.getTipusAsString());
         }
     }
     

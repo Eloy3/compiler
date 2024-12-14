@@ -1,21 +1,46 @@
 	org $1000
 START:
 	JSR SCREENSIZE
+* --> | GOTO | null | null | principal |
+	JMP principal
+* --> | SKIP | null | null | suma |
+suma:
+* --> | PMB | null | null | suma |
+	MOVE.W 4(A7),a_suma
+	MOVE.W 6(A7),b_suma
+* --> | SUMA | a | b | t2 |
+	MOVE.W a_suma,D0
+	MOVE.W b_suma,D1
+	JSR ISUMA
+	MOVE.W D1,t2_suma
+* --> | ASSIGNA | t2 | null | z |
+	MOVE.W t2_suma,z_suma
+* --> | ASSIGNA | z | null | t4 |
+	MOVE.W z_suma,t4_suma
+* --> | RTN | t4 | null | null |
+	MOVE.W t4_suma,D3
+	RTS
 * --> | SKIP | null | null | principal |
 principal:
 * --> | PMB | null | null | principal |
-* --> | ASSIGNA | 5 | null | t0 |
-	MOVE.W #5,t0_principal
-* --> | ASSIGNA | t0 | null | x |
-	MOVE.W t0_principal,x_principal
-* --> | ASSIGNA | 3 | null | t2 |
-	MOVE.W #3,t2_principal
-* --> | ASSIGNA | t2 | null | y |
-	MOVE.W t2_principal,y_principal
-* --> | ASSIGNA | 2 | null | t4 |
-	MOVE.W #2,t4_principal
-* --> | ASSIGNA | t4 | null | z |
-	MOVE.W t4_principal,z_principal
+* --> | ASSIGNA | 5 | null | t5 |
+	MOVE.W #5,t5_principal
+* --> | ASSIGNA | t5 | null | x |
+	MOVE.W t5_principal,x_principal
+* --> | ASSIGNA | 3 | null | t7 |
+	MOVE.W #3,t7_principal
+* --> | ASSIGNA | t7 | null | y |
+	MOVE.W t7_principal,y_principal
+* --> | PARAM_S | null | null | x |
+	MOVE.W x_principal,-(A7)
+* --> | PARAM_S | null | null | y |
+	MOVE.W y_principal,-(A7)
+* --> | CALL | null | null | suma |
+	JSR suma
+* --> | ASSIGNA | retInt | null | t9 |
+	MOVE.W D3,t9_principal
+* --> | ASSIGNA | t9 | null | j |
+	MOVE.W t9_principal,j_principal
 * --> | PARAM_S | null | null | x |
 	MOVE.W x_principal,-(A7)
 * --> | CALL | null | null | line |
@@ -26,19 +51,24 @@ principal:
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
-* --> | PARAM_S | null | null | z |
-	MOVE.W z_principal,-(A7)
+* --> | PARAM_S | null | null | j |
+	MOVE.W j_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
 	SIMHALT
  
-t0_principal: DS.W 1
+a_suma: DS.W 1
+b_suma: DS.W 1
+t2_suma: DS.W 1
+z_suma: DS.W 1
+t4_suma: DS.W 1
+t5_principal: DS.W 1
 x_principal: DS.W 1
-t2_principal: DS.W 1
+t7_principal: DS.W 1
 y_principal: DS.W 1
-t4_principal: DS.W 1
-z_principal: DS.W 1
+t9_principal: DS.W 1
+j_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0

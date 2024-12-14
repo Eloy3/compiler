@@ -1,9 +1,14 @@
 Taula de variables
 
 Nombre          NV         Subprograma          Ocupació        Desplaçament    Tipus subjacent      Valor     
-t0              0          principal            4               0               ENT                  5         
-x               1          principal            4               4               ENT                  5         
-t2              2          principal            4               8               ENT                  3         
-y               3          principal            4               12              ENT                  3         
-t4              4          principal            4               16              ENT                  2         
-z               5          principal            4               20              ENT                  2         
+a               0          suma                 4               0               ENT                            
+b               1          suma                 4               4               ENT                            
+t2              2          suma                 4               8               ENT                  a         
+z               3          suma                 4               12              ENT                  a         
+t4              4          suma                 4               16              ENT                            
+t5              5          principal            4               20              ENT                  5         
+x               6          principal            4               24              ENT                  5         
+t7              7          principal            4               28              ENT                  3         
+y               8          principal            4               32              ENT                  3         
+t9              9          principal            4               36              ENT                            
+j               10         principal            4               40              ENT                            

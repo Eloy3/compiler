@@ -3,11 +3,13 @@ package util;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import back_end.generate_code.ThreeAdressCode;
 import data_structures.SymbolTable;
 import errors.ErrorLogger;
 import front_end.simbols.NodeExprsimple;
 import front_end.simbols.NodeExprsimple.tipusexpr;
 import front_end.simbols.NodeLlistaValors;
+import front_end.simbols.NodeProcedures;
 import front_end.simbols.Simbol;
 import front_end.simbols.NodeBase;
 
@@ -99,4 +101,6 @@ public abstract class Util {
         }
         return list;
     }
+
 }
+

@@ -8,14 +8,14 @@ import util.Util;
 
 public class NodeSortida extends NodeBase {
 
-    private NodeLlistaValors LlistaValors;
-    private boolean linea;
-    private int[] lc;
+    private final NodeLlistaValors LlistaValors;
+    private final boolean linea;
+    private final int[] lc;
 
     public NodeSortida(NodeLlistaValors lv, boolean l, int[] lc) {
         super("Sortida", 0);
-        LlistaValors = lv;
-        linea = l;
+        this.LlistaValors = lv;
+        this.linea = l;
         this.lc = lc;
     }
 
@@ -33,35 +33,27 @@ public class NodeSortida extends NodeBase {
     }
 
     private String paramType(NodeExprsimple print) {
-        // Check if the value is an identifier (ID)
         if (print.getTipus() == tipusexpr.id) {
             Simbol id = ts.get(print.getValor());
-
-            // If the variable does not exist in the symbol table, log an error
             if (id == null) {
-                ErrorLogger.logSemanticError(
-                    lc,
-                    "Variable '" + print.getValor() + "' no existeix."
-                );
-                throw new RuntimeException("Variable '" + print.getValor()+"' no existeix");
+                String errorMsg = "Variable '" + print.getValor() + "' no existeix.";
+                ErrorLogger.logSemanticError(lc, errorMsg);
+                throw new RuntimeException(errorMsg);
             }
 
-            // Determine parameter type based on the variable's type
             String varType = id.getTipus();
-            if (varType.equalsIgnoreCase("ent")) {
-                return "param_s"; // Integer parameter
-            } else if (varType.equalsIgnoreCase("bool")) {
-                return "param_b"; // Boolean parameter
-            } else {
-                ErrorLogger.logSemanticError(
-                    lc,
-                    "Unsupported variable type for: " + print.getValor()
-                );
-                throw new RuntimeException("Unsupported variable type: " + varType);
+            switch (varType.toLowerCase()) {
+                case "ent":
+                    return "param_s"; // Integer parameter
+                case "bool":
+                    return "param_b"; // Boolean parameter
+                default:
+                    String errorMsg = "Unsupported variable type for: " + print.getValor();
+                    ErrorLogger.logSemanticError(lc, errorMsg);
+                    throw new RuntimeException("Unsupported variable type: " + varType);
             }
         } else {
-            // If it's a constant value, assume "param_c"
-            return "param_c";
+            return "param_c"; // Constant value
         }
     }
 }

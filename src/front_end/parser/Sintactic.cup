@@ -52,7 +52,7 @@ non terminal NodeTipus tipus;
 non terminal NodeTipus tipusf;
 non terminal NodeVarinic varinic;
 non terminal NodeVarinic2 varinic2;
-non terminal NodeExprsimple exprsimple,exprsimpleArg;
+non terminal NodeExprsimple exprsimple;
 non terminal NodeParam param;
 non terminal NodeParam2 param2;
 non terminal NodeArg arg;
@@ -118,7 +118,7 @@ sentencia ::=   decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
 
 crida_funcio ::= ID:name EParen arg:a DParen {: RESULT = new NodeCrida_funcio(name, a, lexic.getLineColumn()); :};
 
-arg ::= exprsimpleArg:e arg2:a2 {: RESULT = new NodeArg(e, a2); :}
+arg ::= exprsimple:e arg2:a2 {: RESULT = new NodeArg(e, a2); :}
             |   {: RESULT = new NodeArg(); :};
 
 arg2 ::= COMA arg:a {: RESULT = new NodeArg2(a); :}
@@ -133,11 +133,6 @@ param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}
             |   {: RESULT = new NodeParam2(); :};
 
 exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v); :}
-             | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString()); :}
-             | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString()); :}
-             | crida_funcio:a   {: RESULT = new NodeExprsimple(a); :};
-
-exprsimpleArg ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v); :}
              | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString()); :}
              | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString()); :};
 
@@ -168,10 +163,12 @@ retorna ::= RETORNA exprsimple:expr PUNTICOMA {: RESULT = new NodeRetorna(expr, 
 
 decl_variable ::= tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(t, id, vi, lexic.getLineColumn()); :};
 
-varinic ::= ASSIGN exprsimple:v   {: RESULT = new NodeVarinic(v); :}
-            |      {: RESULT = new NodeVarinic(); :}           ;
+varinic ::= ASSIGN exprsimple:v     {: RESULT = new NodeVarinic(v); :}
+          | ASSIGN crida_funcio:c   {: RESULT = new NodeVarinic(c); :}
+          |                         {: RESULT = new NodeVarinic(); :};  
 
 varinic2 ::= ID:v ASSIGN exprsimple:v1 {: RESULT = new NodeVarinic2(v, v1, lexic.getLineColumn()); :}
+           | ID:v ASSIGN crida_funcio:c {: RESULT = new NodeVarinic2(v, c, lexic.getLineColumn()); :}
            | ID:v ASSIGN exprcomposta:e {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :};
 
 exprcomposta ::= exprsimple:a operador_expr:o exprsimple:b {: RESULT = new NodeExprcomposta(a,o,b,lexic.getLineColumn());:};
@@ -197,7 +194,7 @@ entrada ::= ENTRADA EParen ID:i DParen {: RESULT = new NodeEntrada(i);:};
 
 condicional ::= SI EParen condicio:a DParen EClau blocf:b DClau condsino:c {: RESULT = new NodeCondicional(a,b,c,lexic.getLineColumn()); :};
 
-condicio ::= exprsimpleArg:v operador_cond:o exprsimpleArg:v1 {: RESULT = new NodeCondicio(v,o,v1,lexic.getLineColumn()); :}
+condicio ::= exprsimple:v operador_cond:o exprsimple:v1 {: RESULT = new NodeCondicio(v,o,v1,lexic.getLineColumn()); :}
                 | ID:id {: RESULT = new NodeCondicio(id,lexic.getLineColumn()); :};
 
 condsino ::= SINO EClau blocf:a DClau {: RESULT = new NodeCondsino(a); :}
@@ -234,17 +231,17 @@ dimensions_taula ::= EClaudator DClaudator {: RESULT = new NodeDimensions_taula(
 inicialitzacio_taula ::= ASSIGN EClau valors_taula:a DClau {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :}
                        | ASSIGN assignacio_memoria:a {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :};
 
-valors_taula ::= exprsimpleArg:a COMA valors_taula:b {: RESULT = new NodeValors_taula(a, b, lexic.getLineColumn()); :}
-               | exprsimpleArg:a {: RESULT = new NodeValors_taula(a, null, lexic.getLineColumn()); :};
+valors_taula ::= exprsimple:a COMA valors_taula:b {: RESULT = new NodeValors_taula(a, b, lexic.getLineColumn()); :}
+               | exprsimple:a {: RESULT = new NodeValors_taula(a, null, lexic.getLineColumn()); :};
 
 //                  =  reserva  [2] ...
 assignacio_memoria ::= RESERVA especificacio_dimensio:a{: RESULT = new NodeAssignacio_memoria(a, lexic.getLineColumn()); :};
 
-especificacio_dimensio ::= EClaudator exprsimpleArg:a DClaudator {: RESULT = new NodeEspecificacio_dimensio(a, lexic.getLineColumn()); :}
-                        | especificacio_dimensio:a EClaudator exprsimpleArg:b DClaudator  {: RESULT = new NodeEspecificacio_dimensio(a, b, lexic.getLineColumn()); :};
+especificacio_dimensio ::= EClaudator exprsimple:a DClaudator {: RESULT = new NodeEspecificacio_dimensio(a, lexic.getLineColumn()); :}
+                        | especificacio_dimensio:a EClaudator exprsimple:b DClaudator  {: RESULT = new NodeEspecificacio_dimensio(a, b, lexic.getLineColumn()); :};
 
 //                      x  [0]...            =         1
-inic_element_taula ::= ID indexos_taula:a ASSIGN exprsimpleArg:b {: RESULT = new NodeInic_element_taula(a, b, lexic.getLineColumn()); :};
+inic_element_taula ::= ID indexos_taula:a ASSIGN exprsimple:b {: RESULT = new NodeInic_element_taula(a, b, lexic.getLineColumn()); :};
 
-indexos_taula ::= EClaudator exprsimpleArg:a DClaudator {: RESULT = new NodeIndexos_taula(a, lexic.getLineColumn()); :}
-           |indexos_taula:a EClaudator exprsimpleArg:b DClaudator  {: RESULT = new NodeIndexos_taula(a, b, lexic.getLineColumn()); :};
+indexos_taula ::= EClaudator exprsimple:a DClaudator {: RESULT = new NodeIndexos_taula(a, lexic.getLineColumn()); :}
+           |indexos_taula:a EClaudator exprsimple:b DClaudator  {: RESULT = new NodeIndexos_taula(a, b, lexic.getLineColumn()); :};

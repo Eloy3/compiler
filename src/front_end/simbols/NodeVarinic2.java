@@ -1,6 +1,7 @@
 package front_end.simbols;
 
 import errors.ErrorLogger;
+import util.TacUtil;
 import util.Util;
 import front_end.simbols.NodeCrida_funcio;
 import java.util.Optional;
@@ -10,6 +11,7 @@ public class NodeVarinic2 extends NodeBase {
 
     private NodeExprsimple exprsimple;
     private NodeExprcomposta exprcomposta;
+    private NodeCrida_funcio crida_funcio;
     private String id;
     private int[] lc;
 
@@ -27,15 +29,33 @@ public class NodeVarinic2 extends NodeBase {
         this.lc = lc;
     }
 
+    public NodeVarinic2(String id, NodeCrida_funcio e, int[] lc) {
+        super("Varinic2", 0);
+        this.id = id;
+        this.crida_funcio = e;
+        this.lc = lc;
+    }
+
     public void generateCode_exprsimple() {
-        if ("procediment".equals(exprsimple.getTipusAsString())) {
-            if(Util.validateProcedureExists(ts,exprsimple.getNomProcediment(),lc)==null){return;} 
-            exprsimple.generateCodeProcedure();
-            validateAndGenerate(id, exprsimple.tipusProcediment(), exprsimple.getValor(), Optional.empty());
+        if(crida_funcio!=null){
+            if (!crida_funcio.generateCode()) return;
+            Simbol procedure = Util.validateVariableExists(ts, crida_funcio.getFunctionName(), lc);
+            Simbol variable = Util.validateVariableExists(ts, id, lc);
+            if(procedure == null) {
+                ErrorLogger.logSemanticError(lc, "La funció '" + crida_funcio.getFunctionName() + "' no existeix.");
+                return;
+            }else if(variable == null) {
+                ErrorLogger.logSemanticError(lc, "La variable '" + id + "' no existeix.");
+                return;
+            }else if(!Util.typeMatches(variable.getTipus(), procedure.getTipus())) {
+                ErrorLogger.logSemanticError(lc, "La variable '" + id + "' no té el tipus esperat '" + procedure.getTipus() + "'.");
+                return;
+            }
+            TacUtil.procedureResultToVariable(cta, ts, id, variable.getTipus());
             return;
         }
-        validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
 
+        validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
     }
 
     public void generateCode_exprcomposta() {
@@ -131,4 +151,13 @@ public class NodeVarinic2 extends NodeBase {
     public NodeExprcomposta getExprcomposta() {
         return exprcomposta;
     }
+
+    public NodeCrida_funcio getCrida_funcio() {
+        return crida_funcio;
+    }
+
+    public void setCrida_funcio(NodeCrida_funcio crida_funcio) {
+        this.crida_funcio = crida_funcio;
+    }
+
 }

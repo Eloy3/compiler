@@ -1,7 +1,13 @@
+funcio ent suma(ent a, ent b){
+	ent z;
+	z = a+b;
+	retorna z;
+}
+
 principal(){
 	ent x = 5;
 	ent y = 3;
-	ent z = 2;
-	sortidaln(x,y,z);
-	
+	ent j;
+	j = suma(x,y);
+	sortidaln(x,y,j);
 }

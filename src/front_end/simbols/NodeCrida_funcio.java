@@ -21,11 +21,11 @@ public class NodeCrida_funcio extends NodeBase {
         param = p;
     }
 
-    public void generateCode() {
+    public boolean generateCode() {
         // Check if the function exists in the symbol table
         if (!ts.existeixTs(functionName)) {
             ErrorLogger.logSintacticError(lc, "La funció '" + functionName + "' no existeix");
-            return;
+            return false;
         }
     
         // Extract parameter list from the call
@@ -42,7 +42,7 @@ public class NodeCrida_funcio extends NodeBase {
                 "La funció '" + functionName + "' esperava " + expectedArgs.size() +
                 " paràmetres, però se n'han proporcionat " + params.size()
             );
-            return;
+            return false;
         }
     
         // Validate argument types and generate parameter code
@@ -59,7 +59,7 @@ public class NodeCrida_funcio extends NodeBase {
                         lc,
                         "L'argument '" + paramNode.getExprsimple().getValor() + "' no està declarat."
                     );
-                    return;
+                    return false;
                 }
     
                 // Check type compatibility
@@ -69,7 +69,7 @@ public class NodeCrida_funcio extends NodeBase {
                         "Paràmetre " + (i + 1) + " de la funció '" + functionName +
                         "' esperava tipus '" + expectedType + "' però s'ha trobat '" + argSymbol.getTipus() + "'"
                     );
-                    return;
+                    return false;
                 }
     
                 // Generate code for passing the identifier as a parameter
@@ -83,7 +83,7 @@ public class NodeCrida_funcio extends NodeBase {
                         "Paràmetre " + (i + 1) + " de la funció '" + functionName +
                         "' esperava tipus '" + expectedType + "' però s'ha trobat literal '" + actualType + "'"
                     );
-                    return;
+                    return false;
                 }
     
                 // Generate code for passing the literal as a parameter
@@ -94,7 +94,7 @@ public class NodeCrida_funcio extends NodeBase {
                     lc,
                     "Tipus d'argument desconegut per al paràmetre " + (i + 1) + " de la funció '" + functionName + "'."
                 );
-                return;
+                return false;
             }
         }
     
@@ -106,6 +106,7 @@ public class NodeCrida_funcio extends NodeBase {
             //resultTemp = cta.newTempVar(functionSymbol.getTipus(), null);
             //cta.generateCode("MOVE.W (A7)+, " + resultTemp + "\n");
         }
+        return true;
     }
     
     

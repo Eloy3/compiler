@@ -1,7 +1,7 @@
 package front_end.simbols;
 
 import front_end.simbols.NodeExprsimple.tipusexpr;
-import util.JumpUtil;
+import util.TacUtil;
 import util.Util;
 
 public class NodeBucle extends NodeBase {
@@ -32,13 +32,13 @@ public class NodeBucle extends NodeBase {
 
     public boolean generateCodeWhile() {
         if (!Util.validateCondicio(ts, condicio.getOperand1(), condicio.getOperand2(), condicio.getID(), lc)) return false;
-        JumpUtil.inicibucle(cta);
-        JumpUtil.etiquetacond(cta);
+        TacUtil.inicibucle(cta);
+        TacUtil.etiquetacond(cta);
         if(!GenerateConditionCode()) return false;
-        JumpUtil.condiciobot(cta,false);
+        TacUtil.condiciobot(cta,false);
         ts.incAmbit();
         blocf.generateCode();
-        JumpUtil.retornabucle(cta);
+        TacUtil.retornabucle(cta);
         ts.decAmbit();
         return true;
     }
@@ -46,13 +46,13 @@ public class NodeBucle extends NodeBase {
     public void generateCodeFor() {
         ts.incAmbit();
         decl_Variable.generateCode();
-        JumpUtil.inicibucle(cta);
-        JumpUtil.etiquetacond(cta);
+        TacUtil.inicibucle(cta);
+        TacUtil.etiquetacond(cta);
         GenerateConditionCode();
-        JumpUtil.condiciobot(cta,false);
+        TacUtil.condiciobot(cta,false);
         comportamentv1.generateCode();
         blocf.generateCode();
-        JumpUtil.retornabucle(cta);
+        TacUtil.retornabucle(cta);
         ts.decAmbit();
     }
 
