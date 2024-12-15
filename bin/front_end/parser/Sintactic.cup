@@ -77,7 +77,6 @@ non terminal NodeDecl_taula decl_taula;
 non terminal NodeDimensions_taula dimensions_taula;
 non terminal NodeInicialitzacio_taula inicialitzacio_taula;
 non terminal NodeAssignacio_memoria assignacio_memoria;
-non terminal NodeValors_taula valors_taula;
 non terminal NodeEspecificacio_dimensio especificacio_dimensio; 
 non terminal NodeInic_element_taula inic_element_taula;
 non terminal NodeIndexos_taula indexos_taula;
@@ -228,11 +227,8 @@ dimensions_taula ::= EClaudator DClaudator {: RESULT = new NodeDimensions_taula(
                 | dimensions_taula:a EClaudator DClaudator {: RESULT = new NodeDimensions_taula(a, lexic.getLineColumn()); :};
 
 //                           =     {      1,2,3       }
-inicialitzacio_taula ::= ASSIGN EClau valors_taula:a DClau {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :}
+inicialitzacio_taula ::= ASSIGN EClau llista_valors:a DClau {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :}
                        | ASSIGN assignacio_memoria:a {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :};
-
-valors_taula ::= exprsimple:a COMA valors_taula:b {: RESULT = new NodeValors_taula(a, b, lexic.getLineColumn()); :}
-               | exprsimple:a {: RESULT = new NodeValors_taula(a, null, lexic.getLineColumn()); :};
 
 //                  =  reserva  [2] ...
 assignacio_memoria ::= RESERVA especificacio_dimensio:a{: RESULT = new NodeAssignacio_memoria(a, lexic.getLineColumn()); :};

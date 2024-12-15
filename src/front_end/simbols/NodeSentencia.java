@@ -22,7 +22,7 @@ public class NodeSentencia extends NodeBase {
                 // Check whether it's a simple or compound expression
                 NodeVarinic2 varinic2 = (NodeVarinic2) node;
                 if (varinic2.getExprsimple() != null || varinic2.getCrida_funcio() != null) {
-                    varinic2.generateCode_exprsimple();
+                    varinic2.generateCode();
                 } else if (varinic2.getExprcomposta() != null) {
                     varinic2.generateCode_exprcomposta();
                 }

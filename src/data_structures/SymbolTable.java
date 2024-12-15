@@ -75,15 +75,24 @@ public class SymbolTable {
 
     public void insertElement(String nom, String tipus, Object valor) {
         Simbol s = new Simbol(nom, tipus, valor);
-        tambit.peek().put(s.getNom(), s);
+        //tambit.peek().put(s.getNom(), s);
+        tambit.get(profunditat-1).put(s.getNom(), s);
         writeSymbolToFile(s, null); // Arguments are null by default
     }
 
     public void insertElementWithArgs(String nom, String tipus, Object valor, ArrayList<String> args) {
         Simbol s = new Simbol(nom, tipus, valor);
         s.setArgs(args);
-        tambit.peek().put(s.getNom(), s);
+        //tambit.peek().put(s.getNom(), s);
+        tambit.get(profunditat-1).put(s.getNom(), s);
         writeSymbolToFile(s, args);
+    }
+
+    public boolean existeixTsambit(String a) {
+        if (tambit.get(profunditat-1).containsKey(a)) {
+            return true;
+        }
+        return existeixTemp(a);
     }
 
     public boolean existeixTs(String a) {

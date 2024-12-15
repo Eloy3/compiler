@@ -2,6 +2,7 @@ package front_end.simbols;
 
 import errors.*;
 import util.TacUtil;
+import util.Util;
 
 public class NodeDecl_Variable extends NodeBase{
     private NodeTipus nt;
@@ -18,7 +19,7 @@ public class NodeDecl_Variable extends NodeBase{
     }
     
     public void generateCode(){
-        if(ts.existeixTs(id)){
+        if(ts.existeixTsambit(id)){
             ErrorLogger.logSemanticError(lc,"La variable '" + id + "' ja ha estat declarada.");
             return;
         }
@@ -80,17 +81,14 @@ public class NodeDecl_Variable extends NodeBase{
 
     private void handleProcedimentType() {
         String nomProcedure = varinic.getNomProcedure();
-        if (!ts.existeixTs(nomProcedure)) {
-            ErrorLogger.logSemanticError(lc, "La funció '" + nomProcedure + "' no existeix.");
+        Simbol procedure = Util.validateVariableExists(ts, nomProcedure, lc);
+        if(procedure == null){
             return;
         }
-        String tipusProcedure = varinic.getTipusProcedure();
-        if(!nt.getTipusAsString().equalsIgnoreCase(tipusProcedure)){
-            ErrorLogger.logSemanticError(lc,"La variable " +id + " i el procediment " + nomProcedure + " no tenen el mateix tipus");
-        }else{
-            varinic.getExprsimple().generateCodeProcedure();
-            TacUtil.procedureResultToVariable(cta, ts, id, nt.getTipusAsString());
-        }
+        String tipusProcedure = procedure.getTipus();
+        if(!Util.typeMatches(nt.getTipusAsString(), tipusProcedure)) return;
+        varinic.getCrida_funcio().generateCode();
+        TacUtil.procedureResultToVariable(cta, ts, id, nt.getTipusAsString());
     }
     
     public void generaC3a(){

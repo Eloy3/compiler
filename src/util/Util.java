@@ -1,6 +1,5 @@
 package util;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import back_end.generate_code.ThreeAdressCode;
@@ -18,14 +17,6 @@ public abstract class Util {
     public static Simbol validateVariableExists(SymbolTable ts, String varId, int[] lc) {
         if (!ts.existeixTs(varId)) {
             ErrorLogger.logSemanticError(lc,"La variable '" + varId + "' no existeix.");
-            return null;
-        }
-        return ts.get(varId);
-    }
-
-    public static Simbol validateProcedureExists(SymbolTable ts, String varId, int[] lc) {
-        if (!ts.existeixTs(varId)) {
-            ErrorLogger.logSemanticError(lc,"La funció '" + varId + "' no existeix.");
             return null;
         }
         return ts.get(varId);

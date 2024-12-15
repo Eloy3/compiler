@@ -36,9 +36,17 @@ public class NodeVarinic2 extends NodeBase {
         this.lc = lc;
     }
 
-    public void generateCode_exprsimple() {
+    public void generateCode() {
         if(crida_funcio!=null){
-            if (!crida_funcio.generateCode()) return;
+            generateCodeProcedure();
+            return;
+        }
+
+        validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
+    }
+
+    public void generateCodeProcedure(){
+        if (!crida_funcio.generateCode()) return;
             Simbol procedure = Util.validateVariableExists(ts, crida_funcio.getFunctionName(), lc);
             Simbol variable = Util.validateVariableExists(ts, id, lc);
             if(procedure == null) {
@@ -52,12 +60,8 @@ public class NodeVarinic2 extends NodeBase {
                 return;
             }
             TacUtil.procedureResultToVariable(cta, ts, id, variable.getTipus());
-            return;
-        }
-
-        validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
     }
-
+    
     public void generateCode_exprcomposta() {
         validateAndGenerate(id, exprcomposta.getExprsimple().getTipusAsString(), exprcomposta.getExprsimple().getValor(),
                 Optional.of(exprcomposta.getB()));

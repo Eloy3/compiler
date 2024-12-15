@@ -11,4 +11,3 @@ x               6          principal            4               24              
 t7              7          principal            4               28              ENT                  3         
 y               8          principal            4               32              ENT                  3         
 t9              9          principal            4               36              ENT                            
-j               10         principal            4               40              ENT                            

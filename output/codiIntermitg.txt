@@ -15,10 +15,10 @@ param_s x
 param_s y
 call suma
 t9 = retInt
-j = t9
+z = t9
 param_s x
 call line
 param_s y
 call line
-param_s j
+param_s z
 call line

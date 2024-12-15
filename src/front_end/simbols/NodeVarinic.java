@@ -42,13 +42,9 @@ public class NodeVarinic extends NodeBase{
     public void setExprsimple(NodeExprsimple exprsimple) {
         this.exprsimple = exprsimple;
     }
-
-    public String getTipusProcedure(){
-        return exprsimple.tipusProcediment();
-    }
     
     public String getNomProcedure(){
-        return exprsimple.getNomProcediment();
+        return crida_funcio.getFunctionName();
     }
     public NodeCrida_funcio getCrida_funcio() {
         return crida_funcio;

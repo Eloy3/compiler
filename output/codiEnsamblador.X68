@@ -39,8 +39,8 @@ principal:
 	JSR suma
 * --> | ASSIGNA | retInt | null | t9 |
 	MOVE.W D3,t9_principal
-* --> | ASSIGNA | t9 | null | j |
-	MOVE.W t9_principal,j_principal
+* --> | ASSIGNA | t9 | null | z |
+	MOVE.W t9_principal,z_suma
 * --> | PARAM_S | null | null | x |
 	MOVE.W x_principal,-(A7)
 * --> | CALL | null | null | line |
@@ -51,8 +51,8 @@ principal:
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
-* --> | PARAM_S | null | null | j |
-	MOVE.W j_principal,-(A7)
+* --> | PARAM_S | null | null | z |
+	MOVE.W z_suma,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
@@ -68,7 +68,6 @@ x_principal: DS.W 1
 t7_principal: DS.W 1
 y_principal: DS.W 1
 t9_principal: DS.W 1
-j_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0
