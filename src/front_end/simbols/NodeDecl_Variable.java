@@ -27,7 +27,7 @@ public class NodeDecl_Variable extends NodeBase{
             ts.insertElement(id, nt.getTipusAsString(), null);
         }else if(varinic.getCrida_funcio()!=null){
             handleProcedimentType();
-        }else{
+        }else if(varinic.getExprsimple()!=null){
             handleVariableInitialization();
         }
     }

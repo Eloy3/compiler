@@ -36,7 +36,7 @@ public class NodeDecl_funcio extends NodeBase {
         }
 
         // Add a new procedure entry to the table
-        tp.addRow(new Procedure(tp.getNewNumProc(), 0, functionName, params, 0, tipus.getTipus()));
+        tp.addRow(new Procedure(tp.getNewNumProc(), ts.getProfunditat(), functionName, params, 0, tipus.getTipus()));
     }
 
     public void generateCode() {

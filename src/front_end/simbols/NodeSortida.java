@@ -37,7 +37,7 @@ public class NodeSortida extends NodeBase {
             Simbol id = ts.get(print.getValor());
             if (id == null) {
                 String errorMsg = "Variable '" + print.getValor() + "' no existeix.";
-                ErrorLogger.logSemanticError(lc, errorMsg);
+                //ErrorLogger.logSemanticError(lc, errorMsg);
                 throw new RuntimeException(errorMsg);
             }
 
@@ -48,8 +48,8 @@ public class NodeSortida extends NodeBase {
                 case "bool":
                     return "param_b"; // Boolean parameter
                 default:
-                    String errorMsg = "Unsupported variable type for: " + print.getValor();
-                    ErrorLogger.logSemanticError(lc, errorMsg);
+                    //String errorMsg = "Unsupported variable type for: " + print.getValor();
+                    //ErrorLogger.logSemanticError(lc, errorMsg);
                     throw new RuntimeException("Unsupported variable type: " + varType);
             }
         } else {

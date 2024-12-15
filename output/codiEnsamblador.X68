@@ -20,27 +20,46 @@ suma:
 * --> | RTN | t4 | null | null |
 	MOVE.W t4_suma,D3
 	RTS
+* --> | GOTO | null | null | principal |
+	JMP principal
+* --> | SKIP | null | null | resta |
+resta:
+* --> | PMB | null | null | resta |
+	MOVE.W 4(A7),a_suma
+	MOVE.W 6(A7),b_suma
+* --> | RESTA | a | b | t7 |
+	MOVE.W a_suma,D1
+	MOVE.W b_suma,D0
+	JSR IRESTA
+	MOVE.W D1,t7_resta
+* --> | ASSIGNA | t7 | null | b |
+	MOVE.W t7_resta,b_suma
+* --> | ASSIGNA | b | null | t9 |
+	MOVE.W b_suma,t9_resta
+* --> | RTN | t9 | null | null |
+	MOVE.W t9_resta,D3
+	RTS
 * --> | SKIP | null | null | principal |
 principal:
 * --> | PMB | null | null | principal |
-* --> | ASSIGNA | 5 | null | t5 |
-	MOVE.W #5,t5_principal
-* --> | ASSIGNA | t5 | null | x |
-	MOVE.W t5_principal,x_principal
-* --> | ASSIGNA | 3 | null | t7 |
-	MOVE.W #3,t7_principal
-* --> | ASSIGNA | t7 | null | y |
-	MOVE.W t7_principal,y_principal
+* --> | ASSIGNA | 5 | null | t10 |
+	MOVE.W #5,t10_principal
+* --> | ASSIGNA | t10 | null | x |
+	MOVE.W t10_principal,x_principal
+* --> | ASSIGNA | 3 | null | t12 |
+	MOVE.W #3,t12_principal
+* --> | ASSIGNA | t12 | null | y |
+	MOVE.W t12_principal,y_principal
 * --> | PARAM_S | null | null | x |
 	MOVE.W x_principal,-(A7)
 * --> | PARAM_S | null | null | y |
 	MOVE.W y_principal,-(A7)
 * --> | CALL | null | null | suma |
 	JSR suma
-* --> | ASSIGNA | retInt | null | t9 |
-	MOVE.W D3,t9_principal
-* --> | ASSIGNA | t9 | null | z |
-	MOVE.W t9_principal,z_suma
+* --> | ASSIGNA | retInt | null | t14 |
+	MOVE.W D3,t14_principal
+* --> | ASSIGNA | t14 | null | z |
+	MOVE.W t14_principal,z_suma
 * --> | PARAM_S | null | null | x |
 	MOVE.W x_principal,-(A7)
 * --> | CALL | null | null | line |
@@ -56,6 +75,31 @@ principal:
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
+* --> | PARAM_S | null | null | x |
+	MOVE.W x_principal,-(A7)
+* --> | PARAM_S | null | null | y |
+	MOVE.W y_principal,-(A7)
+* --> | CALL | null | null | resta |
+	JSR resta
+* --> | ASSIGNA | retInt | null | t16 |
+	MOVE.W D3,t16_principal
+* --> | ASSIGNA | t16 | null | r |
+	MOVE.W t16_principal,r_principal
+* --> | PARAM_S | null | null | x |
+	MOVE.W x_principal,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+	ADDA.L #2,A7
+* --> | PARAM_S | null | null | y |
+	MOVE.W y_principal,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+	ADDA.L #2,A7
+* --> | PARAM_S | null | null | r |
+	MOVE.W r_principal,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+	ADDA.L #2,A7
 	SIMHALT
  
 a_suma: DS.W 1
@@ -63,11 +107,15 @@ b_suma: DS.W 1
 t2_suma: DS.W 1
 z_suma: DS.W 1
 t4_suma: DS.W 1
-t5_principal: DS.W 1
+t7_resta: DS.W 1
+t9_resta: DS.W 1
+t10_principal: DS.W 1
 x_principal: DS.W 1
-t7_principal: DS.W 1
+t12_principal: DS.W 1
 y_principal: DS.W 1
-t9_principal: DS.W 1
+t14_principal: DS.W 1
+t16_principal: DS.W 1
+r_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0

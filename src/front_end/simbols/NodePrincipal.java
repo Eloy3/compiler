@@ -24,7 +24,7 @@ public class NodePrincipal extends NodeBase {
 
         String startLabel = cta.getTemp_id();
         cta.setTemp_id(null);
-        tp.addRow(new Procedure(tp.getNewNumProc(), 0, startLabel, getParams(), 0, Tipus.NULL));
+        tp.addRow(new Procedure(tp.getNewNumProc(), ts.getProfunditat(), startLabel, getParams(), 0, Tipus.NULL));
         cta.generateCode("pmb " + startLabel + "\n");
 
         cta.push(cta.getStart_stack(), start_label);

@@ -6,8 +6,12 @@ b               1          suma                 4               4               
 t2              2          suma                 4               8               ENT                  a         
 z               3          suma                 4               12              ENT                  a         
 t4              4          suma                 4               16              ENT                            
-t5              5          principal            4               20              ENT                  5         
-x               6          principal            4               24              ENT                  5         
-t7              7          principal            4               28              ENT                  3         
-y               8          principal            4               32              ENT                  3         
-t9              9          principal            4               36              ENT                            
+t7              7          resta                4               28              ENT                  a         
+t9              9          resta                4               36              ENT                            
+t10             10         principal            4               40              ENT                  5         
+x               11         principal            4               44              ENT                  5         
+t12             12         principal            4               48              ENT                  3         
+y               13         principal            4               52              ENT                  3         
+t14             14         principal            4               56              ENT                            
+t16             16         principal            4               64              ENT                            
+r               17         principal            4               68              ENT                            

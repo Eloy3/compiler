@@ -5,20 +5,38 @@ t2 = a + b
 z = t2
 t4 = z
 rtn t4
+goto principal 
+resta:skip
+pmb resta
+t7 = a - b
+b = t7
+t9 = b
+rtn t9
 principal:skip
 pmb principal
-t5 = 5
-x = t5
-t7 = 3
-y = t7
+t10 = 5
+x = t10
+t12 = 3
+y = t12
 param_s x
 param_s y
 call suma
-t9 = retInt
-z = t9
+t14 = retInt
+z = t14
 param_s x
 call line
 param_s y
 call line
 param_s z
+call line
+param_s x
+param_s y
+call resta
+t16 = retInt
+r = t16
+param_s x
+call line
+param_s y
+call line
+param_s r
 call line

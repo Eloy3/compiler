@@ -115,7 +115,10 @@ sentencia ::=   decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
               | error PUNTICOMA {: logLexicError("Sentència invàlida");:}
               | ID {: logLexicError("Sentència invàlida");:};
 
-crida_funcio ::= ID:name EParen arg:a DParen {: RESULT = new NodeCrida_funcio(name, a, lexic.getLineColumn()); :};
+crida_funcio ::= ID:name EParen arg:a DParen {: RESULT = new NodeCrida_funcio(name, a, lexic.getLineColumn()); :}
+               | ID:name EParen error DParen {: 
+                    logSintacticError("Crida a funció '" + name + "' amb arguments incorrectes."); 
+                :};
 
 arg ::= exprsimple:e arg2:a2 {: RESULT = new NodeArg(e, a2); :}
             |   {: RESULT = new NodeArg(); :};
