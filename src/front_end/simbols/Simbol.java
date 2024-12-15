@@ -9,14 +9,23 @@ public class Simbol{
     String nom;
     String tipus;
     String tipusSubjacent;
+    String subprogram;
     Object valor;
     private ArrayList<String> args;
+
+    public Simbol(String nom, String tipus, String subprogram, Object valor) {
+        this.nom = nom;
+        this.tipus = tipus;
+        this.valor = valor;
+        this.subprogram = subprogram;
+    }
 
     public Simbol(String nom, String tipus, Object valor) {
         this.nom = nom;
         this.tipus = tipus;
         this.valor = valor;
     }
+
     public Simbol (String tipus, Object valor){
         this.tipus = tipus;
         this.valor = valor;
@@ -66,6 +75,15 @@ public class Simbol{
     public String getTipusSubjacent() {
         return tipusSubjacent;
     }
+
+    public String getSubprogram() {
+        return subprogram;
+    }
+
+    public void setSubprogram(String subprogram) {
+        this.subprogram = subprogram;
+    }
+    
     
     
  }

@@ -82,6 +82,16 @@ public class TaulaProcediments {
         return null;
     }
 
+    public Parameter getParam(String procedure,String id){
+        for(Procedure p : this.row_list){
+            if(p.getStart_label().equals(procedure)){
+                return p.getParam(id);
+            }
+        }
+        
+        System.err.println("Error: Procedure not found");
+        return null;
+    }
 
     private String Title() {
         return TABLE_NAME + "\n";
@@ -100,7 +110,7 @@ public class TaulaProcediments {
             node.getNum_proc(),
             node.getDepth(),
             node.getStart_label(),
-            node.getParametros().toString(),
+            node.getParameters().toString(),
             node.getTotal_store(),
             (node.getType_return() != null) ? node.getType_return() : ""
         );

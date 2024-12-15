@@ -109,15 +109,15 @@ public class NodeVarinic2 extends NodeBase {
 
     private void calcOcup(Simbol target, String value) {
         String tempVar = cta.newTempVar(target.getTipus(), value);
-        cta.generateCode(tempVar + " = " + value + "\n");
-        cta.generateCode(cta.newVar(target.getNom(), target.getTipus(), value) + " = " + tempVar + "\n");
+        cta.generateCode(tempVar + " = " + value+"_"+ts.getCurrentProcedure() + "\n");
+        cta.generateCode(cta.newVar(target.getNom()+"_"+ts.getCurrentProcedure(), target.getTipus(), value) + " = " + tempVar + "\n");
         cta.setTemp_id(null);
     }
 
     private void calcOcupComposite(Simbol target, String valueA, String operator, String valueB) {
         String tempVar = cta.newTempVar(target.getTipus(), valueA);
-        cta.generateCode(tempVar + " = " + valueA + " " + operator + " " + valueB + "\n");
-        cta.generateCode(cta.newVar(target.getNom(), target.getTipus(), valueA) + " = " + tempVar + "\n");
+        cta.generateCode(tempVar + " = " + valueA+"_"+ts.getCurrentProcedure() + " " + operator + " " + valueB+"_"+ts.getCurrentProcedure() + "\n");
+        cta.generateCode(cta.newVar(target.getNom()+"_"+ts.getCurrentProcedure(), target.getTipus(), valueA) + " = " + tempVar + "\n");
     }
 
     private void calcOcupProcedure(Simbol target) {
@@ -128,7 +128,7 @@ public class NodeVarinic2 extends NodeBase {
         }
         String tempVar = cta.newTempVar(target.getTipus(), functionName);
         cta.generateCode(tempVar + " = ret" + target.getTipus().toUpperCase() + "\n");
-        cta.generateCode(cta.newVar(target.getNom(), target.getTipus(), null) + " = " + tempVar + "\n");
+        cta.generateCode(cta.newVar(target.getNom()+"_"+functionName, target.getTipus(), null) + " = " + tempVar + "\n");
     }
 
     @Override

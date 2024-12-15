@@ -8,7 +8,7 @@ public class Procedure {
     private final int num_proc;
     private final int depth;
     private final String start_label;
-    private final ArrayList<Parameter> parametros;
+    private final ArrayList<Parameter> parameters;
     private int total_store;
     private Tipus type_return;
 
@@ -16,7 +16,7 @@ public class Procedure {
         this.num_proc = num_proc;
         this.depth = depth;
         this.start_label = start_label;
-        this.parametros = parametros;
+        this.parameters = parametros;
         this.total_store = total_store;
         this.type_return = type_return;
     }
@@ -29,8 +29,17 @@ public class Procedure {
         return depth;
     }
 
-    public ArrayList<Parameter> getParametros() { return parametros; }
+    public ArrayList<Parameter> getParameters() { return parameters; }
 
+    public Parameter getParam(String id){
+        for(Parameter p : this.parameters){
+            if(p.getNombre().equals(id)){
+                return p;
+            }
+        }
+        
+        return null;
+    }
     public int getTotal_store() {
         return total_store;
     }

@@ -58,7 +58,7 @@ public abstract class TacUtil {
         String tempVar = cta.newTempVar(variableType, null);
         cta.generateCode(tempVar + " = retInt\n");
         ts.insertElement(variable, variableType, tempVar);
-        cta.generateCode(variable + " = " + tempVar + "\n");
-        cta.newVar(variable, variableType);
+        cta.generateCode(variable+"_"+ts.getCurrentProcedure() + " = " + tempVar + "\n");
+        cta.newVar(variable+"_"+ts.getCurrentProcedure(), variableType);
     }
 }

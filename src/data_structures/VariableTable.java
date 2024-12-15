@@ -51,7 +51,7 @@ public class VariableTable {
     public void addRow(Variable var) {
 
         for (Variable variable : rows_list) { //Cerca i Si ja existeix no la torna a afegir
-            if (variable.getName().equals(var.getName())) {
+            if (variable.getName().equals(var.getName()) && variable.getSubprog().equals(var.getSubprog())){
                 return;
             }
         }

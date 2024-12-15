@@ -1,8 +1,10 @@
 package front_end.simbols;
 
+import data_structures.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
+import data_structures.Procedure;
 import errors.*;
 import util.Util;
 import front_end.simbols.NodeExprsimple.tipusexpr;
@@ -22,18 +24,17 @@ public class NodeCrida_funcio extends NodeBase {
     }
 
     public boolean generateCode() {
-        // Check if the function exists in the symbol table
-        if (!ts.existeixTs(functionName)) {
-            ErrorLogger.logSintacticError(lc, "La funció '" + functionName + "' no existeix");
+        if(tp.getProc(functionName)==null){
+            ErrorLogger.logSemanticError(lc, "La funció '" + functionName + "' no existeix");
             return false;
         }
-    
         // Extract parameter list from the call
         List<NodeArg> params = extractParamList();
     
         // Get function definition from the symbol table
-        Simbol functionSymbol = ts.get(functionName);
-        ArrayList<String> expectedArgs = functionSymbol.getArgs();
+        //Simbol functionSymbol = ts.get(functionName);
+        Procedure functionSymbol = tp.getProc(functionName);
+        ArrayList<Parameter> expectedArgs = functionSymbol.getParameters();
         ArrayList<String> expectedTypes = getTipusArgs(expectedArgs);
     
         if (expectedArgs.size() != params.size()) {
@@ -72,8 +73,7 @@ public class NodeCrida_funcio extends NodeBase {
                     return false;
                 }
     
-                // Generate code for passing the identifier as a parameter
-                cta.generateCode("param_s " + argSymbol.getNom() + "\n");
+                cta.generateCode("param_s " + argSymbol.getNom()+"_"+ts.getCurrentProcedure() + "\n");
     
             } else if (actualType == NodeExprsimple.tipusexpr.ent || actualType == NodeExprsimple.tipusexpr.bool) {
                 // If the argument is a literal, directly validate its type
@@ -98,11 +98,10 @@ public class NodeCrida_funcio extends NodeBase {
             }
         }
     
-        // Generate code for the function call
         cta.generateCode("call " + functionName + "\n");
     
         // Handle return value (if applicable)
-        if (!functionSymbol.getTipus().equals("BUIT")) {
+        if (!functionSymbol.getType_return().toString().equals("BUIT")) {
             //resultTemp = cta.newTempVar(functionSymbol.getTipus(), null);
             //cta.generateCode("MOVE.W (A7)+, " + resultTemp + "\n");
         }
@@ -120,13 +119,10 @@ public class NodeCrida_funcio extends NodeBase {
         return params;
     }
 
-    public ArrayList<String> getTipusArgs(ArrayList<String> args) {
+    public ArrayList<String> getTipusArgs(ArrayList<Parameter> params) {
         ArrayList<String> tipusList = new ArrayList<>();
-        for (String arg : args) {
-            Simbol id = ts.get(arg);
-            if (id != null) {
-                tipusList.add(id.getTipus());
-            }
+        for (Parameter param : params) {
+            tipusList.add(param.getTipo().toString());
         }
         return tipusList;
     }

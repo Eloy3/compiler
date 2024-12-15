@@ -3,7 +3,9 @@ package util;
 import java.util.ArrayList;
 
 import back_end.generate_code.ThreeAdressCode;
+import data_structures.Procedure;
 import data_structures.SymbolTable;
+import data_structures.TaulaProcediments;
 import errors.ErrorLogger;
 import front_end.simbols.NodeExprsimple;
 import front_end.simbols.NodeExprsimple.tipusexpr;
@@ -20,6 +22,14 @@ public abstract class Util {
             return null;
         }
         return ts.get(varId);
+    }
+
+    public static Procedure validateProcedureExists(TaulaProcediments tp, String varId, int[] lc) {
+        if (tp.getProc(varId).equals(null)) {
+            ErrorLogger.logSemanticError(lc,"La variable '" + varId + "' no existeix.");
+            return null;
+        }
+        return tp.getProc(varId);
     }
     
     public static boolean typeMatches(String type1, String type2) {

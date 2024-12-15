@@ -40,7 +40,7 @@ public class NodePrincipal extends NodeBase {
 
         for (Simbol symbol : paramSymbol) {
             Tipus enum_type = Tipus.valueOf(symbol.getTipusSubjacent().toUpperCase());
-            params.add(new Parameter(symbol.getNom(), enum_type));
+            params.add(new Parameter(symbol.getNom(), enum_type, "principal"));
         }
 
         return params;

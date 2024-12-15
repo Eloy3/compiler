@@ -216,7 +216,7 @@ public class ThreeAdressCodeBackEnd {
                     // Split using regex, preserving multiple spaces within fields
                     String[] split = proc.trim().split("\\s{2,}");
                     
-                    if (split.length >= 6) {
+                    if (split.length >= 5) {
                         try {
                             int np = Integer.parseInt(split[0].trim());
                             int depth = Integer.parseInt(split[1].trim());
@@ -237,7 +237,7 @@ public class ThreeAdressCodeBackEnd {
                                     np,
                                     depth,
                                     startLabel,
-                                    (paramsStr.equals("[]")) ? new ArrayList<Parameter>() : extractParamsTs(paramsStr),
+                                    (paramsStr.equals("[]")) ? new ArrayList<Parameter>() : extractParamsTv(paramsStr,startLabel),
                                     localVarSize,
                                     returnType
                             ));
@@ -305,15 +305,14 @@ public class ThreeAdressCodeBackEnd {
                 // Split by tabs or other consistent delimiters
                 String[] parts = line.split("\\s{2,}|\t");
     
-                // Expecting: ID, TIPUS, VALOR, PROFUNDITAT, ARGS
-                if (parts.length >= 5) {
+                // Expecting: ID, TIPUS, PROFUNDITAT, ARGS
+                if (parts.length >= 4) {
                     String id = parts[0].trim();         // ID
                     String tipus = parts[1].trim();      // TIPUS
-                    String valor = parts[2].trim();      // VALOR
-                    int profunditat = Integer.parseInt(parts[3].trim()); // PROFUNDITAT
+                    //int profunditat = Integer.parseInt(parts[2].trim()); // PROFUNDITAT
                     
                     // Parse ARGS (reverse the order back)
-                    String argsStr = parts[4].trim();
+                    String argsStr = parts[3].trim();
                     ArrayList<String> args = new ArrayList<>();
                     if (!argsStr.equals("[]")) {
                         String[] argsArray = argsStr.substring(1, argsStr.length() - 1).split(", ");
@@ -322,11 +321,10 @@ public class ThreeAdressCodeBackEnd {
                         }
                     }
     
-                    // Create the Simbol object
-                    Simbol simbol = new Simbol(id, tipus, valor.equals("null") ? null : valor);
-    
-                    // Add arguments as needed to the Simbol or process as separate logic
+
+                    Simbol simbol = new Simbol(id, tipus);
                     ts.add(simbol);
+
                 } else {
                     System.err.println("Invalid line in symbol table: " + line);
                 }
@@ -351,7 +349,32 @@ public class ThreeAdressCodeBackEnd {
         return null;
     }
 
-    private ArrayList<Parameter> extractParamsTs(String params) {
+    private ArrayList<Parameter> extractParamsTv(String params, String functionName) {
+        ArrayList<Parameter> parameters = new ArrayList<>();
+
+        // Remove the brackets [ ] and split the string by commas
+        params = params.substring(1, params.length() - 1).trim();
+        if (!params.isEmpty()) {
+            String[] paramArray = params.split(", ");
+
+            // Reverse the parameters to match the original order
+            for (int i = paramArray.length - 1; i >= 0; i--) {
+                String paramName = paramArray[i].trim()+"_"+functionName;
+
+                //Simbol simbol = getSymbol(paramName);
+                Variable var = getVar(paramName, functionName);
+                if (var != null) {
+                    Tipus tipus = Tipus.valueOf(var.getType());
+                    parameters.add(new Parameter(var.getName(), tipus, var.getSubprog()));
+                } else {
+                    System.err.println("Warning: Parameter symbol '" + paramName + "' not found in the symbol table.");
+                }
+            }
+        }
+
+        return parameters;
+    }
+/*     private ArrayList<Parameter> extractParamsTs(String params) {
         ArrayList<Parameter> parameters = new ArrayList<>();
     
         // Remove the brackets [ ] and split the string by commas
@@ -375,7 +398,7 @@ public class ThreeAdressCodeBackEnd {
         }
     
         return parameters;
-    }
+    } */
     
 
     public Simbol getSymbol(String id){
@@ -404,6 +427,15 @@ public class ThreeAdressCodeBackEnd {
     public Variable getVar(String id){
         for(Variable v : this.tv){
             if(v.getName().equals(id)){
+                return v;
+            }
+        }
+        return null;
+    }
+    
+    public Variable getVar(String id, String subprogram){
+        for(Variable v : this.tv){
+            if(v.getName().equals(id) && v.getSubprog().equals(subprogram)){
                 return v;
             }
         }

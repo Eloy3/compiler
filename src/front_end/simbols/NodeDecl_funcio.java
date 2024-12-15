@@ -31,23 +31,19 @@ public class NodeDecl_funcio extends NodeBase {
     
         // Extract function parameters
         while (currentParam != null) {
-            params.add(new Parameter(currentParam.getId(), currentParam.getTipus().getTipus()));
+            params.add(new Parameter(currentParam.getId(), currentParam.getTipus().getTipus(), functionName));
             currentParam = currentParam.getNext();
         }
 
-        // Add a new procedure entry to the table
         tp.addRow(new Procedure(tp.getNewNumProc(), ts.getProfunditat(), functionName, params, 0, tipus.getTipus()));
     }
 
     public void generateCode() {
-
-        if (ts.existeixTs(functionName)) {
-            // Log an error for duplicate function declaration
+        if(tp.getProc(functionName)!=null){
             ErrorLogger.logSemanticError(lc, "La funció '" + functionName + "' ja ha estat declarada.");
             return;
         }
 
-        // Prepare arguments for insertion in the symbol table
         ArrayList<String> argumentNames = new ArrayList<>();
         NodeParam currentParam = param;
 
@@ -56,6 +52,7 @@ public class NodeDecl_funcio extends NodeBase {
             currentParam = currentParam.getNext();
         }
         Collections.reverse(argumentNames);
+        ts.setCurrentProcedure(functionName);
         ts.incAmbit();
         ts.insertElementWithArgs(functionName, tipus.getTipusAsString(), null, argumentNames);
         addProcedureToTable();
@@ -78,7 +75,7 @@ public class NodeDecl_funcio extends NodeBase {
             String paramName = currentParam.getId();
             String paramType = currentParam.getTipus().getTipus().toString();
             ts.insertElement(paramName, paramType, null);
-            cta.newVar(paramName, paramType);
+            cta.newVar(paramName+"_"+functionName, paramType);
             //ta.generateCode("param_s " + paramName + "\n");
             currentParam = currentParam.getNext();
         }
@@ -88,6 +85,7 @@ public class NodeDecl_funcio extends NodeBase {
             blocf.generateCode();
         }
 
+        ts.setCurrentProcedure("principal");
         ts.decAmbit();
         cta.pop(cta.getPproc());
     }

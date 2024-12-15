@@ -291,9 +291,9 @@ public class AssemblyCode {
             return;
         }
     
-        ArrayList<Parameter> param = p.getParametros();
+        ArrayList<Parameter> param = p.getParameters();
         if (param == null) {
-            param = new ArrayList<>(); // Initialize as empty if no parameters
+            param = new ArrayList<>(); 
         }
     
         int ind = param.size() - 1;
@@ -309,9 +309,10 @@ public class AssemblyCode {
     
         while (ind >= 0) {
             Parameter aux = param.get(ind);
-            Variable v = c3a.getVar(aux.getNombre());
+            Variable v = c3a.getVar(aux.getNombre(), aux.getSubprogram());
             if (v == null) {
                 System.err.println("Error: Variable not found for parameter " + aux.getNombre());
+                return;
             }
     
             switch (aux.getTipo()) {
@@ -416,8 +417,8 @@ public class AssemblyCode {
 
     private void iresta(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
-        code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D1");
-        code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D0");
+        code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D0");
+        code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D1");
         code.add("\tJSR IRESTA");
         code.add("\tMOVE.W D1," + varnom(d));
     }
@@ -492,7 +493,7 @@ public class AssemblyCode {
     }
 
     private String varnom(Variable v){
-        return v.getName() + "_" + v.getSubprog();
+        return v.getName();
     }
 
     private void IOsubrutines(){

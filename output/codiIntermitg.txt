@@ -1,42 +1,42 @@
 goto principal 
 suma:skip
 pmb suma
-t2 = a + b
-z = t2
-t4 = z
+t2 = a_suma + b_suma
+z_suma = t2
+t4 = z_suma
 rtn t4
 goto principal 
 resta:skip
 pmb resta
-t7 = a - b
-b = t7
-t9 = b
+t7 = a_resta - b_resta
+b_resta = t7
+t9 = b_resta
 rtn t9
 principal:skip
 pmb principal
 t10 = 5
-x = t10
+x_principal = t10
 t12 = 3
-y = t12
-param_s x
-param_s y
+y_principal = t12
+param_s x_principal
+param_s y_principal
 call suma
 t14 = retInt
-z = t14
-param_s x
+z_principal = t14
+param_s x_principal
 call line
-param_s y
+param_s y_principal
 call line
-param_s z
+param_s z_principal
 call line
-param_s x
-param_s y
+param_s x_principal
+param_s y_principal
 call resta
 t16 = retInt
-r = t16
-param_s x
+r_principal = t16
+param_s x_principal
 call line
-param_s y
+param_s y_principal
 call line
-param_s r
+param_s r_principal
 call line

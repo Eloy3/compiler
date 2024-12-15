@@ -1,5 +1,6 @@
 package front_end.simbols;
 
+import data_structures.Procedure;
 import errors.*;
 import util.TacUtil;
 import util.Util;
@@ -81,11 +82,11 @@ public class NodeDecl_Variable extends NodeBase{
 
     private void handleProcedimentType() {
         String nomProcedure = varinic.getNomProcedure();
-        Simbol procedure = Util.validateVariableExists(ts, nomProcedure, lc);
+        Procedure procedure = Util.validateProcedureExists(tp, nomProcedure, lc);
         if(procedure == null){
             return;
         }
-        String tipusProcedure = procedure.getTipus();
+        String tipusProcedure = procedure.getType_return().toString();
         if(!Util.typeMatches(nt.getTipusAsString(), tipusProcedure)) return;
         varinic.getCrida_funcio().generateCode();
         TacUtil.procedureResultToVariable(cta, ts, id, nt.getTipusAsString());
@@ -100,7 +101,7 @@ public class NodeDecl_Variable extends NodeBase{
         cta.generateCode(temp_var + " = ");
         cta.generateCode(operand.valor + "\n");
 
-        cta.generateCode(cta.newVar(id, operand.tipus, varinic.getValor()) + " = " + temp_var + "\n");
+        cta.generateCode(cta.newVar(id+"_"+ts.getCurrentProcedure(), operand.tipus, varinic.getValor()) + " = " + temp_var + "\n");
 
         cta.setTemp_id(null);
     }

@@ -23,7 +23,7 @@ public class NodeSortida extends NodeBase {
         ArrayList<NodeExprsimple> printList = Util.getArrayList(LlistaValors);
         for (NodeExprsimple print : printList) {
             try {
-                cta.generateCode(paramType(print) + " " + print.getValor() + "\n");
+                cta.generateCode(paramType(print) + " " + print.getValor()+"_"+ts.getCurrentProcedure() + "\n");
                 cta.generateCode("call " + ((linea) ? "line" : "print") + "\n");
             } catch (RuntimeException e) {
                 ErrorLogger.logSemanticError(lc, e.getMessage());
