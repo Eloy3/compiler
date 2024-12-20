@@ -88,7 +88,6 @@ public class AssemblyCode {
     }
 
     private void traslate(Instruction3a i){
-
         code.add("* -->" + i.toString());
         switch (i.getOperation()){
             case ASSIGNA:

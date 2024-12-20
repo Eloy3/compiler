@@ -63,4 +63,20 @@ public class Instruction3a {
         return  " | " + codi + " | "  + operand1 + " | " + operand2 + " | "
                 + desti + " |";
     }
+
+    public void setCodi(Operation codi) {
+        this.codi = codi;
+    }
+
+    public void setOperand1(String operand1) {
+        this.operand1 = operand1;
+    }
+
+    public void setOperand2(String operand2) {
+        this.operand2 = operand2;
+    }
+
+    public void setDesti(String desti) {
+        this.desti = desti;
+    }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import data_structures.Procedure;
 import errors.*;
 import util.Util;
-import front_end.simbols.NodeExprsimple.tipusexpr;
 
 public class NodeCrida_funcio extends NodeBase {
 
@@ -73,7 +72,7 @@ public class NodeCrida_funcio extends NodeBase {
                     return false;
                 }
     
-                cta.generateCode("param_s " + argSymbol.getNom()+"_"+ts.getCurrentProcedure() + "\n");
+                cta.generateCode("param_s", argSymbol.getNom(), "", ts);
     
             } else if (actualType == NodeExprsimple.tipusexpr.ent || actualType == NodeExprsimple.tipusexpr.bool) {
                 // If the argument is a literal, directly validate its type
@@ -86,9 +85,7 @@ public class NodeCrida_funcio extends NodeBase {
                     return false;
                 }
     
-                // Generate code for passing the literal as a parameter
-                cta.generateCode("param_c " + paramNode.getExprsimple().getValor() + "\n");
-    
+                cta.generateCode("param_c", paramNode.getExprsimple().getValor(), "", ts);
             } else {
                 ErrorLogger.logSemanticError(
                     lc,

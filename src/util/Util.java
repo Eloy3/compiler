@@ -103,5 +103,9 @@ public abstract class Util {
         return list;
     }
 
+    public static String appendCurrentProcedure(String baseName, SymbolTable ts) {
+        return baseName + "_" + ts.getCurrentProcedure();
+    }
+
 }
 

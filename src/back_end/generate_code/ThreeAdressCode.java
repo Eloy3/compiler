@@ -1,7 +1,7 @@
-
-
 package back_end.generate_code;
 import data_structures.VariableTable;
+import front_end.simbols.Simbol;
+import data_structures.SymbolTable;
 import data_structures.Variable;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -168,6 +168,40 @@ public class ThreeAdressCode {
         instruction_list.add(code);
     }
         
+    public void generateCode(String param, String arg, SymbolTable ts){
+        switch(param){
+            case "param_s":
+                instruction_list.add("param_s " + arg+"_"+ts.getCurrentProcedure() + "\n");
+                break;
+            case "param_c":
+                instruction_list.add("param_c " + arg+"_"+ts.getCurrentProcedure() + "\n");
+                break;
+        }
+    }
+
+    public void generateCode(String operation, String dest, String value, SymbolTable ts) {
+        switch (operation) {
+            case "param_s":
+            case "param_c":
+                instruction_list.add(operation + " " + _procedure(dest,ts) + "\n");
+                break;
+            case "assign":
+                instruction_list.add(value + " = " + _procedure(dest,ts) + "\n");
+                break;
+        }
+
+        
+    }
+    public String _procedure(String var, SymbolTable ts){
+        return var + "_" + ts.getCurrentProcedure();
+    }
+    public void generateNewVarAssign(Simbol target, String tempVar, String value, SymbolTable ts) {
+        instruction_list.add(newVar(target.getNom()+"_"+ts.getCurrentProcedure(), target.getTipus(), value) + " = " + tempVar + "\n");
+    }
+
+    public void generateAssignComposite(String tempVar, String valueA, String operator, String valueB, SymbolTable ts) {
+        instruction_list.add(tempVar + " = " + valueA+"_"+ts.getCurrentProcedure() + " " + operator + " " + valueB+"_"+ts.getCurrentProcedure() + "\n");
+    }
 
     public Variable getVar(String id){
         return this.tv.getVar(id);
