@@ -359,7 +359,7 @@ public class ThreeAdressCodeBackEnd {
 
             // Reverse the parameters to match the original order
             for (int i = paramArray.length - 1; i >= 0; i--) {
-                String paramName = paramArray[i].trim()+"_"+functionName;
+                String paramName = paramArray[i].trim();
 
                 //Simbol simbol = getSymbol(paramName);
                 Variable var = getVar(paramName, functionName);

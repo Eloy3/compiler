@@ -94,10 +94,10 @@ public class AssemblyCode {
                 iasigna(i);
                 break;
             case GOTO:
-                code.add("\tJMP " + i.getDestiny());
+                code.add("\tJMP " +i.getDestiny());
                 break;
             case SKIP:
-                code.add(i.getDestiny() + ":");
+                code.add((i.getDestiny()) + ":");
                 break;
             case CALL:
                 icall(i);
@@ -113,27 +113,27 @@ public class AssemblyCode {
                 break;
             case IFIGUAL:
                 compare(i);
-                code.add("\tBEQ " + i.getDestiny());
+                code.add("\tBEQ " + assemblyVar(i.getDestiny()));
                 break;
             case IFDIFERENT:
                 compare(i);
-                code.add("\tBNE " + i.getDestiny());
+                code.add("\tBNE " + assemblyVar(i.getDestiny()));
                 break;
             case IFMAJOR:
                 compare(i);
-                code.add("\tBGT " + i.getDestiny());
+                code.add("\tBGT " + assemblyVar(i.getDestiny()));
                 break;
             case IFMAJORIGUAL:
                 compare(i);
-                code.add("\tBGE " + i.getDestiny());
+                code.add("\tBGE " + assemblyVar(i.getDestiny()));
                 break;
             case IFMENOR:
                 compare(i);
-                code.add("\tBLT " + i.getDestiny());
+                code.add("\tBLT " + assemblyVar(i.getDestiny()));
                 break;
             case IFMENORIGUAL:
                 compare(i);
-                code.add("\tBLE " + i.getDestiny());
+                code.add("\tBLE " + assemblyVar(i.getDestiny()));
                 break;
             case SUMA:
                 isuma(i);
@@ -158,7 +158,7 @@ public class AssemblyCode {
                 code.add("\tMOVE.B " + varnom(v) + ",D0");
                 code.add("\tMOVE.B #" + -1 + ",D1");
                 code.add("\tCMP.B D0,D1");
-                code.add("\tBEQ " + i.getDestiny());
+                code.add("\tBEQ " + assemblyVar(i.getDestiny()));
                 break;
             case DESPLAZAR_BITS:
                 idesplazar(i);
@@ -237,7 +237,7 @@ public class AssemblyCode {
                     
             }
         } else {
-            code.add("\tJSR " + i.getDestiny());
+            code.add("\tJSR " + (i.getDestiny()));
         }
         param = null;
     }
@@ -272,9 +272,9 @@ public class AssemblyCode {
                         default:
                             try {
                                 Integer.parseInt(i.getDestiny());
-                                code.add("\tMOVE.W #" + i.getDestiny() + ",-(A7)");
+                                code.add("\tMOVE.W #" + assemblyVar(i.getDestiny()) + ",-(A7)");
                             }catch(NumberFormatException e){
-                                code.add("\tMOVE.L #" + setConstString(i.getOperand1()) + ",-(A7)");
+                                code.add("\tMOVE.L #" + setConstString((i.getOperand1())) + ",-(A7)");
                             }
                             break;
                     }
@@ -286,7 +286,7 @@ public class AssemblyCode {
     private void ipmb(Instruction3a i) {
         Procedure p = c3a.getProc(i.getDestiny());
         if (p == null) {
-            System.err.println("Error: Procedure not found for " + i.getDestiny());
+            System.err.println("Error: Procedure not found for " + assemblyVar(i.getDestiny()));
             return;
         }
     
@@ -492,7 +492,7 @@ public class AssemblyCode {
     }
 
     private String varnom(Variable v){
-        return v.getName();
+        return v.getName()+"_"+v.getSubprog();
     }
 
     private void IOsubrutines(){
@@ -693,5 +693,10 @@ public class AssemblyCode {
 
     private boolean checkHasAllFields(Instruction3a i){
         return i.getOperand1() != null && i.getOperand2() != null && i.getDestiny() != null;
+    }
+
+    private String assemblyVar(String var){
+        Variable variable = c3a.getVar(var);
+        return (variable.getName()+"_"+variable.getSubprog());
     }
 }

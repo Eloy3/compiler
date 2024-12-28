@@ -1,20 +1,9 @@
 Taula de variables
 
 Nombre          NV         Subprograma          Ocupació        Desplaçament    Tipus subjacent      Valor     
-a_suma          0          suma                 4               0               ENT                            
-b_suma          1          suma                 4               4               ENT                            
-t2              2          suma                 4               8               ENT                  a         
-z_suma          3          suma                 4               12              ENT                  a         
-t4              4          suma                 4               16              ENT                            
-a_resta         5          resta                4               20              ENT                            
-b_resta         6          resta                4               24              ENT                            
-t7              7          resta                4               28              ENT                  a         
-t9              9          resta                4               36              ENT                            
-t10             10         principal            4               40              ENT                  5         
-x_principal     11         principal            4               44              ENT                  5         
-t12             12         principal            4               48              ENT                  3         
-y_principal     13         principal            4               52              ENT                  3         
-t14             14         principal            4               56              ENT                            
-z_principal     15         principal            4               60              ENT                            
-t16             16         principal            4               64              ENT                            
-r_principal     17         principal            4               68              ENT                            
+t0              0          principal            4               0               ENT                  1         
+nom[0]          1          principal            4               4               ENT                            
+t2              2          principal            4               8               ENT                  2         
+nom[1]          3          principal            4               12              ENT                            
+t4              4          principal            4               16              ENT                  3         
+nom[2]          5          principal            4               20              ENT                            

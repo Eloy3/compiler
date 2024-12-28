@@ -1,6 +1,6 @@
 00001000 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 20/12/2024 19:54:57
+Created On: 28/12/2024 16:16:47
 
 00001000                             1      org $1000
 00001000                             2  START:
@@ -12,17 +12,17 @@ Created On: 20/12/2024 19:54:57
 0000100C                             8  * --> | PMB | null | null | suma |
 0000100C  33EF 0004 00001156         9      MOVE.W 4(A7),a_suma
 00001014  33EF 0006 00001158        10      MOVE.W 6(A7),b_suma
-0000101C                            11  * --> | SUMA | a_suma | b_suma | t2 |
+0000101C                            11  * --> | SUMA | a | b | t2 |
 0000101C  3039 00001156             12      MOVE.W a_suma,D0
 00001022  3239 00001158             13      MOVE.W b_suma,D1
 00001028  4EB9 000011EC             14      JSR ISUMA
-0000102E  33C1 0000115A             15      MOVE.W D1,t2
-00001034                            16  * --> | ASSIGNA | t2 | null | z_suma |
-00001034  33F9 0000115A 0000115C    17      MOVE.W t2,z_suma
-0000103E                            18  * --> | ASSIGNA | z_suma | null | t4 |
-0000103E  33F9 0000115C 0000115E    19      MOVE.W z_suma,t4
+0000102E  33C1 0000115A             15      MOVE.W D1,t2_suma
+00001034                            16  * --> | ASSIGNA | t2 | null | z |
+00001034  33F9 0000115A 0000115C    17      MOVE.W t2_suma,z_suma
+0000103E                            18  * --> | ASSIGNA | z | null | t4 |
+0000103E  33F9 0000115C 0000115E    19      MOVE.W z_suma,t4_suma
 00001048                            20  * --> | RTN | t4 | null | null |
-00001048  3639 0000115E             21      MOVE.W t4,D3
+00001048  3639 0000115E             21      MOVE.W t4_suma,D3
 0000104E  4E75                      22      RTS
 00001050                            23  * --> | GOTO | null | null | principal |
 00001050  4EF9 0000109A             24      JMP principal
@@ -31,75 +31,75 @@ Created On: 20/12/2024 19:54:57
 00001056                            27  * --> | PMB | null | null | resta |
 00001056  33EF 0004 00001160        28      MOVE.W 4(A7),a_resta
 0000105E  33EF 0006 00001162        29      MOVE.W 6(A7),b_resta
-00001066                            30  * --> | RESTA | a_resta | b_resta | t7 |
-00001066  3039 00001160             31      MOVE.W a_resta,D0
-0000106C  3239 00001162             32      MOVE.W b_resta,D1
+00001066                            30  * --> | RESTA | a | b | t7 |
+00001066  3039 00001156             31      MOVE.W a_suma,D0
+0000106C  3239 00001158             32      MOVE.W b_suma,D1
 00001072  4EB9 00001232             33      JSR IRESTA
-00001078  33C1 00001164             34      MOVE.W D1,t7
-0000107E                            35  * --> | ASSIGNA | t7 | null | b_resta |
-0000107E  33F9 00001164 00001162    36      MOVE.W t7,b_resta
-00001088                            37  * --> | ASSIGNA | b_resta | null | t9 |
-00001088  33F9 00001162 00001166    38      MOVE.W b_resta,t9
+00001078  33C1 00001164             34      MOVE.W D1,t7_resta
+0000107E                            35  * --> | ASSIGNA | t7 | null | b |
+0000107E  33F9 00001164 00001158    36      MOVE.W t7_resta,b_suma
+00001088                            37  * --> | ASSIGNA | b | null | t9 |
+00001088  33F9 00001158 00001166    38      MOVE.W b_suma,t9_resta
 00001092                            39  * --> | RTN | t9 | null | null |
-00001092  3639 00001166             40      MOVE.W t9,D3
+00001092  3639 00001166             40      MOVE.W t9_resta,D3
 00001098  4E75                      41      RTS
 0000109A                            42  * --> | SKIP | null | null | principal |
 0000109A                            43  principal:
 0000109A                            44  * --> | PMB | null | null | principal |
 0000109A                            45  * --> | ASSIGNA | 5 | null | t10 |
-0000109A  33FC 0005 00001168        46      MOVE.W #5,t10
-000010A2                            47  * --> | ASSIGNA | t10 | null | x_principal |
-000010A2  33F9 00001168 0000116A    48      MOVE.W t10,x_principal
+0000109A  33FC 0005 00001168        46      MOVE.W #5,t10_principal
+000010A2                            47  * --> | ASSIGNA | t10 | null | x |
+000010A2  33F9 00001168 0000116A    48      MOVE.W t10_principal,x_principal
 000010AC                            49  * --> | ASSIGNA | 3 | null | t12 |
-000010AC  33FC 0003 0000116C        50      MOVE.W #3,t12
-000010B4                            51  * --> | ASSIGNA | t12 | null | y_principal |
-000010B4  33F9 0000116C 0000116E    52      MOVE.W t12,y_principal
-000010BE                            53  * --> | PARAM_S | null | null | x_principal |
+000010AC  33FC 0003 0000116C        50      MOVE.W #3,t12_principal
+000010B4                            51  * --> | ASSIGNA | t12 | null | y |
+000010B4  33F9 0000116C 0000116E    52      MOVE.W t12_principal,y_principal
+000010BE                            53  * --> | PARAM_S | null | null | x |
 000010BE  3F39 0000116A             54      MOVE.W x_principal,-(A7)
-000010C4                            55  * --> | PARAM_S | null | null | y_principal |
+000010C4                            55  * --> | PARAM_S | null | null | y |
 000010C4  3F39 0000116E             56      MOVE.W y_principal,-(A7)
 000010CA                            57  * --> | CALL | null | null | suma |
 000010CA  4EB8 100C                 58      JSR suma
 000010CE                            59  * --> | ASSIGNA | retInt | null | t14 |
-000010CE  33C3 00001170             60      MOVE.W D3,t14
-000010D4                            61  * --> | ASSIGNA | t14 | null | z_principal |
-000010D4  33F9 00001170 00001172    62      MOVE.W t14,z_principal
-000010DE                            63  * --> | PARAM_S | null | null | x_principal |
+000010CE  33C3 00001170             60      MOVE.W D3,t14_principal
+000010D4                            61  * --> | ASSIGNA | t14 | null | z |
+000010D4  33F9 00001170 0000115C    62      MOVE.W t14_principal,z_suma
+000010DE                            63  * --> | PARAM_S | null | null | x |
 000010DE  3F39 0000116A             64      MOVE.W x_principal,-(A7)
 000010E4                            65  * --> | CALL | null | null | line |
 000010E4  4EB9 000012A8             66      JSR ILINE
 000010EA  548F                      67      ADDA.L #2,A7
-000010EC                            68  * --> | PARAM_S | null | null | y_principal |
+000010EC                            68  * --> | PARAM_S | null | null | y |
 000010EC  3F39 0000116E             69      MOVE.W y_principal,-(A7)
 000010F2                            70  * --> | CALL | null | null | line |
 000010F2  4EB9 000012A8             71      JSR ILINE
 000010F8  548F                      72      ADDA.L #2,A7
-000010FA                            73  * --> | PARAM_S | null | null | z_principal |
-000010FA  3F39 00001172             74      MOVE.W z_principal,-(A7)
+000010FA                            73  * --> | PARAM_S | null | null | z |
+000010FA  3F39 0000115C             74      MOVE.W z_suma,-(A7)
 00001100                            75  * --> | CALL | null | null | line |
 00001100  4EB9 000012A8             76      JSR ILINE
 00001106  548F                      77      ADDA.L #2,A7
-00001108                            78  * --> | PARAM_S | null | null | x_principal |
+00001108                            78  * --> | PARAM_S | null | null | x |
 00001108  3F39 0000116A             79      MOVE.W x_principal,-(A7)
-0000110E                            80  * --> | PARAM_S | null | null | y_principal |
+0000110E                            80  * --> | PARAM_S | null | null | y |
 0000110E  3F39 0000116E             81      MOVE.W y_principal,-(A7)
 00001114                            82  * --> | CALL | null | null | resta |
 00001114  4EB8 1056                 83      JSR resta
 00001118                            84  * --> | ASSIGNA | retInt | null | t16 |
-00001118  33C3 00001174             85      MOVE.W D3,t16
-0000111E                            86  * --> | ASSIGNA | t16 | null | r_principal |
-0000111E  33F9 00001174 00001176    87      MOVE.W t16,r_principal
-00001128                            88  * --> | PARAM_S | null | null | x_principal |
+00001118  33C3 00001174             85      MOVE.W D3,t16_principal
+0000111E                            86  * --> | ASSIGNA | t16 | null | r |
+0000111E  33F9 00001174 00001176    87      MOVE.W t16_principal,r_principal
+00001128                            88  * --> | PARAM_S | null | null | x |
 00001128  3F39 0000116A             89      MOVE.W x_principal,-(A7)
 0000112E                            90  * --> | CALL | null | null | line |
 0000112E  4EB9 000012A8             91      JSR ILINE
 00001134  548F                      92      ADDA.L #2,A7
-00001136                            93  * --> | PARAM_S | null | null | y_principal |
+00001136                            93  * --> | PARAM_S | null | null | y |
 00001136  3F39 0000116E             94      MOVE.W y_principal,-(A7)
 0000113C                            95  * --> | CALL | null | null | line |
 0000113C  4EB9 000012A8             96      JSR ILINE
 00001142  548F                      97      ADDA.L #2,A7
-00001144                            98  * --> | PARAM_S | null | null | r_principal |
+00001144                            98  * --> | PARAM_S | null | null | r |
 00001144  3F39 00001176             99      MOVE.W r_principal,-(A7)
 0000114A                           100  * --> | CALL | null | null | line |
 0000114A  4EB9 000012A8            101      JSR ILINE
@@ -108,20 +108,20 @@ Created On: 20/12/2024 19:54:57
 00001156                           104   
 00001156                           105  a_suma: DS.W 1
 00001158                           106  b_suma: DS.W 1
-0000115A                           107  t2: DS.W 1
+0000115A                           107  t2_suma: DS.W 1
 0000115C                           108  z_suma: DS.W 1
-0000115E                           109  t4: DS.W 1
+0000115E                           109  t4_suma: DS.W 1
 00001160                           110  a_resta: DS.W 1
 00001162                           111  b_resta: DS.W 1
-00001164                           112  t7: DS.W 1
-00001166                           113  t9: DS.W 1
-00001168                           114  t10: DS.W 1
+00001164                           112  t7_resta: DS.W 1
+00001166                           113  t9_resta: DS.W 1
+00001168                           114  t10_principal: DS.W 1
 0000116A                           115  x_principal: DS.W 1
-0000116C                           116  t12: DS.W 1
+0000116C                           116  t12_principal: DS.W 1
 0000116E                           117  y_principal: DS.W 1
-00001170                           118  t14: DS.W 1
+00001170                           118  t14_principal: DS.W 1
 00001172                           119  z_principal: DS.W 1
-00001174                           120  t16: DS.W 1
+00001174                           120  t16_principal: DS.W 1
 00001176                           121  r_principal: DS.W 1
 00001178                           122   
 00001178                           123  strout: DS.B 100
@@ -310,14 +310,14 @@ SUB1                1252
 SUB2                125A
 SUB3                126A
 SUMA                100C
-T10                 1168
-T12                 116C
-T14                 1170
-T16                 1174
-T2                  115A
-T4                  115E
-T7                  1164
-T9                  1166
+T10_PRINCIPAL       1168
+T12_PRINCIPAL       116C
+T14_PRINCIPAL       1170
+T16_PRINCIPAL       1174
+T2_SUMA             115A
+T4_SUMA             115E
+T7_RESTA            1164
+T9_RESTA            1166
 X_PRINCIPAL         116A
 Y_PRINCIPAL         116E
 Z_PRINCIPAL         1172

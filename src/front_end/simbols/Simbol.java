@@ -26,9 +26,9 @@ public class Simbol{
         this.valor = valor;
     }
 
-    public Simbol (String tipus, Object valor){
+    public Simbol (String nom, String tipus){
         this.tipus = tipus;
-        this.valor = valor;
+        this.nom = nom;
     }
 
     public Simbol(){

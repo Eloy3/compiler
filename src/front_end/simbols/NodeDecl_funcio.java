@@ -75,7 +75,7 @@ public class NodeDecl_funcio extends NodeBase {
             String paramName = currentParam.getId();
             String paramType = currentParam.getTipus().getTipus().toString();
             ts.insertElement(paramName, paramType, null);
-            cta.newVar(paramName+"_"+functionName, paramType);
+            cta.newVar(paramName, paramType);
             //ta.generateCode("param_s " + paramName + "\n");
             currentParam = currentParam.getNext();
         }

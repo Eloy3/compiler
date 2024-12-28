@@ -79,6 +79,18 @@ public class SymbolTable {
         writeSymbolToFile(s, null); // Arguments are null by default
     }
 
+    public void insertElement(String nom, String tipus) {
+        Simbol s = new Simbol(nom, tipus);
+        tambit.get(profunditat - 1).put(s.getNom(), s);
+        writeSymbolToFile(s, null); 
+    }
+
+    public void insertArray(String nom, String tipus){
+        Simbol s = new Simbol(nom, tipus);
+        tambit.get(profunditat - 1).put(s.getNom(), s);
+        writeArrayToFile(s, null); 
+    }
+
     public void insertElementWithArgs(String nom, String tipus, Object valor, ArrayList<String> args) {
         Simbol s = new Simbol(nom, tipus, valor);
         s.setArgs(args);
@@ -135,6 +147,9 @@ public class SymbolTable {
         return null;
     }
 
+    public String getTipus(String simbol){
+        return get(simbol).getTipus();
+    }
     public int getProfunditat() {
         return profunditat;
     }
@@ -159,7 +174,22 @@ public class SymbolTable {
         }
     }
 
-    private void writeHeaderToFile() {
+    private void writeArrayToFile(Simbol simbol, ArrayList<String> args) {
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(FILE_PATH, true), StandardCharsets.UTF_8))) {
+            String argsString = (args != null && !args.isEmpty()) ? args.toString() : "[]";
+
+            // Format columns with fixed widths
+            writer.write(String.format("%-15s %-10s %-10d %-20s\n",
+                    simbol.getNom()+"[]",
+                    simbol.getTipus(),
+                    profunditat,
+                    argsString));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+/*     private void writeHeaderToFile() {
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(FILE_PATH, false), StandardCharsets.UTF_8))) {
             String header = String.format(
@@ -170,7 +200,7 @@ public class SymbolTable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    } */
 
     public ArrayList<Simbol> getParams() {
         Collections.reverse(temp);

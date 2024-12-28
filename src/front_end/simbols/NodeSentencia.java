@@ -60,6 +60,10 @@ public class NodeSentencia extends NodeBase {
             case "crida_funcio":
                 ((NodeCrida_funcio)node).generateCode();
                 break;
+            
+            case "decl_taula":
+                ((NodeDecl_taula)node).generateCode();
+                break;
         }
     }
 }

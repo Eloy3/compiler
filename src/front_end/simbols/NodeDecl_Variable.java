@@ -101,7 +101,7 @@ public class NodeDecl_Variable extends NodeBase{
         cta.generateCode(temp_var + " = ");
         cta.generateCode(operand.valor + "\n");
 
-        cta.generateCode(cta.newVar(id+"_"+ts.getCurrentProcedure(), operand.tipus, varinic.getValor()) + " = " + temp_var + "\n");
+        cta.generateCode(cta.newVar(id, operand.tipus, varinic.getValor()) + " = " + temp_var + "\n");
 
         cta.setTemp_id(null);
     }

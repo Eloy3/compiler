@@ -109,7 +109,7 @@ public class NodeVarinic2 extends NodeBase {
 
     private void calcOcup(Simbol target, String value) {
         String tempVar = cta.newTempVar(target.getTipus(), value);
-        cta.generateCode("assign", value, value, ts);
+        cta.generateCode("assign", tempVar, value, ts);
         cta.generateNewVarAssign(target, tempVar, value, ts);
         cta.setTemp_id(null);
     }

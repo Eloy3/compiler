@@ -17,4 +17,35 @@ public class NodeInicialitzacio_taula extends NodeBase {
         this.lineCode = l;
     }
 
+    public NodeInicialitzacio_taula(int[] l){
+        super("Assignacio_dimensional", 0);
+        this.lineCode = l;
+    }
+
+    public NodeLlistaValors getLlistavalors() {
+        return llistavalors;
+    }
+
+    public void setLlistavalors(NodeLlistaValors llistavalors) {
+        this.llistavalors = llistavalors;
+    }
+
+    public NodeAssignacio_memoria getAssignacio_memoria() {
+        return assignacio_memoria;
+    }
+
+    public void setAssignacio_memoria(NodeAssignacio_memoria assignacio_memoria) {
+        this.assignacio_memoria = assignacio_memoria;
+    }
+
+    public int[] getLineCode() {
+        return lineCode;
+    }
+
+    public void setLineCode(int[] lineCode) {
+        this.lineCode = lineCode;
+    }
+
+    
+
 }

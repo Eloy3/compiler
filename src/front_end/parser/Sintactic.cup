@@ -223,15 +223,15 @@ comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comporta
 // Taules amb múltiples dimensions
 
 //             ent       []...            x    
-decl_taula::= tipus:a dimensions_taula:b ID:c inicialitzacio_taula:d {: RESULT = new NodeDecl_taula(a, b, c, d, lexic.getLineColumn()); :}
-            | tipus:a dimensions_taula:b ID:c PUNTICOMA {: RESULT = new NodeDecl_taula(a, b, c, lexic.getLineColumn()); :};
+decl_taula::= tipus:a dimensions_taula:b ID:c inicialitzacio_taula:d {: RESULT = new NodeDecl_taula(a, b, c, d, lexic.getLineColumn()); :};
                     
 dimensions_taula ::= EClaudator DClaudator {: RESULT = new NodeDimensions_taula(null, lexic.getLineColumn()); :}
                 | dimensions_taula:a EClaudator DClaudator {: RESULT = new NodeDimensions_taula(a, lexic.getLineColumn()); :};
 
 //                           =     {      1,2,3       }
 inicialitzacio_taula ::= ASSIGN EClau llista_valors:a DClau {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :}
-                       | ASSIGN assignacio_memoria:a {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :};
+                       | ASSIGN assignacio_memoria:a {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :}
+                       |  {: RESULT = new NodeInicialitzacio_taula(lexic.getLineColumn()); :};
 
 //                  =  reserva  [2] ...
 assignacio_memoria ::= RESERVA especificacio_dimensio:a{: RESULT = new NodeAssignacio_memoria(a, lexic.getLineColumn()); :};

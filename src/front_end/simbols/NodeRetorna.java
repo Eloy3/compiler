@@ -53,7 +53,7 @@ public class NodeRetorna extends NodeBase{
         }
     
         String tempVar = cta.newTempVar(functionReturnType, null);
-        cta.generateCode(tempVar + " = " + expr.getValor()+"_"+ts.getCurrentProcedure() + "\n");
+        cta.generateCode(tempVar + " = " + expr.getValor() + "\n");
         cta.generateCode("rtn " + tempVar + "\n");
     }
     

@@ -1,0 +1,19 @@
+funcio ent suma(ent a, ent b){
+	ent z;
+	z = a+b;
+	retorna z;
+}
+
+funcio ent resta(ent a, ent b){
+	b = a-b;
+	retorna b;
+}
+
+principal(){
+	ent x = 5;
+	ent y = 3;
+	ent z = suma(x,y);
+	sortidaln(x,y,z);
+	ent r = resta(x,y);
+	sortidaln(x,y,r);
+}
