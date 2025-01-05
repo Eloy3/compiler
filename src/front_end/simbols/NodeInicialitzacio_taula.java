@@ -1,5 +1,8 @@
 package front_end.simbols;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NodeInicialitzacio_taula extends NodeBase {
     private NodeLlistaValors llistavalors;
     private NodeAssignacio_memoria assignacio_memoria;
@@ -46,6 +49,23 @@ public class NodeInicialitzacio_taula extends NodeBase {
         this.lineCode = lineCode;
     }
 
-    
+    public ArrayList<NodeExprsimple> getDimensionList(NodeLlistaValors valors) {
+        ArrayList<NodeExprsimple> list = new ArrayList<>();
+        NodeLlistaValors aux = valors;
+        while (aux != null) {
+            list.add(aux.getValor());
+            aux = aux.getLlistaValors();
+        }
+        return list;
+    }
 
+    public ArrayList<NodeExprsimple> extractParamList() {
+        ArrayList<NodeExprsimple> list = new ArrayList<>();
+        NodeEspecificacio_dimensio current = assignacio_memoria.getEspecificacio_dimensio();
+        while (current != null) {
+            list.add(current.getExprsimple());
+            current = current.getAssignacio_dimension();
+        }
+        return list;
+    }
 }

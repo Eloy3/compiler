@@ -2,8 +2,6 @@ Taula de variables
 
 Nombre          NV         Subprograma          Ocupació        Desplaçament    Tipus subjacent      Valor     
 t0              0          principal            4               0               ENT                  1         
-nom[0]          1          principal            4               4               ENT                            
-t2              2          principal            4               8               ENT                  2         
-nom[1]          3          principal            4               12              ENT                            
-t4              4          principal            4               16              ENT                  3         
-nom[2]          5          principal            4               20              ENT                            
+t1              1          principal            4               4               ENT                  2         
+t2              2          principal            4               8               ENT                  3         
+nom             3          principal            12              12              ENT                            

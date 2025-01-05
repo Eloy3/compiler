@@ -2,6 +2,3 @@ NOM             TIPUS      NIVELL     ARGS
  
 principal       NULL       1          []                  
 nom             ENT        1          []                  
-nom[0]          id         1          []                  
-nom[1]          id         1          []                  
-nom[2]          id         1          []                  

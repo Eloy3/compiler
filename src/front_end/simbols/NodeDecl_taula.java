@@ -54,17 +54,29 @@ public class NodeDecl_taula extends NodeBase {
                     generateC3A(valor, tipus, i);
                 }
             }
+            cta.newVarArray(id, tipus.getTipusAsString(), llistavalors.size());
+
+        }else if(inicialitzacio_taula.getAssignacio_memoria() != null){
+            ArrayList<NodeExprsimple> llistavalors = inicialitzacio_taula.extractParamList();
+            int size = 0;
+            for(NodeExprsimple valor : llistavalors){
+                if(valor.getTipus() == NodeExprsimple.tipusexpr.id){
+                    if(Util.validateVariableExists(ts, valor.getValor(), lineCode) == null) return;
+                    if(!Util.typeMatches(tipus.getTipusAsString(), ts.getTipus(valor.getValor()))) return;
+                    size++;
+                }else if(valor.getTipus() == NodeExprsimple.tipusexpr.ent){
+                    if(!Util.typeMatches(tipus.getTipusAsString(), valor.getTipusAsString())) return;
+                    size += Integer.parseInt(valor.getValor());
+                }
+            }
+
         }
     }
 
     public void generateC3A(NodeExprsimple valor, NodeTipus tipus, int i){
-        ts.insertElement(id+"["+i+"]", "id", valor);
         String tempVar = cta.newTempVar(tipus.getTipusAsString(), valor.getValor());
-        cta.generateCode(tempVar + " = " + value + "\n");
-
-        
-        String newVar = cta.newVar(id+"["+i+"]", tipus.getTipusAsString());
-        cta.generateCode("assign", newVar, tempVar,ts);
+        cta.generateCode(tempVar + " = " + valor + "\n");
+        cta.generateCode("assign", id+"["+i+"]", tempVar,ts);
     }
 
     public String getId() {

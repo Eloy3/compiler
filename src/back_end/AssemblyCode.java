@@ -81,7 +81,7 @@ public class AssemblyCode {
                         bytes = false;
                         code.add("\tDC.W 0");
                     }
-                    code.add(name + ": DS.W "+v.getStore()/calculateStore(v.getType(),""));
+                    code.add(name + ": DS.W "+v.getStore()/calculateStore(v.getType()));
                     break;
             }
         }
@@ -163,6 +163,12 @@ public class AssemblyCode {
             case DESPLAZAR_BITS:
                 idesplazar(i);
                 break;
+            case IND_ASS:
+                iind_ass(i);
+                break;
+            case IND_VAL:
+                iind_val(i);
+                break;
         }
     }
 
@@ -200,6 +206,28 @@ public class AssemblyCode {
                 }
                 break;
         }
+    }
+
+    private void iind_ass(Instruction3a i) {
+        Variable array = c3a.getVar(i.getDestiny());
+        if (array == null) {
+            System.err.println("Error: Array not found for assignment: " + i);
+            return;
+        }
+        
+        code.add("\t LEA " + getop(i.getDestiny()) + ",A0");
+        code.add("\t MOVE.W "+getop(i.getOperand1())+","+2*Integer.parseInt((i.getOperand2()))+"(A0)");
+    }
+
+    private void iind_val(Instruction3a i) {
+        Variable array = c3a.getVar(i.getDestiny());
+        if (array == null) {
+            System.err.println("Error: Array not found for assignment: " + i);
+            return;
+        }
+        
+        code.add("\t LEA " + getop(i.getDestiny()) + ",A0");
+        code.add("\t MOVE.W "+2*Integer.parseInt((i.getOperand2()))+"(A0),"+getop(i.getOperand1()));
     }
 
     private void icall(Instruction3a i){
@@ -678,7 +706,7 @@ public class AssemblyCode {
         br.close();
     }
 
-    public int calculateStore(String type, String s) {
+    public int calculateStore(String type) {
         Tipus enum_type = Tipus.valueOf(type.toUpperCase());
         switch (enum_type) {
             case ENT:

@@ -147,7 +147,23 @@ public class ThreeAdressCodeBackEnd {
             if (assignParts.length == 2) {
                 String lhs = assignParts[0].trim(); // Left-hand side
                 String rhs = assignParts[1].trim(); // Right-hand side
-                instructionList.addInst(Operation.ASSIGNA, rhs, null, lhs);
+
+                // Check for indexed assignment: `nom[0] = t0`
+                if (lhs.matches(".+\\[\\s*\\d+\\s*\\]")) {
+                    String arrayName = lhs.substring(0, lhs.indexOf('['));
+                    String index = lhs.substring(lhs.indexOf('[') + 1, lhs.indexOf(']'));
+                    instructionList.addInst(Operation.IND_ASS, rhs, index, arrayName);
+                } 
+                // Check for indexed value: `t0 = nom[0]`
+                else if (rhs.matches(".+\\[\\s*\\d+\\s*\\]")) {
+                    String arrayName = rhs.substring(0, rhs.indexOf('['));
+                    String index = rhs.substring(rhs.indexOf('[') + 1, rhs.indexOf(']'));
+                    instructionList.addInst(Operation.IND_VAL, arrayName, index, lhs);
+                } 
+                // Handle simple assignment
+                else {
+                    instructionList.addInst(Operation.ASSIGNA, rhs, null, lhs);
+                }
             } else {
                 System.err.println("Error: Malformed assignment: " + instruction);
             }

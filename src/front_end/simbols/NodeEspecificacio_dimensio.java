@@ -18,4 +18,30 @@ public class NodeEspecificacio_dimensio extends NodeBase{
         this.exprsimple = b;
         this.l = l;
     }
+
+    public NodeExprsimple getExprsimple() {
+        return exprsimple;
+    }
+
+    public void setExprsimple(NodeExprsimple exprsimple) {
+        this.exprsimple = exprsimple;
+    }
+
+    public NodeEspecificacio_dimensio getAssignacio_dimension() {
+        return assignacio_dimension;
+    }
+
+    public void setAssignacio_dimension(NodeEspecificacio_dimensio assignacio_dimension) {
+        this.assignacio_dimension = assignacio_dimension;
+    }
+
+    public int[] getL() {
+        return l;
+    }
+
+    public void setL(int[] l) {
+        this.l = l;
+    }
+
+    
 }

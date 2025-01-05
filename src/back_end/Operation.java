@@ -21,5 +21,7 @@ public enum Operation {
     PMB,
     PARAM_S,
     PARAM_C,
-    DESPLAZAR_BITS
+    DESPLAZAR_BITS,
+    IND_ASS,
+    IND_VAL
 }

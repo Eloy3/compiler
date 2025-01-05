@@ -4,26 +4,27 @@ START:
 * --> | SKIP | null | null | principal |
 principal:
 * --> | PMB | null | null | principal |
-* --> | ASSIGNA | 0 | null | t0 |
-	MOVE.W #0,t0_principal
-* --> | ASSIGNA | t0 | null | nom[0] |
-	MOVE.W t0_principal,nom[0]_principal
-* --> | ASSIGNA | 0 | null | t2 |
-	MOVE.W #0,t2_principal
-* --> | ASSIGNA | t2 | null | nom[1] |
-	MOVE.W t2_principal,nom[1]_principal
-* --> | ASSIGNA | 0 | null | t4 |
-	MOVE.W #0,t4_principal
-* --> | ASSIGNA | t4 | null | nom[2] |
-	MOVE.W t4_principal,nom[2]_principal
+* --> | ASSIGNA | 1 | null | t0 |
+	MOVE.W #1,t0_principal
+* --> | IND_ASS | t0 | 0 | nom |
+	 LEA nom_principal,A0
+	 MOVE.W t0_principal,0(A0)
+* --> | ASSIGNA | 2 | null | t1 |
+	MOVE.W #2,t1_principal
+* --> | IND_ASS | t1 | 1 | nom |
+	 LEA nom_principal,A0
+	 MOVE.W t1_principal,2(A0)
+* --> | ASSIGNA | 3 | null | t2 |
+	MOVE.W #3,t2_principal
+* --> | IND_ASS | t2 | 2 | nom |
+	 LEA nom_principal,A0
+	 MOVE.W t2_principal,4(A0)
 	SIMHALT
  
 t0_principal: DS.W 1
-nom[0]_principal: DS.W 1
+t1_principal: DS.W 1
 t2_principal: DS.W 1
-nom[1]_principal: DS.W 1
-t4_principal: DS.W 1
-nom[2]_principal: DS.W 1
+nom_principal: DS.W 3
  
 strout: DS.B 100
 	DC.W 0
