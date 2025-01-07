@@ -80,6 +80,7 @@ non terminal NodeAssignacio_memoria assignacio_memoria;
 non terminal NodeEspecificacio_dimensio especificacio_dimensio; 
 non terminal NodeInic_element_taula inic_element_taula;
 non terminal NodeIndexos_taula indexos_taula;
+non terminal NodeValorTaula valorTaula;
 
 start with codi;
 
@@ -134,9 +135,12 @@ param ::= tipus:t ID:id param2:p2 {: RESULT = new NodeParam(t, id, p2); :}
 param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}
             |   {: RESULT = new NodeParam2(); :};
 
-exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v); :}
-             | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString()); :}
-             | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString()); :};
+exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v, lexic.getLineColumn()); :}
+             | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString(), lexic.getLineColumn()); :}
+             | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString(), lexic.getLineColumn()); :}
+             | valorTaula:v     {: RESULT = new NodeExprsimple(v, lexic.getLineColumn()); :};
+
+valorTaula ::= ID:a EClaudator exprsimple:b DClaudator {:RESULT = new NodeValorTaula(a, b, lexic.getLineColumn()); :};
 
 tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ENT); :}
         | BOOL  {: RESULT = new NodeTipus(Tipus.BOOL); :};

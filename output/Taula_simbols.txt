@@ -2,3 +2,4 @@ NOM             TIPUS      NIVELL     ARGS
  
 principal       NULL       1          []                  
 nom             ENT        1          []                  
+nom3            ENT        1          []                  

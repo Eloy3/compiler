@@ -19,12 +19,22 @@ principal:
 * --> | IND_ASS | t2 | 2 | nom |
 	 LEA nom_principal,A0
 	 MOVE.W t2_principal,4(A0)
+* --> | IND_VAL | nom | 0 | t5 |
+	 LEA nom_principal,A0
+	 MOVE.W 0(A0),t5_principal
+* --> | PARAM_S | null | null | t5 |
+	MOVE.W t5_principal,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+	ADDA.L #2,A7
 	SIMHALT
  
 t0_principal: DS.W 1
 t1_principal: DS.W 1
 t2_principal: DS.W 1
 nom_principal: DS.W 3
+nom3_principal: DS.W 12
+t5_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0

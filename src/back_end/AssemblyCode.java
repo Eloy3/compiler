@@ -226,8 +226,8 @@ public class AssemblyCode {
             return;
         }
         
-        code.add("\t LEA " + getop(i.getDestiny()) + ",A0");
-        code.add("\t MOVE.W "+2*Integer.parseInt((i.getOperand2()))+"(A0),"+getop(i.getOperand1()));
+        code.add("\t LEA " + getop(i.getOperand1()) + ",A0");
+        code.add("\t MOVE.W "+2*Integer.parseInt((i.getOperand2()))+"(A0),"+getop(i.getDestiny()));
     }
 
     private void icall(Instruction3a i){

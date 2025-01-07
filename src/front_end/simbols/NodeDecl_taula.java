@@ -58,18 +58,20 @@ public class NodeDecl_taula extends NodeBase {
 
         }else if(inicialitzacio_taula.getAssignacio_memoria() != null){
             ArrayList<NodeExprsimple> llistavalors = inicialitzacio_taula.extractParamList();
-            int size = 0;
+            int size = 1;
             for(NodeExprsimple valor : llistavalors){
-                if(valor.getTipus() == NodeExprsimple.tipusexpr.id){
-                    if(Util.validateVariableExists(ts, valor.getValor(), lineCode) == null) return;
-                    if(!Util.typeMatches(tipus.getTipusAsString(), ts.getTipus(valor.getValor()))) return;
-                    size++;
-                }else if(valor.getTipus() == NodeExprsimple.tipusexpr.ent){
+                if(valor.getTipus() == NodeExprsimple.tipusexpr.ent){
                     if(!Util.typeMatches(tipus.getTipusAsString(), valor.getTipusAsString())) return;
-                    size += Integer.parseInt(valor.getValor());
+                    int sizeParam = Integer.parseInt(valor.getValor());
+                    if(sizeParam < 1){
+                        ErrorLogger.logSemanticError(lineCode,"La dimensió de la taula ha de ser un enter positiu.");
+                    }
+                    size = size * sizeParam;
+                }else{
+                    ErrorLogger.logSemanticError(lineCode,"La declaració de la dimensió de la taula ha de ser un enter.");
                 }
             }
-
+            cta.newVarArray(id, tipus.getTipusAsString(), size);
         }
     }
 
