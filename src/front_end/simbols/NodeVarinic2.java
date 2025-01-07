@@ -77,11 +77,6 @@ public class NodeVarinic2 extends NodeBase {
             return;
         }
 
-        if (exprsimple != null && exprsimple.getProcedure() != null) {
-            calcOcupProcedure(target);
-            return;
-        }
-
         if (optionalB.isPresent()) {
             NodeExprsimple b = optionalB.get();
             String typeB = resolveType(b.getTipusAsString(), b.getValor());
@@ -118,17 +113,6 @@ public class NodeVarinic2 extends NodeBase {
         String tempVar = cta.newTempVar(target.getTipus(), valueA);
         cta.generateAssignComposite(tempVar, valueA, operator, valueB, ts);
         cta.generateNewVarAssign(target, tempVar, valueA, ts);
-    }
-
-    private void calcOcupProcedure(Simbol target) {
-        String functionName = exprsimple.getProcedure().getFunctionName();
-        if (!ts.existeixTs(functionName)) {
-            ErrorLogger.logSemanticError(lc, "La funció '" + functionName + "' no existeix.");
-            return;
-        }
-        String tempVar = cta.newTempVar(target.getTipus(), functionName);
-        cta.generateCode(tempVar + " = ret" + target.getTipus().toUpperCase() + "\n");
-        cta.generateNewVarAssign(target, tempVar, null, ts);
     }
 
     @Override

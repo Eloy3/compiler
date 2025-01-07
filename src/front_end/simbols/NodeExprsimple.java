@@ -2,10 +2,9 @@ package front_end.simbols;
 
 import data_structures.Procedure;
 public class NodeExprsimple extends NodeBase {
-    public enum tipusexpr {id, ent, bool, procediment}
+    public enum tipusexpr {id, ent, bool, procediment, arrayValue}
     private tipusexpr tipus;
     private String valor;
-    private NodeCrida_funcio procedure;
 
     public NodeExprsimple(tipusexpr t, String v) {
         super("Exprsimple", 0);
@@ -13,16 +12,6 @@ public class NodeExprsimple extends NodeBase {
         this.valor = v;
     }
 
-    public NodeExprsimple(NodeCrida_funcio a) {
-        super("Exprsimple", 0);
-        this.tipus = tipusexpr.procediment;
-        this.valor = a.getResult();
-        this.procedure = a;
-    }
-
-    public void generateCodeProcedure(){
-        procedure.generateCode();
-    }
     public tipusexpr getTipus() {
         return tipus;
     }
@@ -35,23 +24,6 @@ public class NodeExprsimple extends NodeBase {
         return valor;
     }
 
-    public NodeCrida_funcio getProcedure() {
-        return procedure;
-    }
-
-    public void setProcedure(NodeCrida_funcio a) {
-        this.procedure = a;
-    }
-
-    public String tipusProcediment(){
-        String nom = procedure.getFunctionName();
-        Procedure p = tp.getProc(nom);
-        return p.getType_return().toString();
-    }
-
-    public String getNomProcediment(){
-        return procedure.getFunctionName();
-    }
     @Override
     public String toString() {
         return valor;
