@@ -1,6 +1,8 @@
 
 principal(){
-	ent[] nom = {1,2,3}; 
-	ent[][] nom3 = reserva [3] [4];
-	sortidaln(nom[0]);
+
+	ent x;
+	x = 1 + 1 + 1;
+	sortidaln(x);
+
 }

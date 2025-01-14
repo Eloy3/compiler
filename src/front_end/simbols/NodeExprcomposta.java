@@ -2,23 +2,25 @@
 
 package front_end.simbols;
 
-import static front_end.simbols.NodeBase.ts;
-
-
 public class NodeExprcomposta extends NodeBase{
     
     private NodeExprsimple exprsimple;
     private NodeOperador_expr operador;
-    private NodeExprsimple b;
-    private Simbol operand1;
-    private Simbol operand2;
+    private NodeExprcomposta exprcomposta;
+    private int[] linecode;
     
-    public NodeExprcomposta(NodeExprsimple a, NodeOperador_expr o, NodeExprsimple b, int[] lc){
+    public NodeExprcomposta(NodeExprsimple a, NodeOperador_expr o, NodeExprcomposta b, int[] lc){
         super("Exprcomposta",0);
         this.exprsimple = a;
         this.operador = o;
-        this.b = b;
-        
+        this.exprcomposta = b;
+        linecode = lc;
+    }
+
+    public NodeExprcomposta(NodeExprsimple a, int[] lc){
+        super("Exprcomposta",0);
+        this.exprsimple = a;
+        linecode = lc;
     }
 
     public NodeExprsimple getExprsimple() {
@@ -37,13 +39,12 @@ public class NodeExprcomposta extends NodeBase{
         this.operador = operador;
     }
 
-    public NodeExprsimple getB() {
-        return b;
+    public NodeExprcomposta getExprcomposta() {
+        return exprcomposta;
     }
 
-    public void setB(NodeExprsimple b) {
-        this.b = b;
+    public void setExprcomposta(NodeExprcomposta b) {
+        this.exprcomposta = b;
     }
-
     
 }

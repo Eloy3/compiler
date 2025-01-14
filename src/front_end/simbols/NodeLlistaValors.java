@@ -12,7 +12,7 @@ public class NodeLlistaValors extends NodeBase{
     }
 
     public NodeLlistaValors(NodeExprsimple v, NodeLlistaValors lv) {
-        super("F", 0);
+        super("LlistaValors", 0);
         this.Valor = v;
         this.LlistaValors = lv;
     }

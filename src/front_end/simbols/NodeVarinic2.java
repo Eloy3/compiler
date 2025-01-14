@@ -4,6 +4,8 @@ import errors.ErrorLogger;
 import util.TacUtil;
 import util.Util;
 import front_end.simbols.NodeCrida_funcio;
+
+import java.util.ArrayList;
 import java.util.Optional;
 import front_end.simbols.NodeExprsimple.tipusexpr;
 
@@ -40,6 +42,13 @@ public class NodeVarinic2 extends NodeBase {
         if(crida_funcio!=null){
             generateCodeProcedure();
             return;
+        }else if(exprcomposta!=null){
+            if(exprcomposta.getExprcomposta()!=null){
+                generateCodeExprcomposta();
+            }else{
+                validateAndGenerate(id, exprcomposta.getExprsimple().getTipusAsString(), exprcomposta.getExprsimple().getValor(), Optional.empty());
+            }
+            return;
         }
 
         validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
@@ -62,9 +71,56 @@ public class NodeVarinic2 extends NodeBase {
             TacUtil.procedureResultToVariable(cta, ts, id, variable.getTipus());
     }
     
-    public void generateCode_exprcomposta() {
-        validateAndGenerate(id, exprcomposta.getExprsimple().getTipusAsString(), exprcomposta.getExprsimple().getValor(),
-                Optional.of(exprcomposta.getB()));
+    public void generateCodeExprcomposta() {
+        NodeExprsimple valueA = exprcomposta.getExprsimple();
+        String targetVar;
+        if (valueA.getTipus() == tipusexpr.id) {
+            targetVar = Util.validateVariableExists(ts, valueA.getValor(), lc).toString();
+        }
+        else if(valueA.getTipus() == tipusexpr.ent) {
+            targetVar = valueA.getValor();
+        }else{
+            ErrorLogger.logSemanticError(lc, "L'expressió " + valueA.getValor() + " no té un tipus vàlid per ser assignada de manera composta.");
+            return;
+        }
+        
+        if (targetVar == null) return;
+
+        Simbol left = Util.validateVariableExists(ts, id, lc);
+        if (left == null) return;
+
+        String operator = exprcomposta.getOperador().getTipus();
+        String valueB = resolveCompositeExpression(exprcomposta);
+        if (valueB == null) return;
+        calcOcupComposite(left, targetVar, operator, valueB);
+    }
+
+    private String resolveCompositeExpression(NodeExprcomposta compositeExpression) {
+
+        if (compositeExpression.getExprcomposta()==null) {
+            NodeExprsimple valueA = exprcomposta.getExprsimple();
+            String targetVar;
+            if (valueA.getTipus() == tipusexpr.id) {
+                targetVar = Util.validateVariableExists(ts, valueA.getValor(), lc).toString();
+            }
+            else if(valueA.getTipus() == tipusexpr.ent) {
+                targetVar = valueA.getValor();
+            }else{
+                ErrorLogger.logSemanticError(lc, "L'expressió " + valueA.getValor() + " no té un tipus vàlid per ser assignada de manera composta.");
+                return null;
+            }
+            return targetVar;
+        }
+
+        NodeExprsimple valueA = compositeExpression.getExprsimple();
+        String operator = compositeExpression.getOperador().getTipus();
+
+        String tempVar = cta.newTempVar(valueA.getTipus().toString());
+        String valueB = resolveCompositeExpression(exprcomposta);
+        if (valueB == null) return null;
+        cta.generateAssignComposite(tempVar, valueA.getValor(), operator, valueB , ts);
+
+        return tempVar;
     }
 
     private void validateAndGenerate(String targetId, String typeA, String valueA, Optional<NodeExprsimple> optionalB) {
@@ -109,10 +165,10 @@ public class NodeVarinic2 extends NodeBase {
         cta.setTemp_id(null);
     }
 
-    private void calcOcupComposite(Simbol target, String valueA, String operator, String valueB) {
-        String tempVar = cta.newTempVar(target.getTipus(), valueA);
+    private void calcOcupComposite(Simbol left, String valueA, String operator, String valueB) {
+        String tempVar = cta.newTempVar(left.getTipus(), valueA);
         cta.generateAssignComposite(tempVar, valueA, operator, valueB, ts);
-        cta.generateNewVarAssign(target, tempVar, valueA, ts);
+        cta.generateNewVarAssign(left, tempVar, ts);
     }
 
     @Override
@@ -146,6 +202,16 @@ public class NodeVarinic2 extends NodeBase {
 
     public void setCrida_funcio(NodeCrida_funcio crida_funcio) {
         this.crida_funcio = crida_funcio;
+    }
+
+    public ArrayList<NodeExprsimple> extractParamList() {
+        ArrayList<NodeExprsimple> list = new ArrayList<>();
+        NodeExprcomposta current = exprcomposta.getExprcomposta();
+        while (current != null) {
+            list.add(current.getExprsimple());
+            current = current.getExprcomposta();
+        }
+        return list;
     }
 
 }

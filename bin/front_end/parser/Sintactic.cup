@@ -173,11 +173,16 @@ varinic ::= ASSIGN exprsimple:v     {: RESULT = new NodeVarinic(v); :}
           | ASSIGN crida_funcio:c   {: RESULT = new NodeVarinic(c); :}
           |                         {: RESULT = new NodeVarinic(); :};  
 
-varinic2 ::= ID:v ASSIGN exprsimple:v1 {: RESULT = new NodeVarinic2(v, v1, lexic.getLineColumn()); :}
-           | ID:v ASSIGN crida_funcio:c {: RESULT = new NodeVarinic2(v, c, lexic.getLineColumn()); :}
+varinic2 ::= ID:v ASSIGN crida_funcio:c {: RESULT = new NodeVarinic2(v, c, lexic.getLineColumn()); :}
            | ID:v ASSIGN exprcomposta:e {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :};
 
-exprcomposta ::= exprsimple:a operador_expr:o exprsimple:b {: RESULT = new NodeExprcomposta(a,o,b,lexic.getLineColumn());:};
+ 
+exprcomposta ::= exprsimple:a                                {: RESULT = new NodeExprcomposta(a, lexic.getLineColumn()); :}
+               | exprsimple:a operador_expr:b exprcomposta:c {: RESULT = new NodeExprcomposta(a, b, c, lexic.getLineColumn()); :};
+
+
+//exprcomposta ::= exprsimple:a operador_expr:o exprsimple:b {: RESULT = new NodeExprcomposta(a,o,b,lexic.getLineColumn());:};
+
 
 operador_expr ::= SUMA:a {: RESULT = new NodeOperador_expr(a.toString());:}
                 | RESTA:a {: RESULT = new NodeOperador_expr(a.toString());:}

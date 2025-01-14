@@ -200,6 +200,10 @@ public class ThreeAdressCode {
         instruction_list.add(newVar(target.getNom(), target.getTipus(), value) + " = " + tempVar + "\n");
     }
 
+    public void generateNewVarAssign(Simbol target, String tempVar, SymbolTable ts) {
+        instruction_list.add(newVar(target.getNom(), target.getTipus()) + " = " + tempVar + "\n");
+    }
+
     public void generateAssignComposite(String tempVar, String valueA, String operator, String valueB, SymbolTable ts) {
         instruction_list.add(tempVar + " = " + valueA + " " + operator + " " + valueB + "\n");
     }

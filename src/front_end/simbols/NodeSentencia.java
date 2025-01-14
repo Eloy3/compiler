@@ -1,4 +1,7 @@
 package front_end.simbols;
+
+import org.w3c.dom.Node;
+
 public class NodeSentencia extends NodeBase {
 
     private String sentencia;
@@ -20,13 +23,15 @@ public class NodeSentencia extends NodeBase {
 
             case "varinic2":
                 // Check whether it's a simple or compound expression
-                NodeVarinic2 varinic2 = (NodeVarinic2) node;
+                ((NodeVarinic2) node).generateCode();
+                break;
+/*                 NodeVarinic2 varinic2 = (NodeVarinic2) node;
                 if (varinic2.getExprsimple() != null || varinic2.getCrida_funcio() != null) {
                     varinic2.generateCode();
                 } else if (varinic2.getExprcomposta() != null) {
-                    varinic2.generateCode_exprcomposta();
+                    varinic2.generateCodeExprcomposta();
                 }
-                break;
+                break; */
 
             case "condicional":
                 ((NodeCondicional) node).generateCode();
