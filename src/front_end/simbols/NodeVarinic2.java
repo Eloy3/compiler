@@ -72,7 +72,7 @@ public class NodeVarinic2 extends NodeBase {
     }
     
     public void generateCodeExprcomposta() {
-        NodeExprsimple valueA = exprcomposta.getExprsimple();
+/*         NodeExprsimple valueA = exprcomposta.getExprsimple();
         String targetVar;
         if (valueA.getTipus() == tipusexpr.id) {
             targetVar = Util.validateVariableExists(ts, valueA.getValor(), lc).toString();
@@ -84,41 +84,54 @@ public class NodeVarinic2 extends NodeBase {
             return;
         }
         
-        if (targetVar == null) return;
+        if (targetVar == null) return; */
 
         Simbol left = Util.validateVariableExists(ts, id, lc);
         if (left == null) return;
 
-        String operator = exprcomposta.getOperador().getTipus();
-        String valueB = resolveCompositeExpression(exprcomposta);
-        if (valueB == null) return;
-        calcOcupComposite(left, targetVar, operator, valueB);
-    }
-
-    private String resolveCompositeExpression(NodeExprcomposta compositeExpression) {
-
-        if (compositeExpression.getExprcomposta()==null) {
-            NodeExprsimple valueA = exprcomposta.getExprsimple();
-            String targetVar;
-            if (valueA.getTipus() == tipusexpr.id) {
-                targetVar = Util.validateVariableExists(ts, valueA.getValor(), lc).toString();
-            }
-            else if(valueA.getTipus() == tipusexpr.ent) {
-                targetVar = valueA.getValor();
-            }else{
-                ErrorLogger.logSemanticError(lc, "L'expressió " + valueA.getValor() + " no té un tipus vàlid per ser assignada de manera composta.");
-                return null;
-            }
-            return targetVar;
+        if(left.getTipus() == tipusexpr.bool.toString()){
+            ErrorLogger.logSemanticError(lc, "No es poden fer operacions aritmètiques amb variables de tipus booleà.");
+            return;
         }
 
-        NodeExprsimple valueA = compositeExpression.getExprsimple();
+        String valueB = resolveCompositeExpression(left.getTipus(), exprcomposta);
+        if (valueB == null) return;
+
+        cta.generateNewVarAssign(left, valueB, ts);
+    }
+
+    private String resolveCompositeExpression(String tipusA, NodeExprcomposta compositeExpression) {
+
+        NodeExprsimple exprA = compositeExpression.getExprsimple();
+        String valueA;
+        if (exprA.getTipus() == tipusexpr.id) {
+            Simbol target = Util.validateVariableExists(ts, exprA.getValor(), lc);
+            if(target == null) {
+                return null;
+            }else if(!Util.typeMatches(tipusA, target.getTipus())) {
+                ErrorLogger.logSemanticError(lc, "La variable '" + exprA.getValor() + "' no té el tipus esperat '" + tipusA + "'.");
+                return null;
+            }else{
+                valueA = target.getNom();
+            }
+        }
+        else if(exprA.getTipus() == tipusexpr.ent) {
+            valueA = exprA.getValor();
+        }else{
+            ErrorLogger.logSemanticError(lc, "L'expressió " + exprA.getValor() + " no té un tipus vàlid per ser assignada de manera composta.");
+            return null;
+        }
+
+        if (compositeExpression.getExprcomposta()==null) { 
+            return valueA;
+        }
+        
         String operator = compositeExpression.getOperador().getTipus();
 
-        String tempVar = cta.newTempVar(valueA.getTipus().toString());
-        String valueB = resolveCompositeExpression(exprcomposta);
+        String tempVar = cta.newTempVar(tipusA);
+        String valueB = resolveCompositeExpression(tipusA,compositeExpression.getExprcomposta());
         if (valueB == null) return null;
-        cta.generateAssignComposite(tempVar, valueA.getValor(), operator, valueB , ts);
+        cta.generateAssignComposite(tempVar, exprA.getValor(), operator, valueB , ts);
 
         return tempVar;
     }

@@ -43,7 +43,6 @@ public class AssemblyCode {
 
         this.code.add("\torg $1000");
         code.add("START:");
-        code.add("\tJSR SCREENSIZE");
         for (Instruction3a i : c3a.getInstructionList().getInst_list()){
             traslate(i);
         }
@@ -438,16 +437,20 @@ public class AssemblyCode {
         Variable destino = c3a.getVar(i.getDestiny());
         code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D0");
         code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D1");
-        code.add("\tJSR ISUMA");
+        code.add("\tADD.W D0,D1");
         code.add("\tMOVE.W D1," + varnom(destino));
+        code.add("\tCLR.W D0");
+        code.add("\tCLR.W D1");
     }
 
     private void iresta(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
-        code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D0");
-        code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D1");
-        code.add("\tJSR IRESTA");
+        code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D1");
+        code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D0");
+        code.add("\tSUB.W D0,D1");
         code.add("\tMOVE.W D1," + varnom(d));
+        code.add("\tCLR.W D0");
+        code.add("\tCLR.W D1");
     }
 
     private void idivision(Instruction3a i){
@@ -458,6 +461,8 @@ public class AssemblyCode {
         code.add("\tEXT.L D0");
         code.add("\tDIVS.W D0,D1");
         code.add("\tMOVE.W D1," + varnom(d));
+        code.add("\tCLR.W D0");
+        code.add("\tCLR.W D1");
     }
 
     private void imultiplicacion(Instruction3a i){
@@ -468,6 +473,8 @@ public class AssemblyCode {
         code.add("\tEXT.L D1");
         code.add("\tMULS.W D0,D1");
         code.add("\tMOVE.W D1," + varnom(d));
+        code.add("\tCLR.W D0");
+        code.add("\tCLR.W D1");
     }
 
     private void iand(Instruction3a i){
@@ -476,6 +483,8 @@ public class AssemblyCode {
         code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1");
         code.add("\tAND.B D0,D1");
         code.add("\tMOVE.B D1," + varnom(d));
+        code.add("\tCLR.W D0");
+        code.add("\tCLR.W D1");
     }
 
     private void ior(Instruction3a i){
@@ -484,6 +493,8 @@ public class AssemblyCode {
         code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1");
         code.add("\tOR.B D0,D1");
         code.add("\tMOVE.B D1," + varnom(d));
+        code.add("\tCLR.W D0");
+        code.add("\tCLR.W D1");
     }
 
     private void idesplazar(Instruction3a i){
@@ -524,12 +535,6 @@ public class AssemblyCode {
     }
 
     private void IOsubrutines(){
-        code.add("SCREENSIZE:");
-        code.add("\tMOVE.L #1024*$10000+768,D1");
-        code.add("\tMOVE.B  #33,D0");
-        code.add("\tTRAP    #15");
-        code.add("\tRTS");
-
         code.add("ISUMA:");
         code.add("\tBTST.L #15,D0");
         code.add("\tBEQ ADD2");

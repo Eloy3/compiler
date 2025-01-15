@@ -1,1 +1,0 @@
-Error semàntic. [5:15] La variable '1' no existeix.

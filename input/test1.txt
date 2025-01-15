@@ -1,8 +1,9 @@
 
 principal(){
 
+	ent y = 3;
 	ent x;
-	x = 1 + 1 + 1;
+	x = y - 1 + 1 - 1;
 	sortidaln(x);
 
 }

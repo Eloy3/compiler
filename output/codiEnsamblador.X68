@@ -1,20 +1,52 @@
 	org $1000
 START:
-	JSR SCREENSIZE
 * --> | SKIP | null | null | principal |
 principal:
 * --> | PMB | null | null | principal |
+* --> | ASSIGNA | 3 | null | t0 |
+	MOVE.W #3,t0_principal
+* --> | ASSIGNA | t0 | null | y |
+	MOVE.W t0_principal,y_principal
+* --> | RESTA | 1 | 1 | t4 |
+	MOVE.W #1,D1
+	MOVE.W #1,D0
+	SUB.W D0,D1
+	MOVE.W D1,t4_principal
+	CLR.W D0
+	CLR.W D1
+* --> | SUMA | 1 | t4 | t3 |
+	MOVE.W #1,D0
+	MOVE.W t4_principal,D1
+	ADD.W D0,D1
+	MOVE.W D1,t3_principal
+	CLR.W D0
+	CLR.W D1
+* --> | RESTA | y | t3 | t2 |
+	MOVE.W y_principal,D1
+	MOVE.W t3_principal,D0
+	SUB.W D0,D1
+	MOVE.W D1,t2_principal
+	CLR.W D0
+	CLR.W D1
+* --> | ASSIGNA | t2 | null | x |
+	MOVE.W t2_principal,x_principal
+* --> | PARAM_S | null | null | x |
+	MOVE.W x_principal,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+	ADDA.L #2,A7
 	SIMHALT
  
+t0_principal: DS.W 1
+y_principal: DS.W 1
+t2_principal: DS.W 1
+t3_principal: DS.W 1
+t4_principal: DS.W 1
+x_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0
  
-SCREENSIZE:
-	MOVE.L #1024*$10000+768,D1
-	MOVE.B  #33,D0
-	TRAP    #15
-	RTS
 ISUMA:
 	BTST.L #15,D0
 	BEQ ADD2
