@@ -3,9 +3,10 @@ package front_end.simbols;
 import errors.ErrorLogger;
 import util.TacUtil;
 import util.Util;
-import front_end.simbols.NodeCrida_funcio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import front_end.simbols.NodeExprsimple.tipusexpr;
 
@@ -14,35 +15,47 @@ public class NodeVarinic2 extends NodeBase {
     private NodeExprsimple exprsimple;
     private NodeExprcomposta exprcomposta;
     private NodeCrida_funcio crida_funcio;
+    private NodeInicialitzacio_taula inicialitzacio_taula;
     private String id;
-    private int[] lc;
+    private int[] lineCode;
 
     public NodeVarinic2(String id, NodeExprsimple e, int[] lc) {
         super("Varinic2", 0);
         this.id = id;
         this.exprsimple = e;
-        this.lc = lc;
+        this.lineCode = lc;
     }
 
     public NodeVarinic2(String id, NodeExprcomposta e, int[] lc) {
         super("Varinic2", 0);
         this.id = id;
         this.exprcomposta = e;
-        this.lc = lc;
+        this.lineCode = lc;
     }
 
     public NodeVarinic2(String id, NodeCrida_funcio e, int[] lc) {
         super("Varinic2", 0);
         this.id = id;
         this.crida_funcio = e;
-        this.lc = lc;
+        this.lineCode = lc;
+    }
+
+    public NodeVarinic2(String id, NodeInicialitzacio_taula e, int[] lc) {
+        super("Varinic2", 0);
+        this.id = id;
+        this.inicialitzacio_taula = e;
+        this.lineCode = lc;
     }
 
     public void generateCode() {
         if(crida_funcio!=null){
             generateCodeProcedure();
             return;
-        }else if(exprcomposta!=null){
+        }else if(inicialitzacio_taula!=null){
+            generateCodeInicialitzacioTaula();
+            return;
+        }
+        else if(exprcomposta!=null){
             if(exprcomposta.getExprcomposta()!=null){
                 generateCodeExprcomposta();
             }else{
@@ -56,16 +69,16 @@ public class NodeVarinic2 extends NodeBase {
 
     public void generateCodeProcedure(){
         if (!crida_funcio.generateCode()) return;
-            Simbol procedure = Util.validateVariableExists(ts, crida_funcio.getFunctionName(), lc);
-            Simbol variable = Util.validateVariableExists(ts, id, lc);
+            Simbol procedure = Util.validateVariableExists(ts, crida_funcio.getFunctionName(), lineCode);
+            Simbol variable = Util.validateVariableExists(ts, id, lineCode);
             if(procedure == null) {
-                ErrorLogger.logSemanticError(lc, "La funció '" + crida_funcio.getFunctionName() + "' no existeix.");
+                ErrorLogger.logSemanticError(lineCode, "La funció '" + crida_funcio.getFunctionName() + "' no existeix.");
                 return;
             }else if(variable == null) {
-                ErrorLogger.logSemanticError(lc, "La variable '" + id + "' no existeix.");
+                ErrorLogger.logSemanticError(lineCode, "La variable '" + id + "' no existeix.");
                 return;
             }else if(!Util.typeMatches(variable.getTipus(), procedure.getTipus())) {
-                ErrorLogger.logSemanticError(lc, "La variable '" + id + "' no té el tipus esperat '" + procedure.getTipus() + "'.");
+                ErrorLogger.logSemanticError(lineCode, "La variable '" + id + "' no té el tipus esperat '" + procedure.getTipus() + "'.");
                 return;
             }
             TacUtil.procedureResultToVariable(cta, ts, id, variable.getTipus());
@@ -86,11 +99,11 @@ public class NodeVarinic2 extends NodeBase {
         
         if (targetVar == null) return; */
 
-        Simbol left = Util.validateVariableExists(ts, id, lc);
+        Simbol left = Util.validateVariableExists(ts, id, lineCode);
         if (left == null) return;
 
         if(left.getTipus() == tipusexpr.bool.toString()){
-            ErrorLogger.logSemanticError(lc, "No es poden fer operacions aritmètiques amb variables de tipus booleà.");
+            ErrorLogger.logSemanticError(lineCode, "No es poden fer operacions aritmètiques amb variables de tipus booleà.");
             return;
         }
 
@@ -105,11 +118,11 @@ public class NodeVarinic2 extends NodeBase {
         NodeExprsimple exprA = compositeExpression.getExprsimple();
         String valueA;
         if (exprA.getTipus() == tipusexpr.id) {
-            Simbol target = Util.validateVariableExists(ts, exprA.getValor(), lc);
+            Simbol target = Util.validateVariableExists(ts, exprA.getValor(), lineCode);
             if(target == null) {
                 return null;
             }else if(!Util.typeMatches(tipusA, target.getTipus())) {
-                ErrorLogger.logSemanticError(lc, "La variable '" + exprA.getValor() + "' no té el tipus esperat '" + tipusA + "'.");
+                ErrorLogger.logSemanticError(lineCode, "La variable '" + exprA.getValor() + "' no té el tipus esperat '" + tipusA + "'.");
                 return null;
             }else{
                 valueA = target.getNom();
@@ -118,7 +131,7 @@ public class NodeVarinic2 extends NodeBase {
         else if(exprA.getTipus() == tipusexpr.ent) {
             valueA = exprA.getValor();
         }else{
-            ErrorLogger.logSemanticError(lc, "L'expressió " + exprA.getValor() + " no té un tipus vàlid per ser assignada de manera composta.");
+            ErrorLogger.logSemanticError(lineCode, "L'expressió " + exprA.getValor() + " no té un tipus vàlid per ser assignada de manera composta.");
             return null;
         }
 
@@ -137,12 +150,12 @@ public class NodeVarinic2 extends NodeBase {
     }
 
     private void validateAndGenerate(String targetId, String typeA, String valueA, Optional<NodeExprsimple> optionalB) {
-        Simbol target = Util.validateVariableExists(ts, targetId, lc);
+        Simbol target = Util.validateVariableExists(ts, targetId, lineCode);
         if (target == null) return;
 
         typeA = resolveType(typeA, valueA);
         if (typeA == null || !Util.typeMatches(target.getTipus(), typeA)) {
-            ErrorLogger.logSemanticError(lc, target.getNom() + " i " + valueA + " no tenen el mateix tipus.");
+            ErrorLogger.logSemanticError(lineCode, target.getNom() + " i " + valueA + " no tenen el mateix tipus.");
             return;
         }
 
@@ -150,7 +163,7 @@ public class NodeVarinic2 extends NodeBase {
             NodeExprsimple b = optionalB.get();
             String typeB = resolveType(b.getTipusAsString(), b.getValor());
             if (typeB == null || !Util.typeMatches(target.getTipus(), typeB)) {
-                ErrorLogger.logSemanticError(lc, "Variable '" + targetId + "' has mismatched types.");
+                ErrorLogger.logSemanticError(lineCode, "Variable '" + targetId + "' has mismatched types.");
                 return;
             }
             calcOcupComposite(target, valueA, exprcomposta.getOperador().getTipus(), b.getValor());
@@ -161,9 +174,9 @@ public class NodeVarinic2 extends NodeBase {
 
     private String resolveType(String type, String value) {
         if (Util.isIdentifier(type)) {
-            Simbol operand = Util.validateVariableExists(ts, value, lc);
+            Simbol operand = Util.validateVariableExists(ts, value, lineCode);
             if (operand == null) {
-                ErrorLogger.logSemanticError(lc, "La variable '" + value + "' no està definida.");
+                ErrorLogger.logSemanticError(lineCode, "La variable '" + value + "' no està definida.");
                 return null;
             }
             return operand.getTipus();
@@ -182,6 +195,49 @@ public class NodeVarinic2 extends NodeBase {
         String tempVar = cta.newTempVar(left.getTipus(), valueA);
         cta.generateAssignComposite(tempVar, valueA, operator, valueB, ts);
         cta.generateNewVarAssign(left, tempVar, ts);
+    }
+
+    private void generateCodeInicialitzacioTaula() {
+        Simbol var = Util.validateVariableExists(ts, id, lineCode);
+        if(var == null) return;
+        String tipus = var.getTipus();
+
+        if(inicialitzacio_taula.getLlistavalors() != null){
+            ArrayList<NodeExprsimple> llistavalors = Util.getArrayList(inicialitzacio_taula.getLlistavalors());
+            for(int i=0; i < llistavalors.size(); i++){
+                NodeExprsimple valor = llistavalors.get(i);
+                List<String> indexes = Arrays.asList(String.valueOf(i));
+                if(valor.getTipus() == NodeExprsimple.tipusexpr.id){
+                    if(Util.validateVariableExists(ts, id, lineCode)==null) return;
+                    if(!Util.typeMatches(tipus, ts.getTipus(valor.getValor()))) return;
+                    TacUtil.generateInd_ass(cta, ts, id, valor.getValor(), tipus, indexes);
+                }else{
+                    if(!Util.typeMatches(tipus, valor.getTipusAsString())) return;
+                    TacUtil.generateInd_ass(cta, ts, id, valor.getValor(), tipus, indexes);
+                }
+            }
+            cta.newVarArray(id, tipus, llistavalors.size());
+
+        }else if(inicialitzacio_taula.getAssignacio_memoria() != null){
+            ArrayList<NodeExprsimple> llistavalors = inicialitzacio_taula.extractParamList();
+            int size = 1;
+            int dimensions = 0;
+            for(NodeExprsimple valor : llistavalors){
+                if(valor.getTipus() == NodeExprsimple.tipusexpr.ent){
+                    if(!Util.typeMatches(tipus, valor.getTipusAsString())) return;
+                    int sizeParam = Integer.parseInt(valor.getValor());
+                    if(sizeParam < 1){
+                        ErrorLogger.logSemanticError(lineCode,"La dimensió de la taula ha de ser un enter positiu.");
+                    }
+                    size = size * sizeParam;
+                    dimensions++;
+                }else{
+                    ErrorLogger.logSemanticError(lineCode,"La declaració de la dimensió de la taula ha de ser un enter.");
+                }
+            }
+            ts.insertElement(id, tipus, dimensions);
+            cta.newVarArray(id, tipus, size);
+        }
     }
 
     @Override

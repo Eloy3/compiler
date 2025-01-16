@@ -1,7 +1,5 @@
 package front_end.simbols;
 
-import org.w3c.dom.Node;
-
 public class NodeSentencia extends NodeBase {
 
     private String sentencia;
@@ -68,6 +66,10 @@ public class NodeSentencia extends NodeBase {
             
             case "decl_taula":
                 ((NodeDecl_taula)node).generateCode();
+                break;
+            
+            case "inic_element_taula":
+                ((NodeInic_element_taula)node).generateCode();
                 break;
         }
     }

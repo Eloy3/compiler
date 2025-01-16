@@ -1,8 +1,11 @@
 package util;
 
+import java.util.List;
+
 import back_end.generate_code.ThreeAdressCode;
 import data_structures.SymbolTable;
-import front_end.simbols.NodeProcedures;
+import front_end.simbols.NodeExprsimple;
+import front_end.simbols.NodeTipus;
 
 public abstract class TacUtil {
 
@@ -49,8 +52,6 @@ public abstract class TacUtil {
         /**
          * Transfers the result of a procedure to a specified variable.
          *
-         * @param cta          The ThreeAdressCode instance used for generating code.
-         * @param ts           The SymbolTable instance where the variable is stored.
          * @param variable     The name of the variable to store the procedure result.
          * @param variableType The type of the variable.
          * 
@@ -60,5 +61,28 @@ public abstract class TacUtil {
         ts.insertElement(variable, variableType, tempVar);
         cta.generateCode(variable + " = " + tempVar + "\n");
         cta.newVar(variable, variableType);
+    }
+
+    /**
+     * Generates code for an indexed assignment operation.
+     *
+     * @param cta The Three Address Code generator.
+     * @param ts The symbol table.
+     * @param id The identifier of the array.
+     * @param value The value to be assigned.
+     * @param tipus The type of the value.
+     * @param indexes The indices at which the value is to be assigned.
+     * array[i][j]...[n] = value
+     */
+    public static void generateInd_ass(ThreeAdressCode cta, SymbolTable ts, String id, String value, String tipus, List<String> indexes) {
+        String tempVar = cta.newTempVar(tipus, value);
+        cta.generateCode(tempVar + " = " + value + "\n");
+
+        StringBuilder indexBuilder = new StringBuilder();
+        for (String index : indexes) {
+            indexBuilder.append("[").append(index).append("]");
+        }
+
+        cta.generateCode("assign", id + indexBuilder.toString(), tempVar, ts);
     }
 }

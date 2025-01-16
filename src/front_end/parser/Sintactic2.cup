@@ -97,7 +97,7 @@ programa ::= {: RESULT = new NodePrograma(); :};
 
 //sentències
 
-sentencies ::=  sentencia:s sentencies2:s2 {: RESULT = new NodeSentencies(s,s2);:};
+sentencies ::=   sentencia:s sentencies2:s2 {: RESULT = new NodeSentencies(s,s2);:};
 
 sentencies2 ::= sentencies:s {: RESULT = new NodeSentencies2(s);:} 
                 | {: RESULT = new NodeSentencies2();:};
@@ -113,6 +113,7 @@ sentencia ::=   decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
 
               | decl_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"decl_taula"); :}
               | inic_element_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"inic_element_taula"); :}
+              | inicialitzacio_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"inicialitzacio_taula"); :}
         
               | error PUNTICOMA {: logLexicError("Sentència invàlida");:}
               | ID {: logLexicError("Sentència invàlida");:};
@@ -174,10 +175,8 @@ varinic ::= ASSIGN exprsimple:v     {: RESULT = new NodeVarinic(v); :}
           | ASSIGN crida_funcio:c   {: RESULT = new NodeVarinic(c); :}
           |                         {: RESULT = new NodeVarinic(); :};  
 
-varinic2 ::= ID:v ASSIGN crida_funcio:c  {: RESULT = new NodeVarinic2(v, c, lexic.getLineColumn()); :}
-           | ID:v ASSIGN exprcomposta:e  {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :}
-           | ID:v inicialitzacio_taula:e {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :};
-
+varinic2 ::= ID:v ASSIGN crida_funcio:c {: RESULT = new NodeVarinic2(v, c, lexic.getLineColumn()); :}
+           | ID:v ASSIGN exprcomposta:e {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :};
 
  
 exprcomposta ::= exprsimple:a                                {: RESULT = new NodeExprcomposta(a, lexic.getLineColumn()); :}

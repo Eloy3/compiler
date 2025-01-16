@@ -1,8 +1,11 @@
 package front_end.simbols;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import errors.ErrorLogger;
+import util.TacUtil;
 import util.Util;
 
 public class NodeDecl_taula extends NodeBase {
@@ -10,6 +13,7 @@ public class NodeDecl_taula extends NodeBase {
     private NodeDimensions_taula dimensions_taula;
     private NodeInicialitzacio_taula inicialitzacio_taula;
     private String id;
+    private int dimensions;
     private int[] lineCode;
 
     public NodeDecl_taula(NodeTipus tipus, NodeDimensions_taula dimensions_taula, String id, NodeInicialitzacio_taula inicialitzacio_taula, int[] l){
@@ -34,10 +38,13 @@ public class NodeDecl_taula extends NodeBase {
             ErrorLogger.logSemanticError(lineCode,"La variable '" + id + "' ja ha estat declarada.");
             return;
         }
-        ts.insertElement(id, tipus.getTipusAsString(), null);
+        
         if(inicialitzacio_taula != null){
             handleArrayInitialization();
+            dimensions = 1;
         }
+
+        ts.insertElement(id, tipus.getTipusAsString(), dimensions);
     }
     
     private void handleArrayInitialization() {
@@ -45,13 +52,14 @@ public class NodeDecl_taula extends NodeBase {
             ArrayList<NodeExprsimple> llistavalors = Util.getArrayList(inicialitzacio_taula.getLlistavalors());
             for(int i=0; i < llistavalors.size(); i++){
                 NodeExprsimple valor = llistavalors.get(i);
+                List<String> indexes = Arrays.asList(String.valueOf(i));
                 if(valor.getTipus() == NodeExprsimple.tipusexpr.id){
                     if(Util.validateVariableExists(ts, id, lineCode)==null) return;
                     if(!Util.typeMatches(tipus.getTipusAsString(), ts.getTipus(valor.getValor()))) return;
-                    generateC3A(valor, tipus, i);
+                    TacUtil.generateInd_ass(cta, ts, id, valor.getValor(), tipus.getTipusAsString(), indexes);
                 }else{
                     if(!Util.typeMatches(tipus.getTipusAsString(), valor.getTipusAsString())) return;
-                    generateC3A(valor, tipus, i);
+                    TacUtil.generateInd_ass(cta, ts, id, valor.getValor(), tipus.getTipusAsString(), indexes);
                 }
             }
             cta.newVarArray(id, tipus.getTipusAsString(), llistavalors.size());
@@ -59,6 +67,7 @@ public class NodeDecl_taula extends NodeBase {
         }else if(inicialitzacio_taula.getAssignacio_memoria() != null){
             ArrayList<NodeExprsimple> llistavalors = inicialitzacio_taula.extractParamList();
             int size = 1;
+            dimensions = 0;
             for(NodeExprsimple valor : llistavalors){
                 if(valor.getTipus() == NodeExprsimple.tipusexpr.ent){
                     if(!Util.typeMatches(tipus.getTipusAsString(), valor.getTipusAsString())) return;
@@ -67,6 +76,7 @@ public class NodeDecl_taula extends NodeBase {
                         ErrorLogger.logSemanticError(lineCode,"La dimensió de la taula ha de ser un enter positiu.");
                     }
                     size = size * sizeParam;
+                    dimensions++;
                 }else{
                     ErrorLogger.logSemanticError(lineCode,"La declaració de la dimensió de la taula ha de ser un enter.");
                 }

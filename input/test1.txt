@@ -2,8 +2,11 @@
 principal(){
 
 	ent y = 3;
-	ent x;
-	x = y - 1 + 1 - 1;
-	sortidaln(x);
+	ent[] array = {6,7,8};
 
+	array = {1,2,3};
+
+	array[0] = 7;
+
+	sortidaln(array[0]);
 }

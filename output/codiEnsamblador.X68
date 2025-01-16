@@ -7,31 +7,46 @@ principal:
 	MOVE.W #3,t0_principal
 * --> | ASSIGNA | t0 | null | y |
 	MOVE.W t0_principal,y_principal
-* --> | RESTA | 1 | 1 | t4 |
-	MOVE.W #1,D1
-	MOVE.W #1,D0
-	SUB.W D0,D1
-	MOVE.W D1,t4_principal
-	CLR.W D0
-	CLR.W D1
-* --> | SUMA | 1 | t4 | t3 |
-	MOVE.W #1,D0
-	MOVE.W t4_principal,D1
-	ADD.W D0,D1
-	MOVE.W D1,t3_principal
-	CLR.W D0
-	CLR.W D1
-* --> | RESTA | y | t3 | t2 |
-	MOVE.W y_principal,D1
-	MOVE.W t3_principal,D0
-	SUB.W D0,D1
-	MOVE.W D1,t2_principal
-	CLR.W D0
-	CLR.W D1
-* --> | ASSIGNA | t2 | null | x |
-	MOVE.W t2_principal,x_principal
-* --> | PARAM_S | null | null | x |
-	MOVE.W x_principal,-(A7)
+* --> | ASSIGNA | 6 | null | t2 |
+	MOVE.W #6,t2_principal
+* --> | IND_ASS | t2 | 0 | array |
+	 LEA array_principal,A0
+	 MOVE.W t2_principal,0(A0)
+* --> | ASSIGNA | 7 | null | t3 |
+	MOVE.W #7,t3_principal
+* --> | IND_ASS | t3 | 1 | array |
+	 LEA array_principal,A0
+	 MOVE.W t3_principal,2(A0)
+* --> | ASSIGNA | 8 | null | t4 |
+	MOVE.W #8,t4_principal
+* --> | IND_ASS | t4 | 2 | array |
+	 LEA array_principal,A0
+	 MOVE.W t4_principal,4(A0)
+* --> | ASSIGNA | 1 | null | t6 |
+	MOVE.W #1,t6_principal
+* --> | IND_ASS | t6 | 0 | array |
+	 LEA array_principal,A0
+	 MOVE.W t6_principal,0(A0)
+* --> | ASSIGNA | 2 | null | t7 |
+	MOVE.W #2,t7_principal
+* --> | IND_ASS | t7 | 1 | array |
+	 LEA array_principal,A0
+	 MOVE.W t7_principal,2(A0)
+* --> | ASSIGNA | 3 | null | t8 |
+	MOVE.W #3,t8_principal
+* --> | IND_ASS | t8 | 2 | array |
+	 LEA array_principal,A0
+	 MOVE.W t8_principal,4(A0)
+* --> | ASSIGNA | 7 | null | t10 |
+	MOVE.W #7,t10_principal
+* --> | IND_ASS | t10 | 0 | array |
+	 LEA array_principal,A0
+	 MOVE.W t10_principal,0(A0)
+* --> | IND_VAL | array | 0 | t11 |
+	 LEA array_principal,A0
+	 MOVE.W 0(A0),t11_principal
+* --> | PARAM_S | null | null | t11 |
+	MOVE.W t11_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
@@ -42,7 +57,12 @@ y_principal: DS.W 1
 t2_principal: DS.W 1
 t3_principal: DS.W 1
 t4_principal: DS.W 1
-x_principal: DS.W 1
+array_principal: DS.W 3
+t6_principal: DS.W 1
+t7_principal: DS.W 1
+t8_principal: DS.W 1
+t10_principal: DS.W 1
+t11_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0

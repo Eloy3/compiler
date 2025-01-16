@@ -2,9 +2,20 @@ principal:skip
 pmb principal
 t0 = 3
 y = t0
-t4 = 1 - 1
-t3 = 1 + t4
-t2 = y - t3
-x = t2
-param_s x
+t2 = 6
+array[0] = t2
+t3 = 7
+array[1] = t3
+t4 = 8
+array[2] = t4
+t6 = 1
+array[0] = t6
+t7 = 2
+array[1] = t7
+t8 = 3
+array[2] = t8
+t10 = 7
+array[0] = t10
+t11 = array[0]
+param_s t11
 call line

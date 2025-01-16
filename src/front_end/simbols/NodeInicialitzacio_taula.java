@@ -1,7 +1,6 @@
 package front_end.simbols;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NodeInicialitzacio_taula extends NodeBase {
     private NodeLlistaValors llistavalors;

@@ -4,7 +4,7 @@ public class NodeIndexos_taula extends NodeBase{
 
     private NodeExprsimple exprsimple;
     private int[] lineCode;
-    private NodeIndexos_taula inic2;
+    private NodeIndexos_taula index;
 
     public NodeIndexos_taula(NodeExprsimple exprsimple, int[] l) {
         super("T_inic2", 0);
@@ -16,7 +16,7 @@ public class NodeIndexos_taula extends NodeBase{
         super("T_inic2", 0);
         this.exprsimple = exprsimple;
         this.lineCode = l;
-        this.inic2 = inic2;
+        this.index = inic2;
     }
     
 }

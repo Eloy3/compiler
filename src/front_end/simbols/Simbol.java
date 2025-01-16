@@ -1,8 +1,5 @@
 
 package front_end.simbols;
-
-import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
-import back_end.Types;
 import java.util.ArrayList;
 
 public class Simbol{
@@ -11,6 +8,8 @@ public class Simbol{
     String tipusSubjacent;
     String subprogram;
     Object valor;
+
+    int arrayDimensions;
     private ArrayList<String> args;
 
     public Simbol(String nom, String tipus, String subprogram, Object valor) {
@@ -26,6 +25,12 @@ public class Simbol{
         this.valor = valor;
     }
 
+    public Simbol(String nom, String tipus, int dimensions) {
+        this.nom = nom;
+        this.tipus = tipus;
+        this.arrayDimensions = dimensions;
+    }
+    
     public Simbol (String nom, String tipus){
         this.tipus = tipus;
         this.nom = nom;
@@ -82,6 +87,18 @@ public class Simbol{
 
     public void setSubprogram(String subprogram) {
         this.subprogram = subprogram;
+    }
+
+    public void setTipusSubjacent(String tipusSubjacent) {
+        this.tipusSubjacent = tipusSubjacent;
+    }
+
+    public int getArrayDimensions() {
+        return arrayDimensions;
+    }
+
+    public void setArrayDimensions(int arrayDimensions) {
+        this.arrayDimensions = arrayDimensions;
     }
     
     

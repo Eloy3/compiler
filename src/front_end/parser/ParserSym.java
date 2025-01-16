@@ -15,6 +15,7 @@ public class ParserSym {
   public static final int RESTA = 3;
   public static final int EParen = 6;
   public static final int OLO = 26;
+  public static final int MATRIU = 36;
   public static final int EClau = 12;
   public static final int OLI = 25;
   public static final int PRINCIPAL = 31;
@@ -80,7 +81,8 @@ public class ParserSym {
   "SORTIDA",
   "SORTIDALN",
   "ENTRADA",
-  "RESERVA"
+  "RESERVA",
+  "MATRIU"
   };
 }
 
