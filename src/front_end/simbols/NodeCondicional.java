@@ -1,6 +1,7 @@
 
 package front_end.simbols;
 
+import errors.ErrorLogger;
 import util.TacUtil;
 import util.Util;
 
@@ -20,7 +21,14 @@ public class NodeCondicional extends NodeBase{
     }
 
     public boolean generateCode(){
-        if(!Util.validateCondicio(ts, condicio.getOperand1(), condicio.getOperand2(), condicio.getID(), lc)) return false;
+        if(condicio.getID()!=null){
+            Simbol var = Util.validateVariableExists(ts, condicio.getID(), lc);
+            if(var == null) return false;
+            if(!Util.typeMatches(var.getTipus(), "bool")){
+                ErrorLogger.logSemanticError(lc,"La variable '" + condicio.getID() + "' no té el tipus esperat '" + var.getTipus() + "'.");
+            }
+        }
+        else if(!Util.validateCondicio(ts, condicio.getOperand1(), condicio.getOperand2(), condicio.getID(), lc)) return false;
         TacUtil.etiquetacond(cta);
         String endLabel = cta.newLabel();
         if (condicio.getOperador() != null) {

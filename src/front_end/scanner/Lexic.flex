@@ -82,7 +82,6 @@ sortida = "sortida"
 sortidaln = "sortidaln"
 entrada = "entrada"
 reserva = "reserva"
-//matriu = "matriu"
 ENDLINE   = [\r\n]+
 ws = [' '|'\t']+
 
@@ -180,7 +179,6 @@ ws = [' '|'\t']+
 {buit}                   { writeToken(this.yytext()); return symbol(ParserSym.BUIT, "buit"); }
 {retorna}                { writeToken(this.yytext()); return symbol(ParserSym.RETORNA, "retorna"); }
 {reserva}                { writeToken(this.yytext()); return symbol(ParserSym.RESERVA, "reserva"); }
-//{matriu}                 { writeToken(this.yytext()); return symbol(ParserSym.MATRIU, "matriu"); }
 {mentre}                 { writeToken(this.yytext()); return symbol(ParserSym.MENTRE, "mentre"); }
 {per}                    { writeToken(this.yytext()); return symbol(ParserSym.PER, "per"); }
 {si}                     { writeToken(this.yytext()); return symbol(ParserSym.SI, "si"); }

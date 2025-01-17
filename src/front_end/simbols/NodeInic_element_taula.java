@@ -33,7 +33,7 @@ public class NodeInic_element_taula extends NodeBase{
             ErrorLogger.logSemanticError(lineCode,"La dimensió de la taula ha de ser igual a la dimensió de l'indexació.");
             return;
         }
-        List<String> indexes = null;
+        List<String> indexes = new ArrayList<>();
 
         // Check if the index is a valid index
         for(NodeExprsimple valor: llistavalors){
@@ -45,9 +45,9 @@ public class NodeInic_element_taula extends NodeBase{
                     ErrorLogger.logSemanticError(lineCode,"L'index ha se ser del tipus enter.");
                     return;
                 }
-                indexes = Arrays.asList(indexSimbol.getValor().toString());
+                indexes.add(indexSimbol.getValor().toString());
             }else if(valor.getTipus() == NodeExprsimple.tipusexpr.ent){
-                indexes = Arrays.asList(valor.getValor());
+                indexes.add(valor.getValor());
             }else{
                 ErrorLogger.logSemanticError(lineCode, "L'index ha de ser un enter.");
                 return;
@@ -68,12 +68,6 @@ public class NodeInic_element_taula extends NodeBase{
         }
     }
 
-    public void generateC3A(NodeExprsimple valor, NodeTipus tipus, int i){
-        String tempVar = cta.newTempVar(tipus.getTipusAsString(), valor.getValor());
-        cta.generateCode(tempVar + " = " + valor + "\n");
-        cta.generateCode("assign", id+"["+i+"]", tempVar,ts);
-    }
-
     public ArrayList<NodeExprsimple> extractParamList() {
         ArrayList<NodeExprsimple> list = new ArrayList<>();
         NodeEspecificacio_dimensio current = especificacio_dimensio;
@@ -83,4 +77,6 @@ public class NodeInic_element_taula extends NodeBase{
         }
         return list;
     }
+
+
 }

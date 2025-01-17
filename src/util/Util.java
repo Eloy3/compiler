@@ -44,12 +44,6 @@ public abstract class Util {
         return new Simbol(operand.getTipusAsString(), operand.getValor());
     }
 
-    public static boolean isIdentifier(String type) {
-        // Assume identifiers are not primitive types like "ENT" or "BOOL"
-        //return !type.equals("ENT") && !type.equals("BOOL");
-        return type.equalsIgnoreCase("id");
-    }
-
     public static void validateUnaryOperand(SymbolTable ts, NodeExprsimple operand, int[] lc) {
         if (validateOperand(ts, operand, lc) == null) {
             ErrorLogger.logSemanticError(lc,"Operand '" + operand.getValor() + "' is not valid.");

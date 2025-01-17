@@ -1,21 +1,13 @@
 principal:skip
-pmb principal
 t0 = 3
 y = t0
-t2 = 6
-array[0] = t2
-t3 = 7
-array[1] = t3
-t4 = 8
-array[2] = t4
-t6 = 1
-array[0] = t6
-t7 = 2
-array[1] = t7
-t8 = 3
-array[2] = t8
-t10 = 7
-array[0] = t10
-t11 = array[0]
-param_s t11
+t2 = cert
+a = t2
+if a then goto e0
+goto e1
+e0:skip
+param_c 3
 call line
+goto e2
+e1:skip
+e2:skip

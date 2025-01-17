@@ -141,7 +141,7 @@ exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.ti
              | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString(), lexic.getLineColumn()); :}
              | valorTaula:v     {: RESULT = new NodeExprsimple(v, lexic.getLineColumn()); :};
 
-valorTaula ::= ID:a EClaudator exprsimple:b DClaudator {:RESULT = new NodeValorTaula(a, b, lexic.getLineColumn()); :};
+valorTaula ::= ID:a especificacio_dimensio:b {:RESULT = new NodeValorTaula(a, b, lexic.getLineColumn()); :};
 
 tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ENT); :}
         | BOOL  {: RESULT = new NodeTipus(Tipus.BOOL); :};
@@ -177,7 +177,6 @@ varinic ::= ASSIGN exprsimple:v     {: RESULT = new NodeVarinic(v); :}
 varinic2 ::= ID:v ASSIGN crida_funcio:c  {: RESULT = new NodeVarinic2(v, c, lexic.getLineColumn()); :}
            | ID:v ASSIGN exprcomposta:e  {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :}
            | ID:v inicialitzacio_taula:e {: RESULT = new NodeVarinic2(v, e, lexic.getLineColumn()); :};
-
 
  
 exprcomposta ::= exprsimple:a                                {: RESULT = new NodeExprcomposta(a, lexic.getLineColumn()); :}
@@ -250,6 +249,3 @@ especificacio_dimensio ::= EClaudator exprsimple:a DClaudator {: RESULT = new No
 
 //                      x  [0]...            =         1
 inic_element_taula ::= ID:a especificacio_dimensio:b ASSIGN exprsimple:c {: RESULT = new NodeInic_element_taula(a, b, c, lexic.getLineColumn()); :};
-
-//indexos_taula ::= EClaudator exprsimple:a DClaudator  {: RESULT = new NodeIndexos_taula(a, lexic.getLineColumn()); :}
-//| indexos_taula:a EClaudator exprsimple:b DClaudator  {: RESULT = new NodeIndexos_taula(a, b, lexic.getLineColumn()); :};

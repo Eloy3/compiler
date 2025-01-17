@@ -1,27 +1,22 @@
 package front_end.simbols;
-import front_end.simbols.NodeExprsimple.tipusexpr;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NodeValorTaula extends NodeBase {
-    private NodeExprsimple exprismple;
+    private NodeEspecificacio_dimensio especificacio_dimensio;
     private String id;
     private final int[] lineCode;
 
-    public NodeValorTaula(String id, NodeExprsimple e, int[] l){
+    public NodeValorTaula(String id, NodeEspecificacio_dimensio especificacio_dimensio, int[] l){
         super("ValorTaula", 0);
         this.id = id;
-        this.exprismple = e;
+        this.especificacio_dimensio = especificacio_dimensio;
         this.lineCode = l;
     }
 
-    public String getValue() {
-        return exprismple.getValor();
-    }
-    public NodeExprsimple getExprismple() {
-        return exprismple;
-    }
-
-    public void setExprismple(NodeExprsimple exprismple) {
-        this.exprismple = exprismple;
+    public List<String> getIndexes() {
+        return extractParamList();
     }
 
     public String getId() {
@@ -36,6 +31,14 @@ public class NodeValorTaula extends NodeBase {
         return lineCode;
     }
 
-    
+    public List<String> extractParamList() {
+        List<String> list = new ArrayList<>();
+        NodeEspecificacio_dimensio current = especificacio_dimensio;
+        while (current != null) {
+            list.add(current.getExprsimple().toString());
+            current = current.getAssignacio_dimension();
+        }
+        return list;
+    }
 
 }

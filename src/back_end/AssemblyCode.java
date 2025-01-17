@@ -22,7 +22,6 @@ public class AssemblyCode {
     private Tipus param;
 
     private int int_store;
-    private int str_store;
     private int logic_store;
     private int null_store;
     public BufferedReader br;
@@ -93,7 +92,7 @@ public class AssemblyCode {
                 iasigna(i);
                 break;
             case GOTO:
-                code.add("\tJMP " +i.getDestiny());
+                code.add("\tJMP " +(i.getDestiny()));
                 break;
             case SKIP:
                 code.add((i.getDestiny()) + ":");
@@ -112,27 +111,27 @@ public class AssemblyCode {
                 break;
             case IFIGUAL:
                 compare(i);
-                code.add("\tBEQ " + assemblyVar(i.getDestiny()));
+                code.add("\tBEQ " + (i.getDestiny()));
                 break;
             case IFDIFERENT:
                 compare(i);
-                code.add("\tBNE " + assemblyVar(i.getDestiny()));
+                code.add("\tBNE " + (i.getDestiny()));
                 break;
             case IFMAJOR:
                 compare(i);
-                code.add("\tBGT " + assemblyVar(i.getDestiny()));
+                code.add("\tBGT " + (i.getDestiny()));
                 break;
             case IFMAJORIGUAL:
                 compare(i);
-                code.add("\tBGE " + assemblyVar(i.getDestiny()));
+                code.add("\tBGE " + (i.getDestiny()));
                 break;
             case IFMENOR:
                 compare(i);
-                code.add("\tBLT " + assemblyVar(i.getDestiny()));
+                code.add("\tBLT " + (i.getDestiny()));
                 break;
             case IFMENORIGUAL:
                 compare(i);
-                code.add("\tBLE " + assemblyVar(i.getDestiny()));
+                code.add("\tBLE " + (i.getDestiny()));
                 break;
             case SUMA:
                 isuma(i);
@@ -157,7 +156,7 @@ public class AssemblyCode {
                 code.add("\tMOVE.B " + varnom(v) + ",D0");
                 code.add("\tMOVE.B #" + -1 + ",D1");
                 code.add("\tCMP.B D0,D1");
-                code.add("\tBEQ " + assemblyVar(i.getDestiny()));
+                code.add("\tBEQ " + (i.getDestiny()));
                 break;
             case DESPLAZAR_BITS:
                 idesplazar(i);
@@ -705,7 +704,6 @@ public class AssemblyCode {
     private void setStore() throws IOException {
         br = new BufferedReader(new FileReader("src/back_end/stores.txt"));
         int_store = Integer.parseInt(br.readLine().split(" ")[2]);
-        str_store = Integer.parseInt(br.readLine().split(" ")[2]);
         logic_store = Integer.parseInt(br.readLine().split(" ")[2]);
         null_store = Integer.parseInt(br.readLine().split(" ")[2]);
         br.close();

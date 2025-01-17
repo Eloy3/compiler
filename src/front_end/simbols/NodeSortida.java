@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import errors.ErrorLogger;
 import front_end.simbols.NodeExprsimple.tipusexpr;
+import util.TacUtil;
 import util.Util;
 
 public class NodeSortida extends NodeBase {
@@ -26,7 +27,8 @@ public class NodeSortida extends NodeBase {
                 if(print.getTipus() == tipusexpr.arrayValue){
                     Simbol id = Util.validateVariableExists(ts, print.getValor(), lineCode);
                     String tempVar = cta.newTempVar(id.getTipus(), null);
-                    cta.generateCode("assign", tempVar, id.getNom()+"["+print.getPos()+"]", ts);
+                    String array = TacUtil.generateIndexes(id.getNom(), print.getPos());
+                    cta.generateCode("assign", tempVar, array, ts);
                     cta.generateCode("param_s " + tempVar + "\n");
                 }else{
                     cta.generateCode(paramType(print) + " " + print.getValor() + "\n");

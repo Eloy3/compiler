@@ -1,6 +1,6 @@
 package front_end.simbols;
 
-import errors.ErrorLogger;
+import java.util.List;
 
 public class NodeExprsimple extends NodeBase {
     public enum tipusexpr {id, ent, bool, procediment, arrayValue}
@@ -8,7 +8,7 @@ public class NodeExprsimple extends NodeBase {
     private String valor;
     private int[] lineCode;
     //just for array index
-    private int pos;
+    private List<String> pos;
 
     public NodeExprsimple(tipusexpr t, String v, int[] l) {
         super("Exprsimple", 0);
@@ -22,12 +22,7 @@ public class NodeExprsimple extends NodeBase {
         this.tipus = tipusexpr.arrayValue;
         this.valor = v.getId();
         this.lineCode = l;
-
-        try {
-            this.pos = Integer.parseInt(v.getValue());
-        } catch (NumberFormatException e) {
-            ErrorLogger.logSemanticError(lineCode,"El valor de l'index no és un enter.");
-        }
+        this.pos = v.getIndexes();
     }
 
     public tipusexpr getTipus() {
@@ -63,13 +58,12 @@ public class NodeExprsimple extends NodeBase {
         this.lineCode = lineCode;
     }
 
-    public int getPos() {
+    public List<String> getPos() {
         return pos;
     }
 
-    public void setPos(int pos) {
+    public void setPos(List<String> pos) {
         this.pos = pos;
     }
 
-    
 }

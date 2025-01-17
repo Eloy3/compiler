@@ -173,7 +173,7 @@ public class NodeVarinic2 extends NodeBase {
     }
 
     private String resolveType(String type, String value) {
-        if (Util.isIdentifier(type)) {
+        if (type.equalsIgnoreCase("id")) {
             Simbol operand = Util.validateVariableExists(ts, value, lineCode);
             if (operand == null) {
                 ErrorLogger.logSemanticError(lineCode, "La variable '" + value + "' no està definida.");

@@ -41,7 +41,9 @@ public class NodeDecl_taula extends NodeBase {
         
         if(inicialitzacio_taula != null){
             handleArrayInitialization();
-            dimensions = 1;
+            if(inicialitzacio_taula.getAssignacio_memoria() == null){
+                dimensions = 1;
+            }
         }
 
         ts.insertElement(id, tipus.getTipusAsString(), dimensions);

@@ -4,8 +4,6 @@ import java.util.List;
 
 import back_end.generate_code.ThreeAdressCode;
 import data_structures.SymbolTable;
-import front_end.simbols.NodeExprsimple;
-import front_end.simbols.NodeTipus;
 
 public abstract class TacUtil {
 
@@ -77,12 +75,14 @@ public abstract class TacUtil {
     public static void generateInd_ass(ThreeAdressCode cta, SymbolTable ts, String id, String value, String tipus, List<String> indexes) {
         String tempVar = cta.newTempVar(tipus, value);
         cta.generateCode(tempVar + " = " + value + "\n");
+        cta.generateCode("assign", generateIndexes(id, indexes), tempVar, ts);
+    }
 
+    public static String generateIndexes(String id, List<String> indexes) {
         StringBuilder indexBuilder = new StringBuilder();
         for (String index : indexes) {
             indexBuilder.append("[").append(index).append("]");
         }
-
-        cta.generateCode("assign", id + indexBuilder.toString(), tempVar, ts);
+        return id + indexBuilder.toString();
     }
 }

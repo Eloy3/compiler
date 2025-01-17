@@ -1,0 +1,15 @@
+principal(){
+
+    ent[] arrayt = reserva [2][3];
+
+    arrayt[0][0] = 1;
+    arrayt[0][1] = 2;
+    arrayt[0][2] = 3;
+    arrayt[1][0] = 7;
+
+    sortidaln(arrayt[1][0]);
+
+    bool[] boolean = {cert,cert,fals};
+
+    sortidaln(boolean[1]);
+}

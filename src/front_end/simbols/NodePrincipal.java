@@ -21,11 +21,10 @@ public class NodePrincipal extends NodeBase {
         cta.push(cta.getStart_stack(), "principal");
         cta.push(cta.getPproc(), "principal");
         cta.generateCode("principal:skip\n");
-
         String startLabel = cta.getTemp_id();
         cta.setTemp_id(null);
         tp.addRow(new Procedure(tp.getNewNumProc(), ts.getProfunditat(), startLabel, getParams(), 0, Tipus.NULL));
-        cta.generateCode("pmb " + startLabel + "\n");
+        //cta.generateCode("pmb " + startLabel + "\n");
 
         cta.push(cta.getStart_stack(), start_label);
         cta.setTemp_id("principal");

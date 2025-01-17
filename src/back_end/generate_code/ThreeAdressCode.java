@@ -125,6 +125,23 @@ public class ThreeAdressCode {
         return name;
     }
 
+    public String newVarLabel(String name, String type, String value) {
+        
+        tv.addRow(new Variable
+            (name,
+                    n_var,
+                    pproc.peek(),
+                tv.calculateStore(type, value),
+                    disp,
+                type,
+            value)
+        );
+
+        incDisplacement(tv.calculateStore(type, value));
+        n_var++;
+
+        return name;
+    }
     
     public String newVarArray(String name, String type, int length) {
         int store = tv.calculateStore(type, "") * length;
@@ -165,7 +182,11 @@ public class ThreeAdressCode {
         } catch (IOException e) {e.printStackTrace();}
     }
 
-    public String newLabel(){return "e" + label_num++;}
+
+    public String newLabel(){
+        String label = "e" + label_num++;
+        //newVar(label, "bool");
+        return label;}
 
     //Procediment que afegeix una instruccio de 3@C
     public void generateCode(String code){
@@ -193,9 +214,8 @@ public class ThreeAdressCode {
                 instruction_list.add(dest + " = " +value + "\n");
                 break;
         }
-
-        
     }
+    
     public void generateNewVarAssign(Simbol target, String tempVar, String value, SymbolTable ts) {
         instruction_list.add(newVar(target.getNom(), target.getTipus(), value) + " = " + tempVar + "\n");
     }
