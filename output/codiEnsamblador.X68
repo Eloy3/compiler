@@ -2,51 +2,39 @@
 START:
 * --> | SKIP | null | null | principal |
 principal:
-* --> | ASSIGNA | cert | null | t0 |
-	MOVE.B #-1,t0_principal
-* --> | IND_ASS | t0 | 0 | xx |
-	 LEA xx_principal,A0
-	 MOVE.B t0_principal,0(A0)
-* --> | ASSIGNA | cert | null | t1 |
-	MOVE.B #-1,t1_principal
-* --> | IND_ASS | t1 | 1 | xx |
-	 LEA xx_principal,A0
-	 MOVE.B t1_principal,2(A0)
-* --> | ASSIGNA | fals | null | t2 |
-	MOVE.B #0,t2_principal
-* --> | IND_ASS | t2 | 2 | xx |
-	 LEA xx_principal,A0
-	 MOVE.B t2_principal,4(A0)
-* --> | IND_VAL | xx | 1 | t4 |
-	 LEA xx_principal,A0
-	 MOVE.B 2(A0),t4_principal
-* --> | IF | t4 | null | e1 |
-	MOVE.B t4_principal,D0
-	MOVE.B #-1,D1
-	CMP.B D0,D1
-	BEQ e1
-* --> | GOTO | null | null | e2 |
-	JMP e2
-* --> | SKIP | null | null | e1 |
-e1:
-* --> | PARAM_C | 11 | null | null |
-	MOVE.W #11,-(A7)
+* --> | ASSIGNA | 3 | null | t0 |
+	MOVE.W #3,t0_principal
+* --> | ASSIGNA | t0 | null | a |
+	MOVE.W t0_principal,a_principal
+* --> | SKIP | null | null | e0 |
+e0:
+* --> | GOTO | null | null | e4 |
+	JMP e4
+* --> | SKIP | null | null | e3 |
+e3:
+* --> | PARAM_S | null | null | a |
+	MOVE.W a_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
+* --> | RESTA | a | 1 | t2 |
+	MOVE.W a_principal,D1
+	MOVE.W #1,D0
+	SUB.W D0,D1
+	MOVE.W D1,t2_principal
+	CLR.W D0
+	CLR.W D1
+* --> | ASSIGNA | t2 | null | a |
+	MOVE.W t2_principal,a_principal
 * --> | GOTO | null | null | e0 |
 	JMP e0
-* --> | SKIP | null | null | e2 |
-e2:
-* --> | SKIP | null | null | e0 |
-e0:
+* --> | SKIP | null | null | e4 |
+e4:
 	SIMHALT
  
-t0_principal: DS.B 1
-t1_principal: DS.B 1
-t2_principal: DS.B 1
-xx_principal: DS.B 3
-t4_principal: DS.B 1
+t0_principal: DS.W 1
+a_principal: DS.W 1
+t2_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0

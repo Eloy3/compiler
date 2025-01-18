@@ -1,6 +1,5 @@
 package front_end.simbols;
 
-import front_end.simbols.NodeExprsimple.tipusexpr;
 import util.TacUtil;
 import util.Util;
 
@@ -30,20 +29,21 @@ public class NodeBucle extends NodeBase {
         this.lc = lc;
     }
 
-    public boolean generateCodeWhile() {
-        if (!Util.validateCondicio(ts, condicio.getOperand1(), condicio.getOperand2(), condicio.getExpr().getValor(), lc)) return false;
+    public void generateCodeWhile() {
+        if (!Util.validateLoop(ts, condicio.getExpr(), condicio.getCond(), lc)) return;
         TacUtil.inicibucle(cta);
         TacUtil.etiquetacond(cta);
-        if(!GenerateConditionCode()) return false;
+        if(!GenerateConditionCode()) return;
         TacUtil.condiciobot(cta,false);
         ts.incAmbit();
         blocf.generateCode();
         TacUtil.retornabucle(cta);
         ts.decAmbit();
-        return true;
+        return;
     }
 
     public void generateCodeFor() {
+        if (!Util.validateLoop(ts, condicio.getExpr(), condicio.getCond(), lc)) return;
         ts.incAmbit();
         decl_Variable.generateCode();
         TacUtil.inicibucle(cta);
@@ -54,17 +54,8 @@ public class NodeBucle extends NodeBase {
         blocf.generateCode();
         TacUtil.retornabucle(cta);
         ts.decAmbit();
+        return;
     }
-
-    /* private boolean generateConditionCode() {
-        if (condicio.getOperador() != null) {
-            if (!condicio.generateCodeOperador()) return false;
-        } else {
-            condicio.generateCodeID();
-        }
-
-        return true;
-    } */
 
     private boolean GenerateConditionCode() {
         if (condicio.getOperador() != null) {

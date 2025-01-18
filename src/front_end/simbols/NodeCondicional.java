@@ -22,7 +22,7 @@ public class NodeCondicional extends NodeBase{
     }
 
     public boolean generateCode(){
-        if(condicio.getExpr()!=null){
+        /* if(condicio.getCond()==null){
             if(condicio.getExpr().getTipus() == tipusexpr.id){
                 Simbol var = Util.validateVariableExists(ts, condicio.getExpr().getValor(), lc);
                 if(var == null) return false;
@@ -37,25 +37,24 @@ public class NodeCondicional extends NodeBase{
                     ErrorLogger.logSemanticError(lc,"La variable '" + condicio.getExpr() + "' no té el tipus esperat '" + var.getTipus() + "'.");
                 }
             }
-        }
-        else if(!Util.validateBinaryOperands(ts, condicio.getOperand1(), condicio.getOperand2(), lc)) return false;
-        
-        String endLabel = cta.newLabel();
-        if (condicio.getOperador() != null) {
-            condicio.generateCodeOperador();
-        } else {
-            condicio.generateCodeID();
-        }
-        TacUtil.condiciobot(cta, false);
-        blocf.generateCode();
-        String falseLabel = cta.getTop(cta.getFalse_stack());
-        cta.generateCode("goto " + endLabel + "\n");
-        cta.generateCode(falseLabel + ":skip\n");
-        if(condsino!=null){
-            condsino.generateCode();
-        }
+        }else{ */
+            String endLabel = cta.newLabel();
+            if (condicio.getOperador() != null) {
+                if(!condicio.generateCodeOperador()) return false;
+            } else {
+                condicio.generateCodeID();
+            }
+            TacUtil.condiciobot(cta, false);
+            blocf.generateCode();
+            String falseLabel = cta.getTop(cta.getFalse_stack());
+            cta.generateCode("goto " + endLabel + "\n");
+            cta.generateCode(falseLabel + ":skip\n");
+            if(condsino!=null){
+                condsino.generateCode();
+            }
 
-        cta.generateCode(endLabel + ":skip\n");
-        return true;
+            cta.generateCode(endLabel + ":skip\n");
+            return true;
+        
     }
 }

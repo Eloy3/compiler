@@ -113,7 +113,7 @@ public class ThreeAdressCodeBackEnd {
         String op1 = parts[1];
         String operator = parts[2];
         String op2 = parts[3];
-        String label = parts[5];
+        String label = parts[6];
 
         switch (operator) {
             case "!=":
@@ -133,6 +133,12 @@ public class ThreeAdressCodeBackEnd {
                 break;
             case "<=":
                 instructionList.addInst(Operation.IFMENORIGUAL, op1, op2, label);
+                break;
+            case "ILogic":
+                instructionList.addInst(Operation.IFAND, op1, op2, label);
+                break;
+            case "OLogic":
+                instructionList.addInst(Operation.IFOR, op1, op2, label);
                 break;
             default:
                 System.err.println("Error: Unsupported conditional operator: " + operator);
@@ -174,6 +180,10 @@ public class ThreeAdressCodeBackEnd {
                 case "-" -> instructionList.addInst(Operation.RESTA, parts[2], parts[4], parts[0]);
                 case "*" -> instructionList.addInst(Operation.MULTIPLICACIO, parts[2], parts[4], parts[0]);
                 case "/" -> instructionList.addInst(Operation.DIVISIO, parts[2], parts[4], parts[0]);
+
+            // Handle logical operations: `x = y ILogic z`
+                case "ILogic" -> instructionList.addInst(Operation.AND, parts[2], parts[4], parts[0]);
+                case "OLogic" -> instructionList.addInst(Operation.OR, parts[2], parts[4], parts[0]);
                 default -> System.err.println("Error: Unknown operation in instruction: " + instruction);
             }
         }
@@ -271,8 +281,6 @@ public class ThreeAdressCodeBackEnd {
         }
     }
     
-    
-    
 
     public static Simbol createSimbolFromLine(String line) {
         String[] parts = line.split(", ");
@@ -283,11 +291,11 @@ public class ThreeAdressCodeBackEnd {
         
         if(!valorStr.equals("null")){
             Object valor = parseValue(tipus, valorStr);
-            return new Simbol(id, tipus, valor);
+            return new Simbol(id, tipus);
         }
         
 
-        return new Simbol(id, tipus, null);
+        return new Simbol(id, tipus);
     }
     public static Object parseValue(String tipus, String valorStr) {
         Object valor;

@@ -85,20 +85,6 @@ public class NodeVarinic2 extends NodeBase {
     }
     
     public void generateCodeExprcomposta() {
-/*         NodeExprsimple valueA = exprcomposta.getExprsimple();
-        String targetVar;
-        if (valueA.getTipus() == tipusexpr.id) {
-            targetVar = Util.validateVariableExists(ts, valueA.getValor(), lc).toString();
-        }
-        else if(valueA.getTipus() == tipusexpr.ent) {
-            targetVar = valueA.getValor();
-        }else{
-            ErrorLogger.logSemanticError(lc, "L'expressió " + valueA.getValor() + " no té un tipus vàlid per ser assignada de manera composta.");
-            return;
-        }
-        
-        if (targetVar == null) return; */
-
         Simbol left = Util.validateVariableExists(ts, id, lineCode);
         if (left == null) return;
 

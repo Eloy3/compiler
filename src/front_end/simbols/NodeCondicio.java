@@ -1,7 +1,9 @@
 package front_end.simbols;
 
+import errors.ErrorLogger;
 import front_end.simbols.NodeExprsimple.tipusexpr;
 import util.TacUtil;
+import util.Util;
 
 /**
  *
@@ -9,8 +11,7 @@ import util.TacUtil;
  */
 public class NodeCondicio extends NodeBase{
     
-    private NodeExprsimple operand1;
-    private NodeExprsimple operand2;
+    private NodeCondicio cond;
     private NodeOperador_cond operador;
     private int[] lc;
     
@@ -22,11 +23,11 @@ public class NodeCondicio extends NodeBase{
         this.lc = lc;
     }
     
-    public NodeCondicio(NodeExprsimple v, NodeOperador_cond o, NodeExprsimple v1, int[] lc) {
+    public NodeCondicio(NodeExprsimple v, NodeOperador_cond o, NodeCondicio cond, int[] lc) {
         super("NodeCondicio", 0);
-        operand1 = v;
-        operand2 = v1;
-        operador = o;
+        this.expr = v;
+        this.cond = cond;
+        this.operador = o;
         this.lc = lc;
     }
 
@@ -41,29 +42,87 @@ public class NodeCondicio extends NodeBase{
         }else{
             cta.generateCode("assign", cond, expr.getValor(), ts);
             TacUtil.etiquetacond(cta);
-            cta.generateCode(expr.getValor() + " ");
+            cta.generateCode(expr.getValor() + " then ");
         }
         
         return true;
     }
 
     public boolean generateCodeOperador(){
-        cta.generateCode(operand1.getValor()+" ");
-        cta.generateCode(operador.getOperador()+ " ");
-        cta.generateCode(operand2.getValor() + " ");
+
+        Simbol left = Util.validateVariableExists(ts, expr.getValor(), lc);
+        if (left == null) return false;
+
+        String valueB = resolveCompositeExpression(left.getTipus(), cond);
+        if (valueB == null) return false;
+        String cond = left.getNom().toString() + " " + operador.getOperador() + " " + valueB;
+        TacUtil.etiquetacond(cta);
+        cta.generateCode(cond + " then ");
         return true;
+    }
+
+    private String resolveCompositeExpression(String tipusA, NodeCondicio compositeExpression) {
+
+        NodeExprsimple exprA = compositeExpression.getExpr();
+        String valueA;
+        if (exprA.getTipus() == tipusexpr.id) {
+            Simbol target = Util.validateVariableExists(ts, exprA.getValor(), lc);
+            if(target == null) {
+                return null;
+            }else if(!Util.typeMatches(tipusA, target.getTipus())) {
+                ErrorLogger.logSemanticError(lc, "La variable '" + exprA.getValor() + "' no té el tipus esperat '" + tipusA + "'.");
+                return null;
+            }else{
+                valueA = target.getNom();
+            }
+        }
+        else if(exprA.getTipus() == tipusexpr.ent) {
+            valueA = exprA.getValor();
+        }else{
+            ErrorLogger.logSemanticError(lc, "L'expressió " + exprA.getValor() + " no té un tipus vàlid per ser assignada de manera composta.");
+            return null;
+        }
+
+        if (compositeExpression.getCond()==null) { 
+            return valueA;
+        }
+        
+        String operator = compositeExpression.getOperador().getOperador();
+
+        String tempVar = cta.newTempVar(tipusA);
+        String valueB = resolveCompositeExpression(tipusA,compositeExpression.getCond());
+        if (valueB == null) return null;
+        cta.generateAssignComposite(tempVar, exprA.getValor(), operator, valueB , ts);
+
+        return tempVar;
     }
 
     public NodeOperador_cond getOperador() {
         return operador;
     }
 
-    public NodeExprsimple getOperand1() {
-        return operand1;
+    public NodeCondicio getCond() {
+        return cond;
     }
 
-    public NodeExprsimple getOperand2() {
-        return operand2;
+    public void setCond(NodeCondicio cond) {
+        this.cond = cond;
+    }
+
+    public void setOperador(NodeOperador_cond operador) {
+        this.operador = operador;
+    }
+
+    public int[] getLc() {
+        return lc;
+    }
+
+    public void setLc(int[] lc) {
+        this.lc = lc;
+    }
+
+    public void setExpr(NodeExprsimple expr) {
+        this.expr = expr;
     }
 
     public NodeExprsimple getExpr() {

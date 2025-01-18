@@ -13,6 +13,7 @@ import front_end.simbols.NodeLlistaValors;
 import front_end.simbols.NodeProcedures;
 import front_end.simbols.Simbol;
 import front_end.simbols.NodeBase;
+import front_end.simbols.NodeCondicio;
 
 public abstract class Util {
     
@@ -68,7 +69,38 @@ public abstract class Util {
 
         return true;
     }
+    public static boolean validateLoop(SymbolTable ts, NodeExprsimple expr, NodeCondicio cond, int[] lc){
+        if(expr==null) return false;
+        String tipus;
+        if(expr.getTipus() == tipusexpr.id){
+            Simbol left = Util.validateVariableExists(ts, expr.getValor(), lc);
+            if (left == null) return false;
+            tipus = left.getTipus();
+        }else{
+            tipus = expr.getTipusAsString();
+        }
+        
+        if(cond == null) return true;
 
+        NodeExprsimple exprA;
+        while(cond != null){
+            exprA = cond.getExpr();
+            if (exprA.getTipus() == tipusexpr.id) {
+                Simbol target = Util.validateVariableExists(ts, exprA.getValor(), lc);
+                if(target == null) {
+                    return false;
+                }else if(!Util.typeMatches(tipus, target.getTipus())) {
+                    ErrorLogger.logSemanticError(lc, "La variable '" + exprA.getValor() + "' no té el tipus esperat '" + tipus + "'.");
+                    return false;
+                }
+            }else if(!Util.typeMatches(tipus, exprA.getTipusAsString())) {
+                ErrorLogger.logSemanticError(lc, "La variable '" + exprA.getValor() + "' no té el tipus esperat '" + tipus + "'.");
+                return false;
+            }
+            cond = cond.getCond();
+        }
+        return true;
+    }
     public static boolean validateCondicio(SymbolTable ts, NodeExprsimple operand1, NodeExprsimple operand2, String ID, int[] lc){
         if (operand1 != null) {
             if(operand1.getTipus().equals(tipusexpr.id)){

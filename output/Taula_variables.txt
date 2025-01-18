@@ -1,8 +1,6 @@
 Taula de variables
 
 Nombre          NV         Subprograma          Ocupació        Desplaçament    Tipus subjacent      Valor     
-t0              0          principal            4               0               BOOL                 cert      
-t1              1          principal            4               4               BOOL                 cert      
-t2              2          principal            4               8               BOOL                 fals      
-xx              3          principal            12              12              BOOL                           
-t4              4          principal            4               24              bool                           
+t0              0          principal            4               0               ENT                  3         
+a               1          principal            4               4               ENT                  3         
+t2              2          principal            4               8               ENT                            

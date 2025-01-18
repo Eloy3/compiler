@@ -16,6 +16,8 @@ public enum Operation {
     IFMAJORIGUAL,
     IFMENORIGUAL,
     IFDIFERENT,
+    IFAND,
+    IFOR,
     CALL,
     RTN,
     PMB,

@@ -52,8 +52,9 @@ igual = "=="
 diferent = "!="
 
 //operadors lògics
-OLi = "&&"
-OLo = "||"
+
+OLi = "ILogic"
+OLo = "OLogic"
 OLno = "!"
 
 
@@ -151,6 +152,7 @@ ws = [' '|'\t']+
 // Regles/accions
 // És molt important l'ordre de les regles!!!
 
+{OLo}                    { writeToken(this.yytext()); return symbol(ParserSym.OLO, this.yytext());    }
 {suma}                   { writeToken(this.yytext()); return symbol(ParserSym.SUMA, this.yytext());   }
 {resta}                  { writeToken(this.yytext()); return symbol(ParserSym.RESTA, this.yytext());  }
 {mul}                    { writeToken(this.yytext()); return symbol(ParserSym.MUL, this.yytext());    }
@@ -158,7 +160,6 @@ ws = [' '|'\t']+
 {igual}                  { writeToken(this.yytext()); return symbol(ParserSym.IGUAL, this.yytext());    }
 {diferent}               { writeToken(this.yytext()); return symbol(ParserSym.DIFERENT, this.yytext());    }
 {OLi}                    { writeToken(this.yytext()); return symbol(ParserSym.OLI, this.yytext());    }
-{OLo}                    { writeToken(this.yytext()); return symbol(ParserSym.OLO, this.yytext());    }
 {eparen}                 { writeToken(this.yytext()); return symbol(ParserSym.EParen); }
 {dparen}                 { writeToken(this.yytext()); return symbol(ParserSym.DParen); }
 {eclaudator}             { writeToken(this.yytext()); return symbol(ParserSym.EClaudator); }
@@ -191,7 +192,7 @@ ws = [' '|'\t']+
 {ENDLINE}                { /*return symbol(ParserSym.EOF);    */    numero_linea++;  }
 {ws}                     { /* No fer res amb els espais */  }
 [^] {
-    System.err.println("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
+    //System.err.println("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
     logLexicalError("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
     return symbol(ParserSym.error);
 }

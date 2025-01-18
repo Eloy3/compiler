@@ -1,0 +1,13 @@
+
+principal(){
+
+	bool a = cert;
+	bool b = fals;
+	bool c = fals;
+	si(a){
+		sortidaln(1);
+	}
+    si(a OLogic b ILogic c){
+        sortidaln(11);
+    }
+}

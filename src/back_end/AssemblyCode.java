@@ -133,6 +133,12 @@ public class AssemblyCode {
                 compare(i);
                 code.add("\tBLE " + (i.getDestiny()));
                 break;
+            case IFAND:
+                iifand(i);
+                break;
+            case IFOR:
+                iifor(i);
+                break;
             case SUMA:
                 isuma(i);
                 break;
@@ -484,20 +490,41 @@ public class AssemblyCode {
         Variable d = c3a.getVar(i.getDestiny());
         code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");
         code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1");
-        code.add("\tAND.B D0,D1");
-        code.add("\tMOVE.B D1," + varnom(d));
-        code.add("\tCLR.W D0");
-        code.add("\tCLR.W D1");
+        code.add("\tAND.B D1,D0");
+        code.add("\tMOVE.B D0," + varnom(d));
+        code.add("\tCLR.B D0");
+        code.add("\tCLR.B D1");
     }
 
+    private void iifand(Instruction3a i) {
+        code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");  // Load operand1 into D0
+        code.add("\tTST.B D0");                                 // Test if operand1 is non-zero
+        code.add("\tBEQ skip_" + i.getDestiny());               // Skip if operand1 is zero
+        code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1"); // Load operand2 into D1
+        code.add("\tTST.B D1");                                 // Test if operand2 is non-zero
+        code.add("\tBEQ skip_" + i.getDestiny());               // Skip if operand2 is zero
+        code.add("\tBRA " + i.getDestiny());                    // Both are true, jump to destination
+        code.add("skip_" + i.getDestiny() + ":");               // Label for skipping the jump
+    }
+    
     private void ior(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
         code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");
         code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1");
-        code.add("\tOR.B D0,D1");
-        code.add("\tMOVE.B D1," + varnom(d));
-        code.add("\tCLR.W D0");
-        code.add("\tCLR.W D1");
+        code.add("\tOR.B D1,D0");
+        code.add("\tMOVE.B D0," + varnom(d));
+        code.add("\tCLR.B D0");
+        code.add("\tCLR.B D1");
+    }
+    
+    private void iifor(Instruction3a i){
+        //Variable d = c3a.getVar(i.getDestiny());
+        code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");  // Load operand1 into D0
+        code.add("\tTST.B D0");                                 // Test if operand1 is non-zero
+        code.add("\tBNE " + i.getDestiny());                    // Jump if operand1 is non-zero
+        code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1"); // Load operand2 into D1
+        code.add("\tTST.B D1");                                 // Test if operand2 is non-zero
+        code.add("\tBNE " + i.getDestiny()); 
     }
 
     private void idesplazar(Instruction3a i){
