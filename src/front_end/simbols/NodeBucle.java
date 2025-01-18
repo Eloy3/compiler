@@ -31,7 +31,7 @@ public class NodeBucle extends NodeBase {
     }
 
     public boolean generateCodeWhile() {
-        if (!Util.validateCondicio(ts, condicio.getOperand1(), condicio.getOperand2(), condicio.getID(), lc)) return false;
+        if (!Util.validateCondicio(ts, condicio.getOperand1(), condicio.getOperand2(), condicio.getExpr().getValor(), lc)) return false;
         TacUtil.inicibucle(cta);
         TacUtil.etiquetacond(cta);
         if(!GenerateConditionCode()) return false;

@@ -2,6 +2,7 @@
 package front_end.simbols;
 
 import errors.ErrorLogger;
+import front_end.simbols.NodeExprsimple.tipusexpr;
 import util.TacUtil;
 import util.Util;
 
@@ -21,15 +22,24 @@ public class NodeCondicional extends NodeBase{
     }
 
     public boolean generateCode(){
-        if(condicio.getID()!=null){
-            Simbol var = Util.validateVariableExists(ts, condicio.getID(), lc);
-            if(var == null) return false;
-            if(!Util.typeMatches(var.getTipus(), "bool")){
-                ErrorLogger.logSemanticError(lc,"La variable '" + condicio.getID() + "' no té el tipus esperat '" + var.getTipus() + "'.");
+        if(condicio.getExpr()!=null){
+            if(condicio.getExpr().getTipus() == tipusexpr.id){
+                Simbol var = Util.validateVariableExists(ts, condicio.getExpr().getValor(), lc);
+                if(var == null) return false;
+                
+                if(!Util.typeMatches(var.getTipus(), "bool")){
+                    ErrorLogger.logSemanticError(lc,"La variable '" + condicio.getExpr() + "' no té el tipus esperat '" + var.getTipus() + "'.");
+                }
+            }else if(condicio.getExpr().getTipus() == tipusexpr.arrayValue){
+                Simbol var = Util.validateVariableExists(ts, condicio.getExpr().getValor(), lc);
+                if(var == null) return false;
+                if(!Util.typeMatches(var.getTipus(), "bool")){
+                    ErrorLogger.logSemanticError(lc,"La variable '" + condicio.getExpr() + "' no té el tipus esperat '" + var.getTipus() + "'.");
+                }
             }
         }
-        else if(!Util.validateCondicio(ts, condicio.getOperand1(), condicio.getOperand2(), condicio.getID(), lc)) return false;
-        TacUtil.etiquetacond(cta);
+        else if(!Util.validateBinaryOperands(ts, condicio.getOperand1(), condicio.getOperand2(), lc)) return false;
+        
         String endLabel = cta.newLabel();
         if (condicio.getOperador() != null) {
             condicio.generateCodeOperador();

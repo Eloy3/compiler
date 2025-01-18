@@ -72,7 +72,7 @@ public class AssemblyCode {
             switch (Tipus.valueOf(v.getType().toUpperCase())){
                 case BOOL:
                     bytes = true;
-                    code.add(name + ": DS.B 1");
+                    code.add(name + ": DS.B "+v.getStore()/calculateStore(v.getType()));
                     break;
                 case ENT:
                     if(bytes){
@@ -212,9 +212,11 @@ public class AssemblyCode {
             System.err.println("Error: Array not found for assignment: " + i);
             return;
         }
+
+        String move = array.getType().toUpperCase().equals("BOOL") ? "MOVE.B" : "MOVE.W";
         
         code.add("\t LEA " + getop(i.getDestiny()) + ",A0");
-        code.add("\t MOVE.W "+getop(i.getOperand1())+","+2*Integer.parseInt((i.getOperand2()))+"(A0)");
+        code.add("\t "+move+" "+getop(i.getOperand1())+","+2*Integer.parseInt((i.getOperand2()))+"(A0)");
     }
 
     private void iind_val(Instruction3a i) {
@@ -224,8 +226,10 @@ public class AssemblyCode {
             return;
         }
         
+        String move = array.getType().toUpperCase().equals("BOOL") ? "MOVE.B" : "MOVE.W";
+        
         code.add("\t LEA " + getop(i.getOperand1()) + ",A0");
-        code.add("\t MOVE.W "+2*Integer.parseInt((i.getOperand2()))+"(A0),"+getop(i.getDestiny()));
+        code.add("\t "+move+" "+2*Integer.parseInt((i.getOperand2()))+"(A0),"+getop(i.getDestiny()));
     }
 
     private void icall(Instruction3a i){

@@ -9,7 +9,9 @@ principal(){
 
     sortidaln(arrayt[1][0]);
 
-    bool[] boolean = {cert,cert,fals};
+    bool[] xx = {cert,cert,fals};
 
-    sortidaln(boolean[1]);
+    si(xx[1]){
+        sortidaln(11);
+    }
 }

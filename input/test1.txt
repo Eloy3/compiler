@@ -1,9 +1,9 @@
 
 principal(){
 
-	ent y = 3;
-	bool a = cert;
-	si(a){
-		sortidaln(3);
-	}
+	bool[] xx = {cert,cert,fals};
+
+    si(xx[1]){
+        sortidaln(11);
+    }
 }

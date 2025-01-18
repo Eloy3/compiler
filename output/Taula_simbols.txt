@@ -1,5 +1,4 @@
 NOM             TIPUS      NIVELL     ARGS                
  
 principal       NULL       1          []                  
-y               ENT        1          []                  
-a               BOOL       1          []                  
+xx              BOOL       1          []                  

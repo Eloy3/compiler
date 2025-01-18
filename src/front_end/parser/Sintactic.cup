@@ -205,7 +205,7 @@ entrada ::= ENTRADA EParen ID:i DParen {: RESULT = new NodeEntrada(i);:};
 condicional ::= SI EParen condicio:a DParen EClau blocf:b DClau condsino:c {: RESULT = new NodeCondicional(a,b,c,lexic.getLineColumn()); :};
 
 condicio ::= exprsimple:v operador_cond:o exprsimple:v1 {: RESULT = new NodeCondicio(v,o,v1,lexic.getLineColumn()); :}
-                | ID:id {: RESULT = new NodeCondicio(id,lexic.getLineColumn()); :};
+                | exprsimple:a {: RESULT = new NodeCondicio(a,lexic.getLineColumn()); :};
 
 condsino ::= SINO EClau blocf:a DClau {: RESULT = new NodeCondsino(a); :}
         |       {: RESULT = new NodeCondsino(); :};

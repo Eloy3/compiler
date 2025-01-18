@@ -1,5 +1,8 @@
 package front_end.simbols;
 
+import front_end.simbols.NodeExprsimple.tipusexpr;
+import util.TacUtil;
+
 /**
  *
  * @author Eloy
@@ -11,11 +14,11 @@ public class NodeCondicio extends NodeBase{
     private NodeOperador_cond operador;
     private int[] lc;
     
-    private String ID;
+    private NodeExprsimple expr;
     
-    public NodeCondicio(String id, int[] lc) {
+    public NodeCondicio(NodeExprsimple expr, int[] lc) {
         super("NodeCondicio", 0);
-        ID = id;
+        this.expr = expr;
         this.lc = lc;
     }
     
@@ -28,7 +31,19 @@ public class NodeCondicio extends NodeBase{
     }
 
     public boolean generateCodeID(){
-        cta.generateCode(ID + " then ");
+        String cond = cta.newTempVar("bool");
+        
+        if(expr.getTipus() == tipusexpr.arrayValue){
+            String ind = TacUtil.generateIndexes(expr.getValor(), expr.getPos());
+            cta.generateCode("assign", cond, ind, ts);
+            TacUtil.etiquetacond(cta);
+            cta.generateCode(cond + " then ");
+        }else{
+            cta.generateCode("assign", cond, expr.getValor(), ts);
+            TacUtil.etiquetacond(cta);
+            cta.generateCode(expr.getValor() + " ");
+        }
+        
         return true;
     }
 
@@ -51,11 +66,11 @@ public class NodeCondicio extends NodeBase{
         return operand2;
     }
 
-    public String getID() {
-        return ID;
+    public NodeExprsimple getExpr() {
+        return expr;
     }
 
-    public void setID(String iD) {
-        ID = iD;
+    public void setID(NodeExprsimple iD) {
+        expr = iD;
     }
 }

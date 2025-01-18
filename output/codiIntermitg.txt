@@ -1,13 +1,16 @@
 principal:skip
-t0 = 3
-y = t0
-t2 = cert
-a = t2
-if a then goto e0
-goto e1
-e0:skip
-param_c 3
-call line
+t0 = cert
+xx[0] = t0
+t1 = cert
+xx[1] = t1
+t2 = fals
+xx[2] = t2
+t4 = xx[1]
+if t4 then goto e1
 goto e2
 e1:skip
+param_c 11
+call line
+goto e0
 e2:skip
+e0:skip

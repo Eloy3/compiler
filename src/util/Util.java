@@ -41,12 +41,12 @@ public abstract class Util {
             return Util.validateVariableExists(ts, operand.getValor(), lc);
         }
         // Handle literals by creating a temporary Simbol
-        return new Simbol(operand.getTipusAsString(), operand.getValor());
+        return new Simbol(operand.getValor(), operand.getTipusAsString());
     }
 
     public static void validateUnaryOperand(SymbolTable ts, NodeExprsimple operand, int[] lc) {
         if (validateOperand(ts, operand, lc) == null) {
-            ErrorLogger.logSemanticError(lc,"Operand '" + operand.getValor() + "' is not valid.");
+            ErrorLogger.logSemanticError(lc,"Operand '" + operand.getValor() + "' no es vàlid.");
         }
     }
 
@@ -55,14 +55,13 @@ public abstract class Util {
         Simbol operand2 = validateOperand(ts, op2, lc);
 
         if (operand1 == null || operand2 == null) {
-            ErrorLogger.logSemanticError(lc,"Operands are not valid.");
             return false;
         }
 
         // Check type compatibility
         if (!typeMatches(operand1.getTipus(), operand2.getTipus())) {
-             ErrorLogger.logSemanticError(lc,"Operand types do not match: " +
-                op1.getValor() + " (" + operand1.getTipus() + ") and " +
+             ErrorLogger.logSemanticError(lc,"Els operands no tenen el mateix tipus: " +
+                op1.getValor() + " (" + operand1.getTipus() + ") i " +
                 op2.getValor() + " (" + operand2.getTipus() + ")");
                 return false;
         }
