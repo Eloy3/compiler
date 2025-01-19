@@ -2,7 +2,6 @@ package util;
 
 import java.util.ArrayList;
 
-import back_end.generate_code.ThreeAdressCode;
 import data_structures.Procedure;
 import data_structures.SymbolTable;
 import data_structures.TaulaProcediments;
@@ -10,9 +9,7 @@ import errors.ErrorLogger;
 import front_end.simbols.NodeExprsimple;
 import front_end.simbols.NodeExprsimple.tipusexpr;
 import front_end.simbols.NodeLlistaValors;
-import front_end.simbols.NodeProcedures;
 import front_end.simbols.Simbol;
-import front_end.simbols.NodeBase;
 import front_end.simbols.NodeCondicio;
 
 public abstract class Util {
@@ -37,21 +34,21 @@ public abstract class Util {
         return type1 != null && type1.equalsIgnoreCase(type2);
     }
 
-    public static Simbol validateOperand(SymbolTable ts, NodeExprsimple operand, int[] lc) {
+    /* public static Simbol validateOperand(SymbolTable ts, NodeExprsimple operand, int[] lc) {
         if (operand.getTipus() == NodeExprsimple.tipusexpr.id) {
             return Util.validateVariableExists(ts, operand.getValor(), lc);
         }
         // Handle literals by creating a temporary Simbol
         return new Simbol(operand.getValor(), operand.getTipusAsString());
-    }
+    } */
 
-    public static void validateUnaryOperand(SymbolTable ts, NodeExprsimple operand, int[] lc) {
+    /* public static void validateUnaryOperand(SymbolTable ts, NodeExprsimple operand, int[] lc) {
         if (validateOperand(ts, operand, lc) == null) {
             ErrorLogger.logSemanticError(lc,"Operand '" + operand.getValor() + "' no es vàlid.");
         }
-    }
+    } */
 
-    public static boolean validateBinaryOperands(SymbolTable ts, NodeExprsimple op1, NodeExprsimple op2, int[] lc) {
+    /* public static boolean validateBinaryOperands(SymbolTable ts, NodeExprsimple op1, NodeExprsimple op2, int[] lc) {
         Simbol operand1 = validateOperand(ts, op1, lc);
         Simbol operand2 = validateOperand(ts, op2, lc);
 
@@ -68,7 +65,7 @@ public abstract class Util {
         }
 
         return true;
-    }
+    } */
     public static boolean validateLoop(SymbolTable ts, NodeExprsimple expr, NodeCondicio cond, int[] lc){
         if(expr==null) return false;
         String tipus;
@@ -101,7 +98,7 @@ public abstract class Util {
         }
         return true;
     }
-    public static boolean validateCondicio(SymbolTable ts, NodeExprsimple operand1, NodeExprsimple operand2, String ID, int[] lc){
+/*     public static boolean validateCondicio(SymbolTable ts, NodeExprsimple operand1, NodeExprsimple operand2, String ID, int[] lc){
         if (operand1 != null) {
             if(operand1.getTipus().equals(tipusexpr.id)){
                 if(validateVariableExists(ts, operand1.getValor(), lc)==null) return false;
@@ -116,7 +113,7 @@ public abstract class Util {
             if(validateVariableExists(ts, ID, lc)==null) return false;
         }
         return true;
-    }
+    } */
 
     public static ArrayList<NodeExprsimple> getArrayList(NodeLlistaValors valors) {
         ArrayList<NodeExprsimple> list = new ArrayList<>();
@@ -126,10 +123,6 @@ public abstract class Util {
             aux = aux.getLlistaValors();
         }
         return list;
-    }
-
-    public static String appendCurrentProcedure(String baseName, SymbolTable ts) {
-        return baseName + "_" + ts.getCurrentProcedure();
     }
 
 }

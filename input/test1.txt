@@ -1,13 +1,8 @@
 
 principal(){
 
-	bool a = cert;
-	bool b = fals;
-	bool c = fals;
-	si(a){
-		sortidaln(1);
+	per(ent i=0;i!=10;i++){
+		sortidaln(i);
 	}
-    si(a OLogic b ILogic c){
-        sortidaln(11);
-    }
+
 }

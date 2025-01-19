@@ -28,10 +28,25 @@ parser code {:
 
         public void logSintacticError(String errorMessage) {
                 ErrorLogger.logSintacticError(lexic.getLineColumn(),errorMessage);
+                System.err.println(errorMessage);
+                System.exit(0);
         }
 
         public void logLexicError(String errorMessage) {
                 ErrorLogger.logLexicError(lexic.getLineColumn(),errorMessage);
+                System.err.println(errorMessage);
+                System.exit(0);
+        }
+
+        @Override
+        public void syntax_error(Symbol cur_token) {
+                // Custom error handling
+                if (cur_token != null && cur_token.sym == ParserSym.ID) {
+                logLexicError("Simbol inesperat \"" + cur_token.value + "\"");
+                }else{
+                logSintacticError("Símbol inesperat \"" + (cur_token == null ? "EOF" : cur_token.value) + "\"");
+                }
+                System.exit(0);
         }
 
 :}
@@ -79,7 +94,6 @@ non terminal NodeInicialitzacio_taula inicialitzacio_taula;
 non terminal NodeAssignacio_memoria assignacio_memoria;
 non terminal NodeEspecificacio_dimensio especificacio_dimensio; 
 non terminal NodeInic_element_taula inic_element_taula;
-non terminal NodeIndexos_taula indexos_taula;
 non terminal NodeValorTaula valorTaula;
 
 start with codi;
@@ -114,12 +128,12 @@ sentencia ::=   decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
               | decl_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"decl_taula"); :}
               | inic_element_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"inic_element_taula"); :}
         
-              | error PUNTICOMA {: logLexicError("Sentència invàlida");:}
-              | ID {: logLexicError("Sentència invàlida");:};
+              | error PUNTICOMA {: logLexicError("Sentència invàlida"); RESULT = null; :}
+              | ID {: logLexicError("Sentència invàlida"); RESULT = null; :};
 
 crida_funcio ::= ID:name EParen arg:a DParen {: RESULT = new NodeCrida_funcio(name, a, lexic.getLineColumn()); :}
                | ID:name EParen error DParen {: 
-                    logSintacticError("Crida a funció '" + name + "' amb arguments incorrectes."); 
+                    logSintacticError("Crida a funció '" + name + "' amb arguments incorrectes."); RESULT = null; 
                 :};
 
 arg ::= exprsimple:e arg2:a2 {: RESULT = new NodeArg(e, a2); :}
@@ -163,7 +177,13 @@ sentenciaf ::=  decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
               | condicional:c {: RESULT = new NodeSentencia(c,"condicional"); :}
               | retorna:r {: RESULT = new NodeSentencia(r,"retorna"); :}
               | sortida:s PUNTICOMA {:RESULT = new NodeSentencia(s, "sortida"); :}
-              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e, "entrada"); :};     
+              | entrada:e PUNTICOMA {:RESULT = new NodeSentencia(e, "entrada"); :}
+
+              | decl_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"decl_taula"); :}
+              | inic_element_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"inic_element_taula"); :}
+        
+              | error PUNTICOMA {: logLexicError("Sentència invàlida"); RESULT = null; :}
+              | ID {: logLexicError("Sentència invàlida"); RESULT = null; :};
 
 retorna ::= RETORNA exprsimple:expr PUNTICOMA {: RESULT = new NodeRetorna(expr, lexic.getLineColumn()); :}
         |   RETORNA PUNTICOMA {: RESULT = new NodeRetorna(); :};
@@ -205,7 +225,8 @@ entrada ::= ENTRADA EParen ID:i DParen {: RESULT = new NodeEntrada(i);:};
 condicional ::= SI EParen condicio:a DParen EClau blocf:b DClau condsino:c {: RESULT = new NodeCondicional(a,b,c,lexic.getLineColumn()); :};
 
 condicio ::= exprsimple:a operador_cond:b condicio:c {: RESULT = new NodeCondicio(a,b,c,lexic.getLineColumn()); :}
-                | exprsimple:a {: RESULT = new NodeCondicio(a,lexic.getLineColumn()); :};
+                | exprsimple:a {: RESULT = new NodeCondicio(a,lexic.getLineColumn()); :}
+                | error {:      logLexicError("Condició invàlida"); RESULT = null;  :};
 
 condsino ::= SINO EClau blocf:a DClau {: RESULT = new NodeCondsino(a); :}
         |       {: RESULT = new NodeCondsino(); :};
@@ -213,14 +234,17 @@ condsino ::= SINO EClau blocf:a DClau {: RESULT = new NodeCondsino(a); :}
 operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
         | OLO:a {: RESULT = new NodeOperador_cond(a); :}
         | IGUAL:a {: RESULT = new NodeOperador_cond(a); :}
-        | DIFERENT:a {: RESULT = new NodeOperador_cond(a); :};
+        | DIFERENT:a {: RESULT = new NodeOperador_cond(a); :}
+        | error {:      logLexicError("Operador invàlid"); RESULT = null; :}
+        | ID {: logLexicError("Operador invàlid"); RESULT = null; :};
 
 
 // **** WHILE i FOR ****
 
 bucle ::= MENTRE EParen condicio:c DParen EClau blocf:bloc DClau {: RESULT = new NodeBucle(c,bloc,lexic.getLineColumn()); :}
 
-        | PER EParen decl_variable:decl PUNTICOMA condicio:cond PUNTICOMA comportamentvl:comp DParen EClau blocf:bloc DClau {: RESULT = new NodeBucle(decl,cond,comp,bloc,lexic.getLineColumn()); :};
+        | PER EParen decl_variable:decl PUNTICOMA condicio:cond PUNTICOMA comportamentvl:comp DParen EClau blocf:bloc DClau {: RESULT = new NodeBucle(decl,cond,comp,bloc,lexic.getLineColumn()); :}
+        | error {:      logLexicError("Bucle invàlid"); RESULT = null; :};
 
 
 comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comportament.INCREMENT, lexic.getLineColumn()); :}

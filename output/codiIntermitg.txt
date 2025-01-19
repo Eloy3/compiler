@@ -1,13 +1,41 @@
+goto principal 
+suma:skip
+pmb suma
+t2 = a + b
+z = t2
+t4 = z
+rtn t4
+goto principal 
+resta:skip
+pmb resta
+t7 = a - b
+b = t7
+t9 = b
+rtn t9
 principal:skip
-t0 = 3
-a = t0
-e0:skip
-if if a != 0 then goto e3
-goto e4
-e3:skip
-param_s a
+t10 = 5
+x = t10
+t12 = 3
+y = t12
+param_s x
+param_s y
+call suma
+t14 = retInt
+z = t14
+param_s x
 call line
-t2 = a - 1
-a = t2
-goto e0
-e4:skip
+param_s y
+call line
+param_s z
+call line
+param_s x
+param_s y
+call resta
+t16 = retInt
+r = t16
+param_s x
+call line
+param_s y
+call line
+param_s r
+call line

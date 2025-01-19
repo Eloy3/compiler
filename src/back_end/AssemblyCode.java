@@ -454,8 +454,8 @@ public class AssemblyCode {
 
     private void iresta(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
-        code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D1");
-        code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D0");
+        code.add("\tMOVE.W " + getop(i.getOperand1(),d.getSubprog()) + ",D0");
+        code.add("\tMOVE.W " + getop(i.getOperand2(),d.getSubprog()) + ",D1");
         code.add("\tSUB.W D0,D1");
         code.add("\tMOVE.W D1," + varnom(d));
         code.add("\tCLR.W D0");
@@ -547,6 +547,21 @@ public class AssemblyCode {
 
     private String getop(String identificador){
         Variable v = c3a.getVar(identificador);
+        if (v == null){
+            if (identificador.startsWith("ret")){
+                return "D3";
+            } else {
+                if (identificador.equals("cert")) identificador = "-1";
+                else if (identificador.equals("fals")) identificador = "0";
+                return "#" + identificador;
+            }
+        } else{
+            return varnom(v);
+        }
+    }
+
+    private String getop(String identificador, String subprogram){
+        Variable v = c3a.getVar(identificador, subprogram);
         if (v == null){
             if (identificador.startsWith("ret")){
                 return "D3";

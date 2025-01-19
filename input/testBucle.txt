@@ -4,4 +4,8 @@ principal(){
 		sortidaln(a);
 		a = a-1;
 	}
+
+	per(ent i=0;i!=10;i++){
+		sortidaln(i);
+	}
 }

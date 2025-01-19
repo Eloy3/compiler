@@ -193,6 +193,6 @@ ws = [' '|'\t']+
 {ws}                     { /* No fer res amb els espais */  }
 [^] {
     //System.err.println("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
-    logLexicalError("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
+    logLexicalError("Error lèxic a la línea " + getLine() + ", columna " + getColumn() + ": Token no reconegut '" + yytext() + "'");
     return symbol(ParserSym.error);
 }

@@ -847,7 +847,7 @@ public class Lexic implements java_cup.runtime.Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             { //System.err.println("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
-    logLexicalError("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
+    logLexicalError("Error lèxic a la línea " + getLine() + ", columna " + getColumn() + ": Token no reconegut '" + yytext() + "'");
     return symbol(ParserSym.error);
             }
             // fall through

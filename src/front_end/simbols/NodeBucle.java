@@ -32,7 +32,7 @@ public class NodeBucle extends NodeBase {
     public void generateCodeWhile() {
         if (!Util.validateLoop(ts, condicio.getExpr(), condicio.getCond(), lc)) return;
         TacUtil.inicibucle(cta);
-        TacUtil.etiquetacond(cta);
+        //TacUtil.etiquetacond(cta);
         if(!GenerateConditionCode()) return;
         TacUtil.condiciobot(cta,false);
         ts.incAmbit();
@@ -43,11 +43,11 @@ public class NodeBucle extends NodeBase {
     }
 
     public void generateCodeFor() {
-        if (!Util.validateLoop(ts, condicio.getExpr(), condicio.getCond(), lc)) return;
         ts.incAmbit();
         decl_Variable.generateCode();
+        if (!Util.validateLoop(ts, condicio.getExpr(), condicio.getCond(), lc)) return;
         TacUtil.inicibucle(cta);
-        TacUtil.etiquetacond(cta);
+        //TacUtil.etiquetacond(cta);
         GenerateConditionCode();
         TacUtil.condiciobot(cta,false);
         comportamentv1.generateCode();

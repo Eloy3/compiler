@@ -1,22 +1,14 @@
 {
     "version": "0.2.0",
     "configurations": [
-
-        {
-            "type": "java",
-            "name": "Main",
-            "request": "launch",
-            "mainClass": "main.Main",
-            "projectName": "compilador_ab79c090"
-        },
         {
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "main.Main",
-            "projectName": "compilador",
+            "projectName": "compilador_ab79c090",
             "args": [
-                "input/testBucle.txt"
+                "input/procedureTest.txt"
             ],
             "vmArgs": "",
             "cwd": "${workspaceFolder}",
