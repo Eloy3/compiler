@@ -13,7 +13,7 @@ public class NodeDecl_taula extends NodeBase {
     private NodeDimensions_taula dimensions_taula;
     private NodeInicialitzacio_taula inicialitzacio_taula;
     private String id;
-    private int dimensions;
+    private ArrayList<Integer> dimensions;
     private int[] lineCode;
 
     public NodeDecl_taula(NodeTipus tipus, NodeDimensions_taula dimensions_taula, String id, NodeInicialitzacio_taula inicialitzacio_taula, int[] l){
@@ -40,13 +40,18 @@ public class NodeDecl_taula extends NodeBase {
         }
         
         if(inicialitzacio_taula != null){
-            handleArrayInitialization();
             if(inicialitzacio_taula.getAssignacio_memoria() == null){
-                dimensions = 1;
+                dimensions = new ArrayList<>();
+                dimensions.add(1);
+                ts.insertElement(id, tipus.getTipusAsString(), dimensions);
+                handleArrayInitialization();
+            }else{
+                handleArrayInitialization();
+                ts.insertElement(id, tipus.getTipusAsString(), dimensions);
             }
+        }else{
+            ts.insertElement(id, tipus.getTipusAsString());
         }
-
-        ts.insertElement(id, tipus.getTipusAsString(), dimensions);
     }
     
     private void handleArrayInitialization() {
@@ -69,18 +74,19 @@ public class NodeDecl_taula extends NodeBase {
         }else if(inicialitzacio_taula.getAssignacio_memoria() != null){
             ArrayList<NodeExprsimple> llistavalors = inicialitzacio_taula.extractParamList();
             int size = 1;
-            dimensions = 0;
+            dimensions = new ArrayList<>();
             for(NodeExprsimple valor : llistavalors){
                 if(valor.getTipus() == NodeExprsimple.tipusexpr.ent){
-                    if(!Util.typeMatches(tipus.getTipusAsString(), valor.getTipusAsString())) return;
                     int sizeParam = Integer.parseInt(valor.getValor());
                     if(sizeParam < 1){
                         ErrorLogger.logSemanticError(lineCode,"La dimensió de la taula ha de ser un enter positiu.");
+                        return;
                     }
                     size = size * sizeParam;
-                    dimensions++;
+                    dimensions.add(sizeParam);
                 }else{
                     ErrorLogger.logSemanticError(lineCode,"La declaració de la dimensió de la taula ha de ser un enter.");
+                    return;
                 }
             }
             cta.newVarArray(id, tipus.getTipusAsString(), size);

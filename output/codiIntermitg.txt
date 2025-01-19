@@ -1,41 +1,28 @@
-goto principal 
-suma:skip
-pmb suma
-t2 = a + b
-z = t2
-t4 = z
-rtn t4
-goto principal 
-resta:skip
-pmb resta
-t7 = a - b
-b = t7
-t9 = b
-rtn t9
 principal:skip
-t10 = 5
-x = t10
-t12 = 3
-y = t12
-param_s x
-param_s y
-call suma
-t14 = retInt
-z = t14
-param_s x
+t1 = 0 * 1
+t0 = t0 + t1
+t3 = 1
+tres[t0] = t3
+t5 = 1 * 1
+t4 = t4 + t5
+t7 = 2
+tres[t4] = t7
+t9 = 2 * 1
+t8 = t8 + t9
+t11 = 3
+tres[t8] = t11
+t13 = 0
+i = t13
+e0:skip
+if i != 3 then goto e1
+goto e2
+e1:skip
+t15 = i + 1
+i = t15
+t18 = i * 1
+t17 = t17 + t18
+t16 = tres[t17]
+param_s t16
 call line
-param_s y
-call line
-param_s z
-call line
-param_s x
-param_s y
-call resta
-t16 = retInt
-r = t16
-param_s x
-call line
-param_s y
-call line
-param_s r
-call line
+goto e0
+e2:skip

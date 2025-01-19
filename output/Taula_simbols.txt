@@ -1,14 +1,5 @@
 NOM             TIPUS      NIVELL     ARGS                
  
-suma            ENT        2          [b, a]              
-a               ENT        2          []                  
-b               ENT        2          []                  
-z               ENT        2          []                  
-resta           ENT        2          [b, a]              
-a               ENT        2          []                  
-b               ENT        2          []                  
 principal       NULL       1          []                  
-x               ENT        1          []                  
-y               ENT        1          []                  
-z               ENT        1          []                  
-r               ENT        1          []                  
+tres            ENT        1          []                  
+i               ENT        2          []                  

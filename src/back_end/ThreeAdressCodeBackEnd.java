@@ -154,14 +154,14 @@ public class ThreeAdressCodeBackEnd {
                 String lhs = assignParts[0].trim(); // Left-hand side
                 String rhs = assignParts[1].trim(); // Right-hand side
 
-                // Check for indexed assignment: `nom[0] = t0`
-                if (lhs.matches(".+\\[\\s*\\d+\\s*\\]")) {
+
+                if (lhs.matches(".+\\[\\w+]")) {
                     String arrayName = lhs.substring(0, lhs.indexOf('['));
                     String index = lhs.substring(lhs.indexOf('[') + 1, lhs.indexOf(']'));
                     instructionList.addInst(Operation.IND_ASS, rhs, index, arrayName);
                 } 
-                // Check for indexed value: `t0 = nom[0]`
-                else if (rhs.matches(".+\\[\\s*\\d+\\s*\\]")) {
+
+                else if (rhs.matches(".+\\[\\w+]")) {
                     String arrayName = rhs.substring(0, rhs.indexOf('['));
                     String index = rhs.substring(rhs.indexOf('[') + 1, rhs.indexOf(']'));
                     instructionList.addInst(Operation.IND_VAL, arrayName, index, lhs);
@@ -494,5 +494,4 @@ public class ThreeAdressCodeBackEnd {
             default: return null;
         }
     }
-
 }

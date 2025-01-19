@@ -27,7 +27,7 @@ public class NodeSortida extends NodeBase {
                 if(print.getTipus() == tipusexpr.arrayValue){
                     Simbol id = Util.validateVariableExists(ts, print.getValor(), lineCode);
                     String tempVar = cta.newTempVar(id.getTipus(), null);
-                    String array = TacUtil.generateIndexes(id.getNom(), print.getPos());
+                    String array = TacUtil.generateIndexes(cta, ts, id.getNom(), print.getPos());
                     cta.generateCode("assign", tempVar, array, ts);
                     cta.generateCode("param_s " + tempVar + "\n");
                 }else{
@@ -35,7 +35,7 @@ public class NodeSortida extends NodeBase {
                 }
                 cta.generateCode("call " + ((linea) ? "line" : "print") + "\n");
             } catch (RuntimeException e) {
-                ErrorLogger.logSemanticError(lineCode, e.getMessage());
+                ErrorLogger.logSemanticError(lineCode, "Error en la sortida de " + print.getValor());
             }
         }
         cta.setTemp_id(null);

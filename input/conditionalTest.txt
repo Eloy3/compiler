@@ -1,0 +1,12 @@
+principal(){
+	ent a = 3;
+	si(a!=3){
+		sortidaln(1);
+	}si_no{
+		sortidaln(2);
+	}
+    bool true = cert;
+    si(true){
+		sortidaln(3);
+	}
+}

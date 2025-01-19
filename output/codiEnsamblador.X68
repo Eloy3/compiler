@@ -1,126 +1,160 @@
 	org $1000
 START:
-* --> | GOTO | null | null | principal |
-	JMP principal
-* --> | SKIP | null | null | suma |
-suma:
-* --> | PMB | null | null | suma |
-	MOVE.W 4(A7),a_suma
-	MOVE.W 6(A7),b_suma
-* --> | SUMA | a | b | t2 |
-	MOVE.W a_suma,D0
-	MOVE.W b_suma,D1
-	ADD.W D0,D1
-	MOVE.W D1,t2_suma
-	CLR.W D0
-	CLR.W D1
-* --> | ASSIGNA | t2 | null | z |
-	MOVE.W t2_suma,z_suma
-* --> | ASSIGNA | z | null | t4 |
-	MOVE.W z_suma,t4_suma
-* --> | RTN | t4 | null | null |
-	MOVE.W t4_suma,D3
-	RTS
-* --> | GOTO | null | null | principal |
-	JMP principal
-* --> | SKIP | null | null | resta |
-resta:
-* --> | PMB | null | null | resta |
-	MOVE.W 4(A7),a_resta
-	MOVE.W 6(A7),b_resta
-* --> | RESTA | a | b | t7 |
-	MOVE.W a_resta,D0
-	MOVE.W b_resta,D1
-	SUB.W D0,D1
-	MOVE.W D1,t7_resta
-	CLR.W D0
-	CLR.W D1
-* --> | ASSIGNA | t7 | null | b |
-	MOVE.W t7_resta,b_suma
-* --> | ASSIGNA | b | null | t9 |
-	MOVE.W b_suma,t9_resta
-* --> | RTN | t9 | null | null |
-	MOVE.W t9_resta,D3
-	RTS
 * --> | SKIP | null | null | principal |
 principal:
-* --> | ASSIGNA | 5 | null | t10 |
-	MOVE.W #5,t10_principal
-* --> | ASSIGNA | t10 | null | x |
-	MOVE.W t10_principal,x_principal
-* --> | ASSIGNA | 3 | null | t12 |
-	MOVE.W #3,t12_principal
-* --> | ASSIGNA | t12 | null | y |
-	MOVE.W t12_principal,y_principal
-* --> | PARAM_S | null | null | x |
-	MOVE.W x_principal,-(A7)
-* --> | PARAM_S | null | null | y |
-	MOVE.W y_principal,-(A7)
-* --> | CALL | null | null | suma |
-	JSR suma
-* --> | ASSIGNA | retInt | null | t14 |
-	MOVE.W D3,t14_principal
-* --> | ASSIGNA | t14 | null | z |
-	MOVE.W t14_principal,z_suma
-* --> | PARAM_S | null | null | x |
-	MOVE.W x_principal,-(A7)
+* --> | MULTIPLICACIO | 0 | 1 | t1 |
+	MOVE.W #0,D0
+	EXT.L D0
+	MOVE.W #1,D1
+	EXT.L D1
+	MULS.W D0,D1
+	MOVE.W D1,t1_principal
+	CLR.W D0
+	CLR.W D1
+* --> | SUMA | t0 | t1 | t0 |
+	MOVE.W t0_principal,D0
+	MOVE.W t1_principal,D1
+	ADD.W D0,D1
+	MOVE.W D1,t0_principal
+	CLR.W D0
+	CLR.W D1
+* --> | ASSIGNA | 1 | null | t3 |
+	MOVE.W #1,t3_principal
+* --> | IND_ASS | t3 | t0 | tres |
+	 LEA tres_principal,A0
+	MOVE.W t0_principal, D1
+	MULS #2, D1
+	ADD.W D1,A0
+	 MOVE.W t3_principal,(A0)
+	CLR.W D1
+* --> | MULTIPLICACIO | 1 | 1 | t5 |
+	MOVE.W #1,D0
+	EXT.L D0
+	MOVE.W #1,D1
+	EXT.L D1
+	MULS.W D0,D1
+	MOVE.W D1,t5_principal
+	CLR.W D0
+	CLR.W D1
+* --> | SUMA | t4 | t5 | t4 |
+	MOVE.W t4_principal,D0
+	MOVE.W t5_principal,D1
+	ADD.W D0,D1
+	MOVE.W D1,t4_principal
+	CLR.W D0
+	CLR.W D1
+* --> | ASSIGNA | 2 | null | t7 |
+	MOVE.W #2,t7_principal
+* --> | IND_ASS | t7 | t4 | tres |
+	 LEA tres_principal,A0
+	MOVE.W t4_principal, D1
+	MULS #2, D1
+	ADD.W D1,A0
+	 MOVE.W t7_principal,(A0)
+	CLR.W D1
+* --> | MULTIPLICACIO | 2 | 1 | t9 |
+	MOVE.W #2,D0
+	EXT.L D0
+	MOVE.W #1,D1
+	EXT.L D1
+	MULS.W D0,D1
+	MOVE.W D1,t9_principal
+	CLR.W D0
+	CLR.W D1
+* --> | SUMA | t8 | t9 | t8 |
+	MOVE.W t8_principal,D0
+	MOVE.W t9_principal,D1
+	ADD.W D0,D1
+	MOVE.W D1,t8_principal
+	CLR.W D0
+	CLR.W D1
+* --> | ASSIGNA | 3 | null | t11 |
+	MOVE.W #3,t11_principal
+* --> | IND_ASS | t11 | t8 | tres |
+	 LEA tres_principal,A0
+	MOVE.W t8_principal, D1
+	MULS #2, D1
+	ADD.W D1,A0
+	 MOVE.W t11_principal,(A0)
+	CLR.W D1
+* --> | ASSIGNA | 0 | null | t13 |
+	MOVE.W #0,t13_principal
+* --> | ASSIGNA | t13 | null | i |
+	MOVE.W t13_principal,i_principal
+* --> | SKIP | null | null | e0 |
+e0:
+* --> | IFDIFERENT | i | 3 | e1 |
+	MOVE.W i_principal,D1
+	MOVE.W #3,D0
+	CMP.W D0,D1
+	BNE e1
+* --> | GOTO | null | null | e2 |
+	JMP e2
+* --> | SKIP | null | null | e1 |
+e1:
+* --> | SUMA | i | 1 | t15 |
+	MOVE.W i_principal,D0
+	MOVE.W #1,D1
+	ADD.W D0,D1
+	MOVE.W D1,t15_principal
+	CLR.W D0
+	CLR.W D1
+* --> | ASSIGNA | t15 | null | i |
+	MOVE.W t15_principal,i_principal
+* --> | MULTIPLICACIO | i | 1 | t18 |
+	MOVE.W i_principal,D0
+	EXT.L D0
+	MOVE.W #1,D1
+	EXT.L D1
+	MULS.W D0,D1
+	MOVE.W D1,t18_principal
+	CLR.W D0
+	CLR.W D1
+* --> | SUMA | t17 | t18 | t17 |
+	MOVE.W t17_principal,D0
+	MOVE.W t18_principal,D1
+	ADD.W D0,D1
+	MOVE.W D1,t17_principal
+	CLR.W D0
+	CLR.W D1
+* --> | IND_VAL | tres | t17 | t16 |
+	 LEA tres_principal,A0
+	MOVE.W t17_principal, D1
+	MULS #2, D1
+	ADD.W D1,A0
+	 MOVE.W (A0),t16_principal
+	CLR.W D1
+* --> | PARAM_S | null | null | t16 |
+	MOVE.W t16_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
-* --> | PARAM_S | null | null | y |
-	MOVE.W y_principal,-(A7)
-* --> | CALL | null | null | line |
-	JSR ILINE
-	ADDA.L #2,A7
-* --> | PARAM_S | null | null | z |
-	MOVE.W z_suma,-(A7)
-* --> | CALL | null | null | line |
-	JSR ILINE
-	ADDA.L #2,A7
-* --> | PARAM_S | null | null | x |
-	MOVE.W x_principal,-(A7)
-* --> | PARAM_S | null | null | y |
-	MOVE.W y_principal,-(A7)
-* --> | CALL | null | null | resta |
-	JSR resta
-* --> | ASSIGNA | retInt | null | t16 |
-	MOVE.W D3,t16_principal
-* --> | ASSIGNA | t16 | null | r |
-	MOVE.W t16_principal,r_principal
-* --> | PARAM_S | null | null | x |
-	MOVE.W x_principal,-(A7)
-* --> | CALL | null | null | line |
-	JSR ILINE
-	ADDA.L #2,A7
-* --> | PARAM_S | null | null | y |
-	MOVE.W y_principal,-(A7)
-* --> | CALL | null | null | line |
-	JSR ILINE
-	ADDA.L #2,A7
-* --> | PARAM_S | null | null | r |
-	MOVE.W r_principal,-(A7)
-* --> | CALL | null | null | line |
-	JSR ILINE
-	ADDA.L #2,A7
+* --> | GOTO | null | null | e0 |
+	JMP e0
+* --> | SKIP | null | null | e2 |
+e2:
 	SIMHALT
  
-a_suma: DS.W 1
-b_suma: DS.W 1
-t2_suma: DS.W 1
-z_suma: DS.W 1
-t4_suma: DS.W 1
-a_resta: DS.W 1
-b_resta: DS.W 1
-t7_resta: DS.W 1
-t9_resta: DS.W 1
+t0_principal: DS.W 1
+t1_principal: DS.W 1
+t2_principal: DS.W 1
+t3_principal: DS.W 1
+t4_principal: DS.W 1
+t5_principal: DS.W 1
+t6_principal: DS.W 1
+t7_principal: DS.W 1
+t8_principal: DS.W 1
+t9_principal: DS.W 1
 t10_principal: DS.W 1
-x_principal: DS.W 1
-t12_principal: DS.W 1
-y_principal: DS.W 1
-t14_principal: DS.W 1
-z_principal: DS.W 1
+t11_principal: DS.W 1
+tres_principal: DS.W 3
+t13_principal: DS.W 1
+i_principal: DS.W 1
+t15_principal: DS.W 1
 t16_principal: DS.W 1
-r_principal: DS.W 1
+t17_principal: DS.W 1
+t18_principal: DS.W 1
+t19_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0

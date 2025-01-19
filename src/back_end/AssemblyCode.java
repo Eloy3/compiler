@@ -212,19 +212,26 @@ public class AssemblyCode {
         }
     }
 
+    //a[b] = c
     private void iind_ass(Instruction3a i) {
         Variable array = c3a.getVar(i.getDestiny());
         if (array == null) {
             System.err.println("Error: Array not found for assignment: " + i);
             return;
         }
-
+        int max = array.getStore()/int_store;
         String move = array.getType().toUpperCase().equals("BOOL") ? "MOVE.B" : "MOVE.W";
         
         code.add("\t LEA " + getop(i.getDestiny()) + ",A0");
-        code.add("\t "+move+" "+getop(i.getOperand1())+","+2*Integer.parseInt((i.getOperand2()))+"(A0)");
+
+        code.add("\tMOVE.W " + getop(i.getOperand2()) + ", D1");
+        code.add("\tMULS #2, D1");
+        code.add("\tADD.W D1,A0");
+        code.add("\t "+move+" "+getop(i.getOperand1())+",(A0)");
+        code.add("\tCLR.W D1");
     }
 
+    //a = b[c] 
     private void iind_val(Instruction3a i) {
         Variable array = c3a.getVar(i.getDestiny());
         if (array == null) {
@@ -235,7 +242,12 @@ public class AssemblyCode {
         String move = array.getType().toUpperCase().equals("BOOL") ? "MOVE.B" : "MOVE.W";
         
         code.add("\t LEA " + getop(i.getOperand1()) + ",A0");
-        code.add("\t "+move+" "+2*Integer.parseInt((i.getOperand2()))+"(A0),"+getop(i.getDestiny()));
+
+        code.add("\tMOVE.W " + getop(i.getOperand2()) + ", D1");
+        code.add("\tMULS #2, D1");
+        code.add("\tADD.W D1,A0");
+        code.add("\t "+move+" (A0),"+getop(i.getDestiny()));
+        code.add("\tCLR.W D1");
     }
 
     private void icall(Instruction3a i){
@@ -438,16 +450,15 @@ public class AssemblyCode {
                     code.add("\tCMP.B D0,D1");
                     break;
             }
-
         }
     }
 
     private void isuma(Instruction3a i){
-        Variable destino = c3a.getVar(i.getDestiny());
+        Variable destiny = c3a.getVar(i.getDestiny());
         code.add("\tMOVE.W " + getop(i.getOperand1()) + ",D0");
         code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D1");
         code.add("\tADD.W D0,D1");
-        code.add("\tMOVE.W D1," + varnom(destino));
+        code.add("\tMOVE.W D1," + varnom(destiny));
         code.add("\tCLR.W D0");
         code.add("\tCLR.W D1");
     }

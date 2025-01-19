@@ -79,7 +79,7 @@ public class SymbolTable {
         writeSymbolToFile(s, null); // Arguments are null by default
     }
 
-    public void insertElement(String nom, String tipus, int dimensions) {
+    public void insertElement(String nom, String tipus, ArrayList<Integer> dimensions) {
         Simbol s = new Simbol(nom, tipus, dimensions);
         // tambit.peek().put(s.getNom(), s);
         tambit.get(profunditat - 1).put(s.getNom(), s);

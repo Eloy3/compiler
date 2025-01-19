@@ -189,6 +189,9 @@ public class NodeVarinic2 extends NodeBase {
         String tipus = var.getTipus();
 
         if(inicialitzacio_taula.getLlistavalors() != null){
+            ArrayList<Integer> dimensions = new ArrayList<>();
+            dimensions.add(1);
+            var.setArrayDimensions(dimensions);
             ArrayList<NodeExprsimple> llistavalors = Util.getArrayList(inicialitzacio_taula.getLlistavalors());
             for(int i=0; i < llistavalors.size(); i++){
                 NodeExprsimple valor = llistavalors.get(i);
@@ -207,7 +210,7 @@ public class NodeVarinic2 extends NodeBase {
         }else if(inicialitzacio_taula.getAssignacio_memoria() != null){
             ArrayList<NodeExprsimple> llistavalors = inicialitzacio_taula.extractParamList();
             int size = 1;
-            int dimensions = 0;
+            ArrayList<Integer> dimensions = new ArrayList<>();
             for(NodeExprsimple valor : llistavalors){
                 if(valor.getTipus() == NodeExprsimple.tipusexpr.ent){
                     if(!Util.typeMatches(tipus, valor.getTipusAsString())) return;
@@ -216,7 +219,7 @@ public class NodeVarinic2 extends NodeBase {
                         ErrorLogger.logSemanticError(lineCode,"La dimensió de la taula ha de ser un enter positiu.");
                     }
                     size = size * sizeParam;
-                    dimensions++;
+                    dimensions.add(sizeParam);
                 }else{
                     ErrorLogger.logSemanticError(lineCode,"La declaració de la dimensió de la taula ha de ser un enter.");
                 }

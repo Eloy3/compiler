@@ -1,7 +1,6 @@
 package front_end.simbols;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import errors.ErrorLogger;
@@ -27,9 +26,9 @@ public class NodeInic_element_taula extends NodeBase{
         Simbol idSimbol = Util.validateVariableExists(ts, id, lineCode);
         if(idSimbol == null) return;
 
-        int dimensions = idSimbol.getArrayDimensions();
+        ArrayList<Integer> dimensions = idSimbol.getArrayDimensions();
         ArrayList<NodeExprsimple> llistavalors = extractParamList();
-        if(dimensions != llistavalors.size()){
+        if(dimensions.size() != llistavalors.size()){
             ErrorLogger.logSemanticError(lineCode,"La dimensió de la taula ha de ser igual a la dimensió de l'indexació.");
             return;
         }
@@ -42,12 +41,16 @@ public class NodeInic_element_taula extends NodeBase{
                 if(indexSimbol == null) return;
 
                 if(!indexSimbol.getTipus().equalsIgnoreCase("ent")){
-                    ErrorLogger.logSemanticError(lineCode,"L'index ha se ser del tipus enter.");
+                    ErrorLogger.logSemanticError(lineCode,"L'index ha de ser del tipus enter.");
                     return;
                 }
-                indexes.add(indexSimbol.getValor().toString());
+                String indextmp = cta.newTempVar("ent");
+                cta.generateCode("assign", indextmp, indexSimbol.getNom(), ts);
+                indexes.add(indextmp);
+
             }else if(valor.getTipus() == NodeExprsimple.tipusexpr.ent){
                 indexes.add(valor.getValor());
+
             }else{
                 ErrorLogger.logSemanticError(lineCode, "L'index ha de ser un enter.");
                 return;

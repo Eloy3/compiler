@@ -1,20 +1,23 @@
 Taula de variables
 
 Nombre          NV         Subprograma          Ocupació        Desplaçament    Tipus subjacent      Valor     
-a               0          suma                 4               0               ENT                            
-b               1          suma                 4               4               ENT                            
-t2              2          suma                 4               8               ENT                            
-z               3          suma                 4               12              ENT                            
-t4              4          suma                 4               16              ENT                            
-a               5          resta                4               20              ENT                            
-b               6          resta                4               24              ENT                            
-t7              7          resta                4               28              ENT                            
-t9              9          resta                4               36              ENT                            
-t10             10         principal            4               40              ENT                  5         
-x               11         principal            4               44              ENT                  5         
-t12             12         principal            4               48              ENT                  3         
-y               13         principal            4               52              ENT                  3         
-t14             14         principal            4               56              ENT                            
-z               15         principal            4               60              ENT                            
-t16             16         principal            4               64              ENT                            
-r               17         principal            4               68              ENT                            
+t0              0          principal            4               0               ent                            
+t1              1          principal            4               4               ent                            
+t2              2          principal            4               8               ent                            
+t3              3          principal            4               12              ENT                            
+t4              4          principal            4               16              ent                            
+t5              5          principal            4               20              ent                            
+t6              6          principal            4               24              ent                            
+t7              7          principal            4               28              ENT                            
+t8              8          principal            4               32              ent                            
+t9              9          principal            4               36              ent                            
+t10             10         principal            4               40              ent                            
+t11             11         principal            4               44              ENT                            
+tres            12         principal            12              48              ENT                            
+t13             13         principal            4               60              ENT                  0         
+i               14         principal            4               64              ENT                  0         
+t15             15         principal            4               68              ENT                            
+t16             16         principal            4               72              ENT                            
+t17             17         principal            4               76              ent                            
+t18             18         principal            4               80              ent                            
+t19             19         principal            4               84              ent                            

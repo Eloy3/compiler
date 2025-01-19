@@ -35,7 +35,7 @@ public class NodeCondicio extends NodeBase{
         String cond = cta.newTempVar("bool");
         
         if(expr.getTipus() == tipusexpr.arrayValue){
-            String ind = TacUtil.generateIndexes(expr.getValor(), expr.getPos());
+            String ind = TacUtil.generateIndexes(cta, ts, expr.getValor(), expr.getPos());
             cta.generateCode("assign", cond, ind, ts);
             TacUtil.etiquetacond(cta);
             cta.generateCode(cond + " then ");

@@ -1,270 +1,304 @@
 00001000 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 19/01/2025 13:11:56
+Created On: 19/01/2025 23:46:48
 
 00001000                             1      org $1000
 00001000                             2  START:
-00001000                             3  * --> | GOTO | null | null | principal |
-00001000  4EF9 00001094              4      JMP principal
-00001006                             5  * --> | SKIP | null | null | suma |
-00001006                             6  suma:
-00001006                             7  * --> | PMB | null | null | suma |
-00001006  33EF 0004 00001150         8      MOVE.W 4(A7),a_suma
-0000100E  33EF 0006 00001152         9      MOVE.W 6(A7),b_suma
-00001016                            10  * --> | SUMA | a | b | t2 |
-00001016  3039 00001150             11      MOVE.W a_suma,D0
-0000101C  3239 00001152             12      MOVE.W b_suma,D1
-00001022  D240                      13      ADD.W D0,D1
-00001024  33C1 00001154             14      MOVE.W D1,t2_suma
-0000102A  4240                      15      CLR.W D0
-0000102C  4241                      16      CLR.W D1
-0000102E                            17  * --> | ASSIGNA | t2 | null | z |
-0000102E  33F9 00001154 00001156    18      MOVE.W t2_suma,z_suma
-00001038                            19  * --> | ASSIGNA | z | null | t4 |
-00001038  33F9 00001156 00001158    20      MOVE.W z_suma,t4_suma
-00001042                            21  * --> | RTN | t4 | null | null |
-00001042  3639 00001158             22      MOVE.W t4_suma,D3
-00001048  4E75                      23      RTS
-0000104A                            24  * --> | GOTO | null | null | principal |
-0000104A  4EF9 00001094             25      JMP principal
-00001050                            26  * --> | SKIP | null | null | resta |
-00001050                            27  resta:
-00001050                            28  * --> | PMB | null | null | resta |
-00001050  33EF 0004 0000115A        29      MOVE.W 4(A7),a_resta
-00001058  33EF 0006 0000115C        30      MOVE.W 6(A7),b_resta
-00001060                            31  * --> | RESTA | a | b | t7 |
-00001060  3039 0000115A             32      MOVE.W a_resta,D0
-00001066  3239 0000115C             33      MOVE.W b_resta,D1
-0000106C  9240                      34      SUB.W D0,D1
-0000106E  33C1 0000115E             35      MOVE.W D1,t7_resta
-00001074  4240                      36      CLR.W D0
-00001076  4241                      37      CLR.W D1
-00001078                            38  * --> | ASSIGNA | t7 | null | b |
-00001078  33F9 0000115E 00001152    39      MOVE.W t7_resta,b_suma
-00001082                            40  * --> | ASSIGNA | b | null | t9 |
-00001082  33F9 00001152 00001160    41      MOVE.W b_suma,t9_resta
-0000108C                            42  * --> | RTN | t9 | null | null |
-0000108C  3639 00001160             43      MOVE.W t9_resta,D3
-00001092  4E75                      44      RTS
-00001094                            45  * --> | SKIP | null | null | principal |
-00001094                            46  principal:
-00001094                            47  * --> | ASSIGNA | 5 | null | t10 |
-00001094  33FC 0005 00001162        48      MOVE.W #5,t10_principal
-0000109C                            49  * --> | ASSIGNA | t10 | null | x |
-0000109C  33F9 00001162 00001164    50      MOVE.W t10_principal,x_principal
-000010A6                            51  * --> | ASSIGNA | 3 | null | t12 |
-000010A6  33FC 0003 00001166        52      MOVE.W #3,t12_principal
-000010AE                            53  * --> | ASSIGNA | t12 | null | y |
-000010AE  33F9 00001166 00001168    54      MOVE.W t12_principal,y_principal
-000010B8                            55  * --> | PARAM_S | null | null | x |
-000010B8  3F39 00001164             56      MOVE.W x_principal,-(A7)
-000010BE                            57  * --> | PARAM_S | null | null | y |
-000010BE  3F39 00001168             58      MOVE.W y_principal,-(A7)
-000010C4                            59  * --> | CALL | null | null | suma |
-000010C4  4EB8 1006                 60      JSR suma
-000010C8                            61  * --> | ASSIGNA | retInt | null | t14 |
-000010C8  33C3 0000116A             62      MOVE.W D3,t14_principal
-000010CE                            63  * --> | ASSIGNA | t14 | null | z |
-000010CE  33F9 0000116A 00001156    64      MOVE.W t14_principal,z_suma
-000010D8                            65  * --> | PARAM_S | null | null | x |
-000010D8  3F39 00001164             66      MOVE.W x_principal,-(A7)
-000010DE                            67  * --> | CALL | null | null | line |
-000010DE  4EB9 00001294             68      JSR ILINE
-000010E4  548F                      69      ADDA.L #2,A7
-000010E6                            70  * --> | PARAM_S | null | null | y |
-000010E6  3F39 00001168             71      MOVE.W y_principal,-(A7)
-000010EC                            72  * --> | CALL | null | null | line |
-000010EC  4EB9 00001294             73      JSR ILINE
-000010F2  548F                      74      ADDA.L #2,A7
-000010F4                            75  * --> | PARAM_S | null | null | z |
-000010F4  3F39 00001156             76      MOVE.W z_suma,-(A7)
-000010FA                            77  * --> | CALL | null | null | line |
-000010FA  4EB9 00001294             78      JSR ILINE
-00001100  548F                      79      ADDA.L #2,A7
-00001102                            80  * --> | PARAM_S | null | null | x |
-00001102  3F39 00001164             81      MOVE.W x_principal,-(A7)
-00001108                            82  * --> | PARAM_S | null | null | y |
-00001108  3F39 00001168             83      MOVE.W y_principal,-(A7)
-0000110E                            84  * --> | CALL | null | null | resta |
-0000110E  4EB8 1050                 85      JSR resta
-00001112                            86  * --> | ASSIGNA | retInt | null | t16 |
-00001112  33C3 0000116E             87      MOVE.W D3,t16_principal
-00001118                            88  * --> | ASSIGNA | t16 | null | r |
-00001118  33F9 0000116E 00001170    89      MOVE.W t16_principal,r_principal
-00001122                            90  * --> | PARAM_S | null | null | x |
-00001122  3F39 00001164             91      MOVE.W x_principal,-(A7)
-00001128                            92  * --> | CALL | null | null | line |
-00001128  4EB9 00001294             93      JSR ILINE
-0000112E  548F                      94      ADDA.L #2,A7
-00001130                            95  * --> | PARAM_S | null | null | y |
-00001130  3F39 00001168             96      MOVE.W y_principal,-(A7)
-00001136                            97  * --> | CALL | null | null | line |
-00001136  4EB9 00001294             98      JSR ILINE
-0000113C  548F                      99      ADDA.L #2,A7
-0000113E                           100  * --> | PARAM_S | null | null | r |
-0000113E  3F39 00001170            101      MOVE.W r_principal,-(A7)
-00001144                           102  * --> | CALL | null | null | line |
-00001144  4EB9 00001294            103      JSR ILINE
-0000114A  548F                     104      ADDA.L #2,A7
-0000114C  FFFF FFFF                105      SIMHALT
-00001150                           106   
-00001150                           107  a_suma: DS.W 1
-00001152                           108  b_suma: DS.W 1
-00001154                           109  t2_suma: DS.W 1
-00001156                           110  z_suma: DS.W 1
-00001158                           111  t4_suma: DS.W 1
-0000115A                           112  a_resta: DS.W 1
-0000115C                           113  b_resta: DS.W 1
-0000115E                           114  t7_resta: DS.W 1
-00001160                           115  t9_resta: DS.W 1
-00001162                           116  t10_principal: DS.W 1
-00001164                           117  x_principal: DS.W 1
-00001166                           118  t12_principal: DS.W 1
-00001168                           119  y_principal: DS.W 1
-0000116A                           120  t14_principal: DS.W 1
-0000116C                           121  z_principal: DS.W 1
-0000116E                           122  t16_principal: DS.W 1
-00001170                           123  r_principal: DS.W 1
-00001172                           124   
-00001172                           125  strout: DS.B 100
-000011D6= 0000                     126      DC.W 0
-000011D8                           127   
-000011D8                           128  ISUMA:
-000011D8  0800 000F                129      BTST.L #15,D0
-000011DC  6700 0026                130      BEQ ADD2
-000011E0  4640                     131      NOT.W D0
-000011E2  5240                     132      ADDQ.W #1,D0
-000011E4  0801 000F                133      BTST.L #15,D1
-000011E8  6700 0012                134      BEQ ADD1
-000011EC  4641                     135      NOT.W D1
-000011EE  5241                     136      ADDQ.W #1,D1
-000011F0  D240                     137      ADD.W D0,D1
-000011F2  4641                     138      NOT.W D1
-000011F4  5241                     139      ADDQ.W #1,D1
-000011F6  4EB9 0000121C            140      JSR ADD4
-000011FC                           141  ADD1:
-000011FC  9240                     142      SUB.W D0,D1
-000011FE  4EB9 0000121C            143      JSR ADD4
-00001204                           144  ADD2:
-00001204  0801 000F                145      BTST.L #15,D1
-00001208  6700 0010                146      BEQ ADD3
-0000120C  4641                     147      NOT.W D1
-0000120E  5241                     148      ADDQ.W #1,D1
-00001210  9041                     149      SUB.W D1,D0
-00001212  3200                     150      MOVE.W  D0,D1
-00001214  4EB9 0000121C            151      JSR ADD4
-0000121A                           152  ADD3:
-0000121A  D240                     153      ADD.W D0,D1
-0000121C                           154  ADD4:
-0000121C  4E75                     155      RTS
-0000121E                           156  IRESTA:
-0000121E  0801 000F                157      BTST.L #15,D1
-00001222  6700 0022                158      BEQ SUB2
-00001226  4641                     159      NOT.W D1
-00001228  5241                     160      ADDQ.W #1,D1
-0000122A  0800 000F                161      BTST.L #15,D0
-0000122E  6700 000E                162      BEQ SUB1
-00001232  4640                     163      NOT.W D0
-00001234  5240                     164      ADDQ.W #1,D0
-00001236  9240                     165      SUB.W D0,D1
-00001238  4641                     166      NOT.W D1
-0000123A  5241                     167      ADDQ.W #1,D1
-0000123C  4E75                     168      RTS
-0000123E                           169  SUB1:
-0000123E  D240                     170      ADD.W D0,D1
-00001240  4641                     171      NOT.W D1
-00001242  5241                     172      ADDQ.W #1,D1
-00001244  4E75                     173      RTS
-00001246                           174  SUB2:
-00001246  0800 000F                175      BTST.L #15,D0
-0000124A  6700 000A                176      BEQ SUB3
-0000124E  4640                     177      NOT.W D0
-00001250  5240                     178      ADDQ.W #1,D0
-00001252  D240                     179      ADD.W D0,D1
-00001254  4E75                     180      RTS
-00001256                           181  SUB3:
-00001256  9240                     182      SUB.W D0,D1
-00001258  4E75                     183      RTS
-0000125A                           184  SPRINT:
-0000125A  226F 0004                185      MOVE.L 4(A7),A1
-0000125E  7001                     186      MOVE.L #1,D0
-00001260  323C 0064                187      MOVE.W #100,D1
-00001264  4E4F                     188      TRAP #15
-00001266  4E75                     189      RTS
-00001268                           190  SLINE:
-00001268  226F 0004                191      MOVE.L 4(A7),A1
-0000126C  2F09                     192      MOVE.L A1,-(A7)
-0000126E  4EB8 125A                193      JSR SPRINT
-00001272  588F                     194      ADDA.L #4,A7
-00001274  700B                     195      MOVE.L #11,D0
-00001276  323C 00FF                196      MOVE.W #$00FF,D1
-0000127A  4E4F                     197      TRAP #15
-0000127C  5241                     198      ADD.W #1,D1
-0000127E  C27C 00FF                199      AND.W #$00FF,D1
-00001282  4E4F                     200      TRAP #15
-00001284  4E75                     201      RTS
-00001286                           202  IPRINT:
-00001286  4281                     203      CLR.L D1
-00001288  322F 0004                204      MOVE.W 4(A7),D1
-0000128C  48C1                     205      EXT.L D1
-0000128E  7003                     206      MOVE.L #3,D0
-00001290  4E4F                     207      TRAP #15
-00001292  4E75                     208      RTS
-00001294                           209  ILINE:
-00001294  322F 0004                210      MOVE.W 4(A7),D1
-00001298  3F01                     211      MOVE.W D1,-(A7)
-0000129A  4EB8 1286                212      JSR IPRINT
-0000129E  544F                     213      ADDA.W #2,A7
-000012A0  700B                     214      MOVE.L #11,D0
-000012A2  323C 00FF                215      MOVE.W #$00FF,D1
-000012A6  4E4F                     216      TRAP #15
-000012A8  5241                     217      ADD.W #1,D1
-000012AA  C27C 00FF                218      AND.W #$00FF,D1
-000012AE  4E4F                     219      TRAP #15
-000012B0  4E75                     220      RTS
-000012B2                           221  GETINT:
-000012B2  7004                     222      MOVE.L #4,D0
-000012B4  4E4F                     223      TRAP #15
-000012B6  3F41 0004                224      MOVE.W D1,4(A7)
-000012BA  4E75                     225      RTS
-000012BC                           226  GETSTR:
-000012BC  226F 0004                227      MOVEA.L 4(A7),A1
-000012C0  7002                     228      MOVE.L #2,D0
-000012C2  4E4F                     229      TRAP #15
-000012C4  4E75                     230      RTS
-000012C6                           231  STRCPY:
-000012C6  12D8                     232      MOVE.B (A0)+,(A1)+
-000012C8  66FC                     233      BNE STRCPY
-000012CA  4E75                     234      RTS
-000012CC                           235  STRCMP:
-000012CC  B308                     236      CMPM.B (A0)+,(A1)+
-000012CE  6600 0008                237      BNE STRRET
-000012D2  4A28 FFFF                238      TST.B -1(A0)
-000012D6  66F4                     239      BNE STRCMP
-000012D8                           240  STRRET:
-000012D8  4E75                     241      RTS
-000012DA                           242  STRCON:
-000012DA  4240                     243      CLR.W D0
-000012DC  323C 0064                244      MOVE.W #100,D1
-000012E0                           245  STRCON1:
-000012E0  14D8                     246      MOVE.B (A0)+,(A2)+
-000012E2  6700 000E                247      BEQ STRCON2
-000012E6  5240                     248      ADDQ.W #1,D0
-000012E8  B240                     249      CMP.W D0,D1
-000012EA  6700 0008                250      BEQ STRCON3
-000012EE  4EF8 12E0                251      JMP STRCON1
-000012F2                           252  STRCON2:
-000012F2  538A                     253      SUBA.L #1,A2
-000012F4                           254  STRCON3:
-000012F4  14D9                     255      MOVE.B (A1)+,(A2)+
-000012F6  6700 000E                256      BEQ STRCON4
-000012FA  5240                     257      ADDQ.W #1,D0
-000012FC  B240                     258      CMP.W D0,D1
-000012FE  6700 0006                259      BEQ STRCON4
-00001302  4EF8 12F4                260      JMP STRCON3
-00001306                           261  STRCON4:
-00001306  4E75                     262      RTS
-00001308                           263      END START
+00001000                             3  * --> | SKIP | null | null | principal |
+00001000                             4  principal:
+00001000                             5  * --> | MULTIPLICACIO | 0 | 1 | t1 |
+00001000  303C 0000                  6      MOVE.W #0,D0
+00001004  48C0                       7      EXT.L D0
+00001006  323C 0001                  8      MOVE.W #1,D1
+0000100A  48C1                       9      EXT.L D1
+0000100C  C3C0                      10      MULS.W D0,D1
+0000100E  33C1 000011A2             11      MOVE.W D1,t1_principal
+00001014  4240                      12      CLR.W D0
+00001016  4241                      13      CLR.W D1
+00001018                            14  * --> | SUMA | t0 | t1 | t0 |
+00001018  3039 000011A0             15      MOVE.W t0_principal,D0
+0000101E  3239 000011A2             16      MOVE.W t1_principal,D1
+00001024  D240                      17      ADD.W D0,D1
+00001026  33C1 000011A0             18      MOVE.W D1,t0_principal
+0000102C  4240                      19      CLR.W D0
+0000102E  4241                      20      CLR.W D1
+00001030                            21  * --> | ASSIGNA | 1 | null | t3 |
+00001030  33FC 0001 000011A6        22      MOVE.W #1,t3_principal
+00001038                            23  * --> | IND_ASS | t3 | t0 | tres |
+00001038  41F9 000011B8             24       LEA tres_principal,A0
+0000103E  3239 000011A0             25      MOVE.W t0_principal, D1
+00001044  C3FC 0002                 26      MULS #2, D1
+00001048  D0C1                      27      ADD.W D1,A0
+0000104A  30B9 000011A6             28       MOVE.W t3_principal,(A0)
+00001050  4241                      29      CLR.W D1
+00001052                            30  * --> | MULTIPLICACIO | 1 | 1 | t5 |
+00001052  303C 0001                 31      MOVE.W #1,D0
+00001056  48C0                      32      EXT.L D0
+00001058  323C 0001                 33      MOVE.W #1,D1
+0000105C  48C1                      34      EXT.L D1
+0000105E  C3C0                      35      MULS.W D0,D1
+00001060  33C1 000011AA             36      MOVE.W D1,t5_principal
+00001066  4240                      37      CLR.W D0
+00001068  4241                      38      CLR.W D1
+0000106A                            39  * --> | SUMA | t4 | t5 | t4 |
+0000106A  3039 000011A8             40      MOVE.W t4_principal,D0
+00001070  3239 000011AA             41      MOVE.W t5_principal,D1
+00001076  D240                      42      ADD.W D0,D1
+00001078  33C1 000011A8             43      MOVE.W D1,t4_principal
+0000107E  4240                      44      CLR.W D0
+00001080  4241                      45      CLR.W D1
+00001082                            46  * --> | ASSIGNA | 2 | null | t7 |
+00001082  33FC 0002 000011AE        47      MOVE.W #2,t7_principal
+0000108A                            48  * --> | IND_ASS | t7 | t4 | tres |
+0000108A  41F9 000011B8             49       LEA tres_principal,A0
+00001090  3239 000011A8             50      MOVE.W t4_principal, D1
+00001096  C3FC 0002                 51      MULS #2, D1
+0000109A  D0C1                      52      ADD.W D1,A0
+0000109C  30B9 000011AE             53       MOVE.W t7_principal,(A0)
+000010A2  4241                      54      CLR.W D1
+000010A4                            55  * --> | MULTIPLICACIO | 2 | 1 | t9 |
+000010A4  303C 0002                 56      MOVE.W #2,D0
+000010A8  48C0                      57      EXT.L D0
+000010AA  323C 0001                 58      MOVE.W #1,D1
+000010AE  48C1                      59      EXT.L D1
+000010B0  C3C0                      60      MULS.W D0,D1
+000010B2  33C1 000011B2             61      MOVE.W D1,t9_principal
+000010B8  4240                      62      CLR.W D0
+000010BA  4241                      63      CLR.W D1
+000010BC                            64  * --> | SUMA | t8 | t9 | t8 |
+000010BC  3039 000011B0             65      MOVE.W t8_principal,D0
+000010C2  3239 000011B2             66      MOVE.W t9_principal,D1
+000010C8  D240                      67      ADD.W D0,D1
+000010CA  33C1 000011B0             68      MOVE.W D1,t8_principal
+000010D0  4240                      69      CLR.W D0
+000010D2  4241                      70      CLR.W D1
+000010D4                            71  * --> | ASSIGNA | 3 | null | t11 |
+000010D4  33FC 0003 000011B6        72      MOVE.W #3,t11_principal
+000010DC                            73  * --> | IND_ASS | t11 | t8 | tres |
+000010DC  41F9 000011B8             74       LEA tres_principal,A0
+000010E2  3239 000011B0             75      MOVE.W t8_principal, D1
+000010E8  C3FC 0002                 76      MULS #2, D1
+000010EC  D0C1                      77      ADD.W D1,A0
+000010EE  30B9 000011B6             78       MOVE.W t11_principal,(A0)
+000010F4  4241                      79      CLR.W D1
+000010F6                            80  * --> | ASSIGNA | 0 | null | t13 |
+000010F6  33FC 0000 000011BE        81      MOVE.W #0,t13_principal
+000010FE                            82  * --> | ASSIGNA | t13 | null | i |
+000010FE  33F9 000011BE 000011C0    83      MOVE.W t13_principal,i_principal
+00001108                            84  * --> | SKIP | null | null | e0 |
+00001108                            85  e0:
+00001108                            86  * --> | IFDIFERENT | i | 3 | e1 |
+00001108  3239 000011C0             87      MOVE.W i_principal,D1
+0000110E  303C 0003                 88      MOVE.W #3,D0
+00001112  B240                      89      CMP.W D0,D1
+00001114  6600 0008                 90      BNE e1
+00001118                            91  * --> | GOTO | null | null | e2 |
+00001118  4EF9 0000119C             92      JMP e2
+0000111E                            93  * --> | SKIP | null | null | e1 |
+0000111E                            94  e1:
+0000111E                            95  * --> | SUMA | i | 1 | t15 |
+0000111E  3039 000011C0             96      MOVE.W i_principal,D0
+00001124  323C 0001                 97      MOVE.W #1,D1
+00001128  D240                      98      ADD.W D0,D1
+0000112A  33C1 000011C2             99      MOVE.W D1,t15_principal
+00001130  4240                     100      CLR.W D0
+00001132  4241                     101      CLR.W D1
+00001134                           102  * --> | ASSIGNA | t15 | null | i |
+00001134  33F9 000011C2 000011C0   103      MOVE.W t15_principal,i_principal
+0000113E                           104  * --> | MULTIPLICACIO | i | 1 | t18 |
+0000113E  3039 000011C0            105      MOVE.W i_principal,D0
+00001144  48C0                     106      EXT.L D0
+00001146  323C 0001                107      MOVE.W #1,D1
+0000114A  48C1                     108      EXT.L D1
+0000114C  C3C0                     109      MULS.W D0,D1
+0000114E  33C1 000011C8            110      MOVE.W D1,t18_principal
+00001154  4240                     111      CLR.W D0
+00001156  4241                     112      CLR.W D1
+00001158                           113  * --> | SUMA | t17 | t18 | t17 |
+00001158  3039 000011C6            114      MOVE.W t17_principal,D0
+0000115E  3239 000011C8            115      MOVE.W t18_principal,D1
+00001164  D240                     116      ADD.W D0,D1
+00001166  33C1 000011C6            117      MOVE.W D1,t17_principal
+0000116C  4240                     118      CLR.W D0
+0000116E  4241                     119      CLR.W D1
+00001170                           120  * --> | IND_VAL | tres | t17 | t16 |
+00001170  41F9 000011B8            121       LEA tres_principal,A0
+00001176  3239 000011C6            122      MOVE.W t17_principal, D1
+0000117C  C3FC 0002                123      MULS #2, D1
+00001180  D0C1                     124      ADD.W D1,A0
+00001182  33D0 000011C4            125       MOVE.W (A0),t16_principal
+00001188  4241                     126      CLR.W D1
+0000118A                           127  * --> | PARAM_S | null | null | t16 |
+0000118A  3F39 000011C4            128      MOVE.W t16_principal,-(A7)
+00001190                           129  * --> | CALL | null | null | line |
+00001190  4EB9 000012EE            130      JSR ILINE
+00001196  548F                     131      ADDA.L #2,A7
+00001198                           132  * --> | GOTO | null | null | e0 |
+00001198  4EF8 1108                133      JMP e0
+0000119C                           134  * --> | SKIP | null | null | e2 |
+0000119C                           135  e2:
+0000119C  FFFF FFFF                136      SIMHALT
+000011A0                           137   
+000011A0                           138  t0_principal: DS.W 1
+000011A2                           139  t1_principal: DS.W 1
+000011A4                           140  t2_principal: DS.W 1
+000011A6                           141  t3_principal: DS.W 1
+000011A8                           142  t4_principal: DS.W 1
+000011AA                           143  t5_principal: DS.W 1
+000011AC                           144  t6_principal: DS.W 1
+000011AE                           145  t7_principal: DS.W 1
+000011B0                           146  t8_principal: DS.W 1
+000011B2                           147  t9_principal: DS.W 1
+000011B4                           148  t10_principal: DS.W 1
+000011B6                           149  t11_principal: DS.W 1
+000011B8                           150  tres_principal: DS.W 3
+000011BE                           151  t13_principal: DS.W 1
+000011C0                           152  i_principal: DS.W 1
+000011C2                           153  t15_principal: DS.W 1
+000011C4                           154  t16_principal: DS.W 1
+000011C6                           155  t17_principal: DS.W 1
+000011C8                           156  t18_principal: DS.W 1
+000011CA                           157  t19_principal: DS.W 1
+000011CC                           158   
+000011CC                           159  strout: DS.B 100
+00001230= 0000                     160      DC.W 0
+00001232                           161   
+00001232                           162  ISUMA:
+00001232  0800 000F                163      BTST.L #15,D0
+00001236  6700 0026                164      BEQ ADD2
+0000123A  4640                     165      NOT.W D0
+0000123C  5240                     166      ADDQ.W #1,D0
+0000123E  0801 000F                167      BTST.L #15,D1
+00001242  6700 0012                168      BEQ ADD1
+00001246  4641                     169      NOT.W D1
+00001248  5241                     170      ADDQ.W #1,D1
+0000124A  D240                     171      ADD.W D0,D1
+0000124C  4641                     172      NOT.W D1
+0000124E  5241                     173      ADDQ.W #1,D1
+00001250  4EB9 00001276            174      JSR ADD4
+00001256                           175  ADD1:
+00001256  9240                     176      SUB.W D0,D1
+00001258  4EB9 00001276            177      JSR ADD4
+0000125E                           178  ADD2:
+0000125E  0801 000F                179      BTST.L #15,D1
+00001262  6700 0010                180      BEQ ADD3
+00001266  4641                     181      NOT.W D1
+00001268  5241                     182      ADDQ.W #1,D1
+0000126A  9041                     183      SUB.W D1,D0
+0000126C  3200                     184      MOVE.W  D0,D1
+0000126E  4EB9 00001276            185      JSR ADD4
+00001274                           186  ADD3:
+00001274  D240                     187      ADD.W D0,D1
+00001276                           188  ADD4:
+00001276  4E75                     189      RTS
+00001278                           190  IRESTA:
+00001278  0801 000F                191      BTST.L #15,D1
+0000127C  6700 0022                192      BEQ SUB2
+00001280  4641                     193      NOT.W D1
+00001282  5241                     194      ADDQ.W #1,D1
+00001284  0800 000F                195      BTST.L #15,D0
+00001288  6700 000E                196      BEQ SUB1
+0000128C  4640                     197      NOT.W D0
+0000128E  5240                     198      ADDQ.W #1,D0
+00001290  9240                     199      SUB.W D0,D1
+00001292  4641                     200      NOT.W D1
+00001294  5241                     201      ADDQ.W #1,D1
+00001296  4E75                     202      RTS
+00001298                           203  SUB1:
+00001298  D240                     204      ADD.W D0,D1
+0000129A  4641                     205      NOT.W D1
+0000129C  5241                     206      ADDQ.W #1,D1
+0000129E  4E75                     207      RTS
+000012A0                           208  SUB2:
+000012A0  0800 000F                209      BTST.L #15,D0
+000012A4  6700 000A                210      BEQ SUB3
+000012A8  4640                     211      NOT.W D0
+000012AA  5240                     212      ADDQ.W #1,D0
+000012AC  D240                     213      ADD.W D0,D1
+000012AE  4E75                     214      RTS
+000012B0                           215  SUB3:
+000012B0  9240                     216      SUB.W D0,D1
+000012B2  4E75                     217      RTS
+000012B4                           218  SPRINT:
+000012B4  226F 0004                219      MOVE.L 4(A7),A1
+000012B8  7001                     220      MOVE.L #1,D0
+000012BA  323C 0064                221      MOVE.W #100,D1
+000012BE  4E4F                     222      TRAP #15
+000012C0  4E75                     223      RTS
+000012C2                           224  SLINE:
+000012C2  226F 0004                225      MOVE.L 4(A7),A1
+000012C6  2F09                     226      MOVE.L A1,-(A7)
+000012C8  4EB8 12B4                227      JSR SPRINT
+000012CC  588F                     228      ADDA.L #4,A7
+000012CE  700B                     229      MOVE.L #11,D0
+000012D0  323C 00FF                230      MOVE.W #$00FF,D1
+000012D4  4E4F                     231      TRAP #15
+000012D6  5241                     232      ADD.W #1,D1
+000012D8  C27C 00FF                233      AND.W #$00FF,D1
+000012DC  4E4F                     234      TRAP #15
+000012DE  4E75                     235      RTS
+000012E0                           236  IPRINT:
+000012E0  4281                     237      CLR.L D1
+000012E2  322F 0004                238      MOVE.W 4(A7),D1
+000012E6  48C1                     239      EXT.L D1
+000012E8  7003                     240      MOVE.L #3,D0
+000012EA  4E4F                     241      TRAP #15
+000012EC  4E75                     242      RTS
+000012EE                           243  ILINE:
+000012EE  322F 0004                244      MOVE.W 4(A7),D1
+000012F2  3F01                     245      MOVE.W D1,-(A7)
+000012F4  4EB8 12E0                246      JSR IPRINT
+000012F8  544F                     247      ADDA.W #2,A7
+000012FA  700B                     248      MOVE.L #11,D0
+000012FC  323C 00FF                249      MOVE.W #$00FF,D1
+00001300  4E4F                     250      TRAP #15
+00001302  5241                     251      ADD.W #1,D1
+00001304  C27C 00FF                252      AND.W #$00FF,D1
+00001308  4E4F                     253      TRAP #15
+0000130A  4E75                     254      RTS
+0000130C                           255  GETINT:
+0000130C  7004                     256      MOVE.L #4,D0
+0000130E  4E4F                     257      TRAP #15
+00001310  3F41 0004                258      MOVE.W D1,4(A7)
+00001314  4E75                     259      RTS
+00001316                           260  GETSTR:
+00001316  226F 0004                261      MOVEA.L 4(A7),A1
+0000131A  7002                     262      MOVE.L #2,D0
+0000131C  4E4F                     263      TRAP #15
+0000131E  4E75                     264      RTS
+00001320                           265  STRCPY:
+00001320  12D8                     266      MOVE.B (A0)+,(A1)+
+00001322  66FC                     267      BNE STRCPY
+00001324  4E75                     268      RTS
+00001326                           269  STRCMP:
+00001326  B308                     270      CMPM.B (A0)+,(A1)+
+00001328  6600 0008                271      BNE STRRET
+0000132C  4A28 FFFF                272      TST.B -1(A0)
+00001330  66F4                     273      BNE STRCMP
+00001332                           274  STRRET:
+00001332  4E75                     275      RTS
+00001334                           276  STRCON:
+00001334  4240                     277      CLR.W D0
+00001336  323C 0064                278      MOVE.W #100,D1
+0000133A                           279  STRCON1:
+0000133A  14D8                     280      MOVE.B (A0)+,(A2)+
+0000133C  6700 000E                281      BEQ STRCON2
+00001340  5240                     282      ADDQ.W #1,D0
+00001342  B240                     283      CMP.W D0,D1
+00001344  6700 0008                284      BEQ STRCON3
+00001348  4EF8 133A                285      JMP STRCON1
+0000134C                           286  STRCON2:
+0000134C  538A                     287      SUBA.L #1,A2
+0000134E                           288  STRCON3:
+0000134E  14D9                     289      MOVE.B (A1)+,(A2)+
+00001350  6700 000E                290      BEQ STRCON4
+00001354  5240                     291      ADDQ.W #1,D0
+00001356  B240                     292      CMP.W D0,D1
+00001358  6700 0006                293      BEQ STRCON4
+0000135C  4EF8 134E                294      JMP STRCON3
+00001360                           295  STRCON4:
+00001360  4E75                     296      RTS
+00001362                           297      END START
 
 No errors detected
 No warnings generated
@@ -273,48 +307,52 @@ No warnings generated
 SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
-ADD1                11FC
-ADD2                1204
-ADD3                121A
-ADD4                121C
-A_RESTA             115A
-A_SUMA              1150
-B_RESTA             115C
-B_SUMA              1152
-GETINT              12B2
-GETSTR              12BC
-ILINE               1294
-IPRINT              1286
-IRESTA              121E
-ISUMA               11D8
-PRINCIPAL           1094
-RESTA               1050
-R_PRINCIPAL         1170
-SLINE               1268
-SPRINT              125A
+ADD1                1256
+ADD2                125E
+ADD3                1274
+ADD4                1276
+E0                  1108
+E1                  111E
+E2                  119C
+GETINT              130C
+GETSTR              1316
+ILINE               12EE
+IPRINT              12E0
+IRESTA              1278
+ISUMA               1232
+I_PRINCIPAL         11C0
+PRINCIPAL           1000
+SLINE               12C2
+SPRINT              12B4
 START               1000
-STRCMP              12CC
-STRCON              12DA
-STRCON1             12E0
-STRCON2             12F2
-STRCON3             12F4
-STRCON4             1306
-STRCPY              12C6
-STROUT              1172
-STRRET              12D8
-SUB1                123E
-SUB2                1246
-SUB3                1256
-SUMA                1006
-T10_PRINCIPAL       1162
-T12_PRINCIPAL       1166
-T14_PRINCIPAL       116A
-T16_PRINCIPAL       116E
-T2_SUMA             1154
-T4_SUMA             1158
-T7_RESTA            115E
-T9_RESTA            1160
-X_PRINCIPAL         1164
-Y_PRINCIPAL         1168
-Z_PRINCIPAL         116C
-Z_SUMA              1156
+STRCMP              1326
+STRCON              1334
+STRCON1             133A
+STRCON2             134C
+STRCON3             134E
+STRCON4             1360
+STRCPY              1320
+STROUT              11CC
+STRRET              1332
+SUB1                1298
+SUB2                12A0
+SUB3                12B0
+T0_PRINCIPAL        11A0
+T10_PRINCIPAL       11B4
+T11_PRINCIPAL       11B6
+T13_PRINCIPAL       11BE
+T15_PRINCIPAL       11C2
+T16_PRINCIPAL       11C4
+T17_PRINCIPAL       11C6
+T18_PRINCIPAL       11C8
+T19_PRINCIPAL       11CA
+T1_PRINCIPAL        11A2
+T2_PRINCIPAL        11A4
+T3_PRINCIPAL        11A6
+T4_PRINCIPAL        11A8
+T5_PRINCIPAL        11AA
+T6_PRINCIPAL        11AC
+T7_PRINCIPAL        11AE
+T8_PRINCIPAL        11B0
+T9_PRINCIPAL        11B2
+TRES_PRINCIPAL      11B8

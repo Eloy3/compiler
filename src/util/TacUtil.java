@@ -1,9 +1,12 @@
 package util;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import back_end.generate_code.ThreeAdressCode;
 import data_structures.SymbolTable;
+import front_end.simbols.Simbol;
 
 public abstract class TacUtil {
 
@@ -69,20 +72,68 @@ public abstract class TacUtil {
      * @param id The identifier of the array.
      * @param value The value to be assigned.
      * @param tipus The type of the value.
-     * @param indexes The indices at which the value is to be assigned.
+     * @param indexes The indexes at which the value is to be assigned.
      * array[i][j]...[n] = value
      */
     public static void generateInd_ass(ThreeAdressCode cta, SymbolTable ts, String id, String value, String tipus, List<String> indexes) {
-        String tempVar = cta.newTempVar(tipus, value);
+        /* Simbol idSimbol = ts.get(id);
+        ArrayList<Integer> dimensions = idSimbol.getArrayDimensions();
+
+        //reverse the values in the list
+        ArrayList<Integer> reversed = new ArrayList<>();
+        for (int i = dimensions.size() - 1; i >= 0; i--) {
+            reversed.add(dimensions.get(i));
+        }
+        dimensions = reversed;
+
+
+        //calculate whichever position name[i][j]...[n] is
+        ArrayList<Integer> dimensionsValue = new ArrayList<>();
+        int elements = 1;
+        for (int i = dimensions.size() - 1; i >= 0; i--) {
+            dimensionsValue.add(elements);
+            elements = dimensions.get(i) * elements;
+        }
+        
+        String indextmp = cta.newTempVar("ent");
+        for(int i = 0; i < indexes.size(); i++){
+            indextmp = cta.newTempVar("ent");
+            cta.generateCode("assign", indextmp, indexes.get(i), ts);
+            cta.generateCode(indextmp + " = " + indextmp + " * " + dimensionsValue.get(i) + "\n");
+        } */
+        String index = generateIndexes(cta, ts, id, indexes);
+        String tempVar = cta.newTempVar(tipus);
         cta.generateCode(tempVar + " = " + value + "\n");
-        cta.generateCode("assign", generateIndexes(id, indexes), tempVar, ts);
+        cta.generateCode("assign", index, tempVar, ts);
     }
 
-    public static String generateIndexes(String id, List<String> indexes) {
-        StringBuilder indexBuilder = new StringBuilder();
-        for (String index : indexes) {
-            indexBuilder.append("[").append(index).append("]");
+    public static String generateIndexes(ThreeAdressCode cta, SymbolTable ts, String id, List<String> indexes) {
+        Simbol idSimbol = ts.get(id);
+        ArrayList<Integer> dimensions = idSimbol.getArrayDimensions();
+
+        //reverse the values in the list
+        ArrayList<Integer> reversed = new ArrayList<>();
+        for (int i = dimensions.size() - 1; i >= 0; i--) {
+            reversed.add(dimensions.get(i));
         }
-        return id + indexBuilder.toString();
+        dimensions = reversed;
+
+
+        //calculate whichever position name[i][j]...[n] is
+        ArrayList<Integer> dimensionsValue = new ArrayList<>();
+        int elements = 1;
+        for (int i = dimensions.size() - 1; i >= 0; i--) {
+            dimensionsValue.add(elements);
+            elements = dimensions.get(i) * elements;
+        }
+        
+        String indextmp = cta.newTempVar("ent");
+        String indextmp2 = cta.newTempVar("ent");
+        for(int i = 0; i < indexes.size(); i++){
+            cta.generateCode(indextmp2 + " = " + indexes.get(i) + " * " + dimensionsValue.get(i) + "\n");
+            cta.generateCode(indextmp + " = " + indextmp + " + " + indextmp2 + "\n");
+            indextmp2 = cta.newTempVar("ent");
+        }
+        return id+"["+indextmp+"]";
     }
 }

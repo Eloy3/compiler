@@ -9,7 +9,7 @@ public class Simbol{
     String subprogram;
     Object valor;
 
-    int arrayDimensions;
+    ArrayList<Integer> arrayDimensions;
     private ArrayList<String> args;
 
     public Simbol(String nom, String tipus, String subprogram, Object valor) {
@@ -25,7 +25,7 @@ public class Simbol{
         this.valor = valor;
     }
 
-    public Simbol(String nom, String tipus, int dimensions) {
+    public Simbol(String nom, String tipus, ArrayList<Integer> dimensions) {
         this.nom = nom;
         this.tipus = tipus;
         this.arrayDimensions = dimensions;
@@ -93,11 +93,11 @@ public class Simbol{
         this.tipusSubjacent = tipusSubjacent;
     }
 
-    public int getArrayDimensions() {
+    public ArrayList<Integer> getArrayDimensions() {
         return arrayDimensions;
     }
 
-    public void setArrayDimensions(int arrayDimensions) {
+    public void setArrayDimensions(ArrayList<Integer> arrayDimensions) {
         this.arrayDimensions = arrayDimensions;
     }
     

@@ -1,8 +1,9 @@
 
 principal(){
 
-	per(ent i=0;i!=10;i++){
-		sortidaln(i);
+	ent[] tres;
+	tres = {1,2,3};
+	per(ent i=0;i!=3;i++){
+		sortidaln(tres[i]);
 	}
-
 }
