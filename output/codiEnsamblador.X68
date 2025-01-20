@@ -2,6 +2,8 @@
 START:
 * --> | SKIP | null | null | principal |
 principal:
+* --> | ASSIGNA | 0 | null | t0 |
+	MOVE.W #0,t0_principal
 * --> | MULTIPLICACIO | 0 | 1 | t1 |
 	MOVE.W #0,D0
 	EXT.L D0
@@ -27,6 +29,8 @@ principal:
 	ADD.W D1,A0
 	 MOVE.W t3_principal,(A0)
 	CLR.W D1
+* --> | ASSIGNA | 0 | null | t4 |
+	MOVE.W #0,t4_principal
 * --> | MULTIPLICACIO | 1 | 1 | t5 |
 	MOVE.W #1,D0
 	EXT.L D0
@@ -52,6 +56,8 @@ principal:
 	ADD.W D1,A0
 	 MOVE.W t7_principal,(A0)
 	CLR.W D1
+* --> | ASSIGNA | 0 | null | t8 |
+	MOVE.W #0,t8_principal
 * --> | MULTIPLICACIO | 2 | 1 | t9 |
 	MOVE.W #2,D0
 	EXT.L D0
@@ -92,43 +98,45 @@ e0:
 	JMP e2
 * --> | SKIP | null | null | e1 |
 e1:
-* --> | SUMA | i | 1 | t15 |
-	MOVE.W i_principal,D0
-	MOVE.W #1,D1
-	ADD.W D0,D1
-	MOVE.W D1,t15_principal
-	CLR.W D0
-	CLR.W D1
-* --> | ASSIGNA | t15 | null | i |
-	MOVE.W t15_principal,i_principal
-* --> | MULTIPLICACIO | i | 1 | t18 |
+* --> | ASSIGNA | 0 | null | t16 |
+	MOVE.W #0,t16_principal
+* --> | MULTIPLICACIO | i | 1 | t17 |
 	MOVE.W i_principal,D0
 	EXT.L D0
 	MOVE.W #1,D1
 	EXT.L D1
 	MULS.W D0,D1
-	MOVE.W D1,t18_principal
-	CLR.W D0
-	CLR.W D1
-* --> | SUMA | t17 | t18 | t17 |
-	MOVE.W t17_principal,D0
-	MOVE.W t18_principal,D1
-	ADD.W D0,D1
 	MOVE.W D1,t17_principal
 	CLR.W D0
 	CLR.W D1
-* --> | IND_VAL | tres | t17 | t16 |
+* --> | SUMA | t16 | t17 | t16 |
+	MOVE.W t16_principal,D0
+	MOVE.W t17_principal,D1
+	ADD.W D0,D1
+	MOVE.W D1,t16_principal
+	CLR.W D0
+	CLR.W D1
+* --> | IND_VAL | tres | t16 | t15 |
 	 LEA tres_principal,A0
-	MOVE.W t17_principal, D1
+	MOVE.W t16_principal, D1
 	MULS #2, D1
 	ADD.W D1,A0
-	 MOVE.W (A0),t16_principal
+	 MOVE.W (A0),t15_principal
 	CLR.W D1
-* --> | PARAM_S | null | null | t16 |
-	MOVE.W t16_principal,-(A7)
+* --> | PARAM_S | null | null | t15 |
+	MOVE.W t15_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR ILINE
 	ADDA.L #2,A7
+* --> | SUMA | i | 1 | t19 |
+	MOVE.W i_principal,D0
+	MOVE.W #1,D1
+	ADD.W D0,D1
+	MOVE.W D1,t19_principal
+	CLR.W D0
+	CLR.W D1
+* --> | ASSIGNA | t19 | null | i |
+	MOVE.W t19_principal,i_principal
 * --> | GOTO | null | null | e0 |
 	JMP e0
 * --> | SKIP | null | null | e2 |

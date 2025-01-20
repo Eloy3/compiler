@@ -15,4 +15,10 @@ principal(){
         sortidaln(11);
     }
 
+    ent[] tres;
+	tres = {1,2,3};
+	per(ent i=0;i!=3;i++){
+		sortidaln(tres[i]);
+	}
+
 }

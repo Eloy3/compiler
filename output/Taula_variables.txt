@@ -17,7 +17,7 @@ tres            12         principal            12              48              
 t13             13         principal            4               60              ENT                  0         
 i               14         principal            4               64              ENT                  0         
 t15             15         principal            4               68              ENT                            
-t16             16         principal            4               72              ENT                            
+t16             16         principal            4               72              ent                            
 t17             17         principal            4               76              ent                            
 t18             18         principal            4               80              ent                            
-t19             19         principal            4               84              ent                            
+t19             19         principal            4               84              ENT                            

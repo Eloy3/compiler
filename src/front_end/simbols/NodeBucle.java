@@ -50,8 +50,8 @@ public class NodeBucle extends NodeBase {
         //TacUtil.etiquetacond(cta);
         GenerateConditionCode();
         TacUtil.condiciobot(cta,false);
-        comportamentv1.generateCode();
         blocf.generateCode();
+        comportamentv1.generateCode();
         TacUtil.retornabucle(cta);
         ts.decAmbit();
         return;

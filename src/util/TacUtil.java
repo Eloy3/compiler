@@ -128,10 +128,13 @@ public abstract class TacUtil {
         }
         
         String indextmp = cta.newTempVar("ent");
+        cta.generateCode(indextmp + " = 0\n");
         String indextmp2 = cta.newTempVar("ent");
+        //String indextmp3 = cta.newTempVar("ent");
         for(int i = 0; i < indexes.size(); i++){
             cta.generateCode(indextmp2 + " = " + indexes.get(i) + " * " + dimensionsValue.get(i) + "\n");
             cta.generateCode(indextmp + " = " + indextmp + " + " + indextmp2 + "\n");
+            //cta.generateCode(indextmp + " = " + indextmp3+"\n");
             indextmp2 = cta.newTempVar("ent");
         }
         return id+"["+indextmp+"]";
