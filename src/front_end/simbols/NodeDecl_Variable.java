@@ -43,12 +43,17 @@ public class NodeDecl_Variable extends NodeBase{
                 break;
             case "ent":
             case "bool":
+                if(!Util.typeMatches(varinic.getTipus(), nt.getTipusAsString())){
+                    ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
+                }else{
+                    generaC3a();
+                }
+                break;
             case "text":
                 if(!Util.typeMatches(varinic.getTipus(), nt.getTipusAsString())){
                     ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
                 }else{
                     cta.newVar(id, varinic.getTipus(), varinic.getValor());
-                    //generaC3a();
                 }
                 break;
         }
@@ -86,10 +91,12 @@ public class NodeDecl_Variable extends NodeBase{
 
         temp_var = cta.newTempVar(operand.tipus.toString());
 
-        cta.generateCode(temp_var + " = " + varinic.getValor() + "\n");
-
+        if(operand.tipus.equalsIgnoreCase("ent") && varinic.getExprsimple().isNegative()){
+            cta.generateCode(temp_var + " = -" + varinic.getValor() + "\n");
+        }else{
+            cta.generateCode(temp_var + " = " + varinic.getValor() + "\n");
+        }
         cta.generateCode(cta.newVar(id, operand.tipus, varinic.getValor()) + " = " + temp_var + "\n");
-
         cta.setTemp_id(null);
     }
 }

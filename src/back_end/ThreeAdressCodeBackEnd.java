@@ -285,7 +285,6 @@ public class ThreeAdressCodeBackEnd {
             e.printStackTrace();
         }
     }
-    
 
     public static Simbol createSimbolFromLine(String line) {
         String[] parts = line.split(", ");
@@ -297,7 +296,6 @@ public class ThreeAdressCodeBackEnd {
         if(!valorStr.equals("null")){
             return new Simbol(id, tipus);
         }
-        
 
         return new Simbol(id, tipus);
     }

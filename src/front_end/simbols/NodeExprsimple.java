@@ -7,6 +7,7 @@ public class NodeExprsimple extends NodeBase {
     private tipusexpr tipus;
     private String valor;
     private int[] lineCode;
+    private boolean isNegative = false;
     //just for array index
     private List<String> pos;
 
@@ -23,6 +24,14 @@ public class NodeExprsimple extends NodeBase {
         this.valor = v.getId();
         this.lineCode = l;
         this.pos = v.getIndexes();
+    }
+
+    public NodeExprsimple(String negative, tipusexpr t, String v, int[] l) {
+        super("Exprsimple", 0);
+        this.tipus = t;
+        this.valor = v;
+        this.lineCode = l;
+        this.isNegative = true;
     }
 
     public tipusexpr getTipus() {
@@ -66,4 +75,12 @@ public class NodeExprsimple extends NodeBase {
         this.pos = pos;
     }
 
+    public boolean isNegative() {
+        return isNegative;
+    }
+
+    public void setNegative(boolean isNegative) {
+        this.isNegative = isNegative;
+    }
+    
 }
