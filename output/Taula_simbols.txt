@@ -1,5 +1,7 @@
 NOM             TIPUS      NIVELL     ARGS                
  
 principal       NULL       1          []                  
-x               ENT        1          []                  
-y               ENT        1          []                  
+test            ENT        1          []                  
+a               TEXT       1          []                  
+b               TEXT       1          []                  
+c               TEXT       1          []                  

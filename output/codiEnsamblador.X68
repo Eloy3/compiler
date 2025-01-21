@@ -2,55 +2,32 @@
 START:
 * --> | SKIP | null | null | principal |
 principal:
-* --> | PARAM_S | null | null | x |
-	MOVE.W x_principal,-(A7)
-* --> | CALL | null | null | getInt |
-	JSR GETINT
-* --> | ASSIGNA | retInt | null | x |
-	MOVE.W (A7),x_principal
-	MOVE.L #-1, (A7)
-* --> | MODUL | x | 2 | t1 |
-	MOVE.W x_principal,D1
-	EXT.L D1
-	MOVE.W #2,D0
-	EXT.L D0
-	DIVS.W D0,D1
-	SWAP D1
-	MOVE.W D1,t1_principal
-* --> | ASSIGNA | t1 | null | y |
-	MOVE.W t1_principal,y_principal
-* --> | IFIGUAL | y | 0 | e1 |
-	MOVE.W y_principal,D1
-	MOVE.W #0,D0
-	CMP.W D0,D1
-	BEQ e1
-* --> | GOTO | null | null | e2 |
-	JMP e2
-* --> | SKIP | null | null | e1 |
-e1:
-* --> | PARAM_T | even | null | null |
-	MOVE.L  #even,-(A7)
+* --> | SUMA | a | b | t3 |
+	MOVE.W a_principal,D0
+	MOVE.W b_principal,D1
+	ADD.W D0,D1
+	MOVE.W D1,t3_principal
+* --> | ASSIGNA | t3 | null | c |
+* --> | PARAM_T | a | null | null |
+	MOVE.L  #a_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR SLINE
 	ADDA.L #4,A7
-* --> | GOTO | null | null | e0 |
-	JMP e0
-* --> | SKIP | null | null | e2 |
-e2:
-* --> | PARAM_T | odd | null | null |
-	MOVE.L  #odd,-(A7)
+* --> | PARAM_T | b | null | null |
+	MOVE.L  #b_principal,-(A7)
 * --> | CALL | null | null | line |
 	JSR SLINE
 	ADDA.L #4,A7
-* --> | SKIP | null | null | e0 |
-e0:
+* --> | PARAM_T | c | null | null |
+	MOVE.L  #c_principal,-(A7)
+* --> | CALL | null | null | line |
+	JSR SLINE
+	ADDA.L #4,A7
 	SIMHALT
  
-x_principal: DS.W 1
-t1_principal: DS.W 1
-y_principal: DS.W 1
-even: DC.B '"even"',0
-odd: DC.B '"odd"',0
+test_principal: DS.W 1
+a_principal: DC.B 'wow',0
+b_principal: DC.B 'hola',0
  
 strout: DS.B 100
 	DC.W 0

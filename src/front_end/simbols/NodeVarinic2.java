@@ -88,8 +88,13 @@ public class NodeVarinic2 extends NodeBase {
         Simbol left = Util.validateVariableExists(ts, id, lineCode);
         if (left == null) return;
 
-        if(left.getTipus() == tipusexpr.bool.toString()){
+        if(left.getTipus().equalsIgnoreCase("bool")){
             ErrorLogger.logSemanticError(lineCode, "No es poden fer operacions aritmètiques amb variables de tipus booleà.");
+            return;
+        }
+        
+        if(left.getTipus().equalsIgnoreCase("text")){
+            ErrorLogger.logSemanticError(lineCode, "No es poden fer operacions aritmètiques amb variables de tipus text.");
             return;
         }
 

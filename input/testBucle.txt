@@ -5,7 +5,7 @@ principal(){
 		a = a-1;
 	}
 
-	per(ent i=0;i!=10;i++){
+	per(ent i=0;i!=3;i++){
 		sortidaln(i);
 	}
 }

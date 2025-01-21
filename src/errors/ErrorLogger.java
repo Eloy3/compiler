@@ -30,5 +30,6 @@ public class ErrorLogger {
         } catch (IOException e) {
             System.err.println("Failed to log error: " + e.getMessage());
         }
+        System.exit(0);
     }
 }

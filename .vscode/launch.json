@@ -8,19 +8,11 @@
             "mainClass": "main.Main",
             "projectName": "compilador_ab79c090",
             "args": [
-                "input/oddOrEven.txt"
+                "input/test1.txt"
             ],
             "vmArgs": "",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal"
-        }
-    ],
-    "inputs": [
-        {
-            "id": "programArgs",
-            "type": "promptString",
-            "description": "Enter program arguments",
-            "default": "input/test1.txt"
         }
     ]
 }

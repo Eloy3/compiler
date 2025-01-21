@@ -47,7 +47,8 @@ public class NodeDecl_Variable extends NodeBase{
                 if(!Util.typeMatches(varinic.getTipus(), nt.getTipusAsString())){
                     ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
                 }else{
-                    generaC3a();
+                    cta.newVar(id, varinic.getTipus(), varinic.getValor());
+                    //generaC3a();
                 }
                 break;
         }

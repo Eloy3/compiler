@@ -295,7 +295,6 @@ public class ThreeAdressCodeBackEnd {
         String valorStr = parts[2].split("=")[1];
         
         if(!valorStr.equals("null")){
-            Object valor = parseValue(tipus, valorStr);
             return new Simbol(id, tipus);
         }
         

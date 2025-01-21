@@ -1,15 +1,10 @@
 
 principal(){
-	ent x;
-    entrada(x);
-    ent y;
-    y = x mod 2;
-    text test = "test";
-    sortidaln(test);
-    text even = "even";
-    si(y==0){
-        sortidaln("even");
-    }si_no{
-        sortidaln("odd");
-    }
+
+    ent test = 1;
+    text a = "wow";
+    text b = "hola";
+    text c;
+    c = a+b;
+    sortidaln(a,b,c);
 }

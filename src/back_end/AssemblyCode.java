@@ -6,11 +6,14 @@ import data_structures.Procedure;
 import data_structures.Parameter;
 import data_structures.Variable;
 import front_end.simbols.Tipus;
+import util.Util;
+
 import static front_end.simbols.Tipus.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class AssemblyCode {
@@ -82,7 +85,9 @@ public class AssemblyCode {
                     code.add(name + ": DS.W "+v.getStore()/calculateStore(v.getType()));
                     break;
                 case TEXT:
-                    code.add(v.getName()+": DC.B '"+v.getValue()+"',0");
+                    if(v.getValue()!=null && v.getName()!=null){
+                        code.add(assemblyVar(Util.labelFormat(v.getName()))+": DC.B '"+v.getValue().replace("\"", "")+"',0");
+                    }
                     break;
                     
             }
@@ -188,7 +193,8 @@ public class AssemblyCode {
             return;
         }
             
-        switch (Tipus.valueOf(d.getType().toUpperCase())) {
+        Tipus tipus = Tipus.valueOf(d.getType().toUpperCase());
+        switch (tipus) {
             case BOOL:
                 if (!i.getOperand1().equals("retBool")) {
                     code.add("\tMOVE.B " + getop(i.getOperand1()) + "," + getop(i.getDestiny()));
@@ -210,7 +216,6 @@ public class AssemblyCode {
     
                 } else if (i.getOperand1().equals("retInt")) {
                     code.add("\tMOVE.W (A7)" + "," + getop(i.getDestiny()));
-                    code.add("\tMOVE.L #-1" + ", (A7)");
                 } else {
                     code.add("\tMOVE.W " + getop(i.getOperand1()) + "," + getop(i.getDestiny()));
                 }
@@ -277,7 +282,6 @@ public class AssemblyCode {
                 case "print":
                     if (param == ENT) {
                         code.add("\tJSR IPRINT");
-                        code.add("\tMOVE.L #-1" + ", (A7)");
                     } else {
                         code.add("\tJSR SPRINT");
                         code.add("\tADDA.L #4,A7");
@@ -286,7 +290,6 @@ public class AssemblyCode {
                 case "line":
                     if (param == ENT) {
                         code.add("\tJSR ILINE");
-                        code.add("\tMOVE.L #-1" + ", (A7)");
                     } else {
                         code.add("\tJSR SLINE");
                         code.add("\tADDA.L #4,A7");
@@ -315,7 +318,7 @@ public class AssemblyCode {
         switch (i.getOperation()){
             case PARAM_T:
                 if (d == null){
-                    code.add("\tMOVE.L  #" + i.getOperand1() + ",-(A7)");
+                    code.add("\tMOVE.L  #" + assemblyVar(i.getOperand1()) + ",-(A7)");
                     param =  TEXT;
                 }
                 break;
@@ -368,7 +371,8 @@ public class AssemblyCode {
         if (param == null) {
             param = new ArrayList<>(); 
         }
-    
+        //reverse parameter list
+        Collections.reverse(param);
         int ind = param.size() - 1;
         int k = 4;
     
@@ -401,10 +405,10 @@ public class AssemblyCode {
         if(r != null){
             switch(r.getType()){
                 case "ENT":
-                    code.add("\tMOVE.W " + varnom(r) + ",D3");
+                    code.add("\tMOVE.W " + varnom(r) + ",4(A7)");
                     break;
                 case "BOOL":
-                    code.add("\tMOVE.B " + varnom(r) + ",D3");
+                    code.add("\tMOVE.B " + varnom(r) + ",4(A7)");
                     break;
             }
         }
@@ -477,18 +481,14 @@ public class AssemblyCode {
         code.add("\tMOVE.W " + getop(i.getOperand2()) + ",D1");
         code.add("\tADD.W D0,D1");
         code.add("\tMOVE.W D1," + varnom(destiny));
-        code.add("\tCLR.W D0");
-        code.add("\tCLR.W D1");
     }
 
     private void iresta(Instruction3a i){
         Variable d = c3a.getVar(i.getDestiny());
-        code.add("\tMOVE.W " + getop(i.getOperand1(),d.getSubprog()) + ",D0");
-        code.add("\tMOVE.W " + getop(i.getOperand2(),d.getSubprog()) + ",D1");
+        code.add("\tMOVE.W " + getop(i.getOperand1(),d.getSubprog()) + ",D1");
+        code.add("\tMOVE.W " + getop(i.getOperand2(),d.getSubprog()) + ",D0");
         code.add("\tSUB.W D0,D1");
         code.add("\tMOVE.W D1," + varnom(d));
-        code.add("\tCLR.W D0");
-        code.add("\tCLR.W D1");
     }
 
     private void idivision(Instruction3a i){
@@ -558,24 +558,6 @@ public class AssemblyCode {
         code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1"); // Load operand2 into D1
         code.add("\tTST.B D1");                                 // Test if operand2 is non-zero
         code.add("\tBNE " + i.getDestiny()); 
-    }
-
-    private void idesplazar(Instruction3a i){
-        Variable op = c3a.getVar(i.getOperand2());
-        if(op == null){
-            code.add("\tMOVE.W #" + i.getOperand2()+ ",D0");
-        }else{
-            code.add("\tMOVE.W " + varnom(op) + ",D0");
-        }
-        code.add("\tEXT.L D0");
-        Variable destino = c3a.getVar(i.getDestiny());
-        int aux = Integer.valueOf(i.getOperand1());
-        if (aux < 0){
-            code.add("\tLSR.L #" + -aux + ",D0");
-        } else {
-            code.add("\tLSL.L #" + aux + ",D0");
-        }
-        code.add("\tMOVE.W D0," + varnom(destino));
     }
 
     private String getop(String identificador){
