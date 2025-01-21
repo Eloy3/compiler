@@ -4,12 +4,6 @@ call getInt
 x = retInt
 t1 = x mod 2
 y = t1
-t3 = "test"
-test = t3
-param_t test
-call line
-t5 = "even"
-even = t5
 if y == 0 then goto e1
 goto e2
 e1:skip

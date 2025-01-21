@@ -5,9 +5,9 @@ principal(){
 	bool b = fals;
 	bool c = fals;
 	si(a){
-		sortidaln(1);
+		sortidaln("a is true");
 	}
     si(a OLogic b ILogic c){
-        sortidaln(11);
+        sortidaln("b and c or a");
     }
 }

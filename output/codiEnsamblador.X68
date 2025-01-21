@@ -19,15 +19,6 @@ principal:
 	MOVE.W D1,t1_principal
 * --> | ASSIGNA | t1 | null | y |
 	MOVE.W t1_principal,y_principal
-* --> | ASSIGNA | "test" | null | t3 |
-* --> | ASSIGNA | t3 | null | test |
-* --> | PARAM_T | test | null | null |
-	MOVE.L  #test,-(A7)
-* --> | CALL | null | null | line |
-	JSR SLINE
-	ADDA.L #4,A7
-* --> | ASSIGNA | "even" | null | t5 |
-* --> | ASSIGNA | t5 | null | even |
 * --> | IFIGUAL | y | 0 | e1 |
 	MOVE.W y_principal,D1
 	MOVE.W #0,D0
@@ -58,11 +49,8 @@ e0:
 x_principal: DS.W 1
 t1_principal: DS.W 1
 y_principal: DS.W 1
-t3: DC.B 't3',0
-test: DC.B 'test',0
-t5: DC.B 't5',0
-even: DC.B 'even',0
-odd: DC.B 'odd',0
+even: DC.B '"even"',0
+odd: DC.B '"odd"',0
  
 strout: DS.B 100
 	DC.W 0

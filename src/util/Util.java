@@ -125,9 +125,15 @@ public abstract class Util {
         return list;
     }
 
-    public static String removeQuotes(String s) {
-        return s.replace("\"", "");
+    public static String labelFormat(String s){
+        //remove both quotes and spaces
+        String noQuotes = s.replace("\"", "");
+        String noSpaces = noQuotes.replace(" ", "_");
+        //replace all non-alphanumeric characters with underscores
+        String noNonAlphanumeric = noSpaces.replaceAll("[^a-zA-Z0-9]", "_");
+        //replace all consecutive underscores with a single underscore
+        String noConsecutiveUnderscores = noNonAlphanumeric.replaceAll("_+", "_");
+        return noConsecutiveUnderscores;
     }
-
 }
 

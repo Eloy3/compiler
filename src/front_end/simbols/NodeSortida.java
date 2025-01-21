@@ -31,8 +31,8 @@ public class NodeSortida extends NodeBase {
                     cta.generateCode("assign", tempVar, array, ts);
                     cta.generateCode("param_s " + tempVar + "\n");
                 }else if(print.getTipus() == tipusexpr.text){                    
-                    cta.generateCode("param_t " + Util.removeQuotes(print.getValor()) + "\n");
-                    cta.newVar(Util.removeQuotes(print.getValor()), "text", print.getValor());
+                    cta.generateCode("param_t " + Util.labelFormat(print.getValor()) + "\n");
+                    cta.newVar(Util.labelFormat(print.getValor()), "text", print.getValor());
                 }
                 else{
                     cta.generateCode(paramType(print) + " " + print.getValor() + "\n");

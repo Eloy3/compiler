@@ -82,7 +82,7 @@ public class AssemblyCode {
                     code.add(name + ": DS.W "+v.getStore()/calculateStore(v.getType()));
                     break;
                 case TEXT:
-                    code.add(v.getName()+": DC.B '"+v.getName()+"',0");
+                    code.add(v.getName()+": DC.B '"+v.getValue()+"',0");
                     break;
                     
             }

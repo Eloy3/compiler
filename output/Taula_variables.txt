@@ -4,8 +4,5 @@ Nombre          NV         Subprograma          Ocupació        Desplaçament  
 x               0          principal            4               0               ENT                            
 t1              1          principal            4               4               ENT                            
 y               2          principal            4               8               ENT                            
-t3              3          principal            4               12              TEXT                           
-test            4          principal            4               16              TEXT                 "test"    
-t5              5          principal            4               20              TEXT                           
-even            6          principal            4               24              TEXT                 "even"    
-odd             8          principal            4               32              text                 "odd"     
+even            3          principal            4               12              text                 "even"    
+odd             4          principal            4               16              text                 "odd"     

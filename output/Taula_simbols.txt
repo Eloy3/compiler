@@ -3,5 +3,3 @@ NOM             TIPUS      NIVELL     ARGS
 principal       NULL       1          []                  
 x               ENT        1          []                  
 y               ENT        1          []                  
-test            TEXT       1          []                  
-even            TEXT       1          []                  
