@@ -24,12 +24,14 @@ public class NodeDecl_Variable extends NodeBase{
             ErrorLogger.logSemanticError(lc,"La variable '" + id + "' ja ha estat declarada.");
             return;
         }
-        if(varinic == null){
-            ts.insertElement(id, nt.getTipusAsString(), null);
-        }else if(varinic.getCrida_funcio()!=null){
-            handleProcedimentType();
-        }else if(varinic.getExprsimple()!=null){
-            handleVariableInitialization();
+        ts.insertElement(id, nt.getTipusAsString());
+
+        if(varinic!=null){
+            if(varinic.getCrida_funcio()!=null){
+                handleProcedimentType();
+            }else if(varinic.getExprsimple()!=null){
+                handleVariableInitialization();
+            }
         }
     }
 
@@ -40,10 +42,13 @@ public class NodeDecl_Variable extends NodeBase{
                 handleIdType(id2);
                 break;
             case "ent":
-                handleEnterType(id2);
-                break;
             case "bool":
-                handleBooleaType(id2);
+            case "text":
+                if(!Util.typeMatches(varinic.getTipus(), nt.getTipusAsString())){
+                    ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
+                }else{
+                    generaC3a();
+                }
                 break;
         }
     }
@@ -56,27 +61,9 @@ public class NodeDecl_Variable extends NodeBase{
             if(!nt.getTipusAsString().equals(param.tipus)){
                 ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
             }else{
-                ts.insertElement(id, nt.getTipusAsString().toString(), param.valor);
+                ts.insertElement(id, nt.getTipusAsString().toString());
                 generaC3a();
             }
-        }
-    }
-
-    private void handleEnterType(String id2) {
-        if(!nt.getTipusAsString().equals("ENT")){
-            ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
-        }else{
-            ts.insertElement(id, nt.getTipusAsString().toString(), varinic);
-            generaC3a();
-        }
-    }
-
-    private void handleBooleaType(String id2) {
-        if(!nt.getTipusAsString().equals("BOOL")){
-            ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
-        }else{
-            ts.insertElement(id, nt.getTipusAsString().toString(), varinic);
-            generaC3a();
         }
     }
 
@@ -96,10 +83,9 @@ public class NodeDecl_Variable extends NodeBase{
         Simbol operand = ts.get(id);
         String temp_var;
 
-        temp_var = cta.newTempVar(operand.tipus.toString(), varinic.getValor());
+        temp_var = cta.newTempVar(operand.tipus.toString());
 
-        cta.generateCode(temp_var + " = ");
-        cta.generateCode(operand.valor + "\n");
+        cta.generateCode(temp_var + " = " + varinic.getValor() + "\n");
 
         cta.generateCode(cta.newVar(id, operand.tipus, varinic.getValor()) + " = " + temp_var + "\n");
 

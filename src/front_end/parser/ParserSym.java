@@ -35,6 +35,7 @@ public class ParserSym {
   public static final int BUIT = 22;
   public static final int COMA = 14;
   public static final int EClaudator = 15;
+  public static final int MOD = 36;
   public static final int RETORNA = 21;
   public static final int ENT = 18;
   public static final int MENTRE = 27;
@@ -42,7 +43,9 @@ public class ParserSym {
   public static final int ENTRADA = 34;
   public static final int SORTIDA = 32;
   public static final int BOOLEA = 11;
+  public static final int STRING = 38;
   public static final int PUNTICOMA = 9;
+  public static final int TEXT = 37;
   public static final int SORTIDALN = 33;
   public static final String[] terminalNames = new String[] {
   "EOF",
@@ -80,7 +83,10 @@ public class ParserSym {
   "SORTIDA",
   "SORTIDALN",
   "ENTRADA",
-  "RESERVA"
+  "RESERVA",
+  "MOD",
+  "TEXT",
+  "STRING"
   };
 }
 

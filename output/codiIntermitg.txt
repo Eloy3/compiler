@@ -1,32 +1,22 @@
 principal:skip
-t0 = 0
-t1 = 0 * 1
-t0 = t0 + t1
-t3 = 1
-tres[t0] = t3
-t4 = 0
-t5 = 1 * 1
-t4 = t4 + t5
-t7 = 2
-tres[t4] = t7
-t8 = 0
-t9 = 2 * 1
-t8 = t8 + t9
-t11 = 3
-tres[t8] = t11
-t13 = 0
-i = t13
-e0:skip
-if i != 3 then goto e1
+param_s x
+call getInt
+x = retInt
+t1 = x mod 2
+y = t1
+t3 = "test"
+test = t3
+param_t test
+call line
+t5 = "even"
+even = t5
+if y == 0 then goto e1
 goto e2
 e1:skip
-t16 = 0
-t17 = i * 1
-t16 = t16 + t17
-t15 = tres[t16]
-param_s t15
+param_t even
 call line
-t19 = i + 1
-i = t19
 goto e0
 e2:skip
+param_t odd
+call line
+e0:skip

@@ -52,7 +52,7 @@ parser code {:
 :}
 
 terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator;
-terminal String ID, ENT, BOOL, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA, RESERVA;
+terminal String ID, ENT, BOOL, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA, RESERVA, MOD, TEXT, STRING;
 
 non terminal NodeExprcomposta exprcomposta;
 non terminal NodeOperador_expr operador_expr;
@@ -153,12 +153,14 @@ param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}
 exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v, lexic.getLineColumn()); :}
              | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString(), lexic.getLineColumn()); :}
              | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString(), lexic.getLineColumn()); :}
+             | STRING:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.text, v, lexic.getLineColumn()); :}
              | valorTaula:v     {: RESULT = new NodeExprsimple(v, lexic.getLineColumn()); :};
 
 valorTaula ::= ID:a especificacio_dimensio:b {:RESULT = new NodeValorTaula(a, b, lexic.getLineColumn()); :};
 
 tipus ::= ENT   {: RESULT = new NodeTipus(Tipus.ENT); :}
-        | BOOL  {: RESULT = new NodeTipus(Tipus.BOOL); :};
+        | BOOL  {: RESULT = new NodeTipus(Tipus.BOOL); :}
+        | TEXT  {: RESULT = new NodeTipus(Tipus.TEXT); :};
 
 tipusf ::= ENT {: RESULT = new NodeTipus(Tipus.ENT); :}
         | BOOL {: RESULT = new NodeTipus(Tipus.BOOL); :}
@@ -206,7 +208,8 @@ exprcomposta ::= exprsimple:a                                {: RESULT = new Nod
 operador_expr ::= SUMA:a {: RESULT = new NodeOperador_expr(a.toString());:}
                 | RESTA:a {: RESULT = new NodeOperador_expr(a.toString());:}
                 | MUL:a {: RESULT = new NodeOperador_expr(a.toString());:}
-                | DIV:a {: RESULT = new NodeOperador_expr(a.toString());:};
+                | DIV:a {: RESULT = new NodeOperador_expr(a.toString());:}
+                | MOD:a {: RESULT = new NodeOperador_expr(a.toString());:};
 
 // **** Sortida per pantalla ****
 

@@ -39,13 +39,14 @@ import java.util.logging.Logger;
 id = [A-Za-z_][A-Za-z0-9_]*
 enter = [0-9]+
 boolea = "cert" | "fals"
+string = \"([^\"\\]|\\.)*\"
 
 //operadors aritmètics
 suma         = \+
 resta        = \-
 mul          = \*
 div          = \/
-mod          = %
+mod          = "mod"
 
 //operadors relacionals
 igual = "=="
@@ -72,6 +73,7 @@ coma         = ,
 principal = "principal"
 ent = "ent"
 bool = "bool"
+text = "text"
 funcio = "funcio"
 si = "si"
 si_no = "si_no"
@@ -152,14 +154,16 @@ ws = [' '|'\t']+
 // Regles/accions
 // És molt important l'ordre de les regles!!!
 
-{OLo}                    { writeToken(this.yytext()); return symbol(ParserSym.OLO, this.yytext());    }
+
 {suma}                   { writeToken(this.yytext()); return symbol(ParserSym.SUMA, this.yytext());   }
 {resta}                  { writeToken(this.yytext()); return symbol(ParserSym.RESTA, this.yytext());  }
 {mul}                    { writeToken(this.yytext()); return symbol(ParserSym.MUL, this.yytext());    }
 {div}                    { writeToken(this.yytext()); return symbol(ParserSym.DIV, this.yytext());    }
+{mod}                    { writeToken(this.yytext()); return symbol(ParserSym.MOD, this.yytext());    }
 {igual}                  { writeToken(this.yytext()); return symbol(ParserSym.IGUAL, this.yytext());    }
 {diferent}               { writeToken(this.yytext()); return symbol(ParserSym.DIFERENT, this.yytext());    }
 {OLi}                    { writeToken(this.yytext()); return symbol(ParserSym.OLI, this.yytext());    }
+{OLo}                    { writeToken(this.yytext()); return symbol(ParserSym.OLO, this.yytext());    }
 {eparen}                 { writeToken(this.yytext()); return symbol(ParserSym.EParen); }
 {dparen}                 { writeToken(this.yytext()); return symbol(ParserSym.DParen); }
 {eclaudator}             { writeToken(this.yytext()); return symbol(ParserSym.EClaudator); }
@@ -176,6 +180,7 @@ ws = [' '|'\t']+
 {entrada}                { writeToken(this.yytext()); return symbol(ParserSym.ENTRADA, "entrada"); }
 {ent}                    { writeToken(this.yytext()); return symbol(ParserSym.ENT, "ent"); }
 {bool}                   { writeToken(this.yytext()); return symbol(ParserSym.BOOL, "bool"); }
+{text}                   { writeToken(this.yytext()); return symbol(ParserSym.TEXT, "text"); }
 {funcio}                 { writeToken(this.yytext()); return symbol(ParserSym.FUNCIO, "funcio"); }
 {buit}                   { writeToken(this.yytext()); return symbol(ParserSym.BUIT, "buit"); }
 {retorna}                { writeToken(this.yytext()); return symbol(ParserSym.RETORNA, "retorna"); }
@@ -187,6 +192,7 @@ ws = [' '|'\t']+
 {principal}              { writeToken(this.yytext()); return symbol(ParserSym.PRINCIPAL, "principal"); }
 {punticoma}              { writeToken(this.yytext()); return symbol(ParserSym.PUNTICOMA, ";"); }
 {coma}                   { writeToken(this.yytext()); return symbol(ParserSym.COMA, ","); }
+{string}                 { writeToken(this.yytext()); return symbol(ParserSym.STRING, this.yytext()); }
 {id}                     { writeToken(this.yytext()); return symbol(ParserSym.ID, this.yytext()); }
 
 {ENDLINE}                { /*return symbol(ParserSym.EOF);    */    numero_linea++;  }

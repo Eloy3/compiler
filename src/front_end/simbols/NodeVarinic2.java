@@ -63,7 +63,7 @@ public class NodeVarinic2 extends NodeBase {
             }
             return;
         }
-
+        
         validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
     }
 
@@ -138,6 +138,11 @@ public class NodeVarinic2 extends NodeBase {
     private void validateAndGenerate(String targetId, String typeA, String valueA, Optional<NodeExprsimple> optionalB) {
         Simbol target = Util.validateVariableExists(ts, targetId, lineCode);
         if (target == null) return;
+
+        if(target.getTipus().equals("text")) {
+            ErrorLogger.logSemanticError(lineCode, "Les cadenes de text son immutables");
+            return;
+        }
 
         typeA = resolveType(typeA, valueA);
         if (typeA == null || !Util.typeMatches(target.getTipus(), typeA)) {

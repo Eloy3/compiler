@@ -1,8 +1,15 @@
 
 principal(){
-	ent[] tres;
-	tres = {1,2,3};
-	per(ent i=0;i!=3;i++){
-		sortidaln(tres[i]);
-	}
+	ent x;
+    entrada(x);
+    ent y;
+    y = x mod 2;
+    text test = "test";
+    sortidaln(test);
+    text even = "even";
+    si(y==0){
+        sortidaln("even");
+    }si_no{
+        sortidaln("odd");
+    }
 }

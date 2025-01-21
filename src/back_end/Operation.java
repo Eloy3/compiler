@@ -23,7 +23,8 @@ public enum Operation {
     PMB,
     PARAM_S,
     PARAM_C,
-    DESPLAZAR_BITS,
+    PARAM_T,
     IND_ASS,
-    IND_VAL
+    IND_VAL,
+    MODUL
 }

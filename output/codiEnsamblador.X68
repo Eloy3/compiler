@@ -2,167 +2,67 @@
 START:
 * --> | SKIP | null | null | principal |
 principal:
-* --> | ASSIGNA | 0 | null | t0 |
-	MOVE.W #0,t0_principal
-* --> | MULTIPLICACIO | 0 | 1 | t1 |
-	MOVE.W #0,D0
-	EXT.L D0
-	MOVE.W #1,D1
+* --> | PARAM_S | null | null | x |
+	MOVE.W x_principal,-(A7)
+* --> | CALL | null | null | getInt |
+	JSR GETINT
+* --> | ASSIGNA | retInt | null | x |
+	MOVE.W (A7),x_principal
+	MOVE.L #-1, (A7)
+* --> | MODUL | x | 2 | t1 |
+	MOVE.W x_principal,D1
 	EXT.L D1
-	MULS.W D0,D1
-	MOVE.W D1,t1_principal
-	CLR.W D0
-	CLR.W D1
-* --> | SUMA | t0 | t1 | t0 |
-	MOVE.W t0_principal,D0
-	MOVE.W t1_principal,D1
-	ADD.W D0,D1
-	MOVE.W D1,t0_principal
-	CLR.W D0
-	CLR.W D1
-* --> | ASSIGNA | 1 | null | t3 |
-	MOVE.W #1,t3_principal
-* --> | IND_ASS | t3 | t0 | tres |
-	 LEA tres_principal,A0
-	MOVE.W t0_principal, D1
-	MULS #2, D1
-	ADD.W D1,A0
-	 MOVE.W t3_principal,(A0)
-	CLR.W D1
-* --> | ASSIGNA | 0 | null | t4 |
-	MOVE.W #0,t4_principal
-* --> | MULTIPLICACIO | 1 | 1 | t5 |
-	MOVE.W #1,D0
-	EXT.L D0
-	MOVE.W #1,D1
-	EXT.L D1
-	MULS.W D0,D1
-	MOVE.W D1,t5_principal
-	CLR.W D0
-	CLR.W D1
-* --> | SUMA | t4 | t5 | t4 |
-	MOVE.W t4_principal,D0
-	MOVE.W t5_principal,D1
-	ADD.W D0,D1
-	MOVE.W D1,t4_principal
-	CLR.W D0
-	CLR.W D1
-* --> | ASSIGNA | 2 | null | t7 |
-	MOVE.W #2,t7_principal
-* --> | IND_ASS | t7 | t4 | tres |
-	 LEA tres_principal,A0
-	MOVE.W t4_principal, D1
-	MULS #2, D1
-	ADD.W D1,A0
-	 MOVE.W t7_principal,(A0)
-	CLR.W D1
-* --> | ASSIGNA | 0 | null | t8 |
-	MOVE.W #0,t8_principal
-* --> | MULTIPLICACIO | 2 | 1 | t9 |
 	MOVE.W #2,D0
 	EXT.L D0
-	MOVE.W #1,D1
-	EXT.L D1
-	MULS.W D0,D1
-	MOVE.W D1,t9_principal
-	CLR.W D0
-	CLR.W D1
-* --> | SUMA | t8 | t9 | t8 |
-	MOVE.W t8_principal,D0
-	MOVE.W t9_principal,D1
-	ADD.W D0,D1
-	MOVE.W D1,t8_principal
-	CLR.W D0
-	CLR.W D1
-* --> | ASSIGNA | 3 | null | t11 |
-	MOVE.W #3,t11_principal
-* --> | IND_ASS | t11 | t8 | tres |
-	 LEA tres_principal,A0
-	MOVE.W t8_principal, D1
-	MULS #2, D1
-	ADD.W D1,A0
-	 MOVE.W t11_principal,(A0)
-	CLR.W D1
-* --> | ASSIGNA | 0 | null | t13 |
-	MOVE.W #0,t13_principal
-* --> | ASSIGNA | t13 | null | i |
-	MOVE.W t13_principal,i_principal
-* --> | SKIP | null | null | e0 |
-e0:
-* --> | IFDIFERENT | i | 3 | e1 |
-	MOVE.W i_principal,D1
-	MOVE.W #3,D0
+	DIVS.W D0,D1
+	SWAP D1
+	MOVE.W D1,t1_principal
+* --> | ASSIGNA | t1 | null | y |
+	MOVE.W t1_principal,y_principal
+* --> | ASSIGNA | "test" | null | t3 |
+* --> | ASSIGNA | t3 | null | test |
+* --> | PARAM_T | test | null | null |
+	MOVE.L  #test,-(A7)
+* --> | CALL | null | null | line |
+	JSR SLINE
+	ADDA.L #4,A7
+* --> | ASSIGNA | "even" | null | t5 |
+* --> | ASSIGNA | t5 | null | even |
+* --> | IFIGUAL | y | 0 | e1 |
+	MOVE.W y_principal,D1
+	MOVE.W #0,D0
 	CMP.W D0,D1
-	BNE e1
+	BEQ e1
 * --> | GOTO | null | null | e2 |
 	JMP e2
 * --> | SKIP | null | null | e1 |
 e1:
-* --> | ASSIGNA | 0 | null | t16 |
-	MOVE.W #0,t16_principal
-* --> | MULTIPLICACIO | i | 1 | t17 |
-	MOVE.W i_principal,D0
-	EXT.L D0
-	MOVE.W #1,D1
-	EXT.L D1
-	MULS.W D0,D1
-	MOVE.W D1,t17_principal
-	CLR.W D0
-	CLR.W D1
-* --> | SUMA | t16 | t17 | t16 |
-	MOVE.W t16_principal,D0
-	MOVE.W t17_principal,D1
-	ADD.W D0,D1
-	MOVE.W D1,t16_principal
-	CLR.W D0
-	CLR.W D1
-* --> | IND_VAL | tres | t16 | t15 |
-	 LEA tres_principal,A0
-	MOVE.W t16_principal, D1
-	MULS #2, D1
-	ADD.W D1,A0
-	 MOVE.W (A0),t15_principal
-	CLR.W D1
-* --> | PARAM_S | null | null | t15 |
-	MOVE.W t15_principal,-(A7)
+* --> | PARAM_T | even | null | null |
+	MOVE.L  #even,-(A7)
 * --> | CALL | null | null | line |
-	JSR ILINE
-	ADDA.L #2,A7
-* --> | SUMA | i | 1 | t19 |
-	MOVE.W i_principal,D0
-	MOVE.W #1,D1
-	ADD.W D0,D1
-	MOVE.W D1,t19_principal
-	CLR.W D0
-	CLR.W D1
-* --> | ASSIGNA | t19 | null | i |
-	MOVE.W t19_principal,i_principal
+	JSR SLINE
+	ADDA.L #4,A7
 * --> | GOTO | null | null | e0 |
 	JMP e0
 * --> | SKIP | null | null | e2 |
 e2:
+* --> | PARAM_T | odd | null | null |
+	MOVE.L  #odd,-(A7)
+* --> | CALL | null | null | line |
+	JSR SLINE
+	ADDA.L #4,A7
+* --> | SKIP | null | null | e0 |
+e0:
 	SIMHALT
  
-t0_principal: DS.W 1
+x_principal: DS.W 1
 t1_principal: DS.W 1
-t2_principal: DS.W 1
-t3_principal: DS.W 1
-t4_principal: DS.W 1
-t5_principal: DS.W 1
-t6_principal: DS.W 1
-t7_principal: DS.W 1
-t8_principal: DS.W 1
-t9_principal: DS.W 1
-t10_principal: DS.W 1
-t11_principal: DS.W 1
-tres_principal: DS.W 3
-t13_principal: DS.W 1
-i_principal: DS.W 1
-t15_principal: DS.W 1
-t16_principal: DS.W 1
-t17_principal: DS.W 1
-t18_principal: DS.W 1
-t19_principal: DS.W 1
+y_principal: DS.W 1
+t3: DC.B 't3',0
+test: DC.B 'test',0
+t5: DC.B 't5',0
+even: DC.B 'even',0
+odd: DC.B 'odd',0
  
 strout: DS.B 100
 	DC.W 0
@@ -302,4 +202,10 @@ STRCON3:
 	JMP STRCON3
 STRCON4:
 	RTS
+out_of_bounds:
+	MOVE.L #error_msg,-(A7)
+	JSR SLINE
+	SIMHALT
+error_msg:
+	DC.B 'Matriu fora del lmit',0
 	END START

@@ -1,1 +1,0 @@
-Error lèxic a la línea 8, columna 15: Token no reconegut '<'

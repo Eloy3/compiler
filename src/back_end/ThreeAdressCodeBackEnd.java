@@ -66,6 +66,10 @@ public class ThreeAdressCodeBackEnd {
                         case "param_c": // Handle constant parameter instruction
                             instructionList.addInst(Operation.PARAM_C, parts[1], null, null);
                             break;
+                        
+                        case "param_t": // Handle constant parameter instruction
+                            instructionList.addInst(Operation.PARAM_T, parts[1], null, null);
+                            break;
     
                         case "rtn":
                             instructionList.addInst(Operation.RTN, parts[1], null, null);
@@ -180,6 +184,7 @@ public class ThreeAdressCodeBackEnd {
                 case "-" -> instructionList.addInst(Operation.RESTA, parts[2], parts[4], parts[0]);
                 case "*" -> instructionList.addInst(Operation.MULTIPLICACIO, parts[2], parts[4], parts[0]);
                 case "/" -> instructionList.addInst(Operation.DIVISIO, parts[2], parts[4], parts[0]);
+                case "mod" -> instructionList.addInst(Operation.MODUL, parts[2], parts[4], parts[0]);
 
             // Handle logical operations: `x = y ILogic z`
                 case "ILogic" -> instructionList.addInst(Operation.AND, parts[2], parts[4], parts[0]);

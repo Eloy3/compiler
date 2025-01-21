@@ -30,7 +30,11 @@ public class NodeSortida extends NodeBase {
                     String array = TacUtil.generateIndexes(cta, ts, id.getNom(), print.getPos());
                     cta.generateCode("assign", tempVar, array, ts);
                     cta.generateCode("param_s " + tempVar + "\n");
-                }else{
+                }else if(print.getTipus() == tipusexpr.text){                    
+                    cta.generateCode("param_t " + Util.removeQuotes(print.getValor()) + "\n");
+                    cta.newVar(Util.removeQuotes(print.getValor()), "text", print.getValor());
+                }
+                else{
                     cta.generateCode(paramType(print) + " " + print.getValor() + "\n");
                 }
                 cta.generateCode("call " + ((linea) ? "line" : "print") + "\n");
@@ -55,6 +59,8 @@ public class NodeSortida extends NodeBase {
                 return "param_s"; // Integer parameter
             case "bool":
                 return "param_b"; // Boolean parameter
+            case "text":
+                return "param_t"; // Text parameter
             default:
                 throw new RuntimeException("Unsupported variable type: " + varType);
             }

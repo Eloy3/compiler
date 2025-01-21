@@ -125,5 +125,9 @@ public abstract class Util {
         return list;
     }
 
+    public static String removeQuotes(String s) {
+        return s.replace("\"", "");
+    }
+
 }
 

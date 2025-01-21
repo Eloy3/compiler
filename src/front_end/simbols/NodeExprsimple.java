@@ -3,7 +3,7 @@ package front_end.simbols;
 import java.util.List;
 
 public class NodeExprsimple extends NodeBase {
-    public enum tipusexpr {id, ent, bool, procediment, arrayValue}
+    public enum tipusexpr {id, ent, bool, procediment, arrayValue, text}
     private tipusexpr tipus;
     private String valor;
     private int[] lineCode;

@@ -16,6 +16,7 @@ public class VariableTable {
     private int int_store;
     private int logic_store;
     private int null_store;
+    private int str_store;
 
     private static final String TABLE_NAME = "Taula de variables";
 
@@ -42,6 +43,7 @@ public class VariableTable {
     private void setStore() throws IOException {
         br = new BufferedReader(new FileReader(STORES_FILE_PATH));
         int_store = Integer.parseInt(br.readLine().split(" ")[2]);
+        str_store = Integer.parseInt(br.readLine().split(" ")[2]);
         logic_store = Integer.parseInt(br.readLine().split(" ")[2]);
         null_store = Integer.parseInt(br.readLine().split(" ")[2]);
         br.close();
@@ -83,6 +85,7 @@ public class VariableTable {
             case BOOL -> logic_store;
             case NULL -> null_store;
             case BUIT -> null_store;
+            case TEXT -> str_store;
         };
     }
 
