@@ -1,10 +1,8 @@
 package front_end.simbols;
 
 import data_structures.Procedure;
-import java_cup.terminal;
 import errors.*;
 import data_structures.Parameter;
-import data_structures.Procedure;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -52,7 +50,7 @@ public class NodeDecl_funcio extends NodeBase {
             currentParam = currentParam.getNext();
         }
         Collections.reverse(argumentNames);
-        ts.setCurrentProcedure(functionName);
+        //ts.setCurrentProcedure(functionName);
         ts.incAmbit();
         ts.insertElementWithArgs(functionName, tipus.getTipusAsString(), null, argumentNames);
         addProcedureToTable();
@@ -85,7 +83,7 @@ public class NodeDecl_funcio extends NodeBase {
             blocf.generateCode();
         }
 
-        ts.setCurrentProcedure("principal");
+        //ts.setCurrentProcedure("principal");
         ts.decAmbit();
         cta.pop(cta.getPproc());
     }

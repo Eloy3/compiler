@@ -1,10 +1,7 @@
 
 package front_end.simbols;
 
-import errors.ErrorLogger;
-import front_end.simbols.NodeExprsimple.tipusexpr;
 import util.TacUtil;
-import util.Util;
 
 public class NodeCondicional extends NodeBase{
 
@@ -22,39 +19,33 @@ public class NodeCondicional extends NodeBase{
     }
 
     public boolean generateCode(){
-        /* if(condicio.getCond()==null){
-            if(condicio.getExpr().getTipus() == tipusexpr.id){
-                Simbol var = Util.validateVariableExists(ts, condicio.getExpr().getValor(), lc);
-                if(var == null) return false;
-                
-                if(!Util.typeMatches(var.getTipus(), "bool")){
-                    ErrorLogger.logSemanticError(lc,"La variable '" + condicio.getExpr() + "' no té el tipus esperat '" + var.getTipus() + "'.");
-                }
-            }else if(condicio.getExpr().getTipus() == tipusexpr.arrayValue){
-                Simbol var = Util.validateVariableExists(ts, condicio.getExpr().getValor(), lc);
-                if(var == null) return false;
-                if(!Util.typeMatches(var.getTipus(), "bool")){
-                    ErrorLogger.logSemanticError(lc,"La variable '" + condicio.getExpr() + "' no té el tipus esperat '" + var.getTipus() + "'.");
-                }
-            }
-        }else{ */
-            String endLabel = cta.newLabel();
-            if (condicio.getOperador() != null) {
-                if(!condicio.generateCodeOperador()) return false;
-            } else {
-                condicio.generateCodeID();
-            }
-            TacUtil.condiciobot(cta, false);
-            blocf.generateCode();
-            String falseLabel = cta.getTop(cta.getFalse_stack());
-            cta.generateCode("goto " + endLabel + "\n");
-            cta.generateCode(falseLabel + ":skip\n");
-            if(condsino!=null){
-                condsino.generateCode();
-            }
 
-            cta.generateCode(endLabel + ":skip\n");
-            return true;
+        String endLabel = cta.newLabel();
+        if (condicio.getOperador() != null) {
+            if(!condicio.generateCodeOperador()) return false;
+        } else {
+            condicio.generateCodeID();
+        }
+        TacUtil.condiciobot(cta, false);
+        blocf.generateCode();
+        String falseLabel = cta.getTop(cta.getFalse_stack());
+        cta.generateCode("goto " + endLabel + "\n");
+        cta.generateCode(falseLabel + ":skip\n");
+        if(condsino!=null){
+            condsino.generateCode();
+        }
+
+        cta.generateCode(endLabel + ":skip\n");
+        return true;
         
     }
+
+    public int[] getLc() {
+        return lc;
+    }
+
+    public void setLc(int[] lc) {
+        this.lc = lc;
+    }
+
 }

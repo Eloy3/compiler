@@ -89,7 +89,7 @@ non terminal NodeLlistaValors llista_valors;
 non terminal NodeCodi codi;
 non terminal NodeProcedures procedures;
 non terminal NodeDecl_taula decl_taula;
-non terminal NodeDimensions_taula dimensions_taula;
+//non terminal NodeDimensions_taula dimensions_taula;
 non terminal NodeInicialitzacio_taula inicialitzacio_taula;
 non terminal NodeAssignacio_memoria assignacio_memoria;
 non terminal NodeEspecificacio_dimensio especificacio_dimensio; 
@@ -258,12 +258,12 @@ comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comporta
 
 // Taules amb múltiples dimensions
 
-//             ent       []...            x    
-decl_taula::= tipus:a dimensions_taula:b ID:c inicialitzacio_taula:d {: RESULT = new NodeDecl_taula(a, b, c, d, lexic.getLineColumn()); :}
-            | tipus:a dimensions_taula:b ID:c                        {: RESULT = new NodeDecl_taula(a, b, c, lexic.getLineColumn()); :};
+//             ent       []                 x    
+decl_taula::= tipus:a EClaudator DClaudator ID:b inicialitzacio_taula:c {: RESULT = new NodeDecl_taula(a, b, c, lexic.getLineColumn()); :}
+            | tipus:a EClaudator DClaudator ID:b                        {: RESULT = new NodeDecl_taula(a, b, lexic.getLineColumn()); :};
                     
-dimensions_taula ::= EClaudator DClaudator {: RESULT = new NodeDimensions_taula(null, lexic.getLineColumn()); :}
-                | dimensions_taula:a EClaudator DClaudator {: RESULT = new NodeDimensions_taula(a, lexic.getLineColumn()); :};
+/* dimensions_taula ::= EClaudator DClaudator {: RESULT = new NodeDimensions_taula(null, lexic.getLineColumn()); :}
+                | dimensions_taula:a EClaudator DClaudator {: RESULT = new NodeDimensions_taula(a, lexic.getLineColumn()); :}; */
 
 //                           =     {      1,2,3       }
 inicialitzacio_taula ::= ASSIGN EClau llista_valors:a DClau {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :}

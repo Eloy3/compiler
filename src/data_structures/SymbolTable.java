@@ -20,7 +20,7 @@ public class SymbolTable {
     protected Stack<HashMap<String, Simbol>> tambit;
     protected ArrayList<Simbol> temp;
     protected int profunditat;
-    protected String currentProcedure = "principal";
+    
     public Writer writer;
     private static final String FILE_PATH = "output/Taula_simbols.txt";
 
@@ -30,15 +30,12 @@ public class SymbolTable {
             temp = new ArrayList<>();
             profunditat = 0;
 
-            // Open the file in overwrite mode (to write the header cleanly)
             try (BufferedWriter headerWriter = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(FILE_PATH, false), StandardCharsets.UTF_8))) {
                 // Format header with fixed column widths
                 headerWriter.write(String.format(
                         "%-15s %-10s %-10s %-20s\n \n",
                         "NOM", "TIPUS", "NIVELL", "ARGS"));
-                // Add a separator line for clarity
-                // headerWriter.write("-".repeat(70) + "\n");
             }
 
             writer = new BufferedWriter(new OutputStreamWriter(
@@ -48,14 +45,6 @@ public class SymbolTable {
         }
 
         incAmbit();
-    }
-
-    private void writeFile(String string) {
-        try {
-            writer.write(string);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void incAmbit() {
@@ -74,16 +63,14 @@ public class SymbolTable {
 
     public void insertElement(String nom, String tipus, Object valor) {
         Simbol s = new Simbol(nom, tipus, valor);
-        // tambit.peek().put(s.getNom(), s);
         tambit.get(profunditat - 1).put(s.getNom(), s);
-        writeSymbolToFile(s, null); // Arguments are null by default
+        writeSymbolToFile(s, null);
     }
 
     public void insertElement(String nom, String tipus, ArrayList<Integer> dimensions) {
         Simbol s = new Simbol(nom, tipus, dimensions);
-        // tambit.peek().put(s.getNom(), s);
         tambit.get(profunditat - 1).put(s.getNom(), s);
-        writeSymbolToFile(s, null); // Arguments are null by default
+        writeSymbolToFile(s, null); 
     }
 
     public void insertElement(String nom, String tipus) {
@@ -101,7 +88,6 @@ public class SymbolTable {
     public void insertElementWithArgs(String nom, String tipus, Object valor, ArrayList<String> args) {
         Simbol s = new Simbol(nom, tipus, valor);
         s.setArgs(args);
-        // tambit.peek().put(s.getNom(), s);
         tambit.get(profunditat - 1).put(s.getNom(), s);
         writeSymbolToFile(s, args);
     }
@@ -212,13 +198,5 @@ public class SymbolTable {
     public ArrayList<Simbol> getParams() {
         Collections.reverse(temp);
         return temp;
-    }
-
-    public String getCurrentProcedure() {
-        return currentProcedure;
-    }
-
-    public void setCurrentProcedure(String currentProcedure) {
-        this.currentProcedure = currentProcedure;
     }
 }
