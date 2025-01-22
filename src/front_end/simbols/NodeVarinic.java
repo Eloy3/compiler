@@ -1,5 +1,7 @@
 package front_end.simbols;
 
+import front_end.simbols.Procedure.NodeCrida_funcio;
+
 public class NodeVarinic extends NodeBase{
 
     private NodeExprsimple exprsimple;

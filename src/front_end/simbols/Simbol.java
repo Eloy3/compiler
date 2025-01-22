@@ -5,19 +5,10 @@ import java.util.ArrayList;
 public class Simbol{
     String nom;
     String tipus;
-    String tipusSubjacent;
-    String subprogram;
     Object valor;
 
     ArrayList<Integer> arrayDimensions;
     private ArrayList<String> args;
-
-    public Simbol(String nom, String tipus, String subprogram, Object valor) {
-        this.nom = nom;
-        this.tipus = tipus;
-        this.valor = valor;
-        this.subprogram = subprogram;
-    }
 
     public Simbol(String nom, String tipus, Object valor) {
         this.nom = nom;
@@ -77,22 +68,6 @@ public class Simbol{
         return  "id=" + nom + ", tipus=" + tipus + ", valor=" + valor;
     }
 
-    public String getTipusSubjacent() {
-        return tipusSubjacent;
-    }
-
-    public String getSubprogram() {
-        return subprogram;
-    }
-
-    public void setSubprogram(String subprogram) {
-        this.subprogram = subprogram;
-    }
-
-    public void setTipusSubjacent(String tipusSubjacent) {
-        this.tipusSubjacent = tipusSubjacent;
-    }
-
     public ArrayList<Integer> getArrayDimensions() {
         return arrayDimensions;
     }
@@ -100,7 +75,5 @@ public class Simbol{
     public void setArrayDimensions(ArrayList<Integer> arrayDimensions) {
         this.arrayDimensions = arrayDimensions;
     }
-    
-    
     
  }

@@ -51,7 +51,7 @@ parser code {:
 
 :}
 
-terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator;
+terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator, MAJOR, MENOR;
 terminal String ID, ENT, BOOL, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA, RESERVA, MOD, TEXT, STRING;
 
 non terminal NodeExprcomposta exprcomposta;
@@ -239,8 +239,10 @@ operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
         | OLO:a {: RESULT = new NodeOperador_cond(a); :}
         | IGUAL:a {: RESULT = new NodeOperador_cond(a); :}
         | DIFERENT:a {: RESULT = new NodeOperador_cond(a); :}
+        | MAJOR:a {: RESULT = new NodeOperador_cond(a.toString()); :}
+        | MENOR:a {: RESULT = new NodeOperador_cond(a.toString()); :}
         | error {:      logLexicError("Operador invàlid"); RESULT = null; :}
-        | ID {: logLexicError("Operador invàlid"); RESULT = null; :};
+        | ID {:         logLexicError("Operador invàlid"); RESULT = null; :};
 
 
 // **** WHILE i FOR ****

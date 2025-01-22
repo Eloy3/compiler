@@ -2,6 +2,8 @@ package front_end.simbols;
 
 import java.util.List;
 
+import front_end.simbols.Array.NodeValorTaula;
+
 public class NodeExprsimple extends NodeBase {
     public enum tipusexpr {id, ent, bool, procediment, arrayValue, text}
     private tipusexpr tipus;

@@ -3,7 +3,7 @@ package front_end.simbols;
 import data_structures.TaulaProcediments;
 import data_structures.SymbolTable;
 import data_structures.VariableTable;
-import back_end.generate_code.ThreeAdressCode;
+import back_end.generate_code.IntermediateCode;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 
 
@@ -12,7 +12,7 @@ public class NodeBase extends ComplexSymbol{
     protected static SymbolTable ts = new SymbolTable();
     protected static VariableTable tv = new VariableTable();
     protected static TaulaProcediments tp = new TaulaProcediments();
-    protected static ThreeAdressCode cta = new ThreeAdressCode(tv);
+    protected static IntermediateCode cta = new IntermediateCode(tv);
     
     public NodeBase(String nom, Integer valor){
         super(nom, i++, valor);

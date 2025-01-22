@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import front_end.simbols.Array.NodeInicialitzacio_taula;
 import front_end.simbols.NodeExprsimple.tipusexpr;
+import front_end.simbols.Procedure.NodeCrida_funcio;
 
 public class NodeVarinic2 extends NodeBase {
 
