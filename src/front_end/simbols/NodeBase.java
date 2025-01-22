@@ -1,9 +1,9 @@
 package front_end.simbols;
 
 import data_structures.TaulaProcediments;
+import back_end.IntermediateCode;
 import data_structures.SymbolTable;
 import data_structures.VariableTable;
-import back_end.generate_code.IntermediateCode;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 
 
