@@ -21,7 +21,7 @@ public class AssemblyCode {
     private ArrayList<String> code;
     private ArrayList<String> conststrings;
     private int conststringidx;
-    private ThreeAdressCodeBackEnd c3a;
+    private ThreeAdressCode c3a;
     private Tipus param;
 
     private int int_store;
@@ -29,7 +29,7 @@ public class AssemblyCode {
     private int null_store;
     public BufferedReader br;
 
-    public AssemblyCode(ThreeAdressCodeBackEnd c3a) throws IOException {
+    public AssemblyCode(ThreeAdressCode c3a) throws IOException {
         this.c3a = c3a;
         this.code = new ArrayList<>();
         this.conststrings = new ArrayList<>();
@@ -67,7 +67,7 @@ public class AssemblyCode {
         code.add("\tEND START");
     }
 
-    private void setMemory(ThreeAdressCodeBackEnd tac){
+    private void setMemory(ThreeAdressCode tac){
         boolean bytes = false;
 
         for (Variable v : tac.getTv()){
@@ -131,17 +131,9 @@ public class AssemblyCode {
                 compare(i);
                 code.add("\tBGT " + (i.getDestiny()));
                 break;
-            case IFMAJORIGUAL:
-                compare(i);
-                code.add("\tBGE " + (i.getDestiny()));
-                break;
             case IFMENOR:
                 compare(i);
                 code.add("\tBLT " + (i.getDestiny()));
-                break;
-            case IFMENORIGUAL:
-                compare(i);
-                code.add("\tBLE " + (i.getDestiny()));
                 break;
             case IFAND:
                 iifand(i);
@@ -219,10 +211,7 @@ public class AssemblyCode {
                 } else {
                     code.add("\tMOVE.W " + getop(i.getOperand1()) + "," + getop(i.getDestiny()));
                 }
-                break;
-            case TEXT:
-                break;
-                
+                break;           
         }
     }
 

@@ -3,7 +3,7 @@ import java.io.*;
 
 
 import back_end.AssemblyCode;
-import back_end.ThreeAdressCodeBackEnd;
+import back_end.ThreeAdressCode;
 import front_end.scanner.Lexic;
 import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.SymbolFactory;
@@ -30,7 +30,7 @@ public class Main {
             Parser parser = new Parser(scanner, sf);
             parser.parse();
 
-            ThreeAdressCodeBackEnd c3a = new ThreeAdressCodeBackEnd();
+            ThreeAdressCode c3a = new ThreeAdressCode();
             AssemblyCode ac = new AssemblyCode(c3a);
             ac.generate();
             writeFile("output/codiEnsamblador.X68", ac.getCode());

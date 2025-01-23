@@ -152,6 +152,21 @@ public class NodeVarinic2 extends NodeBase {
             return;
         }
 
+        if(typeA.equalsIgnoreCase("arrayValue")){
+            typeA = resolveType(typeA, valueA);
+            if (typeA == null || !Util.typeMatches(target.getTipus(), typeA)) {
+                ErrorLogger.logSemanticError(lineCode, target.getNom() + " i " + valueA + " no tenen el mateix tipus.");
+                return;
+            }
+            NodeExprsimple expressio = exprcomposta.getExprsimple();
+            if(expressio == null || expressio.getPos() == null || expressio.getValor() == null){
+                ErrorLogger.logSemanticError(lineCode, "L'array es invàlid.");
+                return;
+            }
+            TacUtil.generateInd_val(cta, ts, expressio.getValor(), id, typeA, expressio.getPos(), lineCode);
+            return;
+        }
+        
         typeA = resolveType(typeA, valueA);
         if (typeA == null || !Util.typeMatches(target.getTipus(), typeA)) {
             ErrorLogger.logSemanticError(lineCode, target.getNom() + " i " + valueA + " no tenen el mateix tipus.");
@@ -172,7 +187,7 @@ public class NodeVarinic2 extends NodeBase {
     }
 
     private String resolveType(String type, String value) {
-        if (type.equalsIgnoreCase("id")) {
+        if (type.equalsIgnoreCase("id") || type.equalsIgnoreCase("arrayValue")) {
             Simbol operand = Util.validateVariableExists(ts, value, lineCode);
             if (operand == null) {
                 ErrorLogger.logSemanticError(lineCode, "La variable '" + value + "' no està definida.");

@@ -1,4 +1,4 @@
-package back_end.generate_code;
+package back_end;
 import data_structures.VariableTable;
 import front_end.simbols.Simbol;
 import data_structures.SymbolTable;
@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class ThreeAdressCode {
+public class IntermediateCode {
 
     private int n_var, label_num, disp = 0;
     private BufferedWriter bw;
@@ -22,7 +22,7 @@ public class ThreeAdressCode {
     private static final String FILE_PATH = "output/codiIntermitg.txt";
     private final VariableTable tv;
     
-    public ThreeAdressCode(VariableTable tv){
+    public IntermediateCode(VariableTable tv){
         this.true_stack = new Stack<>();
         this.false_stack = new Stack<>();
         this.end_stack = new Stack<>();

@@ -12,7 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ThreeAdressCodeBackEnd {
+public class ThreeAdressCode {
 
     private final String TAC_PATH = "output/codiIntermitg.txt";
     private final String TVAR_PATH = "output/Taula_variables.txt";
@@ -24,7 +24,7 @@ public class ThreeAdressCodeBackEnd {
     private ArrayList<Procedure> tp = new ArrayList<>();
     private ArrayList<Simbol> ts = new ArrayList<>();
     
-    public ThreeAdressCodeBackEnd() {
+    public ThreeAdressCode() {
         loadTs();
         loadTv();
         loadTp();
@@ -129,14 +129,8 @@ public class ThreeAdressCodeBackEnd {
             case ">":
                 instructionList.addInst(Operation.IFMAJOR, op1, op2, label);
                 break;
-            case ">=":
-                instructionList.addInst(Operation.IFMAJORIGUAL, op1, op2, label);
-                break;
             case "<":
                 instructionList.addInst(Operation.IFMENOR, op1, op2, label);
-                break;
-            case "<=":
-                instructionList.addInst(Operation.IFMENORIGUAL, op1, op2, label);
                 break;
             case "ILogic":
                 instructionList.addInst(Operation.IFAND, op1, op2, label);

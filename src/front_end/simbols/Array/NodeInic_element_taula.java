@@ -7,7 +7,6 @@ import errors.ErrorLogger;
 import front_end.simbols.NodeBase;
 import front_end.simbols.NodeExprsimple;
 import front_end.simbols.Simbol;
-import front_end.simbols.NodeExprsimple.tipusexpr;
 import util.TacUtil;
 import util.Util;
 
@@ -65,7 +64,7 @@ public class NodeInic_element_taula extends NodeBase{
             Simbol exprSimbol = Util.validateVariableExists(ts, exprsimple.getValor(), lineCode);
             if(exprSimbol == null) return;
             if(!Util.typeMatches(exprSimbol.getTipus(), idSimbol.getTipus())) return;
-            TacUtil.generateInd_ass(cta, ts, id, exprSimbol.getValor().toString(), exprSimbol.getTipus(), indexes);
+            TacUtil.generateInd_ass(cta, ts, id, exprSimbol.getNom(), exprSimbol.getTipus(), indexes);
 
         }else if(Util.typeMatches(idSimbol.getTipus(), exprsimple.getTipusAsString())){
             TacUtil.generateInd_ass(cta, ts, id, exprsimple.getValor(), idSimbol.getTipus(), indexes);

@@ -2,7 +2,6 @@ package front_end.simbols.Procedure;
 
 import front_end.simbols.NodeBase;
 import front_end.simbols.NodeExprsimple;
-import front_end.simbols.NodeExprsimple.tipusexpr;
 
 public class NodeArg extends NodeBase{
     private NodeArg2 arg;

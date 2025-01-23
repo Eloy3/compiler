@@ -8,7 +8,6 @@ import errors.ErrorLogger;
 import front_end.simbols.NodeBase;
 import front_end.simbols.NodeExprsimple;
 import front_end.simbols.NodeTipus;
-import front_end.simbols.NodeExprsimple.tipusexpr;
 import util.TacUtil;
 import util.Util;
 

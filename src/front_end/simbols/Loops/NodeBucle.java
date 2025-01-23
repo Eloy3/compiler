@@ -51,7 +51,6 @@ public class NodeBucle extends NodeBase {
         decl_Variable.generateCode();
         if (!Util.validateLoop(ts, condicio.getExpr(), condicio.getCond(), lc)) return;
         TacUtil.inicibucle(cta);
-        //TacUtil.etiquetacond(cta);
         GenerateConditionCode();
         TacUtil.condiciobot(cta,false);
         blocf.generateCode();

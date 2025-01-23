@@ -9,7 +9,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
 import java.util.logging.Level;
@@ -20,6 +19,7 @@ public class SymbolTable {
     protected Stack<HashMap<String, Simbol>> tambit;
     protected ArrayList<Simbol> temp;
     protected int profunditat;
+    protected String currentProcedure = "principal";
     
     public Writer writer;
     private static final String FILE_PATH = "output/Taula_simbols.txt";
@@ -34,8 +34,8 @@ public class SymbolTable {
                     new FileOutputStream(FILE_PATH, false), StandardCharsets.UTF_8))) {
                 // Format header with fixed column widths
                 headerWriter.write(String.format(
-                        "%-15s %-10s %-10s %-20s\n \n",
-                        "NOM", "TIPUS", "NIVELL", "ARGS"));
+                        "%-30s %-10s %-30s %-20s\n",
+                        "NOM", "TIPUS", "SUBPROGRAMA", "ARGS"));
             }
 
             writer = new BufferedWriter(new OutputStreamWriter(
@@ -157,10 +157,10 @@ public class SymbolTable {
             String argsString = (args != null && !args.isEmpty()) ? args.toString() : "[]";
 
             // Format columns with fixed widths
-            writer.write(String.format("%-15s %-10s %-10d %-20s\n",
+            writer.write(String.format("%-30s %-10s %-30s %-20s\n",
                     simbol.getNom(),
                     simbol.getTipus(),
-                    profunditat,
+                    currentProcedure,
                     argsString));
         } catch (IOException e) {
             e.printStackTrace();
@@ -173,30 +173,22 @@ public class SymbolTable {
             String argsString = (args != null && !args.isEmpty()) ? args.toString() : "[]";
 
             // Format columns with fixed widths
-            writer.write(String.format("%-15s %-10s %-10d %-20s\n",
+            writer.write(String.format("%-30s %-10s %-30s %-20s\n",
                     simbol.getNom()+"[]",
                     simbol.getTipus(),
-                    profunditat,
+                    currentProcedure,
                     argsString));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-/*     private void writeHeaderToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(FILE_PATH, false), StandardCharsets.UTF_8))) {
-            String header = String.format(
-                    "%-15s %-10s %-10s %-8s %-20s\n",
-                    "NOM", "TIPUS", "VALOR", "NIVELL", "ARGS");
-            writer.write(header);
-            writer.write("-".repeat(header.length()) + "\n"); // Add a separator
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    } */
 
-    public ArrayList<Simbol> getParams() {
-        Collections.reverse(temp);
-        return temp;
+    public String getCurrentProcedure() {
+        return currentProcedure;
     }
+
+    public void setCurrentProcedure(String currentProcedure) {
+        this.currentProcedure = currentProcedure;
+    }
+
 }

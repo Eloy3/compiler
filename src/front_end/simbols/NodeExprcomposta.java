@@ -47,4 +47,8 @@ public class NodeExprcomposta extends NodeBase{
         this.exprcomposta = b;
     }
     
+    public int[] getLinecode() {
+        return linecode;
+    }
+
 }

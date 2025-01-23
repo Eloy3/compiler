@@ -9,7 +9,6 @@ import errors.*;
 import front_end.simbols.NodeBase;
 import front_end.simbols.NodeExprsimple;
 import front_end.simbols.Simbol;
-import front_end.simbols.NodeExprsimple.tipusexpr;
 import util.Util;
 
 public class NodeCrida_funcio extends NodeBase {

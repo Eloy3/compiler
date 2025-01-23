@@ -13,8 +13,6 @@ public enum Operation {
     IFIGUAL,
     IFMAJOR,
     IFMENOR,
-    IFMAJORIGUAL,
-    IFMENORIGUAL,
     IFDIFERENT,
     IFAND,
     IFOR,

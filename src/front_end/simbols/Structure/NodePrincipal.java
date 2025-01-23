@@ -2,11 +2,9 @@ package front_end.simbols.Structure;
 
 import java.util.ArrayList;
 
-import data_structures.Parameter;
 import data_structures.Procedure;
 import front_end.simbols.NodeBase;
 import front_end.simbols.Tipus;
-import java_cup.runtime.Symbol;
 
 public class NodePrincipal extends NodeBase {
     private NodeSentencies sentencies;

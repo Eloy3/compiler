@@ -36,8 +36,6 @@ public class VariableTable {
         }
         writeFile(Title());
         writeFile(TableHeader());
-
-
     }
 
     private void setStore() throws IOException {

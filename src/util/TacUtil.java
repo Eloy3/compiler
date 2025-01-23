@@ -1,22 +1,21 @@
 package util;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import back_end.generate_code.ThreeAdressCode;
+import back_end.IntermediateCode;
 import data_structures.SymbolTable;
 import front_end.simbols.Simbol;
 
 public abstract class TacUtil {
 
-    public static void inicibucle(ThreeAdressCode cta) {
+    public static void inicibucle(IntermediateCode cta) {
         String startLabel = cta.newLabel();
         cta.push(cta.getStart_stack(), startLabel);
         cta.generateCode(startLabel + ":skip\n");
     }
 
-    public static void etiquetacond(ThreeAdressCode cta) {
+    public static void etiquetacond(IntermediateCode cta) {
         cta.generateCode("if ");
         String trueLabel = cta.newLabel();
         cta.push(cta.getTrue_stack(), trueLabel);
@@ -25,31 +24,31 @@ public abstract class TacUtil {
         cta.push(cta.getFalse_stack(), falseLabel);
     }
 
-    public static void condiciobot(ThreeAdressCode cta, boolean inverter) {
+    public static void condiciobot(IntermediateCode cta, boolean inverter) {
         String trueLabel = cta.getTop(cta.getTrue_stack());
         String falseLabel = cta.getTop(cta.getFalse_stack());
 
         if (inverter) {
             cta.generateCode("goto " + falseLabel + "\n");
             cta.generateCode("goto " + trueLabel + "\n");
-            cta.pop(cta.getTrue_stack());
             cta.generateCode(trueLabel + ":skip\n");
+            cta.pop(cta.getTrue_stack());
         } else {
             cta.generateCode("goto " + trueLabel + "\n");
-            cta.pop(cta.getTrue_stack());
             cta.generateCode("goto " + falseLabel + "\n");
             cta.generateCode(trueLabel + ":skip\n");
+            cta.pop(cta.getTrue_stack());
         }
         cta.setTemp_id(null);
     }
 
-    public static void retornabucle(ThreeAdressCode cta) {
+    public static void retornabucle(IntermediateCode cta) {
         cta.generateCode("goto " + cta.getTop(cta.getStart_stack()) + "\n");
         String falseLabel = cta.getTop(cta.getFalse_stack());
         cta.generateCode(falseLabel + ":skip\n");
     }
 
-    public static void procedureResultToVariable(ThreeAdressCode cta, SymbolTable ts, String variable, String variableType) {
+    public static void procedureResultToVariable(IntermediateCode cta, SymbolTable ts, String variable, String variableType) {
         /**
          * Transfers the result of a procedure to a specified variable.
          *
@@ -75,7 +74,7 @@ public abstract class TacUtil {
      * @param indexes The indexes at which the value is to be assigned.
      * array[i][j]...[n] = value
      */
-    public static void generateInd_ass(ThreeAdressCode cta, SymbolTable ts, String id, String value, String tipus, List<String> indexes) {
+    public static void generateInd_ass(IntermediateCode cta, SymbolTable ts, String id, String value, String tipus, List<String> indexes) {
         /* Simbol idSimbol = ts.get(id);
         ArrayList<Integer> dimensions = idSimbol.getArrayDimensions();
 
@@ -107,7 +106,7 @@ public abstract class TacUtil {
         cta.generateCode("assign", index, tempVar, ts);
     }
 
-    public static String generateIndexes(ThreeAdressCode cta, SymbolTable ts, String id, List<String> indexes) {
+    public static String generateIndexes(IntermediateCode cta, SymbolTable ts, String id, List<String> indexes) {
         Simbol idSimbol = ts.get(id);
         ArrayList<Integer> dimensions = idSimbol.getArrayDimensions();
 
@@ -136,5 +135,15 @@ public abstract class TacUtil {
             indextmp2 = cta.newTempVar("ent");
         }
         return id+"["+indextmp+"]";
+    }
+
+    public static void generateInd_val(IntermediateCode cta, SymbolTable ts, String array, String target, String tipus, List<String> indexes, int[] lineCode) {
+        Simbol targetSimbol = Util.validateVariableExists(ts, target, lineCode);
+        if(targetSimbol == null) return;
+        String index = generateIndexes(cta, ts, array, indexes);
+        String tempVar = cta.newTempVar(tipus);
+        cta.generateCode(tempVar + " = " + index + "\n");
+        cta.generateCode("assign", target, tempVar, ts);
+        cta.generateNewVarAssign(targetSimbol, tempVar, tempVar, ts);
     }
 }
