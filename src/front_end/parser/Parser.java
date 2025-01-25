@@ -760,7 +760,10 @@ class CUP$Parser$actions {
           case 20: // sentencia ::= ID 
             {
               NodeSentencia RESULT =null;
-		 logLexicError("Sentència invàlida"); RESULT = null; 
+		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 logLexicError("Sentència invàlida, simbol inesperat: "+ a.toString()); RESULT = null; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("sentencia",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

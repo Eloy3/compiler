@@ -136,7 +136,7 @@ sentencia ::=   decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
               | inic_element_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"inic_element_taula"); :}
         
               | error PUNTICOMA {: logLexicError("Sentència invàlida"); RESULT = null; :}
-              | ID {: logLexicError("Sentència invàlida"); RESULT = null; :};
+              | ID:a {: logLexicError("Sentència invàlida, simbol inesperat: "+ a.toString()); RESULT = null; :};
 
 crida_funcio ::= ID:name EParen arg:a DParen {: RESULT = new NodeCrida_funcio(name, a, lexic.getLineColumn()); :}
                | ID:name EParen error DParen {: 
@@ -193,7 +193,7 @@ sentenciaf ::=  decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
               | inic_element_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"inic_element_taula"); :}
         
               | error PUNTICOMA {: logLexicError("Sentència invàlida"); RESULT = null; :}
-              | ID {: logLexicError("Sentència invàlida"); RESULT = null; :};
+              | ID:a {: logLexicError("Sentència invàlida, simbol inesperat: "+ a.toString()); RESULT = null; :};
 
 retorna ::= RETORNA exprsimple:expr PUNTICOMA {: RESULT = new NodeRetorna(expr, lexic.getLineColumn()); :}
         |   RETORNA PUNTICOMA {: RESULT = new NodeRetorna(); :};
