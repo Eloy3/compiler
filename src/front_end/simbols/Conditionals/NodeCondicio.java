@@ -53,23 +53,38 @@ public class NodeCondicio extends NodeBase{
 
     public boolean generateCodeOperador(){
 
-        Simbol left = Util.validateVariableExists(ts, expr.getValor(), lc);
-        if (left == null) return false;
+        String tipusLeft;
+        String idLeft;
 
-        String valueB = resolveCompositeExpression(left.getTipus(), cond);
+        if(expr==null){
+            ErrorLogger.logSemanticError(lc, "No s'ha trobat cap expressió a la condició.");
+            return false;
+        }
+        
+        if(expr.getTipus()==tipusexpr.id){
+            Simbol left = Util.validateVariableExists(ts, expr.getValor(), lc);
+            if (left == null) return false;
+            tipusLeft = left.getTipus();
+            idLeft = left.getNom();
+        }else{
+            tipusLeft = expr.getTipusAsString();
+            idLeft = expr.getValor();
+        }
+
+        String valueB = resolveCompositeExpression(tipusLeft, cond);
         if (valueB == null) return false;
         
-        if(left.getTipus().equalsIgnoreCase("bool")){
+        if(tipusLeft.equalsIgnoreCase("bool")){
             if(!operador.isLogic()){
                 ErrorLogger.logSemanticError(lc, "Operador no vàlid per tipus booleà.");
             }
-        }else if(left.getTipus().equalsIgnoreCase("ent")){
+        }else if(tipusLeft.equalsIgnoreCase("ent")){
             if(!operador.isNumeric()){
                 ErrorLogger.logSemanticError(lc, "Operador no vàlid per tipus enter.");
             }
         }
 
-        String cond = left.getNom().toString() + " " + operador.getOperador() + " " + valueB;
+        String cond = idLeft + " " + operador.getOperador() + " " + valueB;
         TacUtil.etiquetacond(cta);
         cta.generateCode(cond + " then ");
         return true;

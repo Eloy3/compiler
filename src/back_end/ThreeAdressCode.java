@@ -453,6 +453,14 @@ public class ThreeAdressCode {
         return null;
     }
     
+    public boolean isSimbol(String id){
+        for(Simbol s : this.ts){
+            if(s.getNom().equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }
     public Variable getVar(String id, String subprogram){
         for(Variable v : this.tv){
             if(v.getName().equals(id) && v.getSubprog().equals(subprogram)){

@@ -413,6 +413,9 @@ public class AssemblyCode {
     private void compare(Instruction3a i){
         Variable op1 = c3a.getVar(i.getOperand1());
         if(op1 == null){
+            if(c3a.isSimbol(i.getOperand1())){
+                ErrorLogger.logSemanticError("La variable '"+ i.getOperand1() +"' no ha estat inicialitzada");
+            }
             boolean numero;
             try {
                 Integer.parseInt(i.getOperand1());
@@ -440,6 +443,9 @@ public class AssemblyCode {
 
         Variable op2 = c3a.getVar(i.getOperand2());
         if(op2 == null){
+            if(c3a.isSimbol(i.getOperand2())){
+                ErrorLogger.logSemanticError("La variable '"+ i.getOperand2() +"' no ha estat inicialitzada");
+            }
             boolean numero;
             try {
                 Integer.parseInt(i.getOperand2());
@@ -455,7 +461,7 @@ public class AssemblyCode {
                 code.add("\tJSR STRCMP");
             }
         } else {
-            switch (Tipus.valueOf(op1.getType().toUpperCase())){
+            switch (Tipus.valueOf(op2.getType().toUpperCase())){
                 case ENT:
                     code.add("\tMOVE.W " + varnom(op2) + ",D0");
                     code.add("\tCMP.W D0,D1");
