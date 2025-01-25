@@ -21,7 +21,7 @@ public class Main {
                 "output/tokens.txt",
                 "output/Taula_simbols.txt",
                 "output/Taula_variables.txt",
-                "output/Errors.txt",
+                "output/errors.txt",
                 "output/codiIntermitg.txt"
             );
 

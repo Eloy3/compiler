@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class ErrorLogger {
-    private static final String ERROR_FILE = "output/Errors.txt";
+    private static final String ERROR_FILE = "output/errors.txt";
 
     public static void logLexicError(int[] column_line, String message) {
         logError("Error lèxic. [" + column_line[0] + ":" + column_line[1] + "] " + message);
