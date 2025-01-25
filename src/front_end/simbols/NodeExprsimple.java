@@ -10,6 +10,7 @@ public class NodeExprsimple extends NodeBase {
     private String valor;
     private int[] lineCode;
     private boolean isNegative = false;
+    
     //just for array index
     private List<String> pos;
 
@@ -45,6 +46,7 @@ public class NodeExprsimple extends NodeBase {
     }
 
     public String getValor() {
+        if(isNegative) return "-" + valor;
         return valor;
     }
 

@@ -33,6 +33,7 @@ public class NodeCondicional extends NodeBase{
         String falseLabel = cta.getTop(cta.getFalse_stack());
         cta.generateCode("goto " + endLabel + "\n");
         cta.generateCode(falseLabel + ":skip\n");
+        cta.pop(cta.getFalse_stack());
         if(condsino!=null){
             condsino.generateCode();
         }

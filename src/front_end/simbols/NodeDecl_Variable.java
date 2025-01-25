@@ -10,9 +10,19 @@ public class NodeDecl_Variable extends NodeBase{
     private NodeVarinic varinic;
     private String id;
     private int[] lc;
+    private boolean isConstant = false;
     
     public NodeDecl_Variable(NodeTipus nt, String id, NodeVarinic varinic, int[] lc){
         super("Decl_variable", 0);
+        this.nt = nt;
+        this.varinic = varinic;
+        this.id = id;
+        this.lc = lc;
+    }
+
+    public NodeDecl_Variable(boolean constant, NodeTipus nt, String id, NodeVarinic varinic, int[] lc){
+        super("Decl_variable", 0);
+        this.isConstant = true;
         this.nt = nt;
         this.varinic = varinic;
         this.id = id;
@@ -24,7 +34,12 @@ public class NodeDecl_Variable extends NodeBase{
             ErrorLogger.logSemanticError(lc,"La variable '" + id + "' ja ha estat declarada.");
             return;
         }
-        ts.insertElement(id, nt.getTipusAsString());
+        ts.insertElement(id, nt.getTipusAsString(), isConstant);
+
+        if(isConstant && varinic == null){
+            ErrorLogger.logSemanticError(lc,"Les constants s'han d'inicialitzar a la declaració.");
+            return;
+        }
 
         if(varinic!=null){
             if(varinic.getCrida_funcio()!=null){
@@ -67,7 +82,7 @@ public class NodeDecl_Variable extends NodeBase{
             if(!nt.getTipusAsString().equals(param.tipus)){
                 ErrorLogger.logSemanticError(lc,"Les variables " +id + " i " + id2 + " no tenen el mateix tipus");
             }else{
-                ts.insertElement(id, nt.getTipusAsString().toString());
+                ts.insertElement(id, nt.getTipusAsString().toString(), isConstant);
                 generaC3a();
             }
         }
@@ -90,13 +105,17 @@ public class NodeDecl_Variable extends NodeBase{
         String temp_var;
 
         temp_var = cta.newTempVar(operand.tipus.toString());
-
-        if(operand.tipus.equalsIgnoreCase("ent") && varinic.getExprsimple().isNegative()){
-            cta.generateCode(temp_var + " = -" + varinic.getValor() + "\n");
-        }else{
-            cta.generateCode(temp_var + " = " + varinic.getValor() + "\n");
-        }
+        cta.generateCode(temp_var + " = " + varinic.getValor() + "\n");
         cta.generateCode(cta.newVar(id, operand.tipus, varinic.getValor()) + " = " + temp_var + "\n");
         cta.setTemp_id(null);
     }
+
+    public boolean isConstant() {
+        return isConstant;
+    }
+
+    public void setConstant(boolean isConstant) {
+        this.isConstant = isConstant;
+    }
+
 }

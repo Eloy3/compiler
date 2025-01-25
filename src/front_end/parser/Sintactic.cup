@@ -8,6 +8,11 @@ import java_cup.runtime.*;
 import java.io.PrintStream;
 import java.util.HashMap;
 import front_end.simbols.*;
+import front_end.simbols.Structure.*;
+import front_end.simbols.Array.*;
+import front_end.simbols.Procedure.*;
+import front_end.simbols.Conditionals.*;
+import front_end.simbols.Loops.*;
 import front_end.scanner.*;
 import errors.*;
 
@@ -42,9 +47,11 @@ parser code {:
         public void syntax_error(Symbol cur_token) {
                 // Custom error handling
                 if (cur_token != null && cur_token.sym == ParserSym.ID) {
-                logLexicError("Simbol inesperat \"" + cur_token.value + "\"");
+                        logLexicError("Simbol inesperat \"" + cur_token.value + "\"");
                 }else{
-                logSintacticError("Símbol inesperat \"" + (cur_token == null ? "EOF" : cur_token.value) + "\"");
+                        String tokenString = (cur_token == null ? "EOF" : cur_token.toString());
+                        String symbolName = tokenString.contains(":") ? tokenString.split(":")[1].trim() : tokenString;
+                        logSintacticError("Símbol inesperat \"" + symbolName + "\"");
                 }
                 System.exit(0);
         }
@@ -52,7 +59,7 @@ parser code {:
 :}
 
 terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator, MAJOR, MENOR;
-terminal String ID, ENT, BOOL, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA, RESERVA, MOD, TEXT, STRING;
+terminal String ID, ENT, BOOL, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA, RESERVA, MOD, TEXT, STRING, FINAL;
 
 non terminal NodeExprcomposta exprcomposta;
 non terminal NodeOperador_expr operador_expr;
@@ -191,7 +198,8 @@ sentenciaf ::=  decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
 retorna ::= RETORNA exprsimple:expr PUNTICOMA {: RESULT = new NodeRetorna(expr, lexic.getLineColumn()); :}
         |   RETORNA PUNTICOMA {: RESULT = new NodeRetorna(); :};
 
-decl_variable ::= tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(t, id, vi, lexic.getLineColumn()); :};
+decl_variable ::= tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(t, id, vi, lexic.getLineColumn()); :}
+                | FINAL tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(true, t, id, vi, lexic.getLineColumn()); :};
 
 varinic ::= ASSIGN exprsimple:v     {: RESULT = new NodeVarinic(v); :}
           | ASSIGN crida_funcio:c   {: RESULT = new NodeVarinic(c); :}
@@ -235,12 +243,12 @@ condicio ::= exprsimple:a operador_cond:b condicio:c {: RESULT = new NodeCondici
 condsino ::= SINO EClau blocf:a DClau {: RESULT = new NodeCondsino(a); :}
         |       {: RESULT = new NodeCondsino(); :};
 
-operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
-        | OLO:a {: RESULT = new NodeOperador_cond(a); :}
-        | IGUAL:a {: RESULT = new NodeOperador_cond(a); :}
-        | DIFERENT:a {: RESULT = new NodeOperador_cond(a); :}
-        | MAJOR:a {: RESULT = new NodeOperador_cond(a.toString()); :}
-        | MENOR:a {: RESULT = new NodeOperador_cond(a.toString()); :}
+operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a, true, false); :}
+        | OLO:a {: RESULT = new NodeOperador_cond(a, true, false); :}
+        | IGUAL:a {: RESULT = new NodeOperador_cond(a, true, true); :}
+        | DIFERENT:a {: RESULT = new NodeOperador_cond(a ,true, true); :}
+        | MAJOR:a {: RESULT = new NodeOperador_cond(a.toString(), false, true); :}
+        | MENOR:a {: RESULT = new NodeOperador_cond(a.toString(), false, true); :}
         | error {:      logLexicError("Operador invàlid"); RESULT = null; :}
         | ID {:         logLexicError("Operador invàlid"); RESULT = null; :};
 

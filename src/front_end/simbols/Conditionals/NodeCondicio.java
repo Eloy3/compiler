@@ -3,7 +3,6 @@ package front_end.simbols.Conditionals;
 import errors.ErrorLogger;
 import front_end.simbols.NodeBase;
 import front_end.simbols.NodeExprsimple;
-import front_end.simbols.NodeOperador_cond;
 import front_end.simbols.Simbol;
 import front_end.simbols.NodeExprsimple.tipusexpr;
 import util.TacUtil;
@@ -59,6 +58,17 @@ public class NodeCondicio extends NodeBase{
 
         String valueB = resolveCompositeExpression(left.getTipus(), cond);
         if (valueB == null) return false;
+        
+        if(left.getTipus().equalsIgnoreCase("bool")){
+            if(!operador.isLogic()){
+                ErrorLogger.logSemanticError(lc, "Operador no vàlid per tipus booleà.");
+            }
+        }else if(left.getTipus().equalsIgnoreCase("ent")){
+            if(!operador.isNumeric()){
+                ErrorLogger.logSemanticError(lc, "Operador no vàlid per tipus enter.");
+            }
+        }
+
         String cond = left.getNom().toString() + " " + operador.getOperador() + " " + valueB;
         TacUtil.etiquetacond(cta);
         cta.generateCode(cond + " then ");

@@ -87,6 +87,7 @@ sortida = "sortida"
 sortidaln = "sortidaln"
 entrada = "entrada"
 reserva = "reserva"
+final = "final"
 ENDLINE   = [\r\n]+
 ws = [' '|'\t']+
 
@@ -194,6 +195,7 @@ ws = [' '|'\t']+
 {si}                     { writeToken(this.yytext()); return symbol(ParserSym.SI, "si"); }
 {si_no}                  { writeToken(this.yytext()); return symbol(ParserSym.SINO, "si_no"); }
 {principal}              { writeToken(this.yytext()); return symbol(ParserSym.PRINCIPAL, "principal"); }
+{final}                  { writeToken(this.yytext()); return symbol(ParserSym.FINAL, "final"); }
 {punticoma}              { writeToken(this.yytext()); return symbol(ParserSym.PUNTICOMA, ";"); }
 {coma}                   { writeToken(this.yytext()); return symbol(ParserSym.COMA, ","); }
 {string}                 { writeToken(this.yytext()); return symbol(ParserSym.STRING, this.yytext()); }

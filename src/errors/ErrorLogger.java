@@ -14,6 +14,10 @@ public class ErrorLogger {
         logError("Error semàntic. [" + column_line[0] + ":" + column_line[1] + "] " + message);
     }
 
+    public static void logSemanticError(String message) {
+        logError("Error semàntic. " + message + "\n");
+    }
+
     public static void logSintacticError(int[] column_line, String message) {
         logError("Error sintàctic. [" + column_line[0] + ":" + column_line[1] + "] " + message);
     }

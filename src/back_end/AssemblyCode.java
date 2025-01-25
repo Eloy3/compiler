@@ -5,6 +5,7 @@ package back_end;
 import data_structures.Procedure;
 import data_structures.Parameter;
 import data_structures.Variable;
+import errors.ErrorLogger;
 import front_end.simbols.Tipus;
 import util.Util;
 
@@ -164,6 +165,10 @@ public class AssemblyCode {
                 break;
             case IF:
                 Variable v = c3a.getVar(i.getOperand1());
+                if(v==null){
+                    ErrorLogger.logSemanticError("No es poden usar literals en els condicionals");
+                    return;
+                }
                 code.add("\tMOVE.B " + varnom(v) + ",D0");
                 code.add("\tMOVE.B #" + -1 + ",D1");
                 code.add("\tCMP.B D0,D1");

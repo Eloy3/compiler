@@ -14,7 +14,6 @@ import front_end.simbols.NodeExprsimple.tipusexpr;
 import front_end.simbols.Procedure.NodeCrida_funcio;
 
 public class NodeVarinic2 extends NodeBase {
-
     private NodeExprsimple exprsimple;
     private NodeExprcomposta exprcomposta;
     private NodeCrida_funcio crida_funcio;
@@ -58,16 +57,23 @@ public class NodeVarinic2 extends NodeBase {
             generateCodeInicialitzacioTaula();
             return;
         }
-        else if(exprcomposta!=null){
+
+        Simbol left = Util.validateVariableExists(ts, id, lineCode);
+        if (left == null) return;
+        if(left.isConstant()){
+            ErrorLogger.logSemanticError(lineCode, "No es poden fer reassignacions a constants.");
+        }
+
+        if(exprcomposta!=null){
             if(exprcomposta.getExprcomposta()!=null){
                 generateCodeExprcomposta();
             }else{
-                validateAndGenerate(id, exprcomposta.getExprsimple().getTipusAsString(), exprcomposta.getExprsimple().getValor(), Optional.empty());
+                validateAndGenerate(left, exprcomposta.getExprsimple().getTipusAsString(), exprcomposta.getExprsimple().getValor(), Optional.empty());
             }
             return;
         }
         
-        validateAndGenerate(id, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
+        validateAndGenerate(left, exprsimple.getTipusAsString(), exprsimple.getValor(), Optional.empty());
     }
 
     public void generateCodeProcedure(){
@@ -143,9 +149,9 @@ public class NodeVarinic2 extends NodeBase {
         return tempVar;
     }
 
-    private void validateAndGenerate(String targetId, String typeA, String valueA, Optional<NodeExprsimple> optionalB) {
-        Simbol target = Util.validateVariableExists(ts, targetId, lineCode);
-        if (target == null) return;
+    private void validateAndGenerate(Simbol target, String typeA, String valueA, Optional<NodeExprsimple> optionalB) {
+/*         Simbol target = Util.validateVariableExists(ts, targetId, lineCode);
+        if (target == null) return; */
 
         if(target.getTipus().equals("text")) {
             ErrorLogger.logSemanticError(lineCode, "Les cadenes de text son immutables");
@@ -177,7 +183,7 @@ public class NodeVarinic2 extends NodeBase {
             NodeExprsimple b = optionalB.get();
             String typeB = resolveType(b.getTipusAsString(), b.getValor());
             if (typeB == null || !Util.typeMatches(target.getTipus(), typeB)) {
-                ErrorLogger.logSemanticError(lineCode, "Variable '" + targetId + "' has mismatched types.");
+                ErrorLogger.logSemanticError(lineCode, "Variable '" + target.getNom() + "' has mismatched types.");
                 return;
             }
             calcOcupComposite(target, valueA, exprcomposta.getOperador().getTipus(), b.getValor());

@@ -104,14 +104,14 @@ public class VariableTable {
 
     private String TableHeader() {
         return String.format(
-            "\n%-15s %-10s %-20s %-15s %-15s %-20s %-10s\n",
+            "\n%-45s %-10s %-30s %-15s %-15s %-20s %-10s\n",
             "Nombre", "NV", "Subprograma", "Ocupació", "Desplaçament", "Tipus subjacent", "Valor"
         );
     }
     
     private String AddTableRow(Variable node) {
         return String.format(
-            "%-15s %-10d %-20s %-15d %-15d %-20s %-10s\n",
+            "%-45s %-10d %-30s %-15d %-15d %-20s %-10s\n",
             node.getName(),
             node.getN_var(),
             node.getSubprog(),

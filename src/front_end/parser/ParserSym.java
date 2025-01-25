@@ -44,6 +44,7 @@ public class ParserSym {
   public static final int DParen = 7;
   public static final int ENTRADA = 36;
   public static final int SORTIDA = 34;
+  public static final int FINAL = 41;
   public static final int BOOLEA = 11;
   public static final int STRING = 40;
   public static final int PUNTICOMA = 9;
@@ -90,7 +91,8 @@ public class ParserSym {
   "RESERVA",
   "MOD",
   "TEXT",
-  "STRING"
+  "STRING",
+  "FINAL"
   };
 }
 

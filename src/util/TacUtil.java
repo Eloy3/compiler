@@ -75,31 +75,7 @@ public abstract class TacUtil {
      * array[i][j]...[n] = value
      */
     public static void generateInd_ass(IntermediateCode cta, SymbolTable ts, String id, String value, String tipus, List<String> indexes) {
-        /* Simbol idSimbol = ts.get(id);
-        ArrayList<Integer> dimensions = idSimbol.getArrayDimensions();
-
-        //reverse the values in the list
-        ArrayList<Integer> reversed = new ArrayList<>();
-        for (int i = dimensions.size() - 1; i >= 0; i--) {
-            reversed.add(dimensions.get(i));
-        }
-        dimensions = reversed;
-
-
-        //calculate whichever position name[i][j]...[n] is
-        ArrayList<Integer> dimensionsValue = new ArrayList<>();
-        int elements = 1;
-        for (int i = dimensions.size() - 1; i >= 0; i--) {
-            dimensionsValue.add(elements);
-            elements = dimensions.get(i) * elements;
-        }
         
-        String indextmp = cta.newTempVar("ent");
-        for(int i = 0; i < indexes.size(); i++){
-            indextmp = cta.newTempVar("ent");
-            cta.generateCode("assign", indextmp, indexes.get(i), ts);
-            cta.generateCode(indextmp + " = " + indextmp + " * " + dimensionsValue.get(i) + "\n");
-        } */
         String index = generateIndexes(cta, ts, id, indexes);
         String tempVar = cta.newTempVar(tipus);
         cta.generateCode(tempVar + " = " + value + "\n");
@@ -143,7 +119,7 @@ public abstract class TacUtil {
         String index = generateIndexes(cta, ts, array, indexes);
         String tempVar = cta.newTempVar(tipus);
         cta.generateCode(tempVar + " = " + index + "\n");
-        cta.generateCode("assign", target, tempVar, ts);
+        //cta.generateCode("assign", target, tempVar, ts);
         cta.generateNewVarAssign(targetSimbol, tempVar, tempVar, ts);
     }
 }

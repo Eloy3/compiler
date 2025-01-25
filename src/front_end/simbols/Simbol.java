@@ -6,6 +6,7 @@ public class Simbol{
     String nom;
     String tipus;
     Object valor;
+    boolean constant = false;
 
     ArrayList<Integer> arrayDimensions;
     private ArrayList<String> args;
@@ -22,6 +23,12 @@ public class Simbol{
         this.arrayDimensions = dimensions;
     }
     
+    public Simbol (String nom, String tipus, boolean constant){
+        this.tipus = tipus;
+        this.nom = nom;
+        this.constant = constant;
+    }
+
     public Simbol (String nom, String tipus){
         this.tipus = tipus;
         this.nom = nom;
@@ -74,6 +81,14 @@ public class Simbol{
 
     public void setArrayDimensions(ArrayList<Integer> arrayDimensions) {
         this.arrayDimensions = arrayDimensions;
+    }
+
+    public boolean isConstant() {
+        return constant;
+    }
+
+    public void setConstant(boolean constant) {
+        this.constant = constant;
     }
     
  }
