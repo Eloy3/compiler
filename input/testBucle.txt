@@ -2,7 +2,7 @@ principal(){
 	ent a = 3;
 	mentre(a!=0){
 		sortidaln(a);
-		a = a-1;
+		a = a -1;
 	}
 
 	per(ent i=0;i!=3;i++){

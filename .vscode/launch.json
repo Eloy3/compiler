@@ -8,7 +8,7 @@
             "mainClass": "main.Main",
             "projectName": "compilador_ab79c090",
             "args": [
-                "input/test1.txt"
+                "input/testBucle.txt"
             ],
             "vmArgs": "",
             "cwd": "${workspaceFolder}",

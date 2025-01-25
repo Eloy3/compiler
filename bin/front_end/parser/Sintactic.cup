@@ -8,6 +8,11 @@ import java_cup.runtime.*;
 import java.io.PrintStream;
 import java.util.HashMap;
 import front_end.simbols.*;
+import front_end.simbols.Structure.*;
+import front_end.simbols.Array.*;
+import front_end.simbols.Procedure.*;
+import front_end.simbols.Conditionals.*;
+import front_end.simbols.Loops.*;
 import front_end.scanner.*;
 import errors.*;
 
@@ -42,17 +47,19 @@ parser code {:
         public void syntax_error(Symbol cur_token) {
                 // Custom error handling
                 if (cur_token != null && cur_token.sym == ParserSym.ID) {
-                logLexicError("Simbol inesperat \"" + cur_token.value + "\"");
+                        logLexicError("Simbol inesperat \"" + cur_token.value + "\"");
                 }else{
-                logSintacticError("Símbol inesperat \"" + (cur_token == null ? "EOF" : cur_token.value) + "\"");
+                        String tokenString = (cur_token == null ? "EOF" : cur_token.toString());
+                        String symbolName = tokenString.contains(":") ? tokenString.split(":")[1].trim() : tokenString;
+                        logSintacticError("Símbol inesperat \"" + symbolName + "\"");
                 }
                 System.exit(0);
         }
 
 :}
 
-terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator;
-terminal String ID, ENT, BOOL, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA, RESERVA, MOD, TEXT, STRING;
+terminal SUMA, RESTA, MUL, DIV, EParen, DParen, ASSIGN, PUNTICOMA, ENTER, BOOLEA, EClau, DClau, COMA, EClaudator, DClaudator, MAJOR, MENOR;
+terminal String ID, ENT, BOOL, FUNCIO, RETORNA, BUIT, IGUAL, DIFERENT, OLI, OLO, MENTRE, PER, SI, SINO, PRINCIPAL, SORTIDA, SORTIDALN, ENTRADA, RESERVA, MOD, TEXT, STRING, FINAL;
 
 non terminal NodeExprcomposta exprcomposta;
 non terminal NodeOperador_expr operador_expr;
@@ -89,7 +96,7 @@ non terminal NodeLlistaValors llista_valors;
 non terminal NodeCodi codi;
 non terminal NodeProcedures procedures;
 non terminal NodeDecl_taula decl_taula;
-non terminal NodeDimensions_taula dimensions_taula;
+//non terminal NodeDimensions_taula dimensions_taula;
 non terminal NodeInicialitzacio_taula inicialitzacio_taula;
 non terminal NodeAssignacio_memoria assignacio_memoria;
 non terminal NodeEspecificacio_dimensio especificacio_dimensio; 
@@ -129,7 +136,7 @@ sentencia ::=   decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
               | inic_element_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"inic_element_taula"); :}
         
               | error PUNTICOMA {: logLexicError("Sentència invàlida"); RESULT = null; :}
-              | ID {: logLexicError("Sentència invàlida"); RESULT = null; :};
+              | ID:a {: logLexicError("Sentència invàlida, simbol inesperat: "+ a.toString()); RESULT = null; :};
 
 crida_funcio ::= ID:name EParen arg:a DParen {: RESULT = new NodeCrida_funcio(name, a, lexic.getLineColumn()); :}
                | ID:name EParen error DParen {: 
@@ -150,11 +157,12 @@ param ::= tipus:t ID:id param2:p2 {: RESULT = new NodeParam(t, id, p2); :}
 param2 ::= COMA param:p {: RESULT = new NodeParam2(p); :}
             |   {: RESULT = new NodeParam2(); :};
 
-exprsimple ::= ID:v             {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v, lexic.getLineColumn()); :}
-             | ENTER:v          {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString(), lexic.getLineColumn()); :}
-             | BOOLEA:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString(), lexic.getLineColumn()); :}
-             | STRING:v         {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.text, v, lexic.getLineColumn()); :}
-             | valorTaula:v     {: RESULT = new NodeExprsimple(v, lexic.getLineColumn()); :};
+exprsimple ::= ID:v               {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.id, v, lexic.getLineColumn()); :}
+             | RESTA:a ENTER:v    {: RESULT = new NodeExprsimple(a.toString(), NodeExprsimple.tipusexpr.ent, v.toString(), lexic.getLineColumn()); :}
+             | ENTER:v            {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.ent, v.toString(), lexic.getLineColumn()); :}
+             | BOOLEA:v           {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.bool, v.toString(), lexic.getLineColumn()); :}
+             | STRING:v           {: RESULT = new NodeExprsimple(NodeExprsimple.tipusexpr.text, v, lexic.getLineColumn()); :}
+             | valorTaula:v       {: RESULT = new NodeExprsimple(v, lexic.getLineColumn()); :};
 
 valorTaula ::= ID:a especificacio_dimensio:b {:RESULT = new NodeValorTaula(a, b, lexic.getLineColumn()); :};
 
@@ -185,12 +193,13 @@ sentenciaf ::=  decl_variable:v PUNTICOMA {: RESULT = new NodeSentencia(v,"decl_
               | inic_element_taula:a PUNTICOMA {:RESULT = new NodeSentencia(a,"inic_element_taula"); :}
         
               | error PUNTICOMA {: logLexicError("Sentència invàlida"); RESULT = null; :}
-              | ID {: logLexicError("Sentència invàlida"); RESULT = null; :};
+              | ID:a {: logLexicError("Sentència invàlida, simbol inesperat: "+ a.toString()); RESULT = null; :};
 
 retorna ::= RETORNA exprsimple:expr PUNTICOMA {: RESULT = new NodeRetorna(expr, lexic.getLineColumn()); :}
         |   RETORNA PUNTICOMA {: RESULT = new NodeRetorna(); :};
 
-decl_variable ::= tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(t, id, vi, lexic.getLineColumn()); :};
+decl_variable ::= tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(t, id, vi, lexic.getLineColumn()); :}
+                | FINAL tipus:t ID:id varinic:vi {: RESULT = new NodeDecl_Variable(true, t, id, vi, lexic.getLineColumn()); :};
 
 varinic ::= ASSIGN exprsimple:v     {: RESULT = new NodeVarinic(v); :}
           | ASSIGN crida_funcio:c   {: RESULT = new NodeVarinic(c); :}
@@ -234,12 +243,14 @@ condicio ::= exprsimple:a operador_cond:b condicio:c {: RESULT = new NodeCondici
 condsino ::= SINO EClau blocf:a DClau {: RESULT = new NodeCondsino(a); :}
         |       {: RESULT = new NodeCondsino(); :};
 
-operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a); :}
-        | OLO:a {: RESULT = new NodeOperador_cond(a); :}
-        | IGUAL:a {: RESULT = new NodeOperador_cond(a); :}
-        | DIFERENT:a {: RESULT = new NodeOperador_cond(a); :}
+operador_cond ::= OLI:a {: RESULT = new NodeOperador_cond(a, true, false); :}
+        | OLO:a {: RESULT = new NodeOperador_cond(a, true, false); :}
+        | IGUAL:a {: RESULT = new NodeOperador_cond(a, true, true); :}
+        | DIFERENT:a {: RESULT = new NodeOperador_cond(a ,true, true); :}
+        | MAJOR:a {: RESULT = new NodeOperador_cond(a.toString(), false, true); :}
+        | MENOR:a {: RESULT = new NodeOperador_cond(a.toString(), false, true); :}
         | error {:      logLexicError("Operador invàlid"); RESULT = null; :}
-        | ID {: logLexicError("Operador invàlid"); RESULT = null; :};
+        | ID {:         logLexicError("Operador invàlid"); RESULT = null; :};
 
 
 // **** WHILE i FOR ****
@@ -257,12 +268,12 @@ comportamentvl ::= ID:v SUMA SUMA {: RESULT = new NodeComportamentv1(v, Comporta
 
 // Taules amb múltiples dimensions
 
-//             ent       []...            x    
-decl_taula::= tipus:a dimensions_taula:b ID:c inicialitzacio_taula:d {: RESULT = new NodeDecl_taula(a, b, c, d, lexic.getLineColumn()); :}
-            | tipus:a dimensions_taula:b ID:c                        {: RESULT = new NodeDecl_taula(a, b, c, lexic.getLineColumn()); :};
+//             ent       []                 x    
+decl_taula::= tipus:a EClaudator DClaudator ID:b inicialitzacio_taula:c {: RESULT = new NodeDecl_taula(a, b, c, lexic.getLineColumn()); :}
+            | tipus:a EClaudator DClaudator ID:b                        {: RESULT = new NodeDecl_taula(a, b, lexic.getLineColumn()); :};
                     
-dimensions_taula ::= EClaudator DClaudator {: RESULT = new NodeDimensions_taula(null, lexic.getLineColumn()); :}
-                | dimensions_taula:a EClaudator DClaudator {: RESULT = new NodeDimensions_taula(a, lexic.getLineColumn()); :};
+/* dimensions_taula ::= EClaudator DClaudator {: RESULT = new NodeDimensions_taula(null, lexic.getLineColumn()); :}
+                | dimensions_taula:a EClaudator DClaudator {: RESULT = new NodeDimensions_taula(a, lexic.getLineColumn()); :}; */
 
 //                           =     {      1,2,3       }
 inicialitzacio_taula ::= ASSIGN EClau llista_valors:a DClau {: RESULT = new NodeInicialitzacio_taula(a, lexic.getLineColumn()); :}

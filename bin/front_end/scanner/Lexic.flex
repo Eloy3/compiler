@@ -51,6 +51,8 @@ mod          = "mod"
 //operadors relacionals
 igual = "=="
 diferent = "!="
+major = \>
+menor = \<
 
 //operadors lògics
 
@@ -85,6 +87,7 @@ sortida = "sortida"
 sortidaln = "sortidaln"
 entrada = "entrada"
 reserva = "reserva"
+final = "final"
 ENDLINE   = [\r\n]+
 ws = [' '|'\t']+
 
@@ -162,6 +165,8 @@ ws = [' '|'\t']+
 {mod}                    { writeToken(this.yytext()); return symbol(ParserSym.MOD, this.yytext());    }
 {igual}                  { writeToken(this.yytext()); return symbol(ParserSym.IGUAL, this.yytext());    }
 {diferent}               { writeToken(this.yytext()); return symbol(ParserSym.DIFERENT, this.yytext());    }
+{major}                  { writeToken(this.yytext()); return symbol(ParserSym.MAJOR, this.yytext());    }
+{menor}                  { writeToken(this.yytext()); return symbol(ParserSym.MENOR, this.yytext());    }
 {OLi}                    { writeToken(this.yytext()); return symbol(ParserSym.OLI, this.yytext());    }
 {OLo}                    { writeToken(this.yytext()); return symbol(ParserSym.OLO, this.yytext());    }
 {eparen}                 { writeToken(this.yytext()); return symbol(ParserSym.EParen); }
@@ -190,6 +195,7 @@ ws = [' '|'\t']+
 {si}                     { writeToken(this.yytext()); return symbol(ParserSym.SI, "si"); }
 {si_no}                  { writeToken(this.yytext()); return symbol(ParserSym.SINO, "si_no"); }
 {principal}              { writeToken(this.yytext()); return symbol(ParserSym.PRINCIPAL, "principal"); }
+{final}                  { writeToken(this.yytext()); return symbol(ParserSym.FINAL, "final"); }
 {punticoma}              { writeToken(this.yytext()); return symbol(ParserSym.PUNTICOMA, ";"); }
 {coma}                   { writeToken(this.yytext()); return symbol(ParserSym.COMA, ","); }
 {string}                 { writeToken(this.yytext()); return symbol(ParserSym.STRING, this.yytext()); }

@@ -1,1 +1,0 @@
-Error semàntic. [8:12] No es poden fer operacions aritmètiques amb variables de tipus text.

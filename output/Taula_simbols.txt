@@ -1,7 +1,4 @@
-NOM             TIPUS      NIVELL     ARGS                
- 
-principal       NULL       1          []                  
-test            ENT        1          []                  
-a               TEXT       1          []                  
-b               TEXT       1          []                  
-c               TEXT       1          []                  
+NOM                            TIPUS      SUBPROGRAMA                    ARGS                
+principal                      NULL       principal                      []                  
+a                              ENT        principal                      []                  
+i                              ENT        principal                      []                  

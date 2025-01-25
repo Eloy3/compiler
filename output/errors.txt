@@ -1,1 +1,3 @@
 Error lèxic a la línea 11, columna 19: Token no reconegut '"'
+Error lèxic a la línea 8, columna 22: Token no reconegut '>'
+Error lèxic a la línea 9, columna 13: Token no reconegut '>'

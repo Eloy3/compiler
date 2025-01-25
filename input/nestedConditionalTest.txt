@@ -1,0 +1,32 @@
+principal(){
+    ent a = 10;
+    ent b = 5;
+    ent c = 3;
+    
+    si (a > b){
+        sortidaln("a es mes gran que b");
+
+        si (b > c){
+            sortidaln("b es mes gran que c");
+
+            si (c > 0){
+                sortidaln("c es positiu");
+            } si_no {
+                sortidaln("c no es positiu");
+            }
+
+        } si_no {
+            sortidaln("b no es mes gran que c");
+        }
+
+    } si_no {
+        sortidaln("a no es mes gran que b");
+
+        si (b == c){
+            sortidaln("b es igual a c");
+        } si_no {
+            sortidaln("b no es igual a c");
+        }
+    }
+    sortidaln("Programa finalitzat.");
+}

@@ -1,0 +1,24 @@
+principal(){
+
+    ent[] nombres = {1,2,-3,-4,5};
+    ent[] positius = reserva[5];
+
+    ent j = 0;
+    per(ent i=0; i!=5; i++){
+        ent x;
+        x = nombres[i];
+        si(x>0){
+            positius[j] = x;
+            j = j+1;
+        }
+    }
+    sortida("tamany taula: ", j);
+    sortidaln(" ");
+    ent i;
+    i = j-1;
+    mentre(i>-1){
+        sortidaln(positius[i]);
+        i = i-1;
+    }
+
+}

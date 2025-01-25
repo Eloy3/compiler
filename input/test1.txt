@@ -1,10 +1,9 @@
-
 principal(){
+    ent a = 3;
+    ent b;
 
-    ent test = 1;
-    text a = "wow";
-    text b = "hola";
-    text c;
-    c = a+b;
-    sortidaln(a,b,c);
+    si (1 > b){
+        sortida("hola");
+    }
+
 }

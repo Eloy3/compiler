@@ -2,32 +2,74 @@
 START:
 * --> | SKIP | null | null | principal |
 principal:
-* --> | SUMA | a | b | t3 |
-	MOVE.W a_principal,D0
-	MOVE.W b_principal,D1
+* --> | ASSIGNA | 3 | null | t0 |
+	MOVE.W #3,t0_principal
+* --> | ASSIGNA | t0 | null | a |
+	MOVE.W t0_principal,a_principal
+* --> | SKIP | null | null | e0 |
+e0:
+* --> | IFDIFERENT | a | 0 | e1 |
+	MOVE.W a_principal,D1
+	MOVE.W #0,D0
+	CMP.W D0,D1
+	BNE e1
+* --> | GOTO | null | null | e2 |
+	JMP e2
+* --> | SKIP | null | null | e1 |
+e1:
+* --> | PARAM_S | null | null | a |
+	MOVE.W a_principal,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+* --> | RESTA | a | 1 | t2 |
+	MOVE.W a_principal,D1
+	MOVE.W #1,D0
+	SUB.W D0,D1
+	MOVE.W D1,t2_principal
+* --> | ASSIGNA | t2 | null | a |
+	MOVE.W t2_principal,a_principal
+* --> | GOTO | null | null | e0 |
+	JMP e0
+* --> | SKIP | null | null | e2 |
+e2:
+* --> | ASSIGNA | 0 | null | t4 |
+	MOVE.W #0,t4_principal
+* --> | ASSIGNA | t4 | null | i |
+	MOVE.W t4_principal,i_principal
+* --> | SKIP | null | null | e3 |
+e3:
+* --> | IFDIFERENT | i | 3 | e4 |
+	MOVE.W i_principal,D1
+	MOVE.W #3,D0
+	CMP.W D0,D1
+	BNE e4
+* --> | GOTO | null | null | e5 |
+	JMP e5
+* --> | SKIP | null | null | e4 |
+e4:
+* --> | PARAM_S | null | null | i |
+	MOVE.W i_principal,-(A7)
+* --> | CALL | null | null | line |
+	JSR ILINE
+* --> | SUMA | i | 1 | t6 |
+	MOVE.W i_principal,D0
+	MOVE.W #1,D1
 	ADD.W D0,D1
-	MOVE.W D1,t3_principal
-* --> | ASSIGNA | t3 | null | c |
-* --> | PARAM_T | a | null | null |
-	MOVE.L  #a_principal,-(A7)
-* --> | CALL | null | null | line |
-	JSR SLINE
-	ADDA.L #4,A7
-* --> | PARAM_T | b | null | null |
-	MOVE.L  #b_principal,-(A7)
-* --> | CALL | null | null | line |
-	JSR SLINE
-	ADDA.L #4,A7
-* --> | PARAM_T | c | null | null |
-	MOVE.L  #c_principal,-(A7)
-* --> | CALL | null | null | line |
-	JSR SLINE
-	ADDA.L #4,A7
+	MOVE.W D1,t6_principal
+* --> | ASSIGNA | t6 | null | i |
+	MOVE.W t6_principal,i_principal
+* --> | GOTO | null | null | e3 |
+	JMP e3
+* --> | SKIP | null | null | e5 |
+e5:
 	SIMHALT
  
-test_principal: DS.W 1
-a_principal: DC.B 'wow',0
-b_principal: DC.B 'hola',0
+t0_principal: DS.W 1
+a_principal: DS.W 1
+t2_principal: DS.W 1
+t4_principal: DS.W 1
+i_principal: DS.W 1
+t6_principal: DS.W 1
  
 strout: DS.B 100
 	DC.W 0
