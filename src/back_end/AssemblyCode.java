@@ -532,14 +532,14 @@ public class AssemblyCode {
     }
 
     private void iifand(Instruction3a i) {
-        code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");  // Load operand1 into D0
-        code.add("\tTST.B D0");                                 // Test if operand1 is non-zero
-        code.add("\tBEQ skip_" + i.getDestiny());               // Skip if operand1 is zero
-        code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1"); // Load operand2 into D1
-        code.add("\tTST.B D1");                                 // Test if operand2 is non-zero
-        code.add("\tBEQ skip_" + i.getDestiny());               // Skip if operand2 is zero
-        code.add("\tBRA " + i.getDestiny());                    // Both are true, jump to destination
-        code.add("skip_" + i.getDestiny() + ":");               // Label for skipping the jump
+        code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");  
+        code.add("\tTST.B D0");                                 
+        code.add("\tBEQ skip_" + i.getDestiny());               
+        code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1"); 
+        code.add("\tTST.B D1");                                 
+        code.add("\tBEQ skip_" + i.getDestiny());               
+        code.add("\tBRA " + i.getDestiny());                    
+        code.add("skip_" + i.getDestiny() + ":");               
     }
     
     private void ior(Instruction3a i){
@@ -552,11 +552,11 @@ public class AssemblyCode {
     
     private void iifor(Instruction3a i){
         //Variable d = c3a.getVar(i.getDestiny());
-        code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");  // Load operand1 into D0
-        code.add("\tTST.B D0");                                 // Test if operand1 is non-zero
-        code.add("\tBNE " + i.getDestiny());                    // Jump if operand1 is non-zero
-        code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1"); // Load operand2 into D1
-        code.add("\tTST.B D1");                                 // Test if operand2 is non-zero
+        code.add("\tMOVE.B " + getop(i.getOperand1()) + ",D0");  
+        code.add("\tTST.B D0");                                 
+        code.add("\tBNE " + i.getDestiny());                    
+        code.add("\tMOVE.B " + getop(i.getOperand2()) + ",D1"); 
+        code.add("\tTST.B D1");                                 
         code.add("\tBNE " + i.getDestiny()); 
     }
 
@@ -595,64 +595,6 @@ public class AssemblyCode {
     }
 
     private void IOsubrutines(){
-        code.add("ISUMA:");
-        code.add("\tBTST.L #15,D0");
-        code.add("\tBEQ ADD2");
-        code.add("\tNOT.W D0");
-        code.add("\tADDQ.W #1,D0");
-        code.add("\tBTST.L #15,D1");
-        code.add("\tBEQ ADD1");
-        code.add("\tNOT.W D1");
-        code.add("\tADDQ.W #1,D1");
-        code.add("\tADD.W D0,D1");
-        code.add("\tNOT.W D1");
-        code.add("\tADDQ.W #1,D1");
-        code.add("\tJSR ADD4");
-        code.add("ADD1:");
-        code.add("\tSUB.W D0,D1");
-        code.add("\tJSR ADD4");
-        code.add("ADD2:");
-        code.add("\tBTST.L #15,D1");
-        code.add("\tBEQ ADD3");
-        code.add("\tNOT.W D1");
-        code.add("\tADDQ.W #1,D1");
-        code.add("\tSUB.W D1,D0");
-        code.add("\tMOVE.W  D0,D1");
-        code.add("\tJSR ADD4");
-        code.add("ADD3:");
-        code.add("\tADD.W D0,D1");
-        code.add("ADD4:");
-        code.add("\tRTS");
-
-        code.add("IRESTA:");
-        code.add("\tBTST.L #15,D1");
-        code.add("\tBEQ SUB2");
-        code.add("\tNOT.W D1");
-        code.add("\tADDQ.W #1,D1");
-        code.add("\tBTST.L #15,D0");
-        code.add("\tBEQ SUB1");
-        code.add("\tNOT.W D0");
-        code.add("\tADDQ.W #1,D0");
-        code.add("\tSUB.W D0,D1");
-        code.add("\tNOT.W D1");
-        code.add("\tADDQ.W #1,D1");
-        code.add("\tRTS");
-        code.add("SUB1:");
-        code.add("\tADD.W D0,D1");
-        code.add("\tNOT.W D1");
-        code.add("\tADDQ.W #1,D1");
-        code.add("\tRTS");
-        code.add("SUB2:");
-        code.add("\tBTST.L #15,D0");
-        code.add("\tBEQ SUB3");
-        code.add("\tNOT.W D0");
-        code.add("\tADDQ.W #1,D0");
-        code.add("\tADD.W D0,D1");
-        code.add("\tRTS");
-        code.add("SUB3:");
-        code.add("\tSUB.W D0,D1");
-        code.add("\tRTS");
-
         code.add("SPRINT:");
         code.add("\tMOVE.L 4(A7),A1");
         code.add("\tMOVE.L #1,D0");
@@ -706,39 +648,12 @@ public class AssemblyCode {
         code.add("\tTRAP #15");
         code.add("\tRTS");
 
-        code.add("STRCPY:");
-        code.add("\tMOVE.B (A0)+,(A1)+");
-        code.add("\tBNE STRCPY");
-        code.add("\tRTS");
-
         code.add("STRCMP:");
         code.add("\tCMPM.B (A0)+,(A1)+");
         code.add("\tBNE STRRET");
         code.add("\tTST.B -1(A0)");
         code.add("\tBNE STRCMP");
         code.add("STRRET:");
-        code.add("\tRTS");
-
-        code.add("STRCON:");
-        code.add("\tCLR.W D0");
-        code.add("\tMOVE.W #100,D1");
-        code.add("STRCON1:");
-        code.add("\tMOVE.B (A0)+,(A2)+");
-        code.add("\tBEQ STRCON2");
-        code.add("\tADDQ.W #1,D0");
-        code.add("\tCMP.W D0,D1");
-        code.add("\tBEQ STRCON3");
-        code.add("\tJMP STRCON1");
-        code.add("STRCON2:");
-        code.add("\tSUBA.L #1,A2");
-        code.add("STRCON3:");
-        code.add("\tMOVE.B (A1)+,(A2)+");
-        code.add("\tBEQ STRCON4");
-        code.add("\tADDQ.W #1,D0");
-        code.add("\tCMP.W D0,D1");
-        code.add("\tBEQ STRCON4");
-        code.add("\tJMP STRCON3");
-        code.add("STRCON4:");
         code.add("\tRTS");
 
         code.add("out_of_bounds:");

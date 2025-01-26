@@ -1,32 +1,11 @@
-Uni project of a compiler for a made-up imperative language
+# **Compilador**
 
-If you're using vscode, you can use the provided launch.json and .vscode foler to compile and run the project.
-You just need to set the 'args' input in the launch.json file to the name of the input file you want to use, and then you can run the project by pressing F5.
+Projecte universitari d'un compilador per a un llenguatge imperatiu inventat.
 
-### Compiling the project
+La millor manera d'executar el projecte és utilitzant **VS Code**, ja que inclou la configuració necessària per compilar i executar el codi fàcilment.  
+Només cal que estableixis l'entrada `args` al fitxer `launch.json` amb el nom del fitxer d'entrada que vulguis utilitzar (pots triar un de la carpeta input), i després podràs executar el projecte prement **F5**.
 
-If you want to compile the project manually, open a terminal and navigate to the project directory. Then, run the following command:
+Si prefereixes executar el projecte manualment, assegura't de compilar tots els fitxers `.java` dins de la carpeta `src/`, incloent les llibreries necessàries situades a la carpeta `lib/`.  
+Un cop compilat, pots executar la classe principal.
 
-```
-javac -d out -sourcepath src src/main/Main.java
-```
-
-This will compile all the Java files in the `src` directory and output the compiled files to the `out` directory.
-
-
-To run the project, open a terminal and navigate to the project directory. Then, run the following command:
-
-```
-java -cp out main.Main <input_file>
-```
-
-Replace `<input_file>` with the name of the input file you want to use. The input file should be in the `input` directory.
-
-For example, to run the project with the `oddOrEven.txt` input file, you would run the following command:
-
-```
-java -cp out main.Main input/testBucle.txt
-```
-
-This will run the project with the `oddOrEven.txt` input file and create all of the output files to the `output` directory.
 

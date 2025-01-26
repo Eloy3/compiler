@@ -33,16 +33,8 @@ public class NodeSentencia extends NodeBase {
                 break;
 
             case "varinic2":
-                // Check whether it's a simple or compound expression
                 ((NodeVarinic2) node).generateCode();
                 break;
-/*                 NodeVarinic2 varinic2 = (NodeVarinic2) node;
-                if (varinic2.getExprsimple() != null || varinic2.getCrida_funcio() != null) {
-                    varinic2.generateCode();
-                } else if (varinic2.getExprcomposta() != null) {
-                    varinic2.generateCodeExprcomposta();
-                }
-                break; */
 
             case "condicional":
                 ((NodeCondicional) node).generateCode();

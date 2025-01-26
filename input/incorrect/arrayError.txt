@@ -1,0 +1,4 @@
+principal(){
+    ent[] a = reserva[2][2][3];
+    a[3] = 7;
+}

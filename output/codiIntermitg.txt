@@ -1,25 +1,16 @@
 principal:skip
-t0 = 3
-a = t0
-e0:skip
-if a != 0 then goto e1
+param_s x
+call getInt
+x = retInt
+t1 = x mod 2
+y = t1
+if y == 0 then goto e1
 goto e2
 e1:skip
-param_s a
+param_t even
 call line
-t2 = a - 1
-a = t2
 goto e0
 e2:skip
-t4 = 0
-i = t4
-e3:skip
-if i != 3 then goto e4
-goto e5
-e4:skip
-param_s i
+param_t odd
 call line
-t6 = i + 1
-i = t6
-goto e3
-e5:skip
+e0:skip

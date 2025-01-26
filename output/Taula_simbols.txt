@@ -1,4 +1,4 @@
 NOM                            TIPUS      SUBPROGRAMA                    ARGS                
 principal                      NULL       principal                      []                  
-a                              ENT        principal                      []                  
-i                              ENT        principal                      []                  
+x                              ENT        principal                      []                  
+y                              ENT        principal                      []                  

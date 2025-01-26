@@ -1,9 +1,5 @@
 principal(){
-    ent a = 3;
-    ent b;
-
-    si (1 > b){
-        sortida("hola");
-    }
-
+    ent a = 7;
+    a = 7 / 2 * 3 + 4;
+    sortidaln(a);
 }

@@ -1,0 +1,150 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 26/01/2025 16:36:57
+
+00001000                             1      org $1000
+00001000                             2  START:
+00001000                             3  * --> | SKIP | null | null | principal |
+00001000                             4  principal:
+00001000                             5  * --> | PARAM_S | null | null | x |
+00001000  3F39 00001070              6      MOVE.W x_principal,-(A7)
+00001006                             7  * --> | CALL | null | null | getInt |
+00001006  4EB9 0000113E              8      JSR GETINT
+0000100C                             9  * --> | ASSIGNA | retInt | null | x |
+0000100C  33D7 00001070             10      MOVE.W (A7),x_principal
+00001012                            11  * --> | MODUL | x | 2 | t1 |
+00001012  3239 00001070             12      MOVE.W x_principal,D1
+00001018  48C1                      13      EXT.L D1
+0000101A  303C 0002                 14      MOVE.W #2,D0
+0000101E  48C0                      15      EXT.L D0
+00001020  83C0                      16      DIVS.W D0,D1
+00001022  4841                      17      SWAP D1
+00001024  33C1 00001072             18      MOVE.W D1,t1_principal
+0000102A                            19  * --> | ASSIGNA | t1 | null | y |
+0000102A  33F9 00001072 00001074    20      MOVE.W t1_principal,y_principal
+00001034                            21  * --> | IFIGUAL | y | 0 | e1 |
+00001034  3239 00001074             22      MOVE.W y_principal,D1
+0000103A  303C 0000                 23      MOVE.W #0,D0
+0000103E  B240                      24      CMP.W D0,D1
+00001040  6700 0008                 25      BEQ e1
+00001044                            26  * --> | GOTO | null | null | e2 |
+00001044  4EF9 0000105E             27      JMP e2
+0000104A                            28  * --> | SKIP | null | null | e1 |
+0000104A                            29  e1:
+0000104A                            30  * --> | PARAM_T | even | null | null |
+0000104A  2F3C 00001076             31      MOVE.L  #even_principal,-(A7)
+00001050                            32  * --> | CALL | null | null | line |
+00001050  4EB9 000010F4             33      JSR SLINE
+00001056  588F                      34      ADDA.L #4,A7
+00001058                            35  * --> | GOTO | null | null | e0 |
+00001058  4EF9 0000106C             36      JMP e0
+0000105E                            37  * --> | SKIP | null | null | e2 |
+0000105E                            38  e2:
+0000105E                            39  * --> | PARAM_T | odd | null | null |
+0000105E  2F3C 0000107B             40      MOVE.L  #odd_principal,-(A7)
+00001064                            41  * --> | CALL | null | null | line |
+00001064  4EB9 000010F4             42      JSR SLINE
+0000106A  588F                      43      ADDA.L #4,A7
+0000106C                            44  * --> | SKIP | null | null | e0 |
+0000106C                            45  e0:
+0000106C  FFFF FFFF                 46      SIMHALT
+00001070                            47   
+00001070                            48  x_principal: DS.W 1
+00001072                            49  t1_principal: DS.W 1
+00001074                            50  y_principal: DS.W 1
+00001076= 65 76 65 6E 00            51  even_principal: DC.B 'even',0
+0000107B= 6F 64 64 00               52  odd_principal: DC.B 'odd',0
+0000107F                            53   
+0000107F                            54  strout: DS.B 100
+000010E4= 0000                      55      DC.W 0
+000010E6                            56   
+000010E6                            57  SPRINT:
+000010E6  226F 0004                 58      MOVE.L 4(A7),A1
+000010EA  7001                      59      MOVE.L #1,D0
+000010EC  323C 0064                 60      MOVE.W #100,D1
+000010F0  4E4F                      61      TRAP #15
+000010F2  4E75                      62      RTS
+000010F4                            63  SLINE:
+000010F4  226F 0004                 64      MOVE.L 4(A7),A1
+000010F8  2F09                      65      MOVE.L A1,-(A7)
+000010FA  4EB8 10E6                 66      JSR SPRINT
+000010FE  588F                      67      ADDA.L #4,A7
+00001100  700B                      68      MOVE.L #11,D0
+00001102  323C 00FF                 69      MOVE.W #$00FF,D1
+00001106  4E4F                      70      TRAP #15
+00001108  5241                      71      ADD.W #1,D1
+0000110A  C27C 00FF                 72      AND.W #$00FF,D1
+0000110E  4E4F                      73      TRAP #15
+00001110  4E75                      74      RTS
+00001112                            75  IPRINT:
+00001112  4281                      76      CLR.L D1
+00001114  322F 0004                 77      MOVE.W 4(A7),D1
+00001118  48C1                      78      EXT.L D1
+0000111A  7003                      79      MOVE.L #3,D0
+0000111C  4E4F                      80      TRAP #15
+0000111E  4E75                      81      RTS
+00001120                            82  ILINE:
+00001120  322F 0004                 83      MOVE.W 4(A7),D1
+00001124  3F01                      84      MOVE.W D1,-(A7)
+00001126  4EB8 1112                 85      JSR IPRINT
+0000112A  544F                      86      ADDA.W #2,A7
+0000112C  700B                      87      MOVE.L #11,D0
+0000112E  323C 00FF                 88      MOVE.W #$00FF,D1
+00001132  4E4F                      89      TRAP #15
+00001134  5241                      90      ADD.W #1,D1
+00001136  C27C 00FF                 91      AND.W #$00FF,D1
+0000113A  4E4F                      92      TRAP #15
+0000113C  4E75                      93      RTS
+0000113E                            94  GETINT:
+0000113E  7004                      95      MOVE.L #4,D0
+00001140  4E4F                      96      TRAP #15
+00001142  3F41 0004                 97      MOVE.W D1,4(A7)
+00001146  4E75                      98      RTS
+00001148                            99  GETSTR:
+00001148  226F 0004                100      MOVEA.L 4(A7),A1
+0000114C  7002                     101      MOVE.L #2,D0
+0000114E  4E4F                     102      TRAP #15
+00001150  4E75                     103      RTS
+00001152                           104  STRCMP:
+00001152  B308                     105      CMPM.B (A0)+,(A1)+
+00001154  6600 0008                106      BNE STRRET
+00001158  4A28 FFFF                107      TST.B -1(A0)
+0000115C  66F4                     108      BNE STRCMP
+0000115E                           109  STRRET:
+0000115E  4E75                     110      RTS
+00001160                           111  out_of_bounds:
+00001160  2F3C 0000116E            112      MOVE.L #error_msg,-(A7)
+00001166  4EB8 10F4                113      JSR SLINE
+0000116A  FFFF FFFF                114      SIMHALT
+0000116E                           115  error_msg:
+0000116E= 4D 61 74 72 69 75 ...    116      DC.B 'Matriu fora del lmit',0
+00001183                           117      END START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+E0                  106C
+E1                  104A
+E2                  105E
+ERROR_MSG           116E
+EVEN_PRINCIPAL      1076
+GETINT              113E
+GETSTR              1148
+ILINE               1120
+IPRINT              1112
+ODD_PRINCIPAL       107B
+OUT_OF_BOUNDS       1160
+PRINCIPAL           1000
+SLINE               10F4
+SPRINT              10E6
+START               1000
+STRCMP              1152
+STROUT              107F
+STRRET              115E
+T1_PRINCIPAL        1072
+X_PRINCIPAL         1070
+Y_PRINCIPAL         1074

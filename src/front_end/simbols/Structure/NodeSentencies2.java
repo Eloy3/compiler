@@ -4,7 +4,7 @@ import front_end.simbols.NodeBase;
 
 public class NodeSentencies2 extends NodeBase {
 
-    private NodeSentencies nodeSentencies; // Lowercase for consistency
+    private NodeSentencies nodeSentencies;
 
     public NodeSentencies2(NodeSentencies nodeSentencies) {
         super("Sentencies2", 0);
@@ -13,11 +13,10 @@ public class NodeSentencies2 extends NodeBase {
 
     public NodeSentencies2() {
         super("Sentencies2", 0);
-        this.nodeSentencies = null; // Explicitly set null when no more sentences
+        this.nodeSentencies = null;
     }
 
     public void generateCode() {
-        // Only generate code if there's more sentences to process
         if (nodeSentencies != null) {
             nodeSentencies.generateCode();
         }

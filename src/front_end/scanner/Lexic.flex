@@ -13,16 +13,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 %%
 
-/****
- Indicació de quin tipus d'analitzador sintàctic s'utilitzarà. En aquest cas 
- es fa ús de Java CUP.
- ****/
 %cup
 
-// Per indicar que la classe és pública
 %public        
 
-//El nom de la classe
 %class Lexic        
 
 // El tipus dels tokens identificats
@@ -91,8 +85,7 @@ final = "final"
 ENDLINE   = [\r\n]+
 ws = [' '|'\t']+
 
-// El següent codi es copiarà també, dins de la classe. És a dir, si es posa res
-// ha de ser en el format adient: mètodes, atributs, etc. 
+
 %{
     
     /***
@@ -154,9 +147,6 @@ ws = [' '|'\t']+
 %}
 
 %%
-// Regles/accions
-// És molt important l'ordre de les regles!!!
-
 
 {suma}                   { writeToken(this.yytext()); return symbol(ParserSym.SUMA, this.yytext());   }
 {resta}                  { writeToken(this.yytext()); return symbol(ParserSym.RESTA, this.yytext());  }
@@ -204,7 +194,6 @@ ws = [' '|'\t']+
 {ENDLINE}                { /*return symbol(ParserSym.EOF);    */    numero_linea++;  }
 {ws}                     { /* No fer res amb els espais */  }
 [^] {
-    //System.err.println("Lexical error at line " + getLine() + ", column " + getColumn() + ": Unrecognized token '" + yytext() + "'");
     logLexicalError("Error lèxic a la línea " + getLine() + ", columna " + getColumn() + ": Token no reconegut '" + yytext() + "'");
     return symbol(ParserSym.error);
 }

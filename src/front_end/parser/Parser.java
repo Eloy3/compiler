@@ -1212,7 +1212,10 @@ class CUP$Parser$actions {
           case 58: // sentenciaf ::= ID 
             {
               NodeSentencia RESULT =null;
-		 logLexicError("Sentència invàlida"); RESULT = null; 
+		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 logLexicError("Sentència invàlida, simbol inesperat: "+ a.toString()); RESULT = null; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("sentenciaf",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1500,7 +1503,7 @@ class CUP$Parser$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		String i = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		 RESULT = new NodeEntrada(i);
+		 RESULT = new NodeEntrada(i, lexic.getLineColumn());
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("entrada",30, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

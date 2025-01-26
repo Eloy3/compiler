@@ -33,7 +33,7 @@ public class Main {
             ThreeAdressCode c3a = new ThreeAdressCode();
             AssemblyCode ac = new AssemblyCode(c3a);
             ac.generate();
-            writeFile("output/codiEnsamblador.X68", ac.getCode());
+            writeFile("output/codiAssemblador.X68", ac.getCode());
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -33,8 +33,6 @@ public class NodeCrida_funcio extends NodeBase {
         // Extract parameter list from the call
         List<NodeArg> params = extractParamList();
     
-        // Get function definition from the symbol table
-        //Simbol functionSymbol = ts.get(functionName);
         Procedure functionSymbol = tp.getProc(functionName);
         ArrayList<Parameter> expectedArgs = functionSymbol.getParameters();
         ArrayList<String> expectedTypes = getTipusArgs(expectedArgs);

@@ -7,7 +7,7 @@
             "request": "launch",
             "mainClass": "main.Main",
             "args": [
-                "input/testBucle.txt"
+                "input/correct/oddOrEven.txt"
             ],
             "vmArgs": "",
             "cwd": "${workspaceFolder}",

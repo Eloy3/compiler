@@ -84,7 +84,6 @@ non terminal NodeBlocf2 blocf2;
 non terminal NodeComportamentv1 comportamentvl;
 non terminal NodeBucle bucle;
 non terminal NodeRetorna retorna;
-
 non terminal NodePrincipal principal;
 non terminal NodeCondicional condicional;
 non terminal NodeCondsino condsino;
@@ -96,7 +95,6 @@ non terminal NodeLlistaValors llista_valors;
 non terminal NodeCodi codi;
 non terminal NodeProcedures procedures;
 non terminal NodeDecl_taula decl_taula;
-//non terminal NodeDimensions_taula dimensions_taula;
 non terminal NodeInicialitzacio_taula inicialitzacio_taula;
 non terminal NodeAssignacio_memoria assignacio_memoria;
 non terminal NodeEspecificacio_dimensio especificacio_dimensio; 
@@ -230,7 +228,7 @@ llista_valors ::= exprsimple:v {: RESULT = new NodeLlistaValors(v);:}|
 
 // **** Entrada per teclat ****
 
-entrada ::= ENTRADA EParen ID:i DParen {: RESULT = new NodeEntrada(i);:};
+entrada ::= ENTRADA EParen ID:i DParen {: RESULT = new NodeEntrada(i, lexic.getLineColumn());:};
 
 // **** IF ****
 

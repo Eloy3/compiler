@@ -37,9 +37,9 @@ public class ThreeAdressCode {
     
             while ((instruction = br.readLine()) != null) {
                 instruction = instruction.trim();
-                if (instruction.isEmpty()) continue; // Skip empty lines
+                if (instruction.isEmpty()) continue;
     
-                String[] parts = instruction.split("\\s+"); // Split by whitespace
+                String[] parts = instruction.split("\\s+"); 
                 if (parts.length == 0) {
                     System.err.println("Error: Empty instruction: " + instruction);
                     continue;
@@ -63,11 +63,11 @@ public class ThreeAdressCode {
                             instructionList.addInst(Operation.PARAM_S, null, null, parts[1]);
                             break;
     
-                        case "param_c": // Handle constant parameter instruction
+                        case "param_c": 
                             instructionList.addInst(Operation.PARAM_C, parts[1], null, null);
                             break;
                         
-                        case "param_t": // Handle constant parameter instruction
+                        case "param_t":
                             instructionList.addInst(Operation.PARAM_T, parts[1], null, null);
                             break;
     
@@ -81,10 +81,8 @@ public class ThreeAdressCode {
     
                         default:
                             if (instruction.contains("=")) {
-                                // Handle assignments
                                 handleAssignmentOrOperation(parts, instruction);
                             } else if (instruction.contains(":skip")) {
-                                // Handle labels
                                 String label = instruction.split(":")[0].trim();
                                 instructionList.addInst(Operation.SKIP, null, null, label);
                             } else {
@@ -164,7 +162,6 @@ public class ThreeAdressCode {
                     String index = rhs.substring(rhs.indexOf('[') + 1, rhs.indexOf(']'));
                     instructionList.addInst(Operation.IND_VAL, arrayName, index, lhs);
                 } 
-                // Handle simple assignment
                 else {
                     instructionList.addInst(Operation.ASSIGNA, rhs, null, lhs);
                 }
@@ -195,11 +192,10 @@ public class ThreeAdressCode {
             String variable;
     
             while ((variable = br.readLine()) != null) {
-                if (!variable.trim().isEmpty() && !variable.startsWith("Nombre")) { // Skip header line
-                    // Split using regex for two or more whitespace characters
+                if (!variable.trim().isEmpty() && !variable.startsWith("Nombre")) { 
+
                     String[] split = variable.trim().split("\\s{2,}");
                     
-                    // Check for expected fields, accounting for optional 'Valor'
                     if (split.length >= 6) {
                         try {
                             String name = split[0].trim();
@@ -208,7 +204,7 @@ public class ThreeAdressCode {
                             int store = Integer.parseInt(split[3].trim());
                             int offset = Integer.parseInt(split[4].trim());
                             String type = split[5].trim();
-                            // Assign 'Valor' if present, otherwise set to null
+                            
                             String value = (split.length > 6) ? split[6].trim() : null;
                             
                             tv.add(new Variable(name, nv, subprogram, store, offset, type, value));
@@ -237,8 +233,7 @@ public class ThreeAdressCode {
     
             String proc;
             while ((proc = br.readLine()) != null) {
-                if (!proc.trim().isEmpty() && !proc.startsWith("NP")) { // Skip header lines
-                    // Split using regex, preserving multiple spaces within fields
+                if (!proc.trim().isEmpty() && !proc.startsWith("NP")) { 
                     String[] split = proc.trim().split("\\s{2,}");
                     
                     if (split.length >= 5) {
@@ -255,7 +250,7 @@ public class ThreeAdressCode {
                                 returnType = Tipus.valueOf(returnTypeStr.toUpperCase());
                             } catch (IllegalArgumentException | NullPointerException e) {
                                 System.err.println("Unknown return type in procedure: " + returnTypeStr);
-                                returnType = null; // handle unknown return type gracefully
+                                returnType = null;
                             }
     
                             tp.add(new Procedure(
@@ -322,14 +317,11 @@ public class ThreeAdressCode {
                 // Skip empty lines
                 if (line.trim().isEmpty()) continue;
     
-                // Split by tabs or other consistent delimiters
                 String[] parts = line.split("\\s{2,}|\t");
     
-                // Expecting: ID, TIPUS, PROFUNDITAT, ARGS
                 if (parts.length >= 4) {
-                    String id = parts[0].trim();         // ID
-                    String tipus = parts[1].trim();      // TIPUS
-                    //int profunditat = Integer.parseInt(parts[2].trim()); // PROFUNDITAT
+                    String id = parts[0].trim();       
+                    String tipus = parts[1].trim();     
                     
                     // Parse ARGS (reverse the order back)
                     String argsStr = parts[3].trim();
@@ -394,32 +386,6 @@ public class ThreeAdressCode {
 
         return parameters;
     }
-/*     private ArrayList<Parameter> extractParamsTs(String params) {
-        ArrayList<Parameter> parameters = new ArrayList<>();
-    
-        // Remove the brackets [ ] and split the string by commas
-        params = params.substring(1, params.length() - 1).trim();
-        if (!params.isEmpty()) {
-            String[] paramArray = params.split(", ");
-    
-            // Reverse the parameters to match the original order
-            for (int i = paramArray.length - 1; i >= 0; i--) {
-                String paramName = paramArray[i].trim();
-    
-                // Get the corresponding symbol from the symbol table
-                Simbol simbol = getSymbol(paramName);
-                if (simbol != null) {
-                    Tipus tipus = Tipus.valueOf(simbol.getTipus().toUpperCase());
-                    parameters.add(new Parameter(simbol.getNom(), tipus));
-                } else {
-                    System.err.println("Warning: Parameter symbol '" + paramName + "' not found in the symbol table.");
-                }
-            }
-        }
-    
-        return parameters;
-    } */
-    
 
     public Simbol getSymbol(String id){
         for (Simbol s : ts){

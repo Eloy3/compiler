@@ -19,7 +19,6 @@ public class NodeBlocf2 extends NodeBase{
     }   
 
     public void generateCode() {
-        // Only generate code if there's more sentences to process
         if (blocf != null) {
             blocf.generateCode();
         }

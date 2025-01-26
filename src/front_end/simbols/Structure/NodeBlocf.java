@@ -18,12 +18,10 @@ public class NodeBlocf extends NodeBase{
     }
 
     public void generateCode() {
-        // First, generate the code for the current sentencia
         if (sentenciaf != null) {
             sentenciaf.generateCode();
         }
 
-        // Then, generate the code for the next set of sentencies (if any)
         if (blocf2 != null) {
             blocf2.generateCode();
         }

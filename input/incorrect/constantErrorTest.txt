@@ -1,0 +1,4 @@
+principal(){
+    final ent x;
+    x = 7;
+}

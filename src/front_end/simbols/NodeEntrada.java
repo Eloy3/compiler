@@ -1,20 +1,22 @@
 
 package front_end.simbols;
 
+import util.Util;
 
 public class NodeEntrada extends NodeBase{
     
     private String id;
     private Simbol s;
+    private int[] lineCode;
     
-    public NodeEntrada(String a) {
+    public NodeEntrada(String a, int[] lc) {
         super("Entrada", 0);
         this.id = a;
-        
+        this.lineCode = lc;
     }
 
     public void generateCode(){
-        s = ts.get(id);
+        s = Util.validateVariableExists(ts, id, lineCode);
         cta.generateCode(paramType()+" " + id + "\n");
         cta.generateCode("call " + (paramType().equals("param_c")?"getStr":"getInt") + "\n");
         cta.generateCode(cta.newVar(s.getNom(), s.getTipus()) +" = " + returnType() + "\n");
